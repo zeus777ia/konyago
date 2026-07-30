@@ -1,88 +1,94 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0d9488">
-<title>Ulaşım | KonyaGo</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0c1220;--card:rgba(15,28,48,.88);--teal:#14b8a6;--gold:#e8b86d;--text:#eef6f4;--muted:#8aa4a0;--border:rgba(20,184,166,.22);--safe-b:env(safe-area-inset-bottom,0px)}
-body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(20,184,166,.12),transparent),linear-gradient(180deg,#0c1220,#0a1520)}
-.wrap{max-width:720px;margin:0 auto;padding:20px 16px 96px}
-a.back{color:var(--teal);text-decoration:none;font-weight:600;font-size:.9rem}
-h1{font-size:1.55rem;font-weight:800;margin:16px 0 8px}
-.lead{color:var(--muted);margin-bottom:20px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
-.card h2{font-size:1.02rem;color:var(--teal);margin-bottom:8px}
-.card p,.card li{font-size:.9rem;color:#a8c0ba}
-.card ul{margin:8px 0 0 1.1em}
-.warn{border-color:rgba(232,184,109,.4);background:rgba(232,184,109,.08)}
-.warn h2{color:var(--gold)}
-.btn{display:inline-flex;margin-top:10px;padding:11px 16px;border-radius:999px;background:linear-gradient(135deg,var(--teal),#0d9488);color:#042f2e;font-weight:700;text-decoration:none;font-size:.88rem}
-.mnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(12,18,32,.96);border-top:1px solid var(--border);padding:8px 6px calc(8px + var(--safe-b));z-index:60}
-.mnav a{flex:1;text-align:center;text-decoration:none;color:var(--muted);font-size:.65rem;font-weight:600;padding:6px 2px}
-.mnav a .i{display:block;font-size:1.15rem}.mnav a.active{color:var(--teal)}
-@media(min-width:900px){.mnav{display:none}.wrap{padding-bottom:40px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="Konya şehir içi ulaşım — otobüs, dolmuş, kart ve resmi sefer kaynakları.">
+  <title>Ulaşım | KonyaGo</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-<main class="wrap">
-  <a class="back" href="index.html">← KonyaGo</a>
-  <h1>Şehir içi ulaşım</h1>
-  <p class="lead">Otobüs, dolmuş ve kart sistemi. Canlı sefer saatleri resmi uygulamalardan takip edilmelidir.</p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark">K</span>
+        <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
+      </a>
+      <nav class="nav-desktop" aria-label="Ana menü">
+        <a href="index.html">Ana</a>
+        <a href="tarihce.html">Tarihçe</a>
+        <a href="gezilecek.html">Gezilecek</a>
+        <a href="ulasim.html" aria-current="page">Ulaşım</a>
+        <a href="pratik.html">Pratik</a>
+      </nav>
+    </div>
+  </header>
 
-  <div class="card warn">
-    <h2>⚠️ Sefer saatleri hakkında</h2>
-    <p>Hat saatleri sık değişir. KonyaGo uydurma tablo yayınlamaz. Güncel kalkış için Konya Büyükşehir Belediyesi ulaşım kanalları ve resmi mobil uygulamaları kullanın.</p>
-  </div>
+  <main class="container">
+    <div class="page-head">
+      <a href="index.html">← Ana sayfa</a>
+      <h1>Şehir içi ulaşım</h1>
+      <p>Otobüs, dolmuş ve ödeme. Canlı sefer için resmi kaynak kullanın.</p>
+    </div>
 
-  <div class="card">
-    <h2>🚌 Belediye otobüsü</h2>
-    <p>Şehir içi ana omurga belediye otobüs hatlarıdır. Duraklar ve güzergâhlar merkeze (Mevlana–Alaaddin–otogar aksı) yoğunlaşır.</p>
-    <ul>
-      <li>Hat numarası ve durak adıyla sorgulayın</li>
-      <li>Yoğun saatlerde ek sefer olabilir</li>
-      <li>Engelli erişimi hatlara göre değişir</li>
-    </ul>
-  </div>
+    <div class="info warn">
+      <h2>Sefer saatleri</h2>
+      <p>Hat saatleri değişebilir. KonyaGo uydurma tablo yayınlamaz. Güncel bilgi için Konya Büyükşehir Belediyesi ulaşım kanallarını ve resmi mobil uygulamaları kullanın.</p>
+    </div>
 
-  <div class="card">
-    <h2>🚐 Dolmuş / minibüs</h2>
-    <p>Belirli semt ve ilçe bağlantılarında dolmuş hatları yaygındır. Güzergâh tabelasını kontrol edin; ücret otobüsten farklı olabilir.</p>
-  </div>
+    <div class="info">
+      <h2>Belediye otobüsü</h2>
+      <p>Şehir içi ana taşıma omurgasıdır. Merkez (Mevlana–Alaaddin–otogar) hatları yoğundur.</p>
+      <ul>
+        <li>Hat numarası ve durak adıyla sorgulayın</li>
+        <li>Yoğun saatlerde ek sefer olabilir</li>
+        <li>Son seferleri akşam erken bitebilir</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>💳 Kart & ödeme</h2>
-    <p>Toplu taşımada elektronik kart sistemleri kullanılır (KonyaKart ve güncel belediye çözümleri). Kart dolumu büfe, otomat ve resmi noktalardan yapılır. Nakit kabulü hat/araç tipine göre değişebilir.</p>
-  </div>
+    <div class="info">
+      <h2>Dolmuş / minibüs</h2>
+      <p>Semt ve bazı ilçe bağlantılarında yaygındır. Güzergâh tabelasını kontrol edin; ücret otobüsten farklı olabilir.</p>
+    </div>
 
-  <div class="card">
-    <h2>🗺️ Pratik ipuçları</h2>
-    <ul>
-      <li>Mevlana Müzesi ve Alaaddin çevresi yürüme mesafesinde planlanabilir</li>
-      <li>Sille için otobüs/dolmuş + kısa yürüyüş gerekebilir</li>
-      <li>Otogar–merkez arası direkt hatları tercih edin</li>
-      <li>Akşam seferleri seyrekleşir; son seferi resmi uygulamadan bakın</li>
-    </ul>
-  </div>
+    <div class="info">
+      <h2>Kart ve ödeme</h2>
+      <p>Toplu taşımada elektronik kart sistemleri kullanılır. Dolum büfe, otomat ve resmi noktalardan yapılır. Nakit kabulü hat ve araca göre değişebilir.</p>
+    </div>
 
-  <div class="card">
-    <h2>🔗 Resmi kaynak</h2>
-    <p>Güncel hat ve sefer için Konya Büyükşehir Belediyesi web sitesi ve ulaşım uygulamalarını kullanın.</p>
-    <a class="btn" href="https://www.konya.bel.tr" target="_blank" rel="noopener">konya.bel.tr →</a>
-  </div>
-</main>
-<nav class="mnav">
-  <a href="index.html"><span class="i">🏠</span>Ana</a>
-  <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
-  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-  <a href="ulasim.html" class="active"><span class="i">🚌</span>Ulaşım</a>
-  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
-</nav>
+    <div class="info">
+      <h2>Pratik ipuçları</h2>
+      <ul>
+        <li>Mevlana ve Alaaddin çevresi yürüme ile birleştirilebilir</li>
+        <li>Sille için otobüs veya dolmuş + kısa yürüyüş planlayın</li>
+        <li>Otogar–merkez arası doğrudan hatları tercih edin</li>
+      </ul>
+    </div>
+
+    <div class="info">
+      <h2>Resmi kaynak</h2>
+      <p>Güncel hat ve duyurular için belediye sitesi:</p>
+      <p style="margin-top:12px">
+        <a class="btn btn-primary" href="https://www.konya.bel.tr" target="_blank" rel="noopener noreferrer">konya.bel.tr</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 KonyaGo</div>
+  </footer>
+
+  <nav class="mnav" aria-label="Mobil menü">
+    <a href="index.html"><span class="i">🏠</span>Ana</a>
+    <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
+    <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+    <a href="ulasim.html" aria-current="page"><span class="i">🚌</span>Ulaşım</a>
+    <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+  </nav>
+
+  <script src="assets/js/app.js" defer></script>
 </body>
 </html>

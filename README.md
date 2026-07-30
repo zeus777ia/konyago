@@ -1,35 +1,34 @@
 # KonyaGo
 
-Konya şehir rehberi — tarihçe, gezilecek yerler, ulaşım ve pratik bilgi.
+Konya şehir rehberi — tarihçe, gezilecek yerler, ulaşım, pratik bilgi.
 
-**Domain:** konyago.com.tr  
-**Repo:** https://github.com/zeus777ia/konyago  
-**Canlı (Pages açılınca):** https://zeus777ia.github.io/konyago/
+- Domain: **konyago.com.tr**
+- Repo: https://github.com/zeus777ia/konyago
 
-## GitHub Pages — bir kerelik ayar (zorunlu)
+## Yapı
 
-Linklerin açılması için Pages’i açman lazım:
+```
+index.html
+tarihce.html
+gezilecek.html
+ulasim.html
+pratik.html
+assets/css/app.css
+assets/js/app.js
+manifest.json
+sw.js
+icon.svg
+```
 
-1. Repo sayfası: https://github.com/zeus777ia/konyago
-2. **Settings** → sol menü **Pages**
-3. **Build and deployment → Source:** `GitHub Actions` seç
-4. Kaydet / bekle (1–2 dk)
-5. Actions sekmesinde yeşil tik gelince site açılır:
-   - https://zeus777ia.github.io/konyago/
+## GitHub Pages
 
-### Domain bağlama (konyago.com.tr hazır olunca)
-Settings → Pages → **Custom domain** → `konyago.com.tr`  
-DNS (registrar):
-- `A` kayıtları GitHub Pages IP’leri, veya
-- Cloudflare kullanıyorsan CNAME / proxy ayarı (cnrtech ile aynı mantık)
+1. Settings → Pages
+2. Source: Deploy from a branch
+3. Branch: `main` / `/ (root)`
+4. Custom domain: `konyago.com.tr` (DNS hazır olunca)
 
-## Sayfalar
-- index.html — ana
-- tarihce.html
-- gezilecek.html
-- ulasim.html
-- pratik.html
-- PWA: manifest.json + sw.js
+Önizleme: `https://zeus777ia.github.io/konyago/`
 
 ## Not
-Sefer saatleri resmi kaynaklara yönlendirilir; uydurma saat yok.
+
+Sefer saatleri resmi kaynaklara yönlendirilir; sabit uydurma tablo yoktur.

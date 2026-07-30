@@ -1,116 +1,109 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0d9488">
-<meta name="description" content="KonyaGo — Konya tarihçe, gezilecek yerler, otobüs-dolmuş bilgisi ve pratik rehber.">
-<title>KonyaGo | Konya Şehir Rehberi</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon.svg">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0c1220;--card:rgba(15,28,48,.88);--teal:#14b8a6;--teal2:#0d9488;--gold:#e8b86d;--text:#eef6f4;--muted:#8aa4a0;--border:rgba(20,184,166,.22);--safe-b:env(safe-area-inset-bottom,0px)}
-body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 45% at 15% -5%,rgba(20,184,166,.16),transparent 55%),radial-gradient(ellipse 50% 40% at 90% 15%,rgba(232,184,109,.08),transparent 50%),linear-gradient(180deg,#0c1220,#0a1520)}
-.wrap{max-width:960px;margin:0 auto;padding:0 16px 88px}
-header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(12,18,32,.9);border-bottom:1px solid var(--border)}
-.header-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;max-width:960px;margin:0 auto}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-.brand-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal2));display:grid;place-items:center;font-weight:800;color:#042f2e}
-.brand strong{font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
-.brand span{display:block;font-size:.7rem;color:var(--muted);font-weight:500}
-nav{display:flex;gap:6px;flex-wrap:wrap}
-nav a{text-decoration:none;color:var(--teal);font-weight:600;font-size:.82rem;padding:8px 12px;border-radius:999px;border:1px solid rgba(20,184,166,.28);background:rgba(20,184,166,.08)}
-nav a:hover{background:rgba(20,184,166,.18);color:#fff}
-.hero{padding:40px 0 28px;text-align:center}
-.hero h1{font-size:clamp(1.6rem,4vw,2.35rem);font-weight:800;line-height:1.2;margin-bottom:12px;background:linear-gradient(135deg,#fff 10%,var(--teal) 55%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{color:var(--muted);max-width:520px;margin:0 auto 22px;font-size:1.02rem}
-.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:.95rem}
-.btn-main{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#042f2e;box-shadow:0 6px 24px rgba(20,184,166,.35)}
-.btn-ghost{border:1.5px solid rgba(20,184,166,.4);color:var(--teal)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr);gap:14px}}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 14px;text-decoration:none;color:inherit;transition:.25s;display:block}
-.card:hover{border-color:rgba(20,184,166,.5);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.25)}
-.card .ico{font-size:1.5rem;margin-bottom:8px}
-.card h3{font-size:1rem;color:var(--teal);margin-bottom:4px;font-weight:700}
-.card p{font-size:.84rem;color:var(--muted);line-height:1.45}
-.section{margin-top:36px}
-.section h2{font-size:1.25rem;font-weight:800;margin-bottom:12px}
-.section h2 span{color:var(--teal)}
-.note{font-size:.85rem;color:#6b8580;margin-top:20px;text-align:center;line-height:1.5}
-footer{text-align:center;padding:28px 16px;color:#5a706c;font-size:.82rem;border-top:1px solid rgba(20,184,166,.12);margin-top:40px}
-footer a{color:var(--teal);text-decoration:none;margin:0 4px}
-.mnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(12,18,32,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border);padding:8px 6px calc(8px + var(--safe-b));z-index:60;justify-content:space-around}
-.mnav a{flex:1;text-align:center;text-decoration:none;color:var(--muted);font-size:.65rem;font-weight:600;padding:6px 2px}
-.mnav a .i{display:block;font-size:1.15rem;margin-bottom:2px}
-.mnav a.active,.mnav a:hover{color:var(--teal)}
-@media(min-width:900px){.mnav{display:none}body{padding-bottom:0}.wrap{padding-bottom:40px}}
-@media(max-width:699px){nav{display:none}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="KonyaGo — Konya tarihçe, gezilecek yerler, ulaşım ve pratik şehir rehberi.">
+  <title>KonyaGo | Konya Şehir Rehberi</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-<header>
-  <div class="header-in wrap" style="padding-left:16px;padding-right:16px">
-    <a class="brand" href="index.html">
-      <div class="brand-mark">K</div>
-      <div><strong>KonyaGo</strong><span>Şehir rehberi</span></div>
-    </a>
-    <nav aria-label="Menü">
-      <a href="tarihce.html">Tarihçe</a>
-      <a href="gezilecek.html">Gezilecek</a>
-      <a href="ulasim.html">Ulaşım</a>
-      <a href="pratik.html">Pratik</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="hero">
-    <h1>Konya’yı keşfet,<br>tek yerden planla</h1>
-    <p>Tarihçe, gezilecek yerler, şehir içi ulaşım ve pratik bilgiler — KonyaGo ile yanın da.</p>
-    <div class="btns">
-      <a class="btn btn-main" href="gezilecek.html">🏛️ Gezilecek yerler</a>
-      <a class="btn btn-ghost" href="ulasim.html">🚌 Ulaşım</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark">K</span>
+        <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
+      </a>
+      <nav class="nav-desktop" aria-label="Ana menü">
+        <a href="index.html" aria-current="page">Ana</a>
+        <a href="tarihce.html">Tarihçe</a>
+        <a href="gezilecek.html">Gezilecek</a>
+        <a href="ulasim.html">Ulaşım</a>
+        <a href="pratik.html">Pratik</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <div class="grid">
-    <a class="card" href="tarihce.html"><div class="ico">📜</div><h3>Tarihçe</h3><p>Selçuklu’dan bugüne Konya’nın kısa hikâyesi.</p></a>
-    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek</h3><p>Mevlana, Sille, Alaaddin ve daha fazlası.</p></a>
-    <a class="card" href="ulasim.html"><div class="ico">🚌</div><h3>Ulaşım</h3><p>Otobüs, dolmuş, kart ve resmi sefer kaynakları.</p></a>
-    <a class="card" href="pratik.html"><div class="ico">ℹ️</div><h3>Pratik</h3><p>Acil numaralar, faydalı linkler, ipuçları.</p></a>
-  </div>
+  <main class="container">
+    <section class="hero">
+      <h1>Konya’yı keşfet,<br>tek yerden planla</h1>
+      <p>Tarihçe, gezilecek yerler, şehir içi ulaşım ve pratik bilgiler — sade ve mobil uyumlu.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="gezilecek.html">Gezilecek yerler</a>
+        <a class="btn btn-ghost" href="ulasim.html">Ulaşım</a>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Neden <span>KonyaGo</span>?</h2>
-    <div class="grid" style="grid-template-columns:1fr;gap:10px">
-      <div class="card"><h3>Yerel odak</h3><p>Sadece Konya: merkez ve öne çıkan ilçe durakları, kültür ve ulaşım.</p></div>
-      <div class="card"><h3>Mobil uyumlu</h3><p>Telefonda uygulama gibi açılır (PWA). Ana ekrana ekleyebilirsin.</p></div>
-      <div class="card"><h3>Güncel yapı</h3><p>Sefer saatleri resmi kaynaklara bağlanır; yanlış tablo yok.</p></div>
+    <section class="grid grid-2 grid-4" aria-label="Bölümler">
+      <a class="card" href="tarihce.html">
+        <div class="ico">📜</div>
+        <h3>Tarihçe</h3>
+        <p>Selçuklu’dan bugüne kısa ve net özet.</p>
+      </a>
+      <a class="card" href="gezilecek.html">
+        <div class="ico">🕌</div>
+        <h3>Gezilecek</h3>
+        <p>Mevlana, Sille, Alaaddin ve çevresi.</p>
+      </a>
+      <a class="card" href="ulasim.html">
+        <div class="ico">🚌</div>
+        <h3>Ulaşım</h3>
+        <p>Otobüs, dolmuş, kart ve resmi kaynaklar.</p>
+      </a>
+      <a class="card" href="pratik.html">
+        <div class="ico">ℹ️</div>
+        <h3>Pratik</h3>
+        <p>Acil numaralar ve faydalı linkler.</p>
+      </a>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Neden <span>KonyaGo</span>?</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Yerel odak</h3>
+          <p>Sadece Konya: kültür, merkez rotaları ve ulaşım ipuçları.</p>
+        </div>
+        <div class="card">
+          <h3>Mobil uyum</h3>
+          <p>Telefonda rahat okunur. Ana ekrana ekleyerek uygulama gibi kullanılır.</p>
+        </div>
+        <div class="card">
+          <h3>Güvenilir bilgi</h3>
+          <p>Sefer saatleri uydurulmaz; resmi belediye kaynaklarına yönlendirilir.</p>
+        </div>
+        <div class="card">
+          <h3>Hafif yapı</h3>
+          <p>Hızlı açılır, sade arayüz, gereksiz karmaşa yok.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="note">konyago.com.tr · Bağımsız rehber · Resmi kurum sitesi değildir.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      © 2026 KonyaGo
+      · <a href="tarihce.html">Tarihçe</a>
+      · <a href="gezilecek.html">Gezilecek</a>
+      · <a href="ulasim.html">Ulaşım</a>
+      · <a href="pratik.html">Pratik</a>
     </div>
-  </section>
-  <p class="note">konyago.com.tr · Bağımsız şehir rehberi · Resmi kurum sitesi değildir.</p>
-</main>
+  </footer>
 
-<footer>
-  © 2026 KonyaGo · <a href="tarihce.html">Tarihçe</a> · <a href="gezilecek.html">Gezilecek</a> · <a href="ulasim.html">Ulaşım</a> · <a href="pratik.html">Pratik</a>
-</footer>
+  <nav class="mnav" aria-label="Mobil menü">
+    <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
+    <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
+    <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+    <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
+    <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+  </nav>
 
-<nav class="mnav" aria-label="Mobil menü">
-  <a href="index.html" class="active"><span class="i">🏠</span>Ana</a>
-  <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
-  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-  <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
-  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
-</nav>
-
-<script>
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
-</script>
+  <script src="assets/js/app.js" defer></script>
 </body>
 </html>

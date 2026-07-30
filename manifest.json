@@ -1,11 +1,12 @@
 {
-  "name": "KonyaGo — Konya Rehberi",
+  "name": "KonyaGo",
   "short_name": "KonyaGo",
-  "description": "Konya tarihçe, gezilecek yerler, ulaşım ve pratik bilgi",
-  "start_url": "/",
+  "description": "Konya sehir rehberi: tarihce, gezilecek yerler, ulasim ve pratik bilgi",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0c1220",
-  "theme_color": "#0d9488",
+  "background_color": "#0b1220",
+  "theme_color": "#0f766e",
   "lang": "tr",
   "icons": [
     {

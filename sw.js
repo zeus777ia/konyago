@@ -1,11 +1,52 @@
-const CACHE='konyago-v1';
-const ASSETS=['./','./index.html','./tarihce.html','./gezilecek.html','./ulasim.html','./pratik.html','./manifest.json','./icon.svg'];
-self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));
+/* KonyaGo service worker */
+var CACHE = "konyago-v2";
+var ASSETS = [
+  "./",
+  "./index.html",
+  "./tarihce.html",
+  "./gezilecek.html",
+  "./ulasim.html",
+  "./pratik.html",
+  "./assets/css/app.css",
+  "./assets/js/app.js",
+  "./manifest.json",
+  "./icon.svg"
+];
+
+self.addEventListener("install", function (event) {
+  event.waitUntil(
+    caches.open(CACHE).then(function (cache) {
+      return cache.addAll(ASSETS);
+    }).then(function () {
+      return self.skipWaiting();
+    })
+  );
 });
-self.addEventListener('activate',e=>{
-  e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+
+self.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(
+        keys.filter(function (k) { return k !== CACHE; }).map(function (k) {
+          return caches.delete(k);
+        })
+      );
+    }).then(function () {
+      return self.clients.claim();
+    })
+  );
 });
-self.addEventListener('fetch',e=>{
-  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./index.html'))));
+
+self.addEventListener("fetch", function (event) {
+  if (event.request.method !== "GET") return;
+  event.respondWith(
+    caches.match(event.request).then(function (cached) {
+      if (cached) return cached;
+      return fetch(event.request).then(function (response) {
+        return response;
+      }).catch(function () {
+        return caches.match("./index.html");
+      });
+    })
+  );
 });
