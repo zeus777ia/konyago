@@ -1,94 +1,102 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f766e">
-  <meta name="description" content="Konya sehir ici ulasim bilgileri.">
-  <title>Ulasim | KonyaGo</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/app.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Ulaşım | KonyaGo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">
-        <span class="logo-mark">K</span>
-        <span class="logo-text"><strong>KonyaGo</strong><small>Sehir rehberi</small></span>
-      </a>
-      <nav class="nav-desktop" aria-label="Ana menu">
-        <a href="index.html">Ana</a>
-        <a href="tarihce.html">Tarihce</a>
-        <a href="gezilecek.html">Gezilecek</a>
-        <a href="ulasim.html" aria-current="page">Ulasim</a>
-        <a href="pratik.html">Pratik</a>
-      </nav>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">K</span><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
+    <nav class="nav-desktop" aria-label="Ana menü">
+      <a href="index.html">Ana</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="gezilecek.html">Gezilecek</a>
+      <a href="harita.html">Harita</a>
+      <a href="ulasim.html" aria-current="page">Ulaşım</a>
+      <a href="pratik.html">Pratik</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana sayfa</a>
+    <h1>Şehir içi ulaşım</h1>
+    <p>Canlı sefer, hat ve durak bilgisi resmi ATUS sisteminden alınır. Aşağıdan doğrudan ilgili sayfalara gidebilirsin.</p>
+  </div>
+
+  <div class="info warn">
+    <h2>Neden burada sabit saat yok?</h2>
+    <p>Otobüs ve tramvay saatleri sık güncellenir. Yanlış tablo yayınlamak yerine Konya Büyükşehir’in <strong>ATUS</strong> sistemine ve resmi mobil uygulamaya yönlendiriyoruz. Böylece “otobüsüm nerede?”, hat–durak ve tarife güncel kalır.</p>
+  </div>
+
+  <div class="info">
+    <h2>ATUS — Akıllı Toplu Ulaşım</h2>
+    <p>Resmi portal: hat sorgulama, duraklar, “Otobüsüm Nerede?”, tarife ve ilçe ulaşım bilgileri.</p>
+    <div class="link-row">
+      <a class="btn btn-primary" href="https://atus.konya.bel.tr/" target="_blank" rel="noopener">ATUS’u aç</a>
+      <a class="btn btn-ghost" href="https://atus.konya.bel.tr/" target="_blank" rel="noopener">Hat & güzergâh</a>
     </div>
-  </header>
+  </div>
 
-  <main class="container">
-    <div class="page-head">
-      <a href="index.html">&larr; Ana sayfa</a>
-      <h1>Sehir Ici Ulasim</h1>
-      <p>Otobus, dolmus ve odeme. Canli sefer icin resmi kaynak kullanin.</p>
+  <div class="info">
+    <h2>Konya mobil uygulama</h2>
+    <p>Belediyenin “Konya” uygulaması: akıllı ulaşım, Elkart / Konyakart bakiye, seyahat planlama (otobüs, tramvay, bisiklet).</p>
+    <div class="link-row">
+      <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.ikolmobil.konya" target="_blank" rel="noopener">Google Play</a>
+      <a class="btn btn-ghost btn-sm" href="https://apps.apple.com/tr/app/konya/id517602098" target="_blank" rel="noopener">App Store</a>
     </div>
+  </div>
 
-    <div class="info warn">
-      <h2>Sefer Saatleri</h2>
-      <p>Hat saatleri degisebilir. KonyaGo uydurma tablo yayinlamaz. Guncel bilgi icin Konya Buyuksehir Belediyesi ulasim kanallarini ve resmi mobil uygulamalari kullanin.</p>
+  <div class="info">
+    <h2>Konyakart</h2>
+    <p>Şehir içi toplu taşımada temassız elektronik kart. Bakiye yükleme noktaları, e-dolum ve başvuru belediye kanallarından yapılır.</p>
+    <div class="link-row">
+      <a class="btn btn-primary btn-sm" href="https://konyakart.konya.bel.tr/" target="_blank" rel="noopener">Konyakart sitesi</a>
     </div>
+  </div>
 
-    <div class="info">
-      <h2>Belediye Otobusu</h2>
-      <p>Sehir ici ana tasima omurgasidir. Merkez (Mevlana-Alaaddin-otogar) hatlari yogundur.</p>
-      <ul>
-        <li>Hat numarasi ve durak adıyla sorgulayin</li>
-        <li>Yogun saatlerde ek sefer olabilir</li>
-        <li>Son seferleri aksam erken bitebilir</li>
-      </ul>
+  <div class="info">
+    <h2>Nasıl kullanılır? (kısa)</h2>
+    <ul>
+      <li><strong>Otobüs / tramvay:</strong> ATUS veya mobil uygulamadan hat ve durak seç → canlı araç / sefer bilgisi</li>
+      <li><strong>Dolmuş:</strong> Semt hatlarında tabelayı kontrol et; ücret otobüsten farklı olabilir</li>
+      <li><strong>Turistik merkez:</strong> Mevlana–Alaaddin aksı yürüme + kısa otobüs ile çözülür</li>
+      <li><strong>Sille / Meram:</strong> İlgili hat veya dolmuş; uygulamadan “gideceğim yer” ara</li>
+      <li><strong>Çatalhöyük, Beyşehir, Meke:</strong> Şehirlerarası / özel araç daha mantıklı</li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h2>Turist için pratik rota</h2>
+    <ul>
+      <li>Gün 1: Mevlana → Panorama / çevre müzeler → Alaaddin</li>
+      <li>Gün 2: Sille sabah, öğleden sonra Meram veya Kelebek Bahçesi</li>
+      <li>Günübirlik: Çatalhöyük veya Beyşehir (araç)</li>
+    </ul>
+    <div class="link-row">
+      <a class="btn btn-ghost btn-sm" href="harita.html">Haritada noktaları gör</a>
+      <a class="btn btn-ghost btn-sm" href="gezilecek.html">Gezilecek listesi</a>
     </div>
+  </div>
 
-    <div class="info">
-      <h2>Dolmus / Minibus</h2>
-      <p>Semt ve bazi ilce baglantilarinda yaygindir. Guzergah tabelasini kontrol edin; ucret otobusden farkli olabilir.</p>
-    </div>
+  <p class="note">KonyaGo resmi belediye sitesi değildir. Ulaşım verisi için her zaman ATUS ve Konya mobil uygulamasını kullanın.</p>
+</main>
 
-    <div class="info">
-      <h2>Kart ve Odeme</h2>
-      <p>Toplu tasimada elektronik kart sistemleri kullanilir. Dolum bufe, otomat ve resmi noktalardan yapilir.</p>
-    </div>
-
-    <div class="info">
-      <h2>Pratik Ipuclari</h2>
-      <ul>
-        <li>Mevlana ve Alaaddin cevresi yurume ile birlestirilebilir</li>
-        <li>Sille icin otobus veya dolmus + kisa yuruyus planlayin</li>
-        <li>Otogar-merkez arasi dogrudan hatlari tercih edin</li>
-      </ul>
-    </div>
-
-    <div class="info">
-      <h2>Resmi Kaynak</h2>
-      <p>Guncel hat ve duyurular icin belediye sitesi:</p>
-      <p style="margin-top:12px">
-        <a class="btn btn-primary" href="https://www.konya.bel.tr" target="_blank" rel="noopener noreferrer">konya.bel.tr</a>
-      </p>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">&copy; 2026 KonyaGo</div>
-  </footer>
-
-  <nav class="mnav" aria-label="Mobil menu">
-    <a href="index.html"><span class="i">🏠</span>Ana</a>
-    <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
-    <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-    <a href="ulasim.html" aria-current="page"><span class="i">🚌</span>Ulasim</a>
-    <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
-  </nav>
-
-  <script src="assets/js/app.js" defer></script>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
+<nav class="mnav" aria-label="Mobil menü">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="harita.html"><span class="i">🗺️</span>Harita</a>
+  <a href="ulasim.html" aria-current="page"><span class="i">🚌</span>Ulaşım</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+</nav>
+<script src="assets/js/app.js" defer></script>
 </body>
 </html>

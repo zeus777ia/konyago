@@ -1,105 +1,252 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f766e">
-  <meta name="description" content="Konya gezilecek yerler - Mevlana, Alaaddin, Sille ve daha fazlasi.">
-  <title>Gezilecek Yerler | KonyaGo</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/app.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Gezilecek Yerler | KonyaGo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">
-        <span class="logo-mark">K</span>
-        <span class="logo-text"><strong>KonyaGo</strong><small>Sehir rehberi</small></span>
-      </a>
-      <nav class="nav-desktop" aria-label="Ana menu">
-        <a href="index.html">Ana</a>
-        <a href="tarihce.html">Tarihce</a>
-        <a href="gezilecek.html" aria-current="page">Gezilecek</a>
-        <a href="ulasim.html">Ulasim</a>
-        <a href="pratik.html">Pratik</a>
-      </nav>
-    </div>
-  </header>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">K</span><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
+    <nav class="nav-desktop" aria-label="Ana menü">
+      <a href="index.html">Ana</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="gezilecek.html" aria-current="page">Gezilecek</a>
+      <a href="harita.html">Harita</a>
+      <a href="ulasim.html">Ulaşım</a>
+      <a href="pratik.html">Pratik</a>
+    </nav>
+  </div>
+</header>
 
-  <main class="container">
-    <div class="page-head">
-      <a href="index.html">&larr; Ana sayfa</a>
-      <h1>Gezilecek Yerler</h1>
-      <p>Merkez ve yakin cevreden one cikan duraklar.</p>
-    </div>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana sayfa</a>
+    <h1>Gezilecek yerler</h1>
+    <p>Konya ili genelinde öne çıkan turistik noktalar. Harita ve yol tarifi için <a href="harita.html">Harita</a> sayfasına bak.</p>
+  </div>
 
-    <div class="grid grid-2">
-      <article class="place">
-        <div class="place-visual">🕌</div>
-        <div class="place-body">
-          <h2>Mevlana Muzesi</h2>
-          <p>Turbe ve muze kompleksi. Konya'nin en bilinen ziyaret noktasi; kultur turizminin merkezi.</p>
-          <div class="tags"><span class="tag">Muze</span><span class="tag">Merkez</span></div>
+  <h2 class="section-title">Merkez <span>kültür</span></h2>
+  <div class="grid grid-2">
+    <article class="place">
+      <div class="place-img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mevlana_Museum_Konya.jpg/640px-Mevlana_Museum_Konya.jpg')"><span class="badge">Müze</span></div>
+      <div class="place-body">
+        <h2>Mevlana Müzesi</h2>
+        <p>Mevlânâ Celâleddîn-i Rûmî’nin türbesi ve eski dergâh. Yeşil kubbe Konya’nın simgesi. Sema, el yazmaları ve Mevlevî kültürünü yakından görmek için ilk durak.</p>
+        <div class="tags"><span class="tag">Müze</span><span class="tag">İnanç</span><span class="tag">Merkez</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.87056,32.50472" target="_blank" rel="noopener">Yol tarifi</a>
+          <a class="btn btn-ghost btn-sm" href="harita.html">Haritada</a>
         </div>
-      </article>
-      <article class="place">
-        <div class="place-visual">🏰</div>
-        <div class="place-body">
-          <h2>Alaaddin Tepesi</h2>
-          <p>Tarihi cekirdek: cami, park ve sehir manzarasi. Selcuklu doneminin simge alani.</p>
-          <div class="tags"><span class="tag">Tarih</span><span class="tag">Park</span></div>
-        </div>
-      </article>
-      <article class="place">
-        <div class="place-visual">🏘️</div>
-        <div class="place-body">
-          <h2>Sille</h2>
-          <p>Tas doku, kiliseler ve koy atmosferi. Merkeze yakin, yarim gunluk gezi icin uygun.</p>
-          <div class="tags"><span class="tag">Koy</span><span class="tag">Kultur</span></div>
-        </div>
-      </article>
-      <article class="place">
-        <div class="place-visual">🏛️</div>
-        <div class="place-body">
-          <h2>Ince Minareli Medrese</h2>
-          <p>Selcuklu tas isciligi. Muze olarak gezilebilir; guclu bir fotograf noktasi.</p>
-          <div class="tags"><span class="tag">Selcuklu</span><span class="tag">Muze</span></div>
-        </div>
-      </article>
-      <article class="place">
-        <div class="place-visual">🪨</div>
-        <div class="place-body">
-          <h2>Catalhoyuk</h2>
-          <p>Arkeolojik alan. Tarihoncesi yerlesim; ulasim ve ziyaret saatini onceden planlayin.</p>
-          <div class="tags"><span class="tag">Arkeoloji</span><span class="tag">Gunubirlik</span></div>
-        </div>
-      </article>
-      <article class="place">
-        <div class="place-visual">🌄</div>
-        <div class="place-body">
-          <h2>Doga ve Cevre</h2>
-          <p>Il genelinde bozkir ve dogal manzaralar. Mevsim, yol ve resmi uyarilara gore planlayin.</p>
-          <div class="tags"><span class="tag">Doga</span><span class="tag">Gunubirlik</span></div>
-        </div>
-      </article>
-    </div>
+      </div>
+    </article>
 
-    <p class="note">Acilis saatleri ve ucretler degisebilir. Gitmeden once resmi duyurulari kontrol edin.</p>
-  </main>
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#1a4a5c,#0d2a38);display:grid;place-items:center;font-size:3rem">🏰</div>
+      <div class="place-body">
+        <h2>Alaaddin Tepesi & Camii</h2>
+        <p>Selçuklu başkentinin kalbi. Tepe parkı, Alaaddin Camii ve şehir manzarası. Akşam yürüyüşü için ideal.</p>
+        <div class="tags"><span class="tag">Selçuklu</span><span class="tag">Park</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8730,32.4925" target="_blank" rel="noopener">Yol tarifi</a>
+          <a class="btn btn-ghost btn-sm" href="harita.html">Haritada</a>
+        </div>
+      </div>
+    </article>
 
-  <footer class="site-footer">
-    <div class="container">&copy; 2026 KonyaGo</div>
-  </footer>
+    <article class="place">
+      <div class="place-img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Ince_Minareli_Medrese_Konya.jpg/640px-Ince_Minareli_Medrese_Konya.jpg')"><span class="badge">Selçuklu</span></div>
+      <div class="place-body">
+        <h2>İnce Minareli Medrese</h2>
+        <p>Taş işçiliğinin şaheseri. Bugün Taş ve Ahşap Eserler Müzesi olarak geziliyor; portal detayları ünlü.</p>
+        <div class="tags"><span class="tag">Müze</span><span class="tag">Mimari</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8728,32.4950" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
 
-  <nav class="mnav" aria-label="Mobil menu">
-    <a href="index.html"><span class="i">🏠</span>Ana</a>
-    <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
-    <a href="gezilecek.html" aria-current="page"><span class="i">🕌</span>Gezi</a>
-    <a href="ulasim.html"><span class="i">🚌</span>Ulasim</a>
-    <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
-  </nav>
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#2a4a3a,#0e2018);display:grid;place-items:center;font-size:3rem">🏛️</div>
+      <div class="place-body">
+        <h2>Karatay Medresesi</h2>
+        <p>Çini ve kubbe süslemeleriyle bilinen Selçuklu medresesi. Çini Eserleri Müzesi olarak ziyaret edilir.</p>
+        <div class="tags"><span class="tag">Müze</span><span class="tag">Çini</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8745,32.4980" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
 
-  <script src="assets/js/app.js" defer></script>
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#3a2a4a,#1a1028);display:grid;place-items:center;font-size:3rem">🖼️</div>
+      <div class="place-body">
+        <h2>Panorama 1326 / Konya Müzesi</h2>
+        <p>Fetih ve dönem sahnelerini panoramik olarak anlatan modern müze deneyimi.</p>
+        <div class="tags"><span class="tag">Müze</span><span class="tag">Aile</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8720,32.5065" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#4a3a2a,#201810);display:grid;place-items:center;font-size:3rem">🏺</div>
+      <div class="place-body">
+        <h2>Arkeoloji Müzesi</h2>
+        <p>Çatalhöyük buluntuları dahil bölgenin arkeolojik mirası. Tarih öncesi ve klasik dönem eserleri.</p>
+        <div class="tags"><span class="tag">Müze</span><span class="tag">Arkeoloji</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8685,32.4960" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <h2 class="section-title" style="margin-top:32px">Yakın <span>çevre</span></h2>
+  <div class="grid grid-2">
+    <article class="place">
+      <div class="place-img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Sille_Konya.jpg/640px-Sille_Konya.jpg')"><span class="badge">Köy</span></div>
+      <div class="place-body">
+        <h2>Sille</h2>
+        <p>Taş evler, Aya Eleni Kilisesi, mağaralar ve köy sokakları. Merkeze yakın yarım günlük gezi rotası.</p>
+        <div class="tags"><span class="tag">Kültür</span><span class="tag">Fotoğraf</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.9320,32.4030" target="_blank" rel="noopener">Yol tarifi</a>
+          <a class="btn btn-ghost btn-sm" href="harita.html">Haritada</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#2a5a3a,#102018);display:grid;place-items:center;font-size:3rem">🍇</div>
+      <div class="place-body">
+        <h2>Meram Bağları</h2>
+        <p>Yeşil vadi, mesire ve yürüyüş. Yaz akşamları serinlemek ve piknik için tercih edilir.</p>
+        <div class="tags"><span class="tag">Doğa</span><span class="tag">Meram</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8380,32.4300" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#3a5a2a,#182010);display:grid;place-items:center;font-size:3rem">🦋</div>
+      <div class="place-body">
+        <h2>Tropikal Kelebek Bahçesi</h2>
+        <p>Kapalı tropik ortamda kelebekler ve bitkiler. Aile ve çocuklu ziyaretçiler için popüler.</p>
+        <div class="tags"><span class="tag">Aile</span><span class="tag">Doğa</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.9125,32.5120" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#2a3a5a,#101828);display:grid;place-items:center;font-size:3rem">🌸</div>
+      <div class="place-body">
+        <h2>Japon Parkı</h2>
+        <p>Japon bahçesi düzeni, gölet ve yürüyüş yolları. Şehir içi dinlenme noktası.</p>
+        <div class="tags"><span class="tag">Park</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8765,32.4780" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <h2 class="section-title" style="margin-top:32px">İlçe & <span>günübirelik</span></h2>
+  <div class="grid grid-2">
+    <article class="place">
+      <div class="place-img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Catalhoyuk_Konya.jpg/640px-Catalhoyuk_Konya.jpg')"><span class="badge">UNESCO</span></div>
+      <div class="place-body">
+        <h2>Çatalhöyük</h2>
+        <p>Dünyanın en bilinen Neolitik yerleşimlerinden. Kazı alanı ve ziyaretçi merkezi; günübirlik planlayın.</p>
+        <div class="tags"><span class="tag">Arkeoloji</span><span class="tag">Dünya mirası</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.6663,32.8264" target="_blank" rel="noopener">Yol tarifi</a>
+          <a class="btn btn-ghost btn-sm" href="harita.html">Haritada</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#5a4a2a,#281e10);display:grid;place-items:center;font-size:3rem">🪨</div>
+      <div class="place-body">
+        <h2>Kilistra (Gökyurt)</h2>
+        <p>Kayalara oyulmuş antik yerleşim. Sessiz ve etkileyici; araçla ulaşım gerekir.</p>
+        <div class="tags"><span class="tag">Antik</span><span class="tag">Doğa</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.5480,32.2480" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#4a6a8a,#1a2838);display:grid;place-items:center;font-size:3rem">🌊</div>
+      <div class="place-body">
+        <h2>Beyşehir Gölü</h2>
+        <p>Türkiye’nin büyük tatlı su göllerinden. Kıyı, doğa ve Beyşehir ilçe merkezi ile birleştirilebilir.</p>
+        <div class="tags"><span class="tag">Doğa</span><span class="tag">Göl</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.6770,31.7220" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#6a5a3a,#2a2010);display:grid;place-items:center;font-size:3rem">🗿</div>
+      <div class="place-body">
+        <h2>Eflatunpınar</h2>
+        <p>Hitit su anıtı. Beyşehir yakınında; tarih ve doğayı bir arada arayanlar için.</p>
+        <div class="tags"><span class="tag">Hitit</span><span class="tag">Anıt</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.8250,31.6780" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#5a3a3a,#281818);display:grid;place-items:center;font-size:3rem">🌋</div>
+      <div class="place-body">
+        <h2>Meke Gölü</h2>
+        <p>Volkanik krater gölü (Karapınar). Mevsime göre su seviyesi değişir; yol durumu kontrol edilmeli.</p>
+        <div class="tags"><span class="tag">Doğa</span><span class="tag">Jeoloji</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=37.6850,33.6450" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="place-img" style="background:linear-gradient(135deg,#3a4a5a,#182028);display:grid;place-items:center;font-size:3rem">😄</div>
+      <div class="place-body">
+        <h2>Akşehir · Nasreddin Hoca</h2>
+        <p>Nasreddin Hoca kültürü, türbe ve ilçe merkezi. Konya merkeze göre daha uzak; günübirlik veya konaklamalı.</p>
+        <div class="tags"><span class="tag">Kültür</span><span class="tag">İlçe</span></div>
+        <div class="place-links">
+          <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/dir/?api=1&destination=38.3570,31.4160" target="_blank" rel="noopener">Yol tarifi</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <p class="note">Açılış saatleri ve ücretler değişebilir. Gitmeden resmi duyuruları kontrol edin. Bazı Wikimedia görselleri yüklenemezse renkli kart görünür.</p>
+</main>
+
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="harita.html">Harita</a></div></footer>
+<nav class="mnav" aria-label="Mobil menü">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="gezilecek.html" aria-current="page"><span class="i">🕌</span>Gezi</a>
+  <a href="harita.html"><span class="i">🗺️</span>Harita</a>
+  <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+</nav>
+<script src="assets/js/app.js" defer></script>
 </body>
 </html>
