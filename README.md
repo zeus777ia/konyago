@@ -3,21 +3,33 @@
 Konya şehir rehberi — tarihçe, gezilecek yerler, ulaşım ve pratik bilgi.
 
 **Domain:** konyago.com.tr  
-**Repo:** https://github.com/zeus777ia/konyago
+**Repo:** https://github.com/zeus777ia/konyago  
+**Canlı (Pages açılınca):** https://zeus777ia.github.io/konyago/
 
-## GitHub Pages
-1. Settings → Pages
-2. Source: Deploy from branch
-3. Branch: `main` / root
-4. Domain kaydı bitince Custom domain: `konyago.com.tr` (+ www istersen)
+## GitHub Pages — bir kerelik ayar (zorunlu)
+
+Linklerin açılması için Pages’i açman lazım:
+
+1. Repo sayfası: https://github.com/zeus777ia/konyago
+2. **Settings** → sol menü **Pages**
+3. **Build and deployment → Source:** `GitHub Actions` seç
+4. Kaydet / bekle (1–2 dk)
+5. Actions sekmesinde yeşil tik gelince site açılır:
+   - https://zeus777ia.github.io/konyago/
+
+### Domain bağlama (konyago.com.tr hazır olunca)
+Settings → Pages → **Custom domain** → `konyago.com.tr`  
+DNS (registrar):
+- `A` kayıtları GitHub Pages IP’leri, veya
+- Cloudflare kullanıyorsan CNAME / proxy ayarı (cnrtech ile aynı mantık)
 
 ## Sayfalar
-- `index.html` — ana sayfa
-- `tarihce.html` — Konya tarihçesi
-- `gezilecek.html` — gezilecek yerler
-- `ulasim.html` — otobüs / dolmuş / kart bilgisi
-- `pratik.html` — acil, faydalı linkler
-- PWA: `manifest.json` + `sw.js`
+- index.html — ana
+- tarihce.html
+- gezilecek.html
+- ulasim.html
+- pratik.html
+- PWA: manifest.json + sw.js
 
 ## Not
-Sefer saatleri resmi kaynaklara yönlendirilir; uydurma saat yazılmaz.
+Sefer saatleri resmi kaynaklara yönlendirilir; uydurma saat yok.
