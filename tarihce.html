@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d9488">
+<title>Tarihçe | KonyaGo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0c1220;--card:rgba(15,28,48,.88);--teal:#14b8a6;--gold:#e8b86d;--text:#eef6f4;--muted:#8aa4a0;--border:rgba(20,184,166,.22);--safe-b:env(safe-area-inset-bottom,0px)}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 60% 40% at 20% 0%,rgba(20,184,166,.12),transparent),linear-gradient(180deg,#0c1220,#0a1520)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 96px}
+a.back{color:var(--teal);text-decoration:none;font-weight:600;font-size:.9rem}
+h1{font-size:1.6rem;font-weight:800;margin:16px 0 8px;background:linear-gradient(135deg,#fff,var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lead{color:var(--muted);margin-bottom:24px}
+.timeline{display:flex;flex-direction:column;gap:14px}
+.item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 16px;border-left:3px solid var(--teal)}
+.item .era{font-size:.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.item h2{font-size:1.05rem;color:var(--teal);margin-bottom:6px}
+.item p{font-size:.92rem;color:#b8cfc9}
+.mnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(12,18,32,.96);border-top:1px solid var(--border);padding:8px 6px calc(8px + var(--safe-b));z-index:60}
+.mnav a{flex:1;text-align:center;text-decoration:none;color:var(--muted);font-size:.65rem;font-weight:600;padding:6px 2px}
+.mnav a .i{display:block;font-size:1.15rem}.mnav a.active{color:var(--teal)}
+@media(min-width:900px){.mnav{display:none}.wrap{padding-bottom:40px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="index.html">← KonyaGo</a>
+  <h1>Konya tarihçesi</h1>
+  <p class="lead">Kısa ve okunaklı özet. Derin akademik metin değil; gezmeden önce hatırlatma.</p>
+  <div class="timeline">
+    <article class="item"><div class="era">Antik çağ</div><h2>İkonium / Konya ovası</h2><p>Bölge, İç Anadolu’nun verimli ovasında erken yerleşimlere ev sahipliği yapmıştır. Çatalhöyük gibi yakın tarihöncesi merkezler, insanlık tarihinin önemli katmanlarındandır.</p></article>
+    <article class="item"><div class="era">Roma & Bizans</div><h2>Anadolu’nun kavşağı</h2><p>Konya, ticaret ve askerî yolların kesişiminde büyümüş; Roma ve Bizans dönemlerinde bölgesel bir merkez olmuştur.</p></article>
+    <article class="item"><div class="era">Selçuklu</div><h2>Başkent Konya</h2><p>Anadolu Selçuklu Devleti’nin başkenti olarak Konya, mimari ve kültürde altın çağını yaşamıştır. Alaaddin Tepesi çevresi, medrese ve camiler bu dönemin izlerini taşır.</p></article>
+    <article class="item"><div class="era">Mevlana</div><h2>Tasavvuf ve kültür</h2><p>Mevlânâ Celâleddîn-i Rûmî ve Mevlevîlik, Konya’yı dünya ölçeğinde tanınır kılmıştır. Şeb-i Arus ve Mevlana Müzesi, şehrin kültürel kimliğinin merkezindedir.</p></article>
+    <article class="item"><div class="era">Osmanlı & Cumhuriyet</div><h2>Modern Konya</h2><p>Osmanlı döneminde önemli bir Anadolu şehri olmayı sürdürmüş; Cumhuriyet ile sanayi, tarım ve üniversite kenti kimliğini güçlendirmiştir.</p></article>
+    <article class="item"><div class="era">Bugün</div><h2>Yaşayan şehir</h2><p>Geniş il sınırı, tarım ve sanayi, üniversiteler ve turizm bir arada. Merkezde Mevlana–Alaaddin aksı, çevrede Sille ve doğa rotaları öne çıkar.</p></article>
+  </div>
+</main>
+<nav class="mnav">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="tarihce.html" class="active"><span class="i">📜</span>Tarih</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+</nav>
+</body>
+</html>

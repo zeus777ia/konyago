@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d9488">
+<title>Pratik Bilgi | KonyaGo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0c1220;--card:rgba(15,28,48,.88);--teal:#14b8a6;--gold:#e8b86d;--text:#eef6f4;--muted:#8aa4a0;--border:rgba(20,184,166,.22);--safe-b:env(safe-area-inset-bottom,0px)}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,#0c1220,#0a1520)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 96px}
+a.back{color:var(--teal);text-decoration:none;font-weight:600;font-size:.9rem}
+h1{font-size:1.55rem;font-weight:800;margin:16px 0 8px}
+.lead{color:var(--muted);margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
+.card h2{font-size:1.02rem;color:var(--teal);margin-bottom:8px}
+.card p,li{font-size:.9rem;color:#a8c0ba}
+ul{margin-left:1.1em}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(20,184,166,.12);font-size:.92rem}
+.row:last-child{border-bottom:0}
+.row span{color:var(--muted)}
+.row strong{color:#dff7f2}
+a.link{color:var(--teal)}
+.mnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(12,18,32,.96);border-top:1px solid var(--border);padding:8px 6px calc(8px + var(--safe-b));z-index:60}
+.mnav a{flex:1;text-align:center;text-decoration:none;color:var(--muted);font-size:.65rem;font-weight:600;padding:6px 2px}
+.mnav a .i{display:block;font-size:1.15rem}.mnav a.active{color:var(--teal)}
+@media(min-width:900px){.mnav{display:none}.wrap{padding-bottom:40px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="index.html">← KonyaGo</a>
+  <h1>Pratik bilgi</h1>
+  <p class="lead">Acil numaralar, faydalı bağlantılar ve kısa ipuçları.</p>
+
+  <div class="card">
+    <h2>🚨 Acil</h2>
+    <div class="row"><span>Acil Çağrı</span><strong>112</strong></div>
+    <div class="row"><span>Polis İmdat</span><strong>155</strong></div>
+    <div class="row"><span>Jandarma</span><strong>156</strong></div>
+    <div class="row"><span>İtfaiye</span><strong>110</strong></div>
+    <div class="row"><span>Alo AFAD</span><strong>122</strong></div>
+  </div>
+
+  <div class="card">
+    <h2>📌 Faydalı linkler</h2>
+    <ul>
+      <li><a class="link" href="https://www.konya.bel.tr" target="_blank" rel="noopener">Konya Büyükşehir Belediyesi</a></li>
+      <li><a class="link" href="https://www.ktb.gov.tr" target="_blank" rel="noopener">Kültür ve Turizm</a></li>
+      <li><a class="link" href="https://www.mgm.gov.tr" target="_blank" rel="noopener">Hava durumu (MGM)</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>💡 Gezi ipuçları</h2>
+    <ul>
+      <li>Yazın öğle sıcağında dış mekânı sabah / akşam planlayın</li>
+      <li>Müze ve türbe girişlerinde kılık kıyafet kurallarına dikkat</li>
+      <li>Şeb-i Arus döneminde konaklama ve yoğunluk artar</li>
+      <li>Telefona KonyaGo’yu “Ana ekrana ekle” ile PWA olarak kaydedin</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📱 Uygulama gibi kullan</h2>
+    <p>Chrome / Safari menüsünden <strong>Ana ekrana ekle</strong> de. KonyaGo çevrimdışı iskelet ile açılabilir (PWA).</p>
+  </div>
+</main>
+<nav class="mnav">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
+  <a href="pratik.html" class="active"><span class="i">ℹ️</span>Pratik</a>
+</nav>
+</body>
+</html>
