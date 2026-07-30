@@ -1,109 +1,118 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f766e">
-  <meta name="description" content="KonyaGo — Konya tarihçe, gezilecek yerler, ulaşım ve pratik şehir rehberi.">
-  <title>KonyaGo | Konya Şehir Rehberi</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="assets/css/app.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<meta name="description" content="KonyaGo - Konya sehir rehberi. Tarihce, gezilecek yerler, ulasim ve pratik bilgiler.">
+<title>KonyaGo | Konya Sehir Rehberi</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">
-        <span class="logo-mark">K</span>
-        <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
-      </a>
-      <nav class="nav-desktop" aria-label="Ana menü">
-        <a href="index.html" aria-current="page">Ana</a>
-        <a href="tarihce.html">Tarihçe</a>
-        <a href="gezilecek.html">Gezilecek</a>
-        <a href="ulasim.html">Ulaşım</a>
-        <a href="pratik.html">Pratik</a>
-      </nav>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-mark">K</span>
+      <span class="logo-text">
+        <strong>KonyaGo</strong>
+        <small>Sehir Rehberi</small>
+      </span>
+    </a>
+    <nav class="nav-desktop" aria-label="Ana menu">
+      <a href="index.html" aria-current="page">Ana Sayfa</a>
+      <a href="tarihce.html">Tarihce</a>
+      <a href="gezilecek.html">Gezilecek Yerler</a>
+      <a href="ulasim.html">Ulasim</a>
+      <a href="pratik.html">Pratik Bilgi</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>Konya'yi Kesfet</h1>
+    <p>Tarih, kultur, gezilecek yerler ve ulasim bilgileri tek platformda. Konya'yi daha iyi tani.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="gezilecek.html">Gezilecek Yerler</a>
+      <a class="btn btn-ghost" href="ulasim.html">Ulasim Rehberi</a>
     </div>
-  </header>
+  </section>
 
-  <main class="container">
-    <section class="hero">
-      <h1>Konya’yı keşfet,<br>tek yerden planla</h1>
-      <p>Tarihçe, gezilecek yerler, şehir içi ulaşım ve pratik bilgiler — sade ve mobil uyumlu.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="gezilecek.html">Gezilecek yerler</a>
-        <a class="btn btn-ghost" href="ulasim.html">Ulaşım</a>
-      </div>
-    </section>
-
-    <section class="grid grid-2 grid-4" aria-label="Bölümler">
+  <section aria-label="Bolumler">
+    <div class="grid grid-2 grid-4">
       <a class="card" href="tarihce.html">
-        <div class="ico">📜</div>
-        <h3>Tarihçe</h3>
-        <p>Selçuklu’dan bugüne kısa ve net özet.</p>
+        <div class="ico">&#128220;</div>
+        <h3>Tarihce</h3>
+        <p>Antik donemden gunumuze Konya'nin tarihi.</p>
       </a>
       <a class="card" href="gezilecek.html">
-        <div class="ico">🕌</div>
-        <h3>Gezilecek</h3>
-        <p>Mevlana, Sille, Alaaddin ve çevresi.</p>
+        <div class="ico">&#128205;</div>
+        <h3>Gezilecek Yerler</h3>
+        <p>Muzeler, tarihi yapilar ve doga rotalari.</p>
       </a>
       <a class="card" href="ulasim.html">
-        <div class="ico">🚌</div>
-        <h3>Ulaşım</h3>
-        <p>Otobüs, dolmuş, kart ve resmi kaynaklar.</p>
+        <div class="ico">&#128652;</div>
+        <h3>Ulasim</h3>
+        <p>Otobus, dolmus ve sehir ici ulasim bilgileri.</p>
       </a>
       <a class="card" href="pratik.html">
-        <div class="ico">ℹ️</div>
-        <h3>Pratik</h3>
-        <p>Acil numaralar ve faydalı linkler.</p>
+        <div class="ico">&#8505;&#65039;</div>
+        <h3>Pratik Bilgi</h3>
+        <p>Acil numaralar, linkler ve faydali notlar.</p>
       </a>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">Neden <span>KonyaGo</span>?</h2>
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Yerel odak</h3>
-          <p>Sadece Konya: kültür, merkez rotaları ve ulaşım ipuçları.</p>
-        </div>
-        <div class="card">
-          <h3>Mobil uyum</h3>
-          <p>Telefonda rahat okunur. Ana ekrana ekleyerek uygulama gibi kullanılır.</p>
-        </div>
-        <div class="card">
-          <h3>Güvenilir bilgi</h3>
-          <p>Sefer saatleri uydurulmaz; resmi belediye kaynaklarına yönlendirilir.</p>
-        </div>
-        <div class="card">
-          <h3>Hafif yapı</h3>
-          <p>Hızlı açılır, sade arayüz, gereksiz karmaşa yok.</p>
-        </div>
-      </div>
-    </section>
-
-    <p class="note">konyago.com.tr · Bağımsız rehber · Resmi kurum sitesi değildir.</p>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      © 2026 KonyaGo
-      · <a href="tarihce.html">Tarihçe</a>
-      · <a href="gezilecek.html">Gezilecek</a>
-      · <a href="ulasim.html">Ulaşım</a>
-      · <a href="pratik.html">Pratik</a>
     </div>
-  </footer>
+  </section>
 
-  <nav class="mnav" aria-label="Mobil menü">
-    <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
-    <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
-    <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-    <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
-    <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
-  </nav>
+  <section class="section">
+    <h2 class="section-title">One Cikan <span>Yerler</span></h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="ico">🕌</div>
+        <h3>Mevlana Muzesi</h3>
+        <p>Mevleviligin merkezi. Turbe, semahane ve eserler.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🏘️</div>
+        <h3>Sille</h3>
+        <p>Tarihi koy dokusu, Aya Eleni Kilisesi ve doga yuruyusleri.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🏰</div>
+        <h3>Alaaddin Camii</h3>
+        <p>Selcuklu baskentinin kalbi. Tepe uzerinde panoramik manzara.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🏛️</div>
+        <h3>Karatay Medresesi</h3>
+        <p>Cini ve mimari detaylariyla unlu Selcuklu medresesi.</p>
+      </div>
+    </div>
+  </section>
 
-  <script src="assets/js/app.js" defer></script>
+  <p class="note">konyago.com.tr &middot; Bagimsiz sehir rehberi &middot; Resmi kurum sitesi degildir.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    &copy; 2026 KonyaGo
+    &middot; <a href="tarihce.html">Tarihce</a>
+    &middot; <a href="gezilecek.html">Gezilecek</a>
+    &middot; <a href="ulasim.html">Ulasim</a>
+    &middot; <a href="pratik.html">Pratik</a>
+  </div>
+</footer>
+
+<nav class="mnav" aria-label="Mobil menu">
+  <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
+  <a href="tarihce.html"><span class="i">📜</span>Tarih</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="ulasim.html"><span class="i">🚌</span>Ulasim</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+</nav>
+
+<script src="assets/js/app.js" defer></script>
 </body>
 </html>
