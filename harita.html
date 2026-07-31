@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f766e">
-<title>Harita & Navigasyon | KonyaGo</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0d7a4f">
+<title>Harita | KonyaGo</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html"><span class="logo-mark">K</span><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
     <nav class="nav-desktop" aria-label="Ana menü">
       <a href="index.html">Ana</a>
       <a href="tarihce.html">Tarihçe</a>
@@ -24,26 +23,20 @@
     </nav>
   </div>
 </header>
-
 <main class="container">
   <div class="page-head">
     <a href="index.html">← Ana sayfa</a>
     <h1>Harita & navigasyon</h1>
-    <p>Turistik noktalar haritada. Listeden seç veya işarete tıkla; Google / Yandex ile yol tarifi al.</p>
+    <p>Turistik noktalar · Google / Yandex yol tarifi</p>
   </div>
-
-  <div id="map" role="application" aria-label="Konya turistik harita"></div>
-
+  <div id="map" role="application" aria-label="Konya harita"></div>
   <div class="link-row">
     <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/Konya+gezilecek+yerler" target="_blank" rel="noopener">Google Maps</a>
-    <a class="btn btn-ghost btn-sm" href="https://yandex.com.tr/maps/11508/konya/" target="_blank" rel="noopener">Yandex Harita</a>
+    <a class="btn btn-ghost btn-sm" href="https://yandex.com.tr/maps/11508/konya/" target="_blank" rel="noopener">Yandex</a>
   </div>
-
-  <h2 class="section-title" style="margin-top:24px">Konumlar</h2>
+  <h2 class="section-title" style="margin-top:20px">Konumlar</h2>
   <div class="map-list" id="placeList"></div>
-  <p class="note">Harita OpenStreetMap ile çalışır. İnternet gerekir. Yol tarifi harici uygulamada açılır.</p>
 </main>
-
 <footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
@@ -52,67 +45,41 @@
   <a href="ulasim.html"><span class="i">🚌</span>Ulaşım</a>
   <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
 </nav>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-(function () {
-  if (typeof L === 'undefined') {
-    document.getElementById('map').innerHTML = '<p style="padding:24px;text-align:center;color:#8fa8a4">Harita yüklenemedi. İnternet bağlantını kontrol et.</p>';
-    return;
-  }
-  var places = [
-    { name: 'Mevlana Müzesi', lat: 37.87056, lng: 32.50472, cat: 'Müze' },
-    { name: 'Alaaddin Tepesi', lat: 37.8730, lng: 32.4925, cat: 'Tarih' },
-    { name: 'İnce Minareli Medrese', lat: 37.8728, lng: 32.4950, cat: 'Selçuklu' },
-    { name: 'Karatay Medresesi', lat: 37.8745, lng: 32.4980, cat: 'Müze' },
-    { name: 'Sille', lat: 37.9320, lng: 32.4030, cat: 'Köy' },
-    { name: 'Çatalhöyük', lat: 37.6663, lng: 32.8264, cat: 'Arkeoloji' },
-    { name: 'Meram Bağları', lat: 37.8380, lng: 32.4300, cat: 'Doğa' },
-    { name: 'Tropikal Kelebek Bahçesi', lat: 37.9125, lng: 32.5120, cat: 'Aile' },
-    { name: 'Japon Parkı', lat: 37.8765, lng: 32.4780, cat: 'Park' },
-    { name: 'Panorama Konya Müzesi', lat: 37.8720, lng: 32.5065, cat: 'Müze' },
-    { name: 'Konya Arkeoloji Müzesi', lat: 37.8685, lng: 32.4960, cat: 'Müze' },
-    { name: 'Kilistra (Gökyurt)', lat: 37.5480, lng: 32.2480, cat: 'Antik' },
-    { name: 'Eflatunpınar', lat: 37.8250, lng: 31.6780, cat: 'Hitit' },
-    { name: 'Beyşehir Gölü', lat: 37.6770, lng: 31.7220, cat: 'Doğa' },
-    { name: 'Meke Gölü', lat: 37.6850, lng: 33.6450, cat: 'Doğa' },
-    { name: 'Akşehir / Nasreddin', lat: 38.3570, lng: 31.4160, cat: 'Kültür' }
+(function(){
+  if(typeof L==='undefined'){document.getElementById('map').innerHTML='<p style="padding:24px;text-align:center;color:#5a7264">Harita yüklenemedi.</p>';return;}
+  var places=[
+    {name:'Mevlana Müzesi',lat:37.87056,lng:32.50472,cat:'Müze'},
+    {name:'Alaaddin Tepesi',lat:37.8730,lng:32.4925,cat:'Tarih'},
+    {name:'İnce Minareli Medrese',lat:37.8728,lng:32.4950,cat:'Selçuklu'},
+    {name:'Karatay Medresesi',lat:37.8745,lng:32.4980,cat:'Müze'},
+    {name:'Sille',lat:37.9320,lng:32.4030,cat:'Köy'},
+    {name:'Çatalhöyük',lat:37.6663,lng:32.8264,cat:'Arkeoloji'},
+    {name:'Meram Bağları',lat:37.8380,lng:32.4300,cat:'Doğa'},
+    {name:'Tropikal Kelebek Bahçesi',lat:37.9125,lng:32.5120,cat:'Aile'},
+    {name:'Japon Parkı',lat:37.8765,lng:32.4780,cat:'Park'},
+    {name:'Kilistra',lat:37.5480,lng:32.2480,cat:'Antik'},
+    {name:'Eflatunpınar',lat:37.8250,lng:31.6780,cat:'Hitit'},
+    {name:'Beyşehir Gölü',lat:37.6770,lng:31.7220,cat:'Doğa'},
+    {name:'Meke Gölü',lat:37.6850,lng:33.6450,cat:'Doğa'},
+    {name:'Akşehir',lat:38.3570,lng:31.4160,cat:'Kültür'}
   ];
-
-  var map = L.map('map').setView([37.87, 32.48], 11);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
-
-  var markers = [];
-  var list = document.getElementById('placeList');
-
-  places.forEach(function (p, i) {
-    var m = L.marker([p.lat, p.lng]).addTo(map);
-    var gUrl = 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng;
-    var yUrl = 'https://yandex.com.tr/maps/?rtext=~' + p.lat + '%2C' + p.lng;
-    m.bindPopup(
-      '<strong>' + p.name + '</strong><br>' + p.cat +
-      '<br><a href="' + gUrl + '" target="_blank" rel="noopener">Google yol tarifi</a> · ' +
-      '<a href="' + yUrl + '" target="_blank" rel="noopener">Yandex</a>'
-    );
+  var map=L.map('map').setView([37.87,32.48],11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OSM'}).addTo(map);
+  var markers=[],list=document.getElementById('placeList');
+  places.forEach(function(p,i){
+    var m=L.marker([p.lat,p.lng]).addTo(map);
+    var g='https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng;
+    var y='https://yandex.com.tr/maps/?rtext=~'+p.lat+'%2C'+p.lng;
+    m.bindPopup('<strong>'+p.name+'</strong><br>'+p.cat+'<br><a href="'+g+'" target="_blank" rel="noopener">Google</a> · <a href="'+y+'" target="_blank" rel="noopener">Yandex</a>');
     markers.push(m);
-
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.innerHTML = '<strong>' + p.name + '</strong><span>' + p.cat + ' · haritada göster</span>';
-    btn.addEventListener('click', function () {
-      map.setView([p.lat, p.lng], 14);
-      markers[i].openPopup();
-    });
+    var btn=document.createElement('button');btn.type='button';
+    btn.innerHTML='<strong>'+p.name+'</strong><span>'+p.cat+' · haritada göster</span>';
+    btn.onclick=function(){map.setView([p.lat,p.lng],14);markers[i].openPopup();};
     list.appendChild(btn);
   });
-
-  try {
-    var group = L.featureGroup(markers);
-    map.fitBounds(group.getBounds().pad(0.12));
-  } catch (err) {}
+  try{map.fitBounds(L.featureGroup(markers).getBounds().pad(0.12));}catch(e){}
 })();
 </script>
 <script src="assets/js/app.js" defer></script>
