@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<meta name="description" content="KonyaGo duyurular — site güncellemeleri ve bilgilendirmeler.">
+<title>Duyurular | KonyaGo</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
+    <nav class="nav-desktop" aria-label="Ana menü">
+      <a href="index.html">Ana</a>
+      <a href="duyurular.html" aria-current="page">Duyurular</a>
+      <a href="gizlilik.html">Gizlilik</a>
+      <a href="iletisim.html">İletişim</a>
+    </nav>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana sayfa</a>
+    <h1>Duyurular</h1>
+    <p>Site güncellemeleri ve bilgilendirmeler.</p>
+  </div>
+
+  <div class="info warn" id="notifBox">
+    <h2>Tarayıcı bildirimi</h2>
+    <p>Yeni duyuru yayınlandığında (siteyi ziyaret ettiğinizde) tarayıcı bildirimi almak isteğe bağlıdır. Zorunlu değildir; KVKK kapsamında açık rızanıza bağlıdır.</p>
+    <div class="link-row" style="margin-top:10px">
+      <button type="button" class="btn btn-primary btn-sm" id="btnNotifOn">Bildirimlere izin ver</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnNotifOff">İstemiyorum</button>
+    </div>
+    <p class="note" id="notifStatus" style="text-align:left;margin-top:8px"></p>
+  </div>
+
+  <div id="duyuruList"></div>
+
+  <p class="note"><a href="gizlilik.html">Gizlilik, çerez ve bildirim politikası</a></p>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="gizlilik.html">Gizlilik</a></div></footer>
+<nav class="mnav" aria-label="Mobil menü">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="duyurular.html" aria-current="page"><span class="i">📢</span>Duyuru</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="gizlilik.html"><span class="i">🔒</span>Gizlilik</a>
+  <a href="iletisim.html"><span class="i">✉️</span>İletişim</a>
+</nav>
+<script src="assets/js/duyurular.js"></script>
+<script src="assets/js/app.js" defer></script>
+<script>
+(function(){
+  var box=document.getElementById('duyuruList');
+  var D=window.KONYAGO_DUYURULAR;
+  if(!box||!D)return;
+  (D.items||[]).forEach(function(it){
+    var el=document.createElement('article');
+    el.className='info';
+    el.innerHTML='<h2>'+it.title+'</h2><p style="font-size:.75rem;color:var(--gold);font-weight:700;margin-bottom:6px">'+it.date+'</p><p>'+it.body+'</p>';
+    box.appendChild(el);
+  });
+  function status(){
+    var s=document.getElementById('notifStatus');
+    if(!s)return;
+    if(!('Notification' in window)){s.textContent='Bu tarayıcı bildirim desteklemiyor.';return;}
+    var pref=localStorage.getItem('konyago_notif_pref');
+    s.textContent='İzin durumu: '+Notification.permission+(pref?(' · tercih: '+pref):'');
+  }
+  status();
+  var on=document.getElementById('btnNotifOn');
+  var off=document.getElementById('btnNotifOff');
+  if(on)on.onclick=function(){
+    if(!('Notification' in window))return;
+    Notification.requestPermission().then(function(p){
+      localStorage.setItem('konyago_notif_pref',p==='granted'?'on':'denied');
+      status();
+    });
+  };
+  if(off)off.onclick=function(){
+    localStorage.setItem('konyago_notif_pref','off');
+    status();
+  };
+})();
+</script>
+</body>
+</html>

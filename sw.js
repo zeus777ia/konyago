@@ -1,5 +1,5 @@
-/* KonyaGo SW v5 — eski kirik gorsel cache'ini temizler */
-var CACHE = "konyago-v5";
+/* KonyaGo SW v6 — bildirim + cache */
+var CACHE = "konyago-v6";
 
 self.addEventListener("install", function (e) {
   self.skipWaiting();
@@ -15,7 +15,22 @@ self.addEventListener("activate", function (e) {
   );
 });
 
-/* HTML her zaman agdan; cache eski sayfayi kilitlemesin */
+self.addEventListener("notificationclick", function (e) {
+  e.notification.close();
+  var url = (e.notification && e.notification.data && e.notification.data.url) || "./duyurular.html";
+  e.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].url && "focus" in list[i]) {
+          list[i].navigate(url);
+          return list[i].focus();
+        }
+      }
+      if (clients.openWindow) return clients.openWindow(url);
+    })
+  );
+});
+
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
   var url = new URL(e.request.url);
