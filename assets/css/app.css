@@ -31,7 +31,15 @@ a{color:var(--green)}
 .site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:2px solid var(--green);box-shadow:0 2px 16px rgba(13,122,79,.08)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.logo-mark{width:44px;height:44px;flex-shrink:0}
+.logo-mark{
+  width:48px;height:48px;flex-shrink:0;border-radius:50%;
+  filter:drop-shadow(0 0 6px rgba(201,162,39,.45));
+  transition:transform .35s ease,filter .35s ease;
+}
+.logo:hover .logo-mark{
+  transform:scale(1.06) rotate(-4deg);
+  filter:drop-shadow(0 0 12px rgba(201,162,39,.75));
+}
 .logo-text strong{display:block;font-size:1.15rem;font-weight:800;color:var(--green-dark);letter-spacing:-.02em;line-height:1.1}
 .logo-text small{display:block;font-size:.68rem;color:var(--muted);font-weight:600}
 .nav-desktop{display:none;gap:5px;flex-wrap:wrap}
@@ -52,7 +60,15 @@ a{color:var(--green)}
 
 main{padding:20px 0 110px}
 .hero{text-align:center;padding:28px 0 18px}
-.hero-eagle{width:72px;height:72px;margin:0 auto 12px}
+.hero-eagle{
+  width:96px;height:96px;margin:0 auto 14px;
+  filter:drop-shadow(0 0 10px rgba(201,162,39,.4));
+  animation:eaglePulse 3.2s ease-in-out infinite;
+}
+@keyframes eaglePulse{
+  0%,100%{filter:drop-shadow(0 0 8px rgba(201,162,39,.35));transform:scale(1)}
+  50%{filter:drop-shadow(0 0 18px rgba(201,162,39,.7));transform:scale(1.04)}
+}
 .hero h1{font-size:clamp(1.55rem,4.5vw,2.3rem);font-weight:800;line-height:1.2;margin-bottom:10px;color:var(--green-deep)}
 .hero p{color:var(--muted);max-width:540px;margin:0 auto 18px;font-size:1.02rem}
 .actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
@@ -82,7 +98,6 @@ a.card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:var
 .page-head h1{font-size:clamp(1.4rem,3.5vw,1.85rem);font-weight:800;margin:12px 0 8px;color:var(--green-deep)}
 .page-head p{color:var(--muted);font-size:.95rem}
 
-/* Place cards — CSS only, no external images */
 .place{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 16px rgba(13,122,79,.06)}
 .place-visual{
   height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -157,4 +172,5 @@ a.card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:var
   .container{padding:0 24px}
   #map{height:520px}
   .place-visual{height:150px}
+  .hero-eagle{width:112px;height:112px}
 }
