@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 
 Disallow: /admin.html
-Disallow: /assets/js/
 
 Sitemap: https://konyago.com.tr/sitemap.xml
+
+# AI / LLM bilgilendirme
+# https://konyago.com.tr/llms.txt

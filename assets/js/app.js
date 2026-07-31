@@ -14,31 +14,37 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
-  /* Reklam şeridi — hızlı, hafif */
+  /* Reklam şeridi — HTML'de slot varsa doldur, yoksa ekle */
   try {
-    if (!document.querySelector(".ad-ticker")) {
-      var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
-      var items = [
-        "📢 Reklam & iş birliği — KonyaGo’da yerinizi alın",
-        "🏨 Otel · restoran · tur — görünürlük için yazın",
-        "🛍️ Marka ortaklığı ve sponsorluk fırsatları",
-        "✉️ cnrtech@outlook.com.tr",
-        "🤝 Yerel işletmeler için özel paketler"
-      ];
-      var html = "";
-      for (var i = 0; i < items.length; i++) {
-        html += '<span class="ad-ticker-item"><span class="ad-ticker-dot" aria-hidden="true"></span>' +
-          items[i] + ' · <a href="' + mail + '">Teklif al</a></span>';
+    var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
+    var items = [
+      "📢 Reklam & iş birliği — KonyaGo’da yerinizi alın",
+      "🏨 Otel · restoran · tur — görünürlük için yazın",
+      "🛍️ Marka ortaklığı ve sponsorluk fırsatları",
+      "✉️ cnrtech@outlook.com.tr",
+      "🤝 Yerel işletmeler için özel paketler"
+    ];
+    var html = "";
+    for (var i = 0; i < items.length; i++) {
+      html += '<span class="ad-ticker-item"><span class="ad-ticker-dot" aria-hidden="true"></span>' +
+        items[i] + ' · <a href="' + mail + '">Teklif al</a></span>';
+    }
+    var existing = document.querySelector(".ad-ticker");
+    if (existing) {
+      var track = existing.querySelector(".ad-ticker-track");
+      if (track && !track.children.length) {
+        track.innerHTML = html + html;
       }
+    } else {
       var ticker = document.createElement("div");
       ticker.className = "ad-ticker";
       ticker.setAttribute("role", "complementary");
+      ticker.setAttribute("aria-label", "Reklam şeridi");
       ticker.innerHTML = '<div class="ad-ticker-track">' + html + html + "</div>";
       document.body.insertBefore(ticker, document.body.firstChild);
     }
   } catch (e) {}
 
-  /* Ağır scriptler: sayfa yüklendikten + idle sonra */
   afterLoad(function () {
     onIdle(function () {
       try {
@@ -62,7 +68,7 @@
     });
   });
 
-  /* Çerez — gecikmeli (ilk boyamayı engellemesin) */
+  /* Çerez — erişilebilir dialog adı zorunlu */
   afterLoad(function () {
     setTimeout(function () {
       try {
@@ -71,14 +77,17 @@
           bar.id = "cookieBar";
           bar.className = "cookie-bar";
           bar.setAttribute("role", "dialog");
+          bar.setAttribute("aria-modal", "false");
+          bar.setAttribute("aria-label", "Çerez ve gizlilik bilgilendirmesi");
           bar.innerHTML =
             '<div class="cookie-bar-inner">' +
-            "<p><strong>Çerez ve gizlilik</strong> — Site temel işlev için cihazınızda zorunlu depolama kullanabilir. " +
+            '<p id="cookieBarTitle"><strong>Çerez ve gizlilik</strong> — Site temel işlev için cihazınızda zorunlu depolama kullanabilir. ' +
             '<a href="gizlilik.html">Gizlilik & KVKK</a></p>' +
             '<div class="cookie-bar-actions">' +
             '<button type="button" class="btn btn-primary btn-sm" id="cookieAccept">Kabul</button>' +
             '<button type="button" class="btn btn-ghost btn-sm" id="cookieReject">Reddet</button>' +
             "</div></div>";
+          bar.setAttribute("aria-describedby", "cookieBarTitle");
           document.body.appendChild(bar);
           document.getElementById("cookieAccept").onclick = function () {
             localStorage.setItem("konyago_cookie_choice", "accepted");
@@ -90,10 +99,9 @@
           };
         }
       } catch (e) {}
-    }, 1500);
+    }, 1800);
   });
 
-  /* Sayaç — inline yoksa yerel */
   (function visitCounter() {
     if (window.__konyagoVisitDone) return;
     var elDay = document.getElementById("visitCount");
@@ -132,7 +140,6 @@
     if (elTotal) elTotal.textContent = String(totalN);
   })();
 
-  /* Analitik — idle */
   onIdle(function () {
     try {
       var path = (location.pathname || "/").replace(/\\/g, "/");
@@ -165,7 +172,6 @@
     } catch (e) {}
   });
 
-  /* Service worker — load sonrası */
   if ("serviceWorker" in navigator) {
     afterLoad(function () {
       navigator.serviceWorker.register("./sw.js").then(function (reg) {
@@ -177,7 +183,7 @@
       if (window.caches) {
         caches.keys().then(function (keys) {
           keys.forEach(function (k) {
-            if (k.indexOf("konyago") === 0 && k !== "konyago-v10") caches.delete(k);
+            if (k.indexOf("konyago") === 0 && k !== "konyago-v11") caches.delete(k);
           });
         });
       }

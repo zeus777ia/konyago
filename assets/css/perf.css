@@ -1,9 +1,27 @@
-/* KonyaGo performans katmanı */
+/* Performans + CLS rezervleri */
 img,svg{content-visibility:auto}
 .section,.place,.card,.info,.prose,.grid{content-visibility:auto;contain-intrinsic-size:auto 120px}
 .ad-rail{content-visibility:auto}
-@media (prefers-reduced-motion:reduce){
-  .hero-eagle,.logo-mark{animation:none!important;transition:none!important}
+
+/* Üst şerit alanı — JS gelmeden yer ayır (CLS) */
+.ad-ticker{
+  min-height:36px;
+  height:var(--ticker-h,36px);
+  box-sizing:border-box;
 }
-/* sticky ticker GPU */
-.ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track{transform:translateZ(0);backface-visibility:hidden}
+.eczane-ticker,.borsa-ticker{min-height:32px;box-sizing:border-box}
+
+/* Dinamik kutular için min yükseklik */
+#weatherBox{min-height:72px}
+#todayPlan{min-height:88px}
+#hotList{min-height:48px}
+.visit-row{min-height:32px}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-eagle,.logo-mark,.ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track{
+    animation:none!important;transition:none!important
+  }
+}
+.ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track{
+  transform:translateZ(0);backface-visibility:hidden
+}

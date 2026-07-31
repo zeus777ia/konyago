@@ -1,0 +1,30 @@
+# KonyaGo
+
+> Konya şehir rehberi: gezilecek yerler, mutfak, rotalar, tarihçe, nöbetçi eczane, hava ve AI asistanı.
+
+Site: https://konyago.com.tr/
+Dil: tr-TR
+İletişim: cnrtech@outlook.com.tr
+
+## Ana sayfalar
+
+- [Ana sayfa](https://konyago.com.tr/): Genel rehber ve kısayollar
+- [Gezilecek yerler](https://konyago.com.tr/gezilecek.html): Mevlana, Sille, medreseler ve merkez
+- [Mutfak](https://konyago.com.tr/mutfak.html): Etli ekmek, bamya, arabaşı ve lezzetler
+- [Rotalar](https://konyago.com.tr/rotalar.html): 1–2 günlük gezi planları
+- [Tarihçe](https://konyago.com.tr/tarihce.html): Selçuklu ve Konya tarihi
+- [Keşfet](https://konyago.com.tr/kesfet.html): Kategori ve ilçe filtreli keşif
+- [Harita](https://konyago.com.tr/harita.html): Harita ve yol tarifi
+- [İlçeler](https://konyago.com.tr/ilceler.html): Beyşehir, Seydişehir, Akşehir
+- [KonyaGo AI](https://konyago.com.tr/ai.html): Konya odaklı soru-cevap asistanı
+- [Nöbetçi eczane](https://konyago.com.tr/nobetci-eczane.html): Eczane bilgileri
+- [Hava](https://konyago.com.tr/hava.html): 7 günlük hava
+- [Ulaşım](https://konyago.com.tr/ulasim.html): ATUS ve pratik ulaşım
+- [Gizlilik](https://konyago.com.tr/gizlilik.html): KVKK ve gizlilik metni
+- [İletişim / katkı](https://konyago.com.tr/katki.html): İşletme ve katkı formu
+
+## Notlar
+
+- Site statik bir rehberdir; resmi kurum sitesi değildir.
+- Saat, ücret ve nöbetçi bilgileri değişebilir; resmi kaynaklar doğrulanmalıdır.
+- Sitemap: https://konyago.com.tr/sitemap.xml
