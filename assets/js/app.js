@@ -1,6 +1,35 @@
 (function () {
   "use strict";
 
+  // --- Üst kayan reklam şeridi (tüm sayfalar, web + mobil) ---
+  try {
+    if (!document.querySelector(".ad-ticker")) {
+      var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
+      var items = [
+        "📢 Reklam & iş birliği — KonyaGo’da yerinizi alın",
+        "🏨 Otel · restoran · tur — görünürlük için yazın",
+        "🛍️ Marka ortaklığı ve sponsorluk fırsatları",
+        "✉️ " + "cnrtech@outlook.com.tr",
+        "🤝 Yerel işletmeler için özel paketler"
+      ];
+      function buildItems() {
+        var html = "";
+        for (var i = 0; i < items.length; i++) {
+          html += '<span class="ad-ticker-item"><span class="ad-ticker-dot" aria-hidden="true"></span>' +
+            items[i] + ' · <a href="' + mail + '">Teklif al</a></span>';
+        }
+        return html;
+      }
+      var ticker = document.createElement("div");
+      ticker.className = "ad-ticker";
+      ticker.setAttribute("role", "complementary");
+      ticker.setAttribute("aria-label", "Reklam şeridi");
+      // Çift kopya = kesintisiz döngü
+      ticker.innerHTML = '<div class="ad-ticker-track">' + buildItems() + buildItems() + "</div>";
+      document.body.insertBefore(ticker, document.body.firstChild);
+    }
+  } catch (e) {}
+
   // Daily visitor counter
   try {
     var key = "konyago_visit_day";
@@ -21,7 +50,6 @@
     if (el) el.textContent = String(count);
   } catch (e) {}
 
-  // Service worker: register + force update (eski cache temizlensin)
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("./sw.js").then(function (reg) {
@@ -31,7 +59,6 @@
         }
       }).catch(function () {});
 
-      // Eski cache isimlerini temizle
       if (window.caches) {
         caches.keys().then(function (keys) {
           keys.forEach(function (k) {
