@@ -1,5 +1,5 @@
-/* KonyaGo SW v8 — HTML/JS/CSS network-first (guncellemeler takilmasin) */
-var CACHE = "konyago-v8";
+/* KonyaGo SW v9 */
+var CACHE = "konyago-v9";
 var PRECACHE = [
   "./",
   "./index.html",
@@ -54,7 +54,6 @@ self.addEventListener("fetch", function (e) {
     /\.html?$/.test(path) || path === "/" || path === "";
   var isCode = /\.(js|css)$/i.test(path);
 
-  // HTML + JS + CSS: once network, offline'da cache
   if (isHTML || isCode) {
     e.respondWith(
       fetch(e.request).then(function (res) {
@@ -75,8 +74,10 @@ self.addEventListener("fetch", function (e) {
   e.respondWith(
     caches.match(e.request).then(function (cached) {
       var net = fetch(e.request).then(function (res) {
-        var copy = res.clone();
-        caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+        try {
+          var copy = res.clone();
+          caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+        } catch (err) {}
         return res;
       }).catch(function () { return cached; });
       return cached || net;
