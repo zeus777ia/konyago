@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+  // --- Üst kayan reklam şeridi ---
   try {
     if (!document.querySelector(".ad-ticker")) {
       var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
@@ -28,6 +29,7 @@
     }
   } catch (e) {}
 
+  // --- Çerez / bildirim (önceki mantık) ---
   try {
     if (!localStorage.getItem("konyago_cookie_choice") && !document.getElementById("cookieBar")) {
       var bar = document.createElement("div");
@@ -129,25 +131,137 @@
     setTimeout(checkDuyuruNotify, 800);
   }
 
-  try {
-    var key = "konyago_visit_day";
-    var countKey = "konyago_visit_count";
-    var today = new Date().toISOString().slice(0, 10);
-    var storedDay = localStorage.getItem(key);
-    var count = parseInt(localStorage.getItem(countKey) || "0", 10);
-    if (storedDay !== today) {
-      count = 1;
-      localStorage.setItem(key, today);
-      localStorage.setItem(countKey, "1");
-    } else if (!sessionStorage.getItem("konyago_hit")) {
-      count += 1;
-      localStorage.setItem(countKey, String(count));
-      sessionStorage.setItem("konyago_hit", "1");
-    }
+  // =====================================================================
+  // PAYLAŞIMLI ZİYARET SAYACI
+  // Eski localStorage sayacı tarayıcıya özeldi → her tarayıcıda farklı sayı.
+  // Artık ortak API: tüm ziyaretçiler aynı sayıyı görür.
+  // Oturum başına 1 kez artar (aynı sekme/oturumda sayfa geçişleri şişirmez).
+  // =====================================================================
+  (function sharedVisitCounter() {
     var el = document.getElementById("visitCount");
-    if (el) el.textContent = String(count);
-  } catch (e) {}
+    if (!el) return;
 
+    el.textContent = "…";
+
+    // İstanbul günü (UTC+3 yaklaşık; ISO date Europe/Istanbul için basit offset)
+    function istanbulDay() {
+      try {
+        return new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Europe/Istanbul",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        }).format(new Date()); // YYYY-MM-DD
+      } catch (e) {
+        return new Date().toISOString().slice(0, 10);
+      }
+    }
+
+    var day = istanbulDay();
+    var ns = "konyago.com.tr";
+    var key = "visits-" + day;
+    var sessionFlag = "konyago_shared_hit_" + day;
+    var alreadyHit = false;
+    try {
+      alreadyHit = sessionStorage.getItem(sessionFlag) === "1";
+    } catch (e) {}
+
+    function parseCount(data) {
+      if (data == null) return null;
+      if (typeof data === "number" && isFinite(data)) return Math.floor(data);
+      if (typeof data === "string" && /^\d+$/.test(data.trim())) return parseInt(data.trim(), 10);
+      if (typeof data === "object") {
+        if (typeof data.value === "number") return data.value;
+        if (typeof data.count === "number") return data.count;
+        if (typeof data.hits === "number") return data.hits;
+      }
+      return null;
+    }
+
+    function show(n) {
+      if (n == null || !isFinite(n) || n < 0) {
+        el.textContent = "—";
+        return;
+      }
+      el.textContent = String(n);
+      try {
+        // Admin paneli / yedek için son bilinen ortak değer
+        localStorage.setItem("konyago_shared_last", JSON.stringify({ day: day, count: n, t: Date.now() }));
+      } catch (e) {}
+    }
+
+    function markHit() {
+      try { sessionStorage.setItem(sessionFlag, "1"); } catch (e) {}
+    }
+
+    // 1) CountAPI.xyz
+    function viaCountApi() {
+      var url = alreadyHit
+        ? "https://api.countapi.xyz/get/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key)
+        : "https://api.countapi.xyz/hit/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
+      return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
+        if (!r.ok) throw new Error("countapi " + r.status);
+        return r.json();
+      }).then(function (data) {
+        var n = parseCount(data);
+        if (n == null) throw new Error("countapi parse");
+        if (!alreadyHit) markHit();
+        return n;
+      });
+    }
+
+    // 2) CounterAPI.dev v1 (workspace gerektirmeyen eski yol)
+    function viaCounterApiDev() {
+      var base = "https://api.counterapi.dev/v1/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
+      var url = alreadyHit ? base : base + "/up";
+      return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
+        if (!r.ok) throw new Error("counterapi " + r.status);
+        return r.json();
+      }).then(function (data) {
+        var n = parseCount(data);
+        if (n == null) throw new Error("counterapi parse");
+        if (!alreadyHit) markHit();
+        return n;
+      });
+    }
+
+    // 3) Abacus (yedek)
+    function viaAbacus() {
+      var path = alreadyHit ? "get" : "hit";
+      var url = "https://abacus.jasoncameron.dev/" + path + "/" +
+        encodeURIComponent(ns) + "/" + encodeURIComponent(key);
+      return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
+        if (!r.ok) throw new Error("abacus " + r.status);
+        return r.text();
+      }).then(function (txt) {
+        var n = parseCount(txt);
+        if (n == null) {
+          try { n = parseCount(JSON.parse(txt)); } catch (e) {}
+        }
+        if (n == null) throw new Error("abacus parse");
+        if (!alreadyHit) markHit();
+        return n;
+      });
+    }
+
+    viaCountApi()
+      .catch(function () { return viaCounterApiDev(); })
+      .catch(function () { return viaAbacus(); })
+      .then(function (n) { show(n); })
+      .catch(function () {
+        // Son çare: daha önce başarılı kayıt varsa onu göster
+        try {
+          var last = JSON.parse(localStorage.getItem("konyago_shared_last") || "null");
+          if (last && last.day === day && typeof last.count === "number") {
+            show(last.count);
+            return;
+          }
+        } catch (e) {}
+        el.textContent = "—";
+      });
+  })();
+
+  // --- Yerel analitik (sadece admin paneli / bu tarayıcı) ---
   try {
     var path = (location.pathname || "/").replace(/\\/g, "/");
     if (path.indexOf("admin") === -1) {
@@ -156,7 +270,18 @@
       if (!data.events) data.events = [];
       if (!data.pages) data.pages = {};
       if (!data.days) data.days = {};
-      var dayKey = new Date().toISOString().slice(0, 10);
+      var dayKey = (function () {
+        try {
+          return new Intl.DateTimeFormat("en-CA", {
+            timeZone: "Europe/Istanbul",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+          }).format(new Date());
+        } catch (e) {
+          return new Date().toISOString().slice(0, 10);
+        }
+      })();
       if (!data.days[dayKey]) data.days[dayKey] = { hits: 0, sessions: 0 };
       data.days[dayKey].hits += 1;
       if (!sessionStorage.getItem("konyago_analytics_session")) {

@@ -1,8 +1,7 @@
-/* KonyaGo gizli yönetim — istemci tarafi; sifre SHA-256 */
+/* KonyaGo gizli yönetim */
 (function () {
   "use strict";
 
-  // Varsayılan şifre: KonyaAdmin2026  →  hemen değiştirmek için bu hash'i güncelle
   var PASS_HASH = "09a7dc2b02e24fa2d2c8e84e12aabd905d7738357253e2624918887b4820cdda";
   var AUTH_KEY = "konyago_admin_ok";
 
@@ -36,27 +35,47 @@
     }
   }
 
-  function publicToday() {
+  function sharedLast() {
     try {
-      var today = new Date().toISOString().slice(0, 10);
-      if (localStorage.getItem("konyago_visit_day") !== today) return 0;
-      return parseInt(localStorage.getItem("konyago_visit_count") || "0", 10) || 0;
-    } catch (e) { return 0; }
+      return JSON.parse(localStorage.getItem("konyago_shared_last") || "null");
+    } catch (e) {
+      return null;
+    }
   }
 
   function render() {
     var data = loadAnalytics();
-    var today = new Date().toISOString().slice(0, 10);
+    var today = (function () {
+      try {
+        return new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Europe/Istanbul",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        }).format(new Date());
+      } catch (e) {
+        return new Date().toISOString().slice(0, 10);
+      }
+    })();
     var day = (data.days && data.days[today]) || { hits: 0, sessions: 0 };
+    var shared = sharedLast();
+
     $("sToday").textContent = String(day.hits || 0);
-    $("sPublic").textContent = String(publicToday());
+    $("sPublic").textContent = shared && shared.day === today ? String(shared.count) : (shared ? String(shared.count) + "*" : "—");
     $("sSessions").textContent = String(day.sessions || 0);
     $("sPages").textContent = String((data.events && data.events.length) || 0);
+
+    var pubNote = $("sPublicNote");
+    if (pubNote) {
+      pubNote.textContent = shared
+        ? ("Ortak sayaç · gün: " + shared.day + " · tüm tarayıcılarda aynı API değeri")
+        : "Ortak sayaç henüz alınamadı (internet / API).";
+    }
 
     var pages = data.pages || {};
     var keys = Object.keys(pages).sort(function (a, b) { return pages[b] - pages[a]; });
     var html = "";
-    if (!keys.length) html = "<p>Henüz sayfa kaydı yok. Sitede gezinince burada birikir.</p>";
+    if (!keys.length) html = "<p>Henüz sayfa kaydı yok.</p>";
     else {
       html = "<ul>";
       keys.slice(0, 30).forEach(function (k) {
@@ -111,7 +130,10 @@
   $("btnRefresh").addEventListener("click", render);
 
   $("btnExport").addEventListener("click", function () {
-    var blob = new Blob([JSON.stringify(loadAnalytics(), null, 2)], { type: "application/json" });
+    var blob = new Blob([JSON.stringify({
+      analytics: loadAnalytics(),
+      shared: sharedLast()
+    }, null, 2)], { type: "application/json" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "konyago-analytics-" + new Date().toISOString().slice(0, 10) + ".json";
@@ -119,7 +141,7 @@
   });
 
   $("btnClear").addEventListener("click", function () {
-    if (!confirm("Tüm yerel analitik kayıtları silinsin mi?")) return;
+    if (!confirm("Yerel analitik kayıtları silinsin mi? (Ortak ziyaret sayacı silinmez)")) return;
     localStorage.removeItem("konyago_analytics");
     render();
   });
