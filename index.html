@@ -18,8 +18,11 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="dns-prefetch" href="https://api.open-meteo.com">
-<link rel="stylesheet" href="assets/css/app.css?v=12">
+<link rel="dns-prefetch" href="https://countapi.mileshilliard.com">
+<link rel="dns-prefetch" href="https://api.counterapi.dev">
+<link rel="stylesheet" href="assets/css/app.css?v=13">
 <link rel="stylesheet" href="assets/css/perf.css?v=2">
+<link rel="stylesheet" href="assets/css/visits.css?v=1">
 <link rel="stylesheet" href="assets/css/wx.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="assets/css/wx.css"></noscript>
 <script type="application/ld+json">
@@ -41,7 +44,6 @@
 </head>
 <body>
 
-<!-- CLS: üst şerit yerini HTML'de rezerve et -->
 <div class="ad-ticker" role="complementary" aria-label="Reklam şeridi">
   <div class="ad-ticker-track"></div>
 </div>
@@ -74,47 +76,16 @@
 </header>
 
 <main class="container">
-  <div class="visit-row" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 4px">
-    <div class="visit-chip">👁 Bugün: <span id="visitCount">0</span></div>
-    <div class="visit-chip">📊 Toplam: <span id="visitTotal">0</span></div>
+  <div class="visit-stats" id="visitStats" aria-label="Ziyaretçi istatistikleri">
+    <div class="visit-stat">
+      <span class="vs-label">Bugün</span>
+      <span class="vs-value" id="visitCount">—</span>
+    </div>
+    <div class="visit-stat vs-total">
+      <span class="vs-label">Toplam ziyaret</span>
+      <span class="vs-value" id="visitTotal">—</span>
+    </div>
   </div>
-  <script>
-  (function () {
-    try {
-      var day;
-      try {
-        day = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
-      } catch (e) { day = new Date().toISOString().slice(0, 10); }
-      var KEY = "konyago_visits_v3";
-      var sess = "konyago_v3_" + day;
-      var dayN = 0, totalN = 0;
-      try {
-        var o = JSON.parse(localStorage.getItem(KEY) || "{}");
-        totalN = typeof o.total === "number" ? o.total : 0;
-        if (o.day === day && typeof o.dayCount === "number") dayN = o.dayCount;
-      } catch (e) {}
-      var hit = false;
-      try { hit = sessionStorage.getItem(sess) === "1"; } catch (e) {}
-      if (!hit) {
-        dayN += 1; totalN += 1;
-        try {
-          localStorage.setItem(KEY, JSON.stringify({ day: day, dayCount: dayN, total: totalN, t: Date.now() }));
-          sessionStorage.setItem(sess, "1");
-        } catch (e) {}
-      }
-      var elD = document.getElementById("visitCount");
-      var elT = document.getElementById("visitTotal");
-      if (elD) elD.textContent = String(dayN);
-      if (elT) elT.textContent = String(totalN);
-      window.__konyagoVisitDone = true;
-    } catch (e) {
-      var a = document.getElementById("visitCount");
-      var b = document.getElementById("visitTotal");
-      if (a) a.textContent = "1";
-      if (b) b.textContent = "1";
-    }
-  })();
-  </script>
 
   <section class="hero">
     <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="" decoding="async">
@@ -215,10 +186,11 @@
   <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
 </nav>
 
+<script src="assets/js/visits.js?v=1"></script>
 <script src="assets/js/duyurular.js" defer></script>
 <script src="assets/js/kesfet-data.js" defer></script>
 <script src="assets/js/features.js" defer></script>
-<script src="assets/js/app.js?v=12" defer></script>
+<script src="assets/js/app.js?v=13" defer></script>
 <script>
 window.addEventListener("DOMContentLoaded", function () {
   var box = document.getElementById("homeDuyuru");
