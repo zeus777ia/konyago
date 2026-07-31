@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo — Konya şehir rehberi ve KonyaGo AI asistanı.">
+<meta name="description" content="KonyaGo — Konya şehir rehberi: gezi, mutfak, rotalar, hava, AI asistan.">
 <title>KonyaGo | Konya Şehir Rehberi</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
@@ -13,14 +13,12 @@
 <body>
 
 <aside class="ad-rail ad-rail-left" aria-label="Reklam">
-  <div class="ad-box"><strong>Reklam alanı</strong>İş birliği & sponsorluk<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">İletişim</a></div>
-  <div class="ad-box ad-box-gold"><strong>Öne çıkın</strong>Otel · restoran · tur<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Teklif</a></div>
-  <div class="ad-box"><strong>Banner</strong>Ana sayfa görünürlüğü<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Yazın</a></div>
+  <div class="ad-box"><strong>Reklam alanı</strong>İş birliği<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">İletişim</a></div>
+  <div class="ad-box ad-box-gold"><strong>Öne çıkın</strong>Otel · restoran<a href="katki.html">Başvuru</a></div>
 </aside>
 <aside class="ad-rail ad-rail-right" aria-label="Reklam">
-  <div class="ad-box ad-box-gold"><strong>Yer alın</strong>KonyaGo’da markanız<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Teklif al</a></div>
-  <div class="ad-box"><strong>İş birliği</strong>Yerel işletmeler<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Mail</a></div>
-  <div class="ad-box"><strong>Sponsor</strong>Etkinlik & rota<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Detay</a></div>
+  <div class="ad-box ad-box-gold"><strong>Sponsor</strong>KonyaGo’da yer alın<a href="katki.html">Teklif</a></div>
+  <div class="ad-box"><strong>Katkı</strong>Gezgin notu gönder<a href="katki.html">Form</a></div>
 </aside>
 
 <header class="site-header">
@@ -31,12 +29,12 @@
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
       <a href="index.html" aria-current="page">Ana</a>
-      <a href="duyurular.html">Duyurular</a>
       <a href="ai.html">AI</a>
-      <a href="gezilecek.html">Gezilecek</a>
+      <a href="gezilecek.html">Gezi</a>
+      <a href="rotalar.html">Rotalar</a>
       <a href="mutfak.html">Mutfak</a>
-      <a href="harita.html">Harita</a>
-      <a href="gizlilik.html">Gizlilik</a>
+      <a href="ilceler.html">İlçeler</a>
+      <a href="en.html">EN</a>
     </nav>
   </div>
 </header>
@@ -49,75 +47,73 @@
   <section class="hero">
     <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="">
     <h1>Konya’yı keşfet</h1>
-    <p>Selçuklu’nun başkenti, Mevlana’nın şehri. Gezi, mutfak, rotalar — ve <strong>KonyaGo AI</strong> ile sınırsız soru.</p>
+    <p>Selçuklu’nun başkenti · Mevlana’nın şehri · Gezi, mutfak, rotalar ve <strong>KonyaGo AI</strong></p>
     <div class="actions">
       <a class="btn btn-primary" href="ai.html">✨ KonyaGo AI</a>
-      <a class="btn btn-ghost" href="duyurular.html">📢 Duyurular</a>
-      <a class="btn btn-ghost" href="gezilecek.html">Gezilecek yerler</a>
+      <a class="btn btn-ghost" href="rotalar.html">Rotalar</a>
+      <a class="btn btn-ghost" href="en.html">English</a>
     </div>
   </section>
+
+  <div class="wx-card" id="weatherBox" aria-live="polite"></div>
+
+  <div class="info" id="todayPlan" style="margin-top:12px">
+    <h2>Bugün ne yapmalı?</h2>
+    <p>Plan hazırlanıyor…</p>
+  </div>
 
   <section class="section" aria-label="Duyurular">
     <h2 class="section-title">Son <span>duyuru</span></h2>
     <div class="info warn" id="homeDuyuru">
-      <h2>Yükleniyor…</h2>
-      <p>Duyurular hazırlanıyor.</p>
-      <div class="link-row"><a class="btn btn-ghost btn-sm" href="duyurular.html">Tüm duyurular</a></div>
+      <h2>Duyurular</h2>
+      <p><a href="duyurular.html">Tüm duyurular →</a></p>
     </div>
   </section>
-
-  <div class="ad-mobile ad-mobile-compact">
-    <div>
-      <strong>Reklam & iş birliği</strong>
-      <span style="display:block;font-size:.75rem;color:var(--muted)">KonyaGo’da yer alın</span>
-    </div>
-    <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Yazın</a>
-  </div>
-
-  <div class="ad-banner">
-    <strong>Reklam & iş birliği</strong> —
-    <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">cnrtech@outlook.com.tr</a>
-  </div>
 
   <a class="card" href="ai.html" style="margin-bottom:14px;border-color:rgba(13,122,79,.35);background:linear-gradient(135deg,#e8f5ee,#f5ecd0)">
     <div class="ico">✨</div>
     <h3>KonyaGo AI</h3>
-    <p>Konya’ya özel asistan. Kayıt yok, soru limiti yok.</p>
+    <p>Sınırsız Konya soru-cevap · hafta sonu planı tek tıkla</p>
   </a>
 
   <section class="grid grid-2 grid-4" aria-label="Bölümler">
-    <a class="card" href="tarihce.html"><div class="ico">📜</div><h3>Tarihçe</h3><p>Selçuklu’dan bugüne.</p></a>
-    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek</h3><p>Müzeler, Sille, ilçeler.</p></a>
+    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek</h3><p>Müze, Sille, merkez.</p></a>
+    <a class="card" href="ilceler.html"><div class="ico">🏞️</div><h3>İlçeler</h3><p>Beyşehir, Seydişehir, Akşehir.</p></a>
     <a class="card" href="rotalar.html"><div class="ico">🧭</div><h3>Rotalar</h3><p>1–2 gün planları.</p></a>
+    <a class="card" href="rota-yazdir.html"><div class="ico">🖨️</div><h3>Yazdır</h3><p>1 günlük rota çıktısı.</p></a>
     <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Mutfak</h3><p>Etli ekmek ve lezzetler.</p></a>
+    <a class="card" href="lezzet-haritasi.html"><div class="ico">📍</div><h3>Lezzet haritası</h3><p>Konyalı gibi ye.</p></a>
+    <a class="card" href="dinle.html"><div class="ico">🎧</div><h3>Dinle</h3><p>Sesli kısa anlatımlar.</p></a>
+    <a class="card" href="etkinlikler.html"><div class="ico">📅</div><h3>Etkinlikler</h3><p>Şeb-i Arus ve takvim.</p></a>
+    <a class="card" href="pratik.html"><div class="ico">🆘</div><h3>Pratik / Acil</h3><p>112 ve faydalı numaralar.</p></a>
     <a class="card" href="harita.html"><div class="ico">🗺️</div><h3>Harita</h3><p>Noktalar + yol tarifi.</p></a>
-    <a class="card" href="duyurular.html"><div class="ico">📢</div><h3>Duyurular</h3><p>Güncellemeler.</p></a>
-    <a class="card" href="gizlilik.html"><div class="ico">🔒</div><h3>Gizlilik</h3><p>KVKK & çerezler.</p></a>
-    <a class="card" href="sss.html"><div class="ico">❓</div><h3>SSS</h3><p>Sık sorulanlar.</p></a>
+    <a class="card" href="katki.html"><div class="ico">✉️</div><h3>Katkı & işletme</h3><p>Not gönder · yer al.</p></a>
+    <a class="card" href="gizlilik.html"><div class="ico">🔒</div><h3>Gizlilik</h3><p>KVKK aydınlatma.</p></a>
   </section>
 
-  <p class="note">konyago.com.tr · <a href="gizlilik.html">Gizlilik & çerezler</a> · <a href="duyurular.html">Duyurular</a></p>
+  <p class="note">konyago.com.tr · <a href="gizlilik.html">Gizlilik</a> · <a href="en.html">English guide</a></p>
 </main>
 
 <footer class="site-footer">
   <div class="container">
     © 2026 KonyaGo
     · <a href="duyurular.html">Duyurular</a>
+    · <a href="katki.html">Katkı</a>
     · <a href="gizlilik.html">Gizlilik</a>
     · <a href="iletisim.html">İletişim</a>
-    · <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Reklam</a>
   </div>
 </footer>
 
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
-  <a href="duyurular.html"><span class="i">📢</span>Duyuru</a>
   <a href="ai.html"><span class="i">✨</span>AI</a>
   <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-  <a href="gizlilik.html"><span class="i">🔒</span>Gizlilik</a>
+  <a href="rotalar.html"><span class="i">🧭</span>Rota</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
 </nav>
 
 <script src="assets/js/duyurular.js"></script>
+<script src="assets/js/features.js"></script>
 <script src="assets/js/app.js" defer></script>
 <script>
 (function(){
