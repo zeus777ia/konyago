@@ -27,7 +27,6 @@
     return false;
   }
 
-  // Konya disi konular — kibarca reddet
   var OFF = [
     "bitcoin", "kripto", "borsa", "yazilim ogren", "python", "javascript ders",
     "siyaset", "secim", "parti", "futbol skor", "mac sonucu", "netflix",
@@ -37,8 +36,12 @@
 
   var KB = [
     {
-      keys: ["mevlana", "mevlevi", "yesil kubbe", "sema", "mesnevi", "celaleddin"],
-      a: "Mevlana Müzesi, Mevlânâ Celâleddîn-i Rûmî’nin türbesinin bulunduğu külliyedir. Yeşil kubbe Konya’nın simgelerindendir. Sema ve Mevlevî kültürünün merkezi kabul edilir. Ziyaret öncesi güncel saat ve kuralları (kıyafet, sessizlik) kontrol etmek iyi olur. Yol tarifi için sitede Gezilecek / Harita bölümlerine bakabilirsin."
+      keys: ["mevlana", "mevlevi", "yesil kubbe", "sema", "mesnevi", "celaleddin", "ucretsiz", "kapanis", "saat kac"],
+      a: "Mevlana Müzesi ücretsizdir. Genelde 17:00’de kapanır; sabah veya öğleden önce gitmek kalabalıktan kaçmak için iyi olur. Yeşil kubbe Konya’nın simgesi, sema ve Mevlevî kültürünün merkezidir. Kıyafet ve sessizlik kurallarına dikkat et. Yol tarifi: Gezilecek / Harita."
+    },
+    {
+      keys: ["seyit harun", "seyid harun", "harun veli", "sey disehir", "sey disehir", "seydisehir", "kugulu", "kugulu park"],
+      a: "Seydişehir’de Seyit Harun Veli Hazretleri türbesi ilçenin manevi duraklarındandır. Aynı gezide Kuğulu Park’a uğrayabilirsin — yürüyüş ve aile molası için uygun. İkisi de Seydişehir merkezine yakın; araçla günübirlik planlanabilir. Gezilecek ve Harita sayfalarında konumlar var."
     },
     {
       keys: ["etli ekmek", "etliekmek", "pide konya"],
@@ -86,7 +89,7 @@
     },
     {
       keys: ["beysehir", "gol", "meke", "kilistra", "eflatun"],
-      a: "Günübirlik öneriler: Beyşehir Gölü (doğa + ilçe), Meke Gölü, Kilistra ve Eflatunpınar. Bunlar için araç planı gerekir. Rotalar ve Harita sayfalarına bak."
+      a: "Günübirlik öneriler: Beyşehir Gölü, Meke Gölü, Kilistra, Eflatunpınar ve Seydişehir (Seyit Harun Veli + Kuğulu Park). Araç planı gerekir. Rotalar ve Harita sayfalarına bak."
     },
     {
       keys: ["ulasim", "otobus", "tramvay", "atus", "konyakart", "toplu tasima", "dolmus"],
@@ -94,7 +97,7 @@
     },
     {
       keys: ["kac gun", "ne kadar kal", "1 gun", "2 gun", "rota", "plan"],
-      a: "Merkez (Mevlana + müzeler + etli ekmek) için 1 tam gün yetebilir. Sille ve Çatalhöyük veya Beyşehir ekleyeceksen 2 gün daha rahat. Sitede Rotalar sayfasında 1 gün / 2 gün / aile planları hazır."
+      a: "Merkez (Mevlana ücretsiz, ~17:00 kapanış + müzeler + etli ekmek) için 1 tam gün yetebilir; Mevlana’ya erken uğra. Sille, Seydişehir veya Çatalhöyük ekleyeceksen 2 gün daha rahat. Rotalar sayfasında planlar var."
     },
     {
       keys: ["konaklama", "otel", "nerede kal", "pansiyon"],
@@ -122,15 +125,15 @@
     },
     {
       keys: ["harita", "yol tarifi", "nasil giderim", "konum"],
-      a: "Sitede Harita sayfasında önemli noktalar işaretli; Gezilecek kartlarında Google yol tarifi butonları var. Açık harita (OpenStreetMap) üzerinden de bakabilirsin."
+      a: "Sitede Harita sayfasında önemli noktalar işaretli (Mevlana, Sille, Seydişehir vb.); Gezilecek kartlarında Google yol tarifi butonları var."
     },
     {
       keys: ["kelebek", "japon parki", "aile", "cocuk"],
-      a: "Aile için: kısa Mevlana turu, Tropikal Kelebek Bahçesi, parklar (ör. Japon Parkı çevresi), ardından sade bir etli ekmek molası. Rotalar sayfasında aile planı da var."
+      a: "Aile için: kısa Mevlana turu (ücretsiz, 17:00 öncesi bitir), Tropikal Kelebek Bahçesi, parklar; Seydişehir’de Kuğulu Park da uygun. Ardından etli ekmek molası. Rotalar sayfasında aile planı var."
     },
     {
       keys: ["konyago", "bu site", "sen kimsin", "yapay zeka", "ai"],
-      a: "Ben KonyaGo AI — sadece Konya ile ilgili sorulara yardımcı olmak için tasarlandım. Gezi, mutfak, tarih, ulaşım, konaklama ve pratik bilgilerde yol gösteririm. Resmi kurum sitesi değilim; güncel ücret/saat için resmi kaynakları kontrol et. Soru sınırın yok, sorabilirsin."
+      a: "Ben KonyaGo AI — sadece Konya ile ilgili sorulara yardımcı olmak için tasarlandım. Gezi, mutfak, tarih, ulaşım, konaklama ve pratik bilgilerde yol gösteririm. Resmi kurum sitesi değilim. Soru sınırın yok."
     },
     {
       keys: ["merhaba", "selam", "gunaydin", "iyi gunler", "hey"],
@@ -148,9 +151,9 @@
       "etli", "bamya", "tirit", "arabasi", "atus", "konyakart", "sebi",
       "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "meke",
       "kilistra", "gez", "turist", "otel", "konak", "harita", "rota",
-      "mutfak", "yemek", "lezzet", "muz e", "muze", "sem a", "sema"
+      "mutfak", "yemek", "lezzet", "muze", "sema", "seydisehir", "seyit",
+      "harun", "kugulu", "ucretsiz"
     ])) return true;
-    // genel gezi sorulari da kabul (baglam KonyaGo)
     if (hasAny(t, ["nerede", "ne yenir", "ne gezilir", "kac gun", "nasil gider", "ne yapilir", "tavsiye"])) return true;
     if (hasAny(t, ["merhaba", "selam", "tesekkur", "konyago", "sen kimsin"])) return true;
     return false;
@@ -165,7 +168,7 @@
     }
 
     if (!isKonyaRelated(t) && t.split(" ").length > 2) {
-      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Mevlana’ya nasıl giderim?», «Etli ekmek nerede yenir?», «1 günde ne gezilir?», «Bamya çorbası nedir?» — bu tarz sorulara sınırsız cevap verebilirim.";
+      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Mevlana ücretsiz mi?», «Etli ekmek nerede yenir?», «Seydişehir’de ne gezilir?» — bu tarz sorulara sınırsız cevap verebilirim.";
     }
 
     var best = null;
@@ -184,7 +187,7 @@
 
     if (best && bestScore > 0) return best.a;
 
-    return "Konya ile ilgili anladım ama net eşleştiremedim. Şunlardan birini deneyebilirsin:\n• Mevlana / Sille / Çatalhöyük\n• Etli ekmek, bamya, tirit, arabaşı\n• 1–2 günlük rota\n• Ulaşım (ATUS), konaklama, Şeb-i Arus\n\nYa da sitede Gezilecek, Mutfak, Rotalar ve Harita sayfalarına bak. Sorunu biraz daha açarsan yardımcı olayım.";
+    return "Konya ile ilgili anladım ama net eşleştiremedim. Şunlardan birini deneyebilirsin:\n• Mevlana (ücretsiz, ~17:00)\n• Sille / Seydişehir (Seyit Harun, Kuğulu Park)\n• Etli ekmek, bamya, tirit\n• 1–2 günlük rota, ATUS\n\nSorunu biraz daha açarsan yardımcı olayım.";
   }
 
   function addMsg(text, who) {
@@ -207,8 +210,7 @@
     }, 400 + Math.random() * 500);
   }
 
-  // karsilama
-  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya hakkında sorulara cevap veririm — gezi, yemek, tarih, ulaşım, konaklama… Soru limitin yok, sor.\n\nÖrnek: «1 günde ne gezilir?» · «Etli ekmek nedir?» · «Sille’ye nasıl gidilir?»", "bot");
+  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya hakkında sorulara cevap veririm — limit yok.\n\nÖrnek: «Mevlana ücretsiz mi?» · «Seydişehir’de ne var?» · «1 günde ne gezilir?»", "bot");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
