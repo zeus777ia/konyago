@@ -40,24 +40,28 @@
       a: "Mevlana Müzesi ücretsizdir. Genelde 17:00’de kapanır; sabah veya öğleden önce gitmek kalabalıktan kaçmak için iyi olur. Yeşil kubbe Konya’nın simgesi, sema ve Mevlevî kültürünün merkezidir. Kıyafet ve sessizlik kurallarına dikkat et. Yol tarifi: Gezilecek / Harita."
     },
     {
+      keys: ["esrefoglu", "esref oglu", "esrefogullari", "esrefogullari", "suleyman bey", "mubarizuddin", "esrefoglu camii", "esrefoglu cami"],
+      a: "Eşrefoğulları Beyliği (yaklaşık 1280–1326), Beyşehir–Seydişehir hattında kurulan Anadolu beyliğidir.\n• Kurucu: Eşrefoğlu Seyfeddin Süleyman Bey (başkent Beyşehir)\n• Sonra: Mübârizüddin Mehmed Bey; ardından II. Süleyman\n• 1326’da İlhanlı emiri Demirtaş müdahalesiyle fiilen biter; topraklar Hamîdoğulları vb. arasında paylaşılır\n• Mimari miras: Beyşehir Eşrefoğlu Camii (ahşap direkli, Anadolu’nun önemli örneklerinden)\n• Seydişehir / Seyyid Harun külliyesi ile aynı coğrafyada; Mehmed Bey döneminde destek/vakıf ilişkisi anlatılır\nDetaylı metin: Tarihçe sayfası → Eşrefoğulları bölümü."
+    },
+    {
       keys: ["seyit harun", "seyid harun", "harun veli", "seydisehir", "kugulu", "kugulu park", "tinaztepe", "tinaz tepe", "ferzene", "seydisehir kale", "halife sultan", "ilica seydisehir"],
-      a: "Seydişehir tarihi özeti:\n• Seyyid Harun Veli Camii & Türbesi (yaklaşık 1310) — külliyede Halife Sultan, Rüstem Bey–Sultan Hatun türbeleri de vardır\n• Seydişehir Kalesi kalıntıları\n• Kuğulu Park (merkez mola)\n• Tınaztepe Mağarası (sarkıt–dikit, araçla; Antalya yolu üzeri)\n• Ferzene / Güvercinlik mağaraları\n• Ilıca termal notu\nGünübirlik için araç önerilir. Detay: Gezilecek → Seydişehir bölümü ve Harita."
+      a: "Seydişehir tarihi özeti:\n• Seyyid Harun Veli Camii & Türbesi (~1310) — Halife Sultan, Rüstem Bey–Sultan Hatun türbeleri\n• Seydişehir Kalesi\n• Kuğulu Park\n• Tınaztepe Mağarası\n• Ferzene / Güvercinlik mağaraları\nBölge Eşrefoğulları toprakları içindeydi. Detay: Gezilecek + Tarihçe."
     },
     {
       keys: ["etli ekmek", "etliekmek", "pide konya"],
-      a: "Etli ekmek Konya’nın imza lezzetidir: ince hamur, kıyma, soğan ve baharat; taş fırında pişer. Genelde dilim dilim, ayran ile yenir. Öğle 11–14 arası birçok fırında taze çıkar. Merkez ve Mevlana çevresinde çok sayıda taş fırın bulunur. Detay: Mutfak sayfası."
+      a: "Etli ekmek Konya’nın imza lezzetidir: ince hamur, kıyma, soğan ve baharat; taş fırında pişer. Genelde dilim dilim, ayran ile yenir. Öğle 11–14 arası birçok fırında taze çıkar. Detay: Mutfak sayfası."
     },
     {
       keys: ["firin kebabi", "firin kebab", "tandir"],
-      a: "Fırın kebabı kuşbaşı etin soğan ve domatesle uzun süre fırın/tencerede pişmesiyle yapılır; sosu ekmekle yenir. Tandır ve sac kavurma da Konya et kültüründe yaygındır. Mutfak bölümünde diğer lezzetlere de bakabilirsin."
+      a: "Fırın kebabı kuşbaşı etin soğan ve domatesle uzun süre fırın/tencerede pişmesiyle yapılır; sosu ekmekle yenir. Tandır ve sac kavurma da Konya et kültüründe yaygındır."
     },
     {
       keys: ["bamya", "bamya corbasi"],
-      a: "Bamya çorbası Konya usulüyle ekşili, etli veya sade yapılır. Özellikle kış ve ramazan sofralarında sevilir. Yöresel lokantalarda ve ev yemeklerinde sık görülür."
+      a: "Bamya çorbası Konya usulüyle ekşili, etli veya sade yapılır. Özellikle kış ve ramazan sofralarında sevilir."
     },
     {
       keys: ["arabasi", "araba si"],
-      a: "Arabaşı, İç Anadolu’nun kış yemeğidir; unlu/kıvamlı kısım ve et suyu veya etli harçla yenir. Konya ve çevre illerde kış menülerinde yer alır."
+      a: "Arabaşı, İç Anadolu’nun kış yemeğidir; unlu/kıvamlı kısım ve et suyu veya etli harçla yenir."
     },
     {
       keys: ["tirit", "tirid"],
@@ -65,83 +69,83 @@
     },
     {
       keys: ["hosmerim", "cezerye", "tatli"],
-      a: "Hoşmerim (peynir–irmik–şeker) sıcak servis edilen yöresel tatlıdır. Cezerye ise havuçlu, fıstıklı; hediyelik olarak da alınır. Hediyelik ve Mutfak sayfalarına göz at."
+      a: "Hoşmerim (peynir–irmik–şeker) sıcak servis edilen yöresel tatlıdır. Cezerye ise havuçlu, fıstıklı; hediyelik olarak da alınır."
     },
     {
       keys: ["sille"],
-      a: "Sille, merkeze yakın tarihi bir yerleşimdir: taş evler, Aya Eleni Kilisesi, mağaralar ve fotoğraf için uygun sokaklar. Yarım günlük gezi için idealdir. Harita ve Gezilecek’ten yol tarifi alabilirsin."
+      a: "Sille, merkeze yakın tarihi bir yerleşimdir: taş evler, Aya Eleni Kilisesi, mağaralar. Yarım günlük gezi için idealdir."
     },
     {
       keys: ["catalhoyuk", "catal hoyuk", "unesco"],
-      a: "Çatalhöyük, Neolitik dönem yerleşimi ve UNESCO dünya mirasıdır. Merkeze göre daha uzaktır; pratikte araç veya tur ile günübirlik planlanır. Ziyaretçi merkezi vardır."
+      a: "Çatalhöyük, Neolitik dönem yerleşimi ve UNESCO dünya mirasıdır. Araç veya tur ile günübirlik planlanır."
     },
     {
       keys: ["alaaddin", "alaeddin", "tepe"],
-      a: "Alaaddin Tepesi, Selçuklu döneminin simge noktalarındandır; cami, park ve şehir manzarası sunar. Akşam yürüyüşü için sık tercih edilir."
+      a: "Alaaddin Tepesi, Selçuklu döneminin simge noktalarındandır; cami, park ve şehir manzarası sunar."
     },
     {
       keys: ["ince minare", "karatay", "medrese", "cini"],
-      a: "İnce Minareli Medrese taş işçiliği ve müze koleksiyonuyla ünlüdür (çift başlı kartal kabartmaları). Karatay Medresesi çini eserleriyle bilinir. İkisi de merkez kültür aksındadır."
+      a: "İnce Minareli Medrese taş işçiliğiyle; Karatay Medresesi çini eserleriyle bilinir. Merkez kültür aksındadır."
     },
     {
       keys: ["meram", "baglar"],
-      a: "Meram Bağları yeşil vadi, mesire ve yürüyüş alanlarıyla bilinir. Yaz akşamları serinlemek için tercih edilir; merkeze biraz uzaktır."
+      a: "Meram Bağları yeşil vadi, mesire ve yürüyüş alanlarıyla bilinir. Yaz akşamları serinlemek için tercih edilir."
     },
     {
       keys: ["beysehir", "gol", "meke", "kilistra", "eflatun"],
-      a: "Günübirlik öneriler: Beyşehir Gölü, Meke Gölü, Kilistra, Eflatunpınar ve Seydişehir (külliye, kale, Tınaztepe). Araç planı gerekir. Rotalar ve Harita sayfalarına bak."
+      a: "Günübirlik: Beyşehir Gölü + Eşrefoğlu Camii, Meke, Kilistra, Eflatunpınar, Seydişehir (külliye, Tınaztepe). Araç planı gerekir."
     },
     {
       keys: ["ulasim", "otobus", "tramvay", "atus", "konyakart", "toplu tasima", "dolmus"],
-      a: "Şehir içi ulaşımda ATUS (otobüs/tramvay bilgisi) ve Konyakart ödeme sistemi kullanılır. Güncel hat ve saat için belediyenin ATUS uygulaması/sitesi en doğru kaynaktır. Sitede Ulaşım sayfasında bağlantılar var."
+      a: "Şehir içi ulaşımda ATUS ve Konyakart kullanılır. Güncel hat için belediye ATUS uygulaması/sitesi en doğru kaynaktır."
     },
     {
       keys: ["kac gun", "ne kadar kal", "1 gun", "2 gun", "rota", "plan"],
-      a: "Merkez (Mevlana ücretsiz, ~17:00 kapanış + müzeler + etli ekmek) için 1 tam gün yetebilir; Mevlana’ya erken uğra. Sille, Seydişehir (Tınaztepe) veya Çatalhöyük ekleyeceksen 2 gün daha rahat. Rotalar sayfasında planlar var."
+      a: "Merkez için 1 gün yetebilir (Mevlana ücretsiz, ~17:00). Sille, Seydişehir, Beyşehir (Eşrefoğlu Camii) veya Çatalhöyük için 2 gün daha rahat."
     },
     {
       keys: ["konaklama", "otel", "nerede kal", "pansiyon"],
-      a: "Merkez/Mevlana çevresi yürüme mesafesi için pratik. Selçuklu tarafı daha yeni ve AVM’li. Meram daha sakin ve yeşil. KonyaGo otel satmaz; bölge seçimi için Konaklama sayfasına bak. Yoğun dönemlerde (Şeb-i Arus, bayram) erken rezervasyon iyi olur."
+      a: "Merkez/Mevlana yürüme mesafesi için pratik; Selçuklu daha yeni; Meram sakin. Yoğun dönemlerde erken rezervasyon."
     },
     {
       keys: ["seb i arus", "sebi arus", "aralik etkinlik", "etkinlik"],
-      a: "Şeb-i Arus, Mevlana’nın vuslat yıldönümü etkinlikleridir; genelde aralık ayında sema ve kültür programları yoğunlaşır. Şehir ve konaklama doluluğu artar. Bilet ve program için resmi duyuruları takip et. Etkinlikler sayfasına da bakabilirsin."
+      a: "Şeb-i Arus, Mevlana’nın vuslat yıldönümü etkinlikleridir (genelde aralık). Şehir yoğunlaşır; konaklamayı erken ayarla."
     },
     {
-      keys: ["tarih", "selcuklu", "tarihce", "osmanli"],
-      a: "Konya; Çatalhöyük’ten Roma/Bizans’a, Anadolu Selçuklu başkentliğine ve Mevlana mirasına uzanan derin bir tarihe sahiptir. Seydişehir ise 14. yy. Seyyid Harun külliyesiyle öne çıkar. Özet: Tarihçe + Gezilecek."
+      keys: ["tarih", "selcuklu", "tarihce", "osmanli", "beylik"],
+      a: "Konya: Çatalhöyük → İkonium → Selçuklu başkenti → Mevlana → Eşrefoğulları (Beyşehir–Seydişehir, 1280–1326) → Osmanlı–Cumhuriyet. Detay: Tarihçe sayfası."
     },
     {
       keys: ["hava", "mevsim", "ne zaman gel", "yaz", "kis"],
-      a: "İlkbahar ve sonbahar gezi için daha ılımandır. Yaz öğlenleri sıcak olur; dış mekânı sabah/akşam planla. Kışın tirit, bamya, arabaşı gibi lezzetler ayrı güzeldir. Güncel hava için MGM’ye bak (Pratik sayfada link var)."
+      a: "İlkbahar ve sonbahar gezi için daha ılımandır. Yaz öğlenleri sıcak olur. Kışın tirit, bamya, arabaşı ayrı güzeldir."
     },
     {
       keys: ["acil", "polis", "itfaiye", "112", "hastane"],
-      a: "Türkiye genelinde Acil Çağrı: 112. Ayrıca polis 155, jandarma 156, itfaiye 110. Pratik sayfada numaralar ve faydalı linkler listeleniyor."
+      a: "Acil Çağrı: 112. Polis 155, jandarma 156, itfaiye 110. Pratik sayfada linkler var."
     },
     {
       keys: ["hediye", "hediyelik", "ne al"],
-      a: "Klasik hediyelikler: cezerye, çini/seramik, Mevlana temalı ürünler, el işi. Mevlana çevresi ve çarşılarda bol seçenek vardır. Hediyelik sayfasına bak."
+      a: "Cezerye, çini/seramik, Mevlana temalı ürünler, el işi. Mevlana çevresi ve çarşılarda seçenek boldur."
     },
     {
       keys: ["harita", "yol tarifi", "nasil giderim", "konum"],
-      a: "Sitede Harita sayfasında önemli noktalar işaretli (Mevlana, Sille, Seydişehir, Tınaztepe vb.); Gezilecek kartlarında Google yol tarifi butonları var."
+      a: "Harita sayfasında Mevlana, Sille, Seydişehir, Tınaztepe vb. işaretli; Gezilecek’te Google yol tarifi butonları var."
     },
     {
       keys: ["kelebek", "japon parki", "aile", "cocuk"],
-      a: "Aile için: kısa Mevlana turu (ücretsiz, 17:00 öncesi bitir), Tropikal Kelebek Bahçesi, parklar; Seydişehir’de Kuğulu Park da uygun. Ardından etli ekmek molası. Rotalar sayfasında aile planı var."
+      a: "Aile: Mevlana (ücretsiz, 17:00 öncesi), Kelebek Bahçesi, parklar; Seydişehir Kuğulu Park. Sonra etli ekmek."
     },
     {
       keys: ["konyago", "bu site", "sen kimsin", "yapay zeka", "ai"],
-      a: "Ben KonyaGo AI — sadece Konya ile ilgili sorulara yardımcı olmak için tasarlandım. Gezi, mutfak, tarih, ulaşım, konaklama ve pratik bilgilerde yol gösteririm. Resmi kurum sitesi değilim. Soru sınırın yok."
+      a: "Ben KonyaGo AI — sadece Konya ile ilgili sorulara yardımcı olurum. Soru sınırın yok."
     },
     {
       keys: ["merhaba", "selam", "gunaydin", "iyi gunler", "hey"],
-      a: "Merhaba! Ben KonyaGo AI. Konya hakkında ne sormak istersin? Gezi, yemek, ulaşım, tarih, konaklama… hepsi serbest, limit yok."
+      a: "Merhaba! Ben KonyaGo AI. Konya hakkında ne sormak istersin? Limit yok."
     },
     {
       keys: ["tesekkur", "sagol", "eyvallah"],
-      a: "Rica ederim. Başka bir Konya sorusun olursa yazman yeterli. İyi geziler!"
+      a: "Rica ederim. Başka Konya sorusun olursa yaz. İyi geziler!"
     }
   ];
 
@@ -152,7 +156,8 @@
       "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "meke",
       "kilistra", "gez", "turist", "otel", "konak", "harita", "rota",
       "mutfak", "yemek", "lezzet", "muze", "sema", "seydisehir", "seyit",
-      "harun", "kugulu", "ucretsiz", "tinaztepe", "ferzene"
+      "harun", "kugulu", "ucretsiz", "tinaztepe", "ferzene", "esref",
+      "beylik", "suleyman bey"
     ])) return true;
     if (hasAny(t, ["nerede", "ne yenir", "ne gezilir", "kac gun", "nasil gider", "ne yapilir", "tavsiye"])) return true;
     if (hasAny(t, ["merhaba", "selam", "tesekkur", "konyago", "sen kimsin"])) return true;
@@ -164,11 +169,11 @@
     if (!t) return "Bir şey yaz, Konya hakkında yardımcı olayım.";
 
     if (hasAny(t, OFF) && !isKonyaRelated(t)) {
-      return "Bu konuda yardımcı olamıyorum. Ben yalnızca Konya ile ilgili sorulara cevap veriyorum — gezi, yemek, tarih, ulaşım, konaklama gibi. Konya’ya dair sorunu yazabilirsin.";
+      return "Bu konuda yardımcı olamıyorum. Ben yalnızca Konya ile ilgili sorulara cevap veriyorum."
     }
 
     if (!isKonyaRelated(t) && t.split(" ").length > 2) {
-      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Mevlana ücretsiz mi?», «Seydişehir’de ne gezilir?», «Tınaztepe nerede?» — bu tarz sorulara sınırsız cevap verebilirim.";
+      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Eşrefoğulları nedir?», «Mevlana ücretsiz mi?», «Seydişehir’de ne gezilir?»"
     }
 
     var best = null;
@@ -187,7 +192,7 @@
 
     if (best && bestScore > 0) return best.a;
 
-    return "Konya ile ilgili anladım ama net eşleştiremedim. Şunlardan birini deneyebilirsin:\n• Mevlana (ücretsiz, ~17:00)\n• Seydişehir: Seyyid Harun, kale, Tınaztepe\n• Etli ekmek, bamya, tirit\n• 1–2 günlük rota, ATUS\n\nSorunu biraz daha açarsan yardımcı olayım.";
+    return "Konya ile ilgili anladım ama net eşleştiremedim. Deneyebilirsin:\n• Eşrefoğulları Beyliği\n• Mevlana / Seydişehir / Beyşehir\n• Etli ekmek, rota, ATUS\n\nSorunu biraz daha aç."
   }
 
   function addMsg(text, who) {
@@ -210,7 +215,7 @@
     }, 400 + Math.random() * 500);
   }
 
-  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya hakkında sorulara cevap veririm — limit yok.\n\nÖrnek: «Mevlana ücretsiz mi?» · «Seydişehir tarihi yerler?» · «Tınaztepe nedir?»", "bot");
+  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya — limit yok.\n\nÖrnek: «Eşrefoğulları nedir?» · «Mevlana ücretsiz mi?» · «Seydişehir tarihi»", "bot");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
