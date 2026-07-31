@@ -41,7 +41,6 @@
     } catch (e) { throw e; }
   }
 
-  /* 2026: Google AQ. (auth) + eski AIza (standard) */
   function looksLikeGeminiKey(k) {
     k = (k || "").trim();
     if (k.length < 20) return false;
@@ -58,11 +57,11 @@
       var ok = looksLikeGeminiKey(k);
       statusEl.className = "gemini-status " + (ok ? "ok" : "err");
       statusEl.textContent = ok
-        ? "Anahtar kayıtlı (" + k.slice(0, 6) + "…" + k.slice(-4) + "). Gemini seçebilirsin."
-        : "Anahtar kayıtlı ama format şüpheli (" + k.slice(0, 6) + "…). Yine de dene veya yeni key al.";
+        ? "Kayıtlı (" + k.slice(0, 6) + "…" + k.slice(-4) + ")"
+        : "Kayıtlı (format kontrol et)";
     } else {
       statusEl.className = "gemini-status";
-      statusEl.textContent = "Anahtar yok — Yerel motor kullanılabilir.";
+      statusEl.textContent = "Anahtar yok.";
     }
   }
 
@@ -74,8 +73,8 @@
     if (titleEl) titleEl.textContent = mode === "gemini" ? "KonyaGo · Gemini" : "KonyaGo AI";
     if (subEl) {
       subEl.textContent = mode === "gemini"
-        ? "Google Gemini · Konya-only"
-        : "Yerel motor · sınırsız · Konya-only";
+        ? "Google Gemini · Konya asistanı"
+        : "Yerel motor · Konya asistanı";
     }
   }
 
@@ -84,51 +83,40 @@
     if (!v || v.length < 20) {
       if (statusEl) {
         statusEl.className = "gemini-status err";
-        statusEl.textContent = "API anahtarı eksik veya çok kısa.";
+        statusEl.textContent = "Anahtar eksik veya çok kısa.";
       }
-      alert("API anahtarı eksik veya çok kısa.\nAI Studio → Create API key → Copy key");
       return false;
     }
-    try { setKey(v); } catch (e) {
-      alert("Kayıt başarısız (gizli sekme / depolama kapalı olabilir).");
-      return false;
-    }
+    try { setKey(v); } catch (e) { return false; }
     if (keyInput) keyInput.value = "";
     updateStatus();
-    addMsg("Anahtar kaydedildi. Üstten «Gemini» seç, soru sor.", "bot");
-    alert("Kaydedildi! Üstteki Gemini butonuna bas.");
     return true;
   }
 
   if (btnLocal) btnLocal.addEventListener("click", function () { setMode("local"); });
   if (btnGemini) btnGemini.addEventListener("click", function () {
     if (!getKey()) {
-      addMsg("Önce API key kaydet (AQ. veya AIza ile başlar).", "bot");
       setMode("local");
-      var box = document.getElementById("geminiSetup");
-      if (box) box.scrollIntoView({ behavior: "smooth", block: "center" });
+      addMsg("Gemini şu an kullanılamıyor. Yerel asistanla devam edebilirsin — Mevlana, rota, lezzet… sor yeter.", "bot");
       return;
     }
     setMode("gemini");
-    addMsg("Gemini modu açık. Konya hakkında sorabilirsin.", "bot");
   });
 
   if (keySave) keySave.addEventListener("click", function (e) {
     e.preventDefault();
-    saveFromInput();
+    if (saveFromInput()) addMsg("Ayar kaydedildi. Gemini’yi seçip soru sorabilirsin.", "bot");
   });
   if (keyClear) keyClear.addEventListener("click", function () {
     try { setKey(""); } catch (e) {}
     updateStatus();
     setMode("local");
     geminiHistory = [];
-    addMsg("Anahtar silindi. Yerel motor.", "bot");
   });
 
   updateStatus();
   setMode(mode === "gemini" && getKey() ? "gemini" : "local");
 
-  /* ===== Yerel motor (özet) ===== */
   function norm(s) {
     return (s || "").toLowerCase()
       .replace(/ı/g, "i").replace(/İ/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
@@ -141,24 +129,29 @@
   }
   var OFF = ["bitcoin", "kripto", "python ders", "siyaset", "futbol skor", "istanbulda ne gezilir", "ankara gezi"];
   var KONYA_SIGNALS = ["konya", "mevlana", "rumi", "sille", "meram", "catalhoyuk", "alaaddin", "etli", "bamya", "tirit", "arabasi", "atus", "konyakart", "beysehir", "seydisehir", "esref", "aksehir", "nasreddin", "karatay", "selcuk"];
-  var FOLLOW = ["oraya", "nasil giderim", "saat kac", "daha fazla", "anlat", "detay", "peki"];
   var CARDS = [
-    { id: "mevlana", keys: ["mevlana", "rumi", "sema"], w: 12, a: function () { return "Mevlana Müzesi: genelde ücretsiz, kapanış ~17:00 (doğrula). Sabah git."; } },
-    { id: "etli", keys: ["etli ekmek", "etliekmek"], w: 14, a: function () { return "Etli ekmek Konya imzası. Taş fırın, yanına ayran."; } },
-    { id: "sille", keys: ["sille"], w: 11, a: function () { return "Sille yarım gün: taş evler, Aya Eleni."; } },
-    { id: "plan2", keys: ["hafta sonu", "2 gun", "iki gun"], w: 13, a: function () { return "Cts: Mevlana+merkez. Paz: Sille veya Beyşehir."; } },
-    { id: "yemek", keys: ["bamya", "arabasi", "tirit", "yemek", "mutfak"], w: 9, a: function (t) {
-      if (hasAny(t, ["bamya"])) return "Bamya çorbası Konya usulü.";
-      if (hasAny(t, ["arabasi"])) return "Arabaşı kış klasiği.";
-      return "Etli ekmek, fırın kebabı, tirit, bamya, arabaşı, hoşmerim.";
+    { id: "mevlana", keys: ["mevlana", "rumi", "sema"], w: 12, a: function () { return "Mevlana Müzesi genelde ücretsiz; kapanış çoğu gün ~17:00 civarı (resmî kaynaktan doğrula). Sabah veya öğleden önce gitmek kalabalıktan kaçınmak için iyi olur."; } },
+    { id: "etli", keys: ["etli ekmek", "etliekmek"], w: 14, a: function () { return "Etli ekmek Konya’nın imza lezzeti. İnce hamur, kıymalı harç, taş fırın — yanına ayran yakışır. Merkez ve Mevlana çevresinde öğle saatleri yoğun olur."; } },
+    { id: "sille", keys: ["sille"], w: 11, a: function () { return "Sille, merkeze yakın tarihi bir durak. Taş evler ve Aya Eleni ile yarım günlük gezi için ideal. Sabah Mevlana, öğleden sonra Sille dengeli bir plan."; } },
+    { id: "plan2", keys: ["hafta sonu", "2 gun", "iki gun", "1 gun", "bir gun"], w: 13, a: function () { return "Kısa plan önerisi:\n• 1 gün: Mevlana → etli ekmek → Alaaddin / medreseler → akşam Meram\n• 2 gün: ilk gün merkez, ikinci gün Sille veya Beyşehir (araçla)"; } },
+    { id: "yemek", keys: ["bamya", "arabasi", "tirit", "yemek", "mutfak", "lezzet"], w: 9, a: function (t) {
+      if (hasAny(t, ["bamya"])) return "Bamya çorbası Konya usulünde ekşili ve doyurucu; özellikle kış sofralarında sevilir.";
+      if (hasAny(t, ["arabasi"])) return "Arabaşı İç Anadolu’nun kış klasiği: unlu kısım ve et suyu bir arada.";
+      if (hasAny(t, ["tirit"])) return "Tirit; ekmek, et suyu ve kıyma/kuşbaşı ile yapılır — doyurucu bir Konya tabağı.";
+      return "Konya mutfağında öne çıkanlar: etli ekmek, fırın kebabı, tirit, bamya, arabaşı, hoşmerim ve cezerye.";
     } },
-    { id: "self", keys: ["sen kimsin", "konyago"], w: 10, a: function () { return "KonyaGo AI — Yerel veya Gemini. Sadece Konya."; } }
+    { id: "self", keys: ["sen kimsin", "konyago"], w: 10, a: function () { return "Ben KonyaGo asistanıyım. Gezi, lezzet, tarih ve ulaşımda Konya için yardımcı olurum."; } }
   ];
   function answerLocal(q) {
     var t = norm(q);
-    if (!t) return "Konya hakkında sor.";
-    if (hasAny(t, ["merhaba", "selam"])) return "Merhaba! Yerel veya Gemini ile Konya sor.";
-    if (hasAny(t, OFF) && !hasAny(t, KONYA_SIGNALS)) return "Sadece Konya konuları.";
+    if (!t) return "Ne merak ediyorsun? Gezi, yemek veya tarih yazman yeterli.";
+    if (hasAny(t, ["merhaba", "selam", "gunaydin", "iyi gunler"])) {
+      return "Merhaba! Konya için buradayım. Mevlana, etli ekmek, hafta sonu planı veya bir ilçe sorabilirsin.";
+    }
+    if (hasAny(t, ["tesekkur", "sagol"])) return "Rica ederim. İyi geziler!";
+    if (hasAny(t, OFF) && !hasAny(t, KONYA_SIGNALS)) {
+      return "Ben Konya odaklıyım. Gezi rotası, lezzet veya tarih sorarsan hemen yardımcı olurum.";
+    }
     var scored = [];
     for (var i = 0; i < CARDS.length; i++) {
       var s = 0, keys = CARDS[i].keys;
@@ -166,13 +159,14 @@
       if (s > 0) scored.push({ c: CARDS[i], s: s });
     }
     scored.sort(function (a, b) { return b.s - a.s; });
-    if (!scored.length) return "Konya gezi / yemek / tarih sorabilirsin.";
+    if (!scored.length) {
+      return "Konya ile ilgili daha net sorabilirsin. Örneğin: «1 günde ne gezilir?», «Etli ekmek», «Sille».";
+    }
     lastTopics = [scored[0].c.id];
     return typeof scored[0].c.a === "function" ? scored[0].c.a(t) : String(scored[0].c.a);
   }
 
-  /* ===== Gemini ===== */
-  var SYSTEM = "Sen KonyaGo AI’sın. Yalnızca Konya (Türkiye) ili/ilçeleri: gezi, tarih, mutfak, ulaşım. Konya dışı reddet. Türkçe, samimi, kısa-orta. Uydurma adres/telefon yok. Saat-ücret için resmî kaynak de.";
+  var SYSTEM = "Sen KonyaGo AI’sın. Yalnızca Konya (Türkiye) ili ve ilçeleri hakkında yardımcı ol: gezi, tarih, mutfak, ulaşım. Konya dışı sorularda nazikçe reddet. Türkçe, samimi, kısa-orta cevap ver. Uydurma adres veya telefon verme. Saat ve ücret için resmî kaynakları doğrulamayı söyle.";
 
   var GEMINI_MODELS = [
     "gemini-2.5-flash",
@@ -205,8 +199,6 @@
       var model = GEMINI_MODELS[idx];
       var base = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent";
 
-      // 1) header (AQ. auth key için önerilen)
-      // 2) query param yedek
       function doFetch(useHeader) {
         var url = useHeader ? base : (base + "?key=" + encodeURIComponent(key));
         var headers = { "Content-Type": "application/json" };
@@ -217,9 +209,9 @@
       return doFetch(true)
         .then(function (r) {
           if (r.status === 400 || r.status === 401 || r.status === 403) {
-            return doFetch(false).then(function (r2) { return { r: r2, via: "query" }; });
+            return doFetch(false).then(function (r2) { return { r: r2 }; });
           }
-          return { r: r, via: "header" };
+          return { r: r };
         })
         .then(function (pack) {
           var r = pack.r;
@@ -227,7 +219,6 @@
             if (!r.ok) {
               var msg = (j && j.error && j.error.message) || ("HTTP " + r.status);
               errors.push(model + ": " + String(msg).slice(0, 100));
-              // key tamamen bozuksa erken çık
               if (/API key not valid|INVALID_ARGUMENT.*key|PERMISSION_DENIED/i.test(msg) && idx >= 1) {
                 throw new Error(msg);
               }
@@ -259,7 +250,6 @@
     return tryModel(0);
   }
 
-  /* ===== UI ===== */
   function addMsg(text, who, meta) {
     var div = document.createElement("div");
     div.className = "ai-msg ai-" + who;
@@ -299,13 +289,18 @@
   function addTyping() {
     var tip = document.createElement("div");
     tip.className = "ai-msg ai-bot ai-typing";
-    tip.textContent = mode === "gemini" ? "Gemini düşünüyor…" : "Düşünüyor…";
+    tip.textContent = mode === "gemini" ? "Yanıt hazırlanıyor…" : "Düşünüyor…";
     chat.appendChild(tip);
     chat.scrollTop = chat.scrollHeight;
     return tip;
   }
 
-  addMsg("Merhaba! Yerel (anahtarsız) veya Gemini (AQ./AIza key).\nKey: aistudio.google.com/apikey → Copy key → Kaydet → Gemini.", "bot");
+  addMsg(
+    "Merhaba! Ben KonyaGo asistanıyım.\n\n" +
+    "Konya’da ne gezilir, nerede ne yenir, nasıl bir rota çıkarılır — sor, birlikte planlayalım.\n\n" +
+    "Hızlı başlamak için alttaki önerilere de dokunabilirsin.",
+    "bot"
+  );
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -328,18 +323,25 @@
       tip.remove();
       var raw = (err && err.message) || "";
       var msg;
-      if (/no-key/i.test(raw)) msg = "Key yok. Yukarıdan kaydet.";
-      else if (/API key not valid|invalid.*key/i.test(raw)) {
-        msg = "API key geçersiz.\n1) AI Studio’da Delete key\n2) Yeni Create API key\n3) Copy key → sitede Sil → yapıştır → Kaydet\n\nKey ekran görüntüsüne düştüyse mutlaka yenile.";
-      } else if (/429|quota|RESOURCE/i.test(raw)) msg = "Kota doldu. Biraz bekle veya Yerel kullan.";
-      else msg = "Gemini: " + String(raw).slice(0, 240) + "\n\nYerel moda geçebilirsin.";
-      done(msg, "hata");
+      if (/no-key/i.test(raw)) {
+        msg = "Bu mod şu an kapalı. Yerel asistanla devam edebilirsin.";
+        setMode("local");
+      } else if (/API key not valid|invalid.*key/i.test(raw)) {
+        msg = "Bağlantı kurulamadı. Yerel moda geçildi — sorunu yine sorabilirsin.";
+        setMode("local");
+      } else if (/429|quota|RESOURCE/i.test(raw)) {
+        msg = "Yoğunluk nedeniyle yanıt gecikti. Biraz sonra tekrar dene veya Yerel ile devam et.";
+      } else {
+        msg = "Şu an yanıt alınamadı. Yerel asistanla devam edebilirsin.";
+        setMode("local");
+      }
+      done(msg);
     }
 
     if (mode === "gemini") {
-      callGemini(q).then(function (t) { done(t, "Gemini"); }).catch(fail);
+      callGemini(q).then(function (t) { done(t); }).catch(fail);
     } else {
-      setTimeout(function () { done(answerLocal(q), "Yerel"); }, 220);
+      setTimeout(function () { done(answerLocal(q)); }, 220);
     }
   });
 })();
