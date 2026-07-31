@@ -8,7 +8,7 @@
 <title>KonyaGo | Konya Şehir Rehberi</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/app.css?v=9">
 <link rel="stylesheet" href="assets/css/wx.css">
 <style>
 .ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
@@ -20,9 +20,7 @@
 }
 .ilce-pill small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);margin-top:2px}
 .ilce-pill:hover{border-color:var(--green);background:#e2f3ea}
-.quick-search{
-  display:flex;gap:8px;margin:12px 0;flex-wrap:wrap
-}
+.quick-search{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
 .quick-search input{
   flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);
   border-radius:999px;font:inherit;font-size:.92rem
@@ -68,8 +66,8 @@
 
 <main class="container">
   <div class="visit-row" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 4px">
-    <div class="visit-chip">👁 Bugün: <span id="visitCount">—</span></div>
-    <div class="visit-chip">📊 Toplam: <span id="visitTotal">—</span></div>
+    <div class="visit-chip">👁 Bugün: <span id="visitCount">…</span></div>
+    <div class="visit-chip">📊 Toplam: <span id="visitTotal">…</span></div>
   </div>
 
   <section class="hero">
@@ -136,7 +134,7 @@
   <a class="card" href="ai.html" style="margin:14px 0;border-color:rgba(13,122,79,.35);background:linear-gradient(135deg,#e8f5ee,#f5ecd0)">
     <div class="ico">✨</div>
     <h3>KonyaGo AI</h3>
-    <p>Sınırsız Konya soru-cevap · bağlamlı asistan</p>
+    <p>Konya soru-cevap asistanı</p>
   </a>
 
   <section class="grid grid-2 grid-4" aria-label="Bölümler">
@@ -174,7 +172,7 @@
 <script src="assets/js/duyurular.js"></script>
 <script src="assets/js/kesfet-data.js"></script>
 <script src="assets/js/features.js"></script>
-<script src="assets/js/app.js" defer></script>
+<script src="assets/js/app.js?v=9" defer></script>
 <script>
 (function(){
   var box=document.getElementById('homeDuyuru');
