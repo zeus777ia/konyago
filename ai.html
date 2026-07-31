@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo AI — Konya hakkında sınırsız soru-cevap asistanı.">
+<meta name="description" content="KonyaGo AI — Konya odaklı sınırsız gezi, mutfak, tarih ve ulaşım asistanı.">
 <title>KonyaGo AI | Konya Asistanı</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
@@ -78,16 +78,66 @@
   <div class="page-head">
     <a href="index.html">← Ana sayfa</a>
     <h1>KonyaGo AI</h1>
-    <p>Sadece Konya · Sınırsız soru · Gezi, yemek, tarih, ulaşım</p>
+    <p>Konya’ya özel dijital asistan — sınırsız soru, net cevap.</p>
   </div>
 
-  <div class="ai-wrap">
+  <div class="prose">
+    <p><strong>KonyaGo AI</strong>, Konya şehir rehberi için tasarlanmış bir soru-cevap asistanıdır. Amacı; ziyaretçilerin ve yerelin Konya hakkında hızlı, sade ve işe yarar bilgi almasını sağlamaktır. Sohbet gibi yazarsın, asistan Konya bağlamında yanıtlar.</p>
+  </div>
+
+  <div class="info">
+    <h2>Ne yapar?</h2>
+    <ul>
+      <li>Gezilecek yerleri anlatır (Mevlana, Sille, Alaaddin, Çatalhöyük, Meram…)</li>
+      <li>Yöresel lezzetleri açıklar (etli ekmek, fırın kebabı, tirit, bamya, arabaşı, hoşmerim…)</li>
+      <li>1–2 günlük rota ve aile planı önerir</li>
+      <li>Ulaşım hakkında yönlendirir (ATUS, Konyakart, genel toplu taşıma)</li>
+      <li>Konaklama bölgeleri için ipucu verir (merkez, Selçuklu, Meram)</li>
+      <li>Şeb-i Arus ve dönemsel etkinlik notlarını paylaşır</li>
+      <li>Acil numaralar ve pratik bilgilere köprü kurar</li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h2>Nasıl çalışır?</h2>
+    <ul>
+      <li><strong>Sadece Konya:</strong> Konu Konya dışına çıkarsa nazikçe reddeder ve seni tekrar Konya sorularına yönlendirir.</li>
+      <li><strong>Sınırsız soru:</strong> Günlük limit, üyelik veya kayıt yoktur. İstediğin kadar sorabilirsin.</li>
+      <li><strong>Sohbet arayüzü:</strong> Aşağıdaki kutuya yazman veya hazır soru butonlarına basman yeterlidir.</li>
+      <li><strong>Rehber bağlantısı:</strong> Cevaplar sitedeki Gezilecek, Mutfak, Rotalar, Harita ve Pratik bölümleriyle uyumludur.</li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h2>Örnek sorular</h2>
+    <ul>
+      <li>«1 günde Konya’da ne gezilir?»</li>
+      <li>«Etli ekmek nedir, nerede yenir?»</li>
+      <li>«Sille’ye nasıl gidilir?»</li>
+      <li>«Bamya çorbası ve arabaşı nedir?»</li>
+      <li>«ATUS ve Konyakart nasıl kullanılır?»</li>
+      <li>«Şeb-i Arus ne zaman, nelere dikkat etmeliyim?»</li>
+      <li>«Ailemle nereye gidebilirim?»</li>
+    </ul>
+  </div>
+
+  <div class="info warn">
+    <h2>Bilmen gerekenler</h2>
+    <ul>
+      <li>KonyaGo AI resmi belediye veya müze sitesi değildir.</li>
+      <li>Müze ücreti, açılış saati, hat güzergâhı gibi bilgiler dönemsel değişebilir; kesin bilgi için resmi kurumları kontrol et.</li>
+      <li>Tıbbi, hukuki veya Konya dışı genel konularda cevap vermez.</li>
+      <li>Bu sürüm Konya bilgi bankası ile çalışır; genel sohbet botu değildir.</li>
+    </ul>
+  </div>
+
+  <div class="ai-wrap" style="margin-top:8px">
     <div class="ai-panel">
       <div class="ai-head">
         <img src="assets/img/eagle.svg" alt="">
         <div>
           <strong>KonyaGo AI</strong>
-          <span>Konya asistanı · limit yok</span>
+          <span>Konya asistanı · limit yok · hemen sor</span>
         </div>
       </div>
       <div id="aiChat" aria-live="polite"></div>
@@ -107,10 +157,22 @@
     </div>
   </div>
 
-  <p class="note" style="margin-top:16px">KonyaGo AI yalnızca Konya ile ilgili sorulara yanıt verir. Resmi ücret/saat için kurum kaynaklarını kontrol edin.</p>
+  <div class="info" style="margin-top:16px">
+    <h2>Sitede ilgili sayfalar</h2>
+    <div class="link-row">
+      <a class="btn btn-ghost btn-sm" href="gezilecek.html">Gezilecek</a>
+      <a class="btn btn-ghost btn-sm" href="mutfak.html">Mutfak</a>
+      <a class="btn btn-ghost btn-sm" href="rotalar.html">Rotalar</a>
+      <a class="btn btn-ghost btn-sm" href="harita.html">Harita</a>
+      <a class="btn btn-ghost btn-sm" href="ulasim.html">Ulaşım</a>
+      <a class="btn btn-ghost btn-sm" href="pratik.html">Pratik</a>
+    </div>
+  </div>
+
+  <p class="note">© 2026 KonyaGo AI · Yalnızca Konya odaklı bilgilendirme</p>
 </main>
 
-<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="index.html">Ana sayfa</a></div></footer>
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
   <a href="ai.html" aria-current="page"><span class="i">✨</span>AI</a>
