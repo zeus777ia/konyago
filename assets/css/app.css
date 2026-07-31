@@ -20,6 +20,7 @@
   --mnav-h:64px;
   --ticker-h:36px;
   --eczane-h:32px;
+  --borsa-h:32px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -44,16 +45,14 @@ a{color:var(--green)}
 .ad-ticker-item a{color:#ffe9a8;font-weight:800;text-decoration:underline;text-underline-offset:2px}
 .ad-ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.ad-ticker-track{animation:none}}
+@media (prefers-reduced-motion:reduce){.ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track{animation:none!important}}
 
-/* Nöbetçi eczane kayan şerit */
 .eczane-ticker{
   position:sticky;top:calc(var(--ticker-h) + var(--safe-t));z-index:109;
   display:flex;align-items:stretch;min-height:var(--eczane-h);
   background:linear-gradient(90deg,#063d28,#0a5c3b 40%,#0d7a4f);
   color:#fff;font-size:.76rem;font-weight:600;
   border-bottom:1px solid rgba(201,162,39,.35);
-  box-shadow:0 2px 8px rgba(6,61,40,.15);
 }
 .eczane-ticker-label{
   flex:0 0 auto;padding:0 12px;background:rgba(0,0,0,.25);
@@ -73,11 +72,42 @@ a{color:var(--green)}
 .eczane-ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 16px;opacity:.96}
 .eczane-ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
 @keyframes eczaneMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.eczane-ticker-track{animation:none}}
-body:has(.eczane-ticker) .site-header{top:calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t))}
+
+/* Borsa / döviz kayan şerit */
+.borsa-ticker{
+  position:sticky;top:calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t));z-index:108;
+  display:flex;align-items:stretch;min-height:var(--borsa-h);
+  background:linear-gradient(90deg,#1a2e24,#243d32 35%,#2a4a3a);
+  color:#e8f5ee;font-size:.76rem;font-weight:700;
+  border-bottom:1px solid rgba(201,162,39,.4);
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+.borsa-ticker-label{
+  flex:0 0 auto;padding:0 12px;background:rgba(201,162,39,.2);
+  color:#f5ecd0;white-space:nowrap;display:flex;align-items:center;font-size:.72rem;font-weight:800;
+}
+.borsa-ticker-viewport{
+  flex:1;overflow:hidden;
+  mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+}
+.borsa-ticker-track{
+  display:inline-flex;white-space:nowrap;align-items:center;
+  animation:borsaMarquee 40s linear infinite;padding:7px 0;width:max-content;
+}
+.borsa-ticker:hover .borsa-ticker-track{animation-play-state:paused}
+.borsa-ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 18px}
+.borsa-ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+@keyframes borsaMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+body:has(.eczane-ticker):not(:has(.borsa-ticker)) .site-header{top:calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t))}
+body:has(.borsa-ticker) .site-header{top:calc(var(--ticker-h) + var(--eczane-h) + var(--borsa-h) + var(--safe-t))}
+body:has(.borsa-ticker):not(:has(.eczane-ticker)) .site-header{top:calc(var(--ticker-h) + var(--borsa-h) + var(--safe-t))}
+body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker{top:calc(var(--ticker-h) + var(--safe-t))}
+
 @media (max-width:480px){
-  .eczane-ticker{font-size:.7rem}
-  .eczane-ticker-label{padding:0 8px;font-size:.65rem}
+  .eczane-ticker,.borsa-ticker{font-size:.7rem}
+  .eczane-ticker-label,.borsa-ticker-label{padding:0 8px;font-size:.65rem}
 }
 
 .site-header{position:sticky;top:calc(var(--ticker-h) + var(--safe-t));z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:2px solid var(--green);box-shadow:0 2px 16px rgba(13,122,79,.08)}
@@ -214,7 +244,7 @@ a.card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:var
   .container{padding:0 24px}.header-inner{min-height:68px}.logo-mark{width:48px;height:48px}.nav-desktop{display:flex}.mnav{display:none}
   --ticker-h:40px;main{padding:20px 0 48px}.hero{padding:28px 0 18px}.hero-eagle{width:112px;height:112px}
   .ad-mobile,.ad-mobile-strip{display:none}.ad-banner,.ad-banner-wide{display:block}
-  .ad-rail{display:block;position:fixed;top:calc(90px + var(--ticker-h) + var(--eczane-h));width:128px;z-index:50}
+  .ad-rail{display:block;position:fixed;top:calc(90px + var(--ticker-h) + var(--eczane-h) + var(--borsa-h));width:128px;z-index:50}
   .ad-rail-left{left:max(8px,calc(50% - 520px - 138px))}.ad-rail-right{right:max(8px,calc(50% - 520px - 138px))}
   .grid-2{grid-template-columns:1fr 1fr}.grid-4{grid-template-columns:repeat(4,1fr)}
   .place-visual{height:150px}#map{height:520px}.site-footer{padding:28px 16px 24px}
