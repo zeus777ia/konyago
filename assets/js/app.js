@@ -28,13 +28,21 @@
     }
   } catch (e) {}
 
-  /* Nöbetçi eczane kayan şerit */
   try {
     if (!document.querySelector("script[data-nobetci]")) {
       var ns = document.createElement("script");
       ns.src = "assets/js/nobetci.js";
       ns.setAttribute("data-nobetci", "1");
       document.head.appendChild(ns);
+    }
+  } catch (e) {}
+
+  try {
+    if (!document.querySelector("script[data-borsa]")) {
+      var bs = document.createElement("script");
+      bs.src = "assets/js/borsa.js";
+      bs.setAttribute("data-borsa", "1");
+      document.head.appendChild(bs);
     }
   } catch (e) {}
 
@@ -143,7 +151,6 @@
     var elDay = document.getElementById("visitCount");
     var elTotal = document.getElementById("visitTotal");
     if (!elDay && !elTotal) return;
-
     if (elDay) elDay.textContent = "…";
     if (elTotal) elTotal.textContent = "…";
 
@@ -166,9 +173,7 @@
     var keyTotal = "visits-total";
     var sessionFlag = "konyago_shared_hit_" + day;
     var alreadyHit = false;
-    try {
-      alreadyHit = sessionStorage.getItem(sessionFlag) === "1";
-    } catch (e) {}
+    try { alreadyHit = sessionStorage.getItem(sessionFlag) === "1"; } catch (e) {}
 
     function parseCount(data) {
       if (data == null) return null;
@@ -252,7 +257,6 @@
     }
 
     var doHit = !alreadyHit;
-
     Promise.all([
       elDay ? fetchKey(keyDay, doHit).catch(function () { return null; }) : Promise.resolve(null),
       elTotal ? fetchKey(keyTotal, doHit).catch(function () { return null; }) : Promise.resolve(null)
@@ -260,7 +264,6 @@
       var dayN = results[0];
       var totalN = results[1];
       if (doHit && (dayN != null || totalN != null)) markHit();
-
       if (dayN != null) showDay(dayN);
       else {
         try {
@@ -269,7 +272,6 @@
           else showDay(null);
         } catch (e) { showDay(null); }
       }
-
       if (totalN != null) showTotal(totalN);
       else {
         try {
