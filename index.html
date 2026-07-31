@@ -4,12 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo — Konya şehir rehberi: keşfet, gezi, mutfak, hava, nöbetçi eczane, AI.">
-<title>KonyaGo | Konya Şehir Rehberi</title>
+<title>KonyaGo | Konya Gezilecek Yerler, Mutfak, Rota ve Şehir Rehberi</title>
+<meta name="description" content="Konya şehir rehberi: Mevlana, Sille, etli ekmek, gezilecek yerler, rotalar, tarihçe, nöbetçi eczane, hava durumu ve KonyaGo AI asistanı. Güncel ve ücretsiz.">
+<meta name="keywords" content="Konya, Konya gezilecek yerler, Mevlana, Sille, etli ekmek, Konya rehber, Konya rota, Beyşehir, Seydişehir, Konya mutfak, KonyaGo">
+<meta name="author" content="KonyaGo">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://konyago.com.tr/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="KonyaGo">
+<meta property="og:title" content="KonyaGo | Konya Şehir Rehberi">
+<meta property="og:description" content="Mevlana’dan etli ekmeğe, Sille’den Beyşehir’e — Konya gezi, mutfak, rota ve pratik bilgiler.">
+<meta property="og:url" content="https://konyago.com.tr/">
+<meta property="og:image" content="https://konyago.com.tr/assets/img/eagle.svg">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KonyaGo | Konya Şehir Rehberi">
+<meta name="twitter:description" content="Konya gezilecek yerler, mutfak, rotalar ve AI asistanı.">
+
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="stylesheet" href="assets/css/app.css?v=9">
 <link rel="stylesheet" href="assets/css/wx.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "KonyaGo",
+  "alternateName": "Konya Şehir Rehberi",
+  "url": "https://konyago.com.tr/",
+  "description": "Konya gezilecek yerler, mutfak, rotalar, tarihçe ve şehir rehberi.",
+  "inLanguage": "tr-TR",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://konyago.com.tr/ara.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "KonyaGo",
+    "url": "https://konyago.com.tr/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://konyago.com.tr/assets/img/eagle.svg"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TouristInformationCenter",
+  "name": "KonyaGo",
+  "url": "https://konyago.com.tr/",
+  "description": "Konya için dijital şehir rehberi: gezi, mutfak, ulaşım ve pratik bilgiler.",
+  "areaServed": {
+    "@type": "City",
+    "name": "Konya",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Konya",
+      "addressCountry": "TR"
+    }
+  }
+}
+</script>
+
 <style>
 .ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
 @media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
@@ -49,7 +112,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
-      <img class="logo-mark" src="assets/img/eagle.svg" width="48" height="48" alt="Selçuklu kartal">
+      <img class="logo-mark" src="assets/img/eagle.svg" width="48" height="48" alt="KonyaGo Selçuklu kartal logosu">
       <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
@@ -72,8 +135,8 @@
 
   <section class="hero">
     <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="">
-    <h1>Konya’yı keşfet</h1>
-    <p>Selçuklu’nun başkenti · Mevlana’nın şehri · Gezi, mutfak, keşfet ve <strong>KonyaGo AI</strong></p>
+    <h1>Konya gezilecek yerler ve şehir rehberi</h1>
+    <p>Selçuklu’nun başkenti · Mevlana’nın şehri · Gezi, mutfak, rotalar ve <strong>KonyaGo AI</strong></p>
     <div class="actions">
       <a class="btn btn-primary" href="kesfet.html">🔍 Keşfet</a>
       <a class="btn btn-ghost" href="ai.html">✨ AI</a>
@@ -82,7 +145,7 @@
   </section>
 
   <form class="quick-search" action="ara.html" method="get" role="search">
-    <input type="search" name="q" id="homeQ" placeholder="İşletme, müze, yemek, eczane…" aria-label="Ara">
+    <input type="search" name="q" id="homeQ" placeholder="İşletme, müze, yemek, eczane…" aria-label="Konya’da ara">
     <button type="submit" class="btn btn-primary">Ara</button>
   </form>
 
@@ -139,10 +202,10 @@
 
   <section class="grid grid-2 grid-4" aria-label="Bölümler">
     <a class="card" href="kesfet.html"><div class="ico">🔍</div><h3>Keşfet</h3><p>Kategori + ilçe filtre</p></a>
-    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek</h3><p>Müze, Sille, merkez</p></a>
+    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek yerler</h3><p>Mevlana, Sille, merkez</p></a>
     <a class="card" href="rotalar.html"><div class="ico">🧭</div><h3>Rotalar</h3><p>1–2 gün planları</p></a>
-    <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Mutfak</h3><p>Etli ekmek & lezzet</p></a>
-    <a class="card" href="etkinlikler.html"><div class="ico">📅</div><h3>Etkinlikler</h3><p>Şeb-i Arus</p></a>
+    <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Konya mutfağı</h3><p>Etli ekmek &amp; lezzet</p></a>
+    <a class="card" href="tarihce.html"><div class="ico">📜</div><h3>Tarihçe</h3><p>Selçuklu ve ötesi</p></a>
     <a class="card" href="harita.html"><div class="ico">🗺️</div><h3>Harita</h3><p>Yol tarifi</p></a>
     <a class="card" href="katki.html"><div class="ico">✉️</div><h3>Başvuru</h3><p>İşletme / katkı</p></a>
     <a class="card" href="gizlilik.html"><div class="ico">🔒</div><h3>Gizlilik</h3><p>KVKK</p></a>
