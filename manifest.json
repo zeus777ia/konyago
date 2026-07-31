@@ -1,23 +1,28 @@
 {
-  "name": "KonyaGo",
+  "name": "KonyaGo — Konya Şehir Rehberi",
   "short_name": "KonyaGo",
-  "description": "Konya şehir rehberi",
-  "start_url": "./",
+  "description": "Konya gezilecek yerler, mutfak, rotalar, harita ve ulaşım",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#f7faf8",
   "theme_color": "#0d7a4f",
   "lang": "tr",
+  "dir": "ltr",
+  "categories": ["travel", "navigation", "lifestyle"],
   "icons": [
     {
       "src": "assets/img/eagle.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
