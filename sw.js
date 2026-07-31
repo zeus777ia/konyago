@@ -1,17 +1,11 @@
-/* KonyaGo SW v7 — offline temel sayfalar + bildirim */
-var CACHE = "konyago-v7";
+/* KonyaGo SW v8 — HTML/JS/CSS network-first (guncellemeler takilmasin) */
+var CACHE = "konyago-v8";
 var PRECACHE = [
   "./",
   "./index.html",
   "./assets/css/app.css",
-  "./assets/css/wx.css",
   "./assets/js/app.js",
-  "./assets/js/features.js",
   "./assets/img/eagle.svg",
-  "./pratik.html",
-  "./rotalar.html",
-  "./rota-yazdir.html",
-  "./gizlilik.html",
   "./manifest.json"
 ];
 
@@ -54,16 +48,24 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
   if (url.origin !== self.location.origin) return;
 
+  var path = url.pathname || "";
   var isHTML = e.request.mode === "navigate" ||
     (e.request.headers.get("accept") || "").indexOf("text/html") !== -1 ||
-    /\.html?$/.test(url.pathname) ||
-    url.pathname === "/" || url.pathname === "";
+    /\.html?$/.test(path) || path === "/" || path === "";
+  var isCode = /\.(js|css)$/i.test(path);
 
-  if (isHTML) {
+  // HTML + JS + CSS: once network, offline'da cache
+  if (isHTML || isCode) {
     e.respondWith(
-      fetch(e.request).then(function (res) { return res; }).catch(function () {
+      fetch(e.request).then(function (res) {
+        try {
+          var copy = res.clone();
+          caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+        } catch (err) {}
+        return res;
+      }).catch(function () {
         return caches.match(e.request).then(function (c) {
-          return c || caches.match("./index.html");
+          return c || (isHTML ? caches.match("./index.html") : undefined);
         });
       })
     );

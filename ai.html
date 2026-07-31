@@ -8,7 +8,7 @@
 <title>KonyaGo AI | Yerel + Gemini</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/app.css?v=8">
 <style>
 .ai-wrap{max-width:720px;margin:0 auto}
 .ai-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;height:min(72vh,600px)}
@@ -40,8 +40,8 @@
 .gemini-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .gemini-row input{flex:1;min-width:180px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit;font-size:.85rem}
 .gemini-status{font-size:.78rem;color:var(--muted);margin-top:8px}
-.gemini-status.ok{color:var(--green)}
-.gemini-status.err{color:#a33}
+.gemini-status.ok{color:var(--green);font-weight:700}
+.gemini-status.err{color:#a33;font-weight:700}
 </style>
 </head>
 <body>
@@ -71,17 +71,16 @@
   <div class="info" style="margin-bottom:12px">
     <h2>İki motor, bir yer</h2>
     <ul>
-      <li><strong>Yerel</strong> — Anahtar yok, anında, sadece Konya bilgi motoru (her zaman çalışır)</li>
-      <li><strong>Gemini</strong> — Google’ın gerçek yapay zekası; daha doğal cevap (ücretsiz API anahtarı gerekir)</li>
-      <li>Gemini de yalnızca Konya sorularına cevap verecek şekilde ayarlıdır</li>
+      <li><strong>Yerel</strong> — Anahtar yok, anında, sadece Konya bilgi motoru</li>
+      <li><strong>Gemini</strong> — Google gerçek AI (ücretsiz API anahtarı)</li>
     </ul>
   </div>
 
   <div class="gemini-box" id="geminiSetup">
     <h2>🔑 Gemini API anahtarı</h2>
-    <p>Ücretsiz al: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> → Create API key. Anahtar yalnızca senin tarayıcında (localStorage) saklanır; sunucuya gitmez.</p>
+    <p>Ücretsiz al: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> → Create API key. Anahtar yalnızca tarayıcında saklanır.</p>
     <div class="gemini-row">
-      <input type="password" id="geminiKeyInput" placeholder="AIza… API anahtarını yapıştır" autocomplete="off">
+      <input type="text" id="geminiKeyInput" placeholder="AIza… API anahtarını yapıştır" autocomplete="off" spellcheck="false">
       <button type="button" class="btn btn-primary btn-sm" id="geminiKeySave">Kaydet</button>
       <button type="button" class="btn btn-ghost btn-sm" id="geminiKeyClear">Sil</button>
     </div>
@@ -120,7 +119,7 @@
 
   <div class="info warn" style="margin-top:16px">
     <h2>Not</h2>
-    <p>Yerel motor her zaman hazırdır. Gemini ücretsiz kotaya bağlıdır (Google AI Studio). Saat/ücret için resmî kaynakları doğrula. API anahtarını kimseyle paylaşma.</p>
+    <p>Yerel motor her zaman hazırdır. Gemini Google kotasına bağlıdır. Anahtarı kimseyle paylaşma.</p>
   </div>
 </main>
 
@@ -132,9 +131,55 @@
   <a href="mutfak.html"><span class="i">🍽️</span>Mutfak</a>
   <a href="harita.html"><span class="i">🗺️</span>Harita</a>
 </nav>
-<script src="assets/js/app.js" defer></script>
-<script src="assets/js/ai.js" defer></script>
+<script src="assets/js/app.js?v=8" defer></script>
+<script src="assets/js/ai.js?v=8" defer></script>
 <script>
+/* Yedek kaydet — ai.js gecikse bile calisir */
+(function(){
+  function status(msg, ok){
+    var el=document.getElementById("geminiStatus");
+    if(!el)return;
+    el.className="gemini-status "+(ok===true?"ok":ok===false?"err":"");
+    el.textContent=msg;
+  }
+  function saveKey(){
+    var inp=document.getElementById("geminiKeyInput");
+    var v=(inp&&inp.value||"").trim();
+    if(!v||v.length<15){
+      status("Geçerli bir API anahtarı yapıştır (aistudio.google.com/apikey).", false);
+      alert("API anahtarı eksik veya çok kısa.");
+      return;
+    }
+    try{
+      localStorage.setItem("konyago_gemini_key", v);
+    }catch(e){
+      status("Kayıt başarısız (gizli mod / depolama engeli).", false);
+      alert("localStorage yazılamadı. Gizli sekede olma.");
+      return;
+    }
+    if(inp)inp.value="";
+    status("Anahtar kayıtlı ("+v.slice(0,6)+"…"+v.slice(-4)+"). Üstten Gemini seç.", true);
+    alert("Kaydedildi! Üstteki Gemini butonuna bas.");
+  }
+  function clearKey(){
+    try{localStorage.removeItem("konyago_gemini_key");}catch(e){}
+    status("Anahtar silindi — Yerel motor kullanılabilir.", true);
+  }
+  document.addEventListener("DOMContentLoaded", function(){
+    var s=document.getElementById("geminiKeySave");
+    var c=document.getElementById("geminiKeyClear");
+    if(s)s.addEventListener("click", saveKey);
+    if(c)c.addEventListener("click", clearKey);
+    try{
+      var k=localStorage.getItem("konyago_gemini_key");
+      if(k)status("Anahtar kayıtlı ("+k.slice(0,6)+"…"+k.slice(-4)+"). Gemini seçilebilir.", true);
+    }catch(e){}
+  });
+  // ai.js de baglasin diye global
+  window.konyagoSaveGeminiKey=saveKey;
+  window.konyagoClearGeminiKey=clearKey;
+})();
+
 document.querySelectorAll(".ai-hints button").forEach(function(b){
   b.addEventListener("click",function(){
     var input=document.getElementById("aiInput");
