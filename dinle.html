@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<meta name="description" content="KonyaGo sesli anlatım — Mevlana ve Alaaddin kısa dinletiler.">
+<title>Dinle | KonyaGo</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana</a>
+    <h1>Sesli kısa anlatım</h1>
+    <p>Tarayıcı ses motoru ile 1–2 dakikalık özetler. Kulaklıkla dinle; ses cihazına göre değişir.</p>
+  </div>
+
+  <div class="info">
+    <h2>Mevlana & Konya</h2>
+    <p id="txtMevlana">Konya, Anadolu Selçuklu’nun başkenti olarak yüzyıllarca ilim, sanat ve tasavvufun merkezi oldu. Mevlana Celaleddin Rumi’nin burada yaşaması ve vuslatının ardından yükselen Mevlevi geleneği, kenti dünya çapında tanınır kıldı. Mevlana Müzesi bugün hem ziyaret hem tefekkür mekânıdır; giriş uygulamaları dönemsel değişebilir, güncel resmi duyuruları kontrol etmek gerekir. Çevresindeki çarşı ve caminin atmosferi, kısa bir yürüyüşle şehrin ruhunu hissettirir.</p>
+    <div class="link-row">
+      <button type="button" class="btn btn-primary btn-sm" id="btnMevlana">▶ Dinle</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnStop1">Durdur</button>
+    </div>
+  </div>
+
+  <div class="info">
+    <h2>Alaaddin Tepesi</h2>
+    <p id="txtAlaaddin">Alaaddin Tepesi, Konya’nın tarihî çekirdeğidir. Selçuklu döneminden izler taşıyan camii ve çevre yapılar, kente yukarıdan bakış imkânı sunar. Yakınındaki medrese ve müzelerle birlikte yarım günlük kültür rotasının omurgasını oluşturur. Yazın öğle sıcağında gölge ve su molası planlamak, kışın ise kaygan zemin için uygun ayakkabı seçmek ziyareti kolaylaştırır.</p>
+    <div class="link-row">
+      <button type="button" class="btn btn-primary btn-sm" id="btnAla">▶ Dinle</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnStop2">Durdur</button>
+    </div>
+  </div>
+
+  <div class="info warn">
+    <h2>Not</h2>
+    <p>Ses, cihazındaki Türkçe ses paketine bağlıdır. Kayıt dosyası değil; tarayıcı sentezidir. Resmî rehberlik yerine geçmez.</p>
+  </div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
+<script src="assets/js/features.js"></script>
+<script src="assets/js/app.js" defer></script>
+<script>
+(function(){
+  function stop(){ if(window.speechSynthesis) speechSynthesis.cancel(); }
+  document.getElementById('btnMevlana').onclick=function(){
+    window.KonyaGoFeatures.speak(document.getElementById('txtMevlana').textContent, this);
+  };
+  document.getElementById('btnAla').onclick=function(){
+    window.KonyaGoFeatures.speak(document.getElementById('txtAlaaddin').textContent, this);
+  };
+  document.getElementById('btnStop1').onclick=stop;
+  document.getElementById('btnStop2').onclick=stop;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<title>1 Günlük Rota Yazdır | KonyaGo</title>
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+@media print{
+  .site-header,.mnav,.site-footer,.ad-ticker,.cookie-bar,.notif-prompt,.no-print{display:none!important}
+  main{padding:0!important}
+  body{background:#fff}
+  .info{break-inside:avoid;box-shadow:none}
+}
+.print-sheet{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px}
+.print-sheet h1{font-size:1.4rem;color:var(--green-deep);margin-bottom:4px}
+.print-sheet .sub{color:var(--muted);font-size:.85rem;margin-bottom:16px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Yazdırılabilir rota</small></span></a>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head no-print">
+    <a href="rotalar.html">← Rotalar</a>
+    <h1>1 günlük rota çıktısı</h1>
+    <p>Yazdır veya “PDF olarak kaydet” ile offline kullan.</p>
+    <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Yazdır / PDF</button>
+  </div>
+
+  <div class="print-sheet">
+    <h1>KonyaGo — 1 günlük merkez rotası</h1>
+    <p class="sub">konyago.com.tr · bilgilendirme amaçlı · saatler değişebilir</p>
+    <div class="info">
+      <h2>Sabah</h2>
+      <ul>
+        <li>Mevlana Müzesi (erken saat tercih et)</li>
+        <li>Kısa çarşı / çevre yürüyüşü</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h2>Öğle</h2>
+      <ul>
+        <li>Etli ekmek + ayran (merkez)</li>
+        <li>Kısa dinlenme</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h2>Öğleden sonra</h2>
+      <ul>
+        <li>Alaaddin Tepesi</li>
+        <li>İnce Minare ve/veya Karatay Medresesi</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h2>Akşam</h2>
+      <ul>
+        <li>Meram veya Japon Parkı</li>
+        <li>Hafif akşam yemeği</li>
+      </ul>
+    </div>
+    <div class="info warn">
+      <h2>Notlar</h2>
+      <ul>
+        <li>Acil: 112</li>
+        <li>Ulaşım: ATUS / Konyakart</li>
+        <li>Müze kurallarına ve güncel saatlere uy</li>
+      </ul>
+    </div>
+  </div>
+</main>
+<footer class="site-footer no-print"><div class="container">© 2026 KonyaGo</div></footer>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

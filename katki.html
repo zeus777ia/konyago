@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<meta name="description" content="KonyaGo katkı, işletme başvurusu ve bülten.">
+<title>Katkı & İşletme | KonyaGo</title>
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+.form-grid label{display:block;font-size:.82rem;font-weight:600;color:var(--green-dark);margin:10px 0 4px}
+.form-grid input,.form-grid textarea,.form-grid select{
+  width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:12px;font:inherit;font-size:.92rem
+}
+.form-grid textarea{min-height:110px;resize:vertical}
+.form-grid input:focus,.form-grid textarea:focus{outline:none;border-color:var(--green)}
+.form-hint{font-size:.75rem;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Katkı</small></span></a>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana</a>
+    <h1>Katkı, işletme ve bülten</h1>
+    <p>WhatsApp yok — e-posta ile. Veriler KVKK aydınlatmasına tabidir.</p>
+  </div>
+
+  <div class="info">
+    <h2>1) Gezgin notu / hikâye</h2>
+    <p>Konya deneyimini yaz; uygun görülenler moderasyon sonrası duyurulabilir. Fotoğraf için link veya açıklama yeter (dosya e-posta ekinden).</p>
+    <form class="form-grid" id="formStory" action="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Gezgin%20Notu" method="post" enctype="text/plain">
+      <label for="sName">Ad (isteğe bağlı)</label>
+      <input id="sName" name="Ad" maxlength="80">
+      <label for="sMail">E-posta</label>
+      <input id="sMail" name="E-posta" type="email" required maxlength="120">
+      <label for="sMsg">Notun</label>
+      <textarea id="sMsg" name="Not" required maxlength="2000" placeholder="Nereyi gezdin, ne yedin, ipuçların…"></textarea>
+      <p class="form-hint">Gönder’e basınca e-posta uygulaman açılır. <a href="gizlilik.html">Gizlilik</a></p>
+      <button type="submit" class="btn btn-primary" style="margin-top:12px">E-posta ile gönder</button>
+    </form>
+  </div>
+
+  <div class="info">
+    <h2>2) İşletme / öne çıkma başvurusu</h2>
+    <p>Restoran, otel, tur veya marka için. Ücretli rozet varsa teklifte şeffaf belirtilir.</p>
+    <form class="form-grid" id="formBiz" action="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Isletme%20Basvurusu" method="post" enctype="text/plain">
+      <label for="bName">İşletme adı</label>
+      <input id="bName" name="Isletme" required maxlength="120">
+      <label for="bType">Tür</label>
+      <select id="bType" name="Tur">
+        <option>Restoran / kafe</option>
+        <option>Otel / konaklama</option>
+        <option>Tur / rehberlik</option>
+        <option>Diğer</option>
+      </select>
+      <label for="bMail">Yetkili e-posta</label>
+      <input id="bMail" name="E-posta" type="email" required>
+      <label for="bMsg">Kısa tanıtım</label>
+      <textarea id="bMsg" name="Tanitim" required maxlength="1500"></textarea>
+      <button type="submit" class="btn btn-primary" style="margin-top:12px">Başvuruyu mail at</button>
+    </form>
+  </div>
+
+  <div class="info">
+    <h2>3) E-posta bülteni (isteğe bağlı)</h2>
+    <p>Ayda en fazla birkaç Konya özeti. Çift onay: mailine onay isteği gider; istemezsen yazman yeterli. Zorunlu değil.</p>
+    <form class="form-grid" action="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Bulten%20Kayit" method="post" enctype="text/plain">
+      <label for="nMail">E-posta</label>
+      <input id="nMail" name="E-posta" type="email" required>
+      <label><input type="checkbox" required style="width:auto;margin-right:8px"> Gizlilik metnini okudum; bülten için açık rıza veriyorum.</label>
+      <button type="submit" class="btn btn-ghost" style="margin-top:12px">Kayıt maili aç</button>
+    </form>
+  </div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="gizlilik.html">KVKK</a></div></footer>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
