@@ -10,7 +10,7 @@
 
   var KEY_LS = "konyago_gemini_key";
   var MODE_LS = "konyago_ai_mode";
-  var mode = "local"; // local | gemini
+  var mode = "local";
   try {
     var savedMode = localStorage.getItem(MODE_LS);
     if (savedMode === "gemini" || savedMode === "local") mode = savedMode;
@@ -20,6 +20,7 @@
   var geminiHistory = [];
   var lastTopics = [];
   var turn = 0;
+  var lastGeminiError = "";
 
   var btnLocal = document.getElementById("modeLocal");
   var btnGemini = document.getElementById("modeGemini");
@@ -38,15 +39,23 @@
     try {
       if (k) localStorage.setItem(KEY_LS, k);
       else localStorage.removeItem(KEY_LS);
-    } catch (e) {}
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  function looksLikeGeminiKey(k) {
+    // Google AI Studio API keys genelde AIza ile baslar
+    return /^AIza[0-9A-Za-z_-]{20,}$/.test(k || "");
   }
 
   function updateStatus() {
     var k = getKey();
     if (!statusEl) return;
     if (k) {
-      statusEl.className = "gemini-status ok";
-      statusEl.textContent = "Anahtar kayıtlı (" + k.slice(0, 6) + "…" + k.slice(-4) + "). Gemini modunu seçebilirsin.";
+      var warn = looksLikeGeminiKey(k) ? "" : " ⚠️ Bu key AIza ile başlamıyor — muhtemelen yanlış kopyalandı.";
+      statusEl.className = "gemini-status " + (looksLikeGeminiKey(k) ? "ok" : "err");
+      statusEl.textContent = "Anahtar kayıtlı (" + k.slice(0, 6) + "…" + k.slice(-4) + ")." + warn;
     } else {
       statusEl.className = "gemini-status";
       statusEl.textContent = "Anahtar yok — şimdilik Yerel motor kullanılabilir.";
@@ -66,44 +75,66 @@
     }
   }
 
+  function saveFromInput() {
+    var v = (keyInput && keyInput.value || "").trim().replace(/\s+/g, "");
+    if (!v || v.length < 20) {
+      if (statusEl) {
+        statusEl.className = "gemini-status err";
+        statusEl.textContent = "API anahtarı eksik veya çok kısa.";
+      }
+      alert("API anahtarı eksik veya çok kısa.\n\nDoğru key aistudio.google.com/apikey adresinden alınır ve genelde AIza ile başlar.");
+      return false;
+    }
+    if (!looksLikeGeminiKey(v)) {
+      if (statusEl) {
+        statusEl.className = "gemini-status err";
+        statusEl.textContent = "Uyarı: Key AIza ile başlamıyor. Yine de kaydedildi — genelde çalışmaz.";
+      }
+      alert("Dikkat: Yapıştırdığın metin klasik Gemini API key formatında değil.\n\nDoğru key genelde şöyle başlar: AIzaSy...\n\naistudio.google.com/apikey → Create API key → kopyala.\nYine de kaydediyorum; denemek istersen Gemini’ye geç.");
+    }
+    try {
+      setKey(v);
+    } catch (e) {
+      alert("Kayıt başarısız (gizli mod / depolama kapalı olabilir).");
+      return false;
+    }
+    if (keyInput) keyInput.value = "";
+    updateStatus();
+    addMsg("Gemini anahtarı kaydedildi. Üstten «Gemini» butonuna bas.", "bot");
+    return true;
+  }
+
   if (btnLocal) btnLocal.addEventListener("click", function () { setMode("local"); });
   if (btnGemini) btnGemini.addEventListener("click", function () {
     if (!getKey()) {
-      addMsg("Gemini için önce yukarıya API anahtarını kaydet. Anahtar yokken Yerel motoru kullanabilirsin.", "bot");
+      addMsg("Gemini için önce API anahtarını kaydet (AIzaSy… ile başlar).", "bot");
       setMode("local");
       var box = document.getElementById("geminiSetup");
       if (box) box.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
+    if (!looksLikeGeminiKey(getKey())) {
+      addMsg("Kayıtlı anahtar AIza ile başlamıyor. AI Studio’dan yeni key alıp kaydet — şu anki büyük ihtimalle çalışmaz.", "bot");
+    }
     setMode("gemini");
   });
 
-  if (keySave) keySave.addEventListener("click", function () {
-    var v = (keyInput && keyInput.value || "").trim();
-    if (!v || v.length < 20) {
-      if (statusEl) {
-        statusEl.className = "gemini-status err";
-        statusEl.textContent = "Geçerli bir API anahtarı yapıştır (aistudio.google.com/apikey).";
-      }
-      return;
-    }
-    setKey(v);
-    if (keyInput) keyInput.value = "";
-    updateStatus();
-    addMsg("Gemini anahtarı kaydedildi. Üstten «Gemini» butonuna basarak gerçek modele geçebilirsin.", "bot");
+  if (keySave) keySave.addEventListener("click", function (e) {
+    e.preventDefault();
+    saveFromInput();
   });
-
   if (keyClear) keyClear.addEventListener("click", function () {
-    setKey("");
+    try { setKey(""); } catch (e) {}
     updateStatus();
     setMode("local");
+    geminiHistory = [];
     addMsg("Gemini anahtarı silindi. Yerel motora döndün.", "bot");
   });
 
   updateStatus();
   setMode(mode === "gemini" && getKey() ? "gemini" : "local");
 
-  /* ========== YEREL MOTOR (önceki v2) ========== */
+  /* ========== YEREL MOTOR ========== */
   function norm(s) {
     return (s || "")
       .toLowerCase()
@@ -123,145 +154,66 @@
     return false;
   }
 
-  function hourTR() {
-    try {
-      return parseInt(new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Europe/Istanbul", hour: "numeric", hour12: false
-      }).format(new Date()), 10);
-    } catch (e) {
-      return new Date().getHours();
-    }
-  }
-
-  function monthTR() {
-    try {
-      return parseInt(new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Europe/Istanbul", month: "numeric"
-      }).format(new Date()), 10);
-    } catch (e) {
-      return new Date().getMonth() + 1;
-    }
-  }
-
   var OFF = [
-    "bitcoin", "kripto", "borsa", "python ders", "javascript ogren", "yazilim kurs",
-    "siyaset", "secim", "parti propaganda", "futbol skor", "mac sonucu", "netflix dizi",
-    "diyet listesi", "ilac dozu", "hastalik teshis", "hack", "sifre kir", "silah yap",
-    "uyusturucu", "istanbulda ne gezilir", "ankara gezi", "izmir tatil"
+    "bitcoin", "kripto", "borsa", "python ders", "javascript ogren",
+    "siyaset", "futbol skor", "netflix dizi", "ilac dozu", "hack",
+    "istanbulda ne gezilir", "ankara gezi", "izmir tatil"
   ];
-
   var KONYA_SIGNALS = [
     "konya", "mevlana", "rumi", "sille", "meram", "catalhoyuk", "alaaddin", "alaeddin",
-    "selcuk", "etli", "bamya", "tirit", "arabasi", "atus", "konyakart", "sebi", "seb i",
-    "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "meke", "kilistra",
-    "eflatun", "muze", "sema", "seydisehir", "seyit", "harun", "kugulu", "tinaztepe",
-    "esref", "beylik", "aksehir", "nasreddin", "japon parki", "kelebek", "firin kebabi",
-    "tandir", "yesil kubbe", "mesnevi", "mevlevi", "iconium"
+    "selcuk", "etli", "bamya", "tirit", "arabasi", "atus", "konyakart", "sebi",
+    "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "seydisehir",
+    "esref", "aksehir", "nasreddin", "kelebek", "firin kebabi", "tandir", "iconium"
   ];
-
-  var FOLLOW = [
-    "oraya", "orasi", "nasil giderim", "yol tarifi", "ne kadar surer", "ucreti ne",
-    "acik mi", "saat kac", "daha fazla", "anlat", "detay", "peki", "baska",
-    "yaninda ne var", "ne yenir orada", "yakinda"
-  ];
+  var FOLLOW = ["oraya", "orasi", "nasil giderim", "yol tarifi", "ucreti ne", "acik mi", "saat kac", "daha fazla", "anlat", "detay", "peki", "baska"];
 
   var CARDS = [
-    { id: "mevlana", keys: ["mevlana", "rumi", "yesil kubbe", "sema", "mesnevi", "celaleddin", "mevlevi"], w: 12,
-      a: function () {
-        return "Mevlana Celaleddin Rumi’nin makamı bugün Mevlana Müzesi olarak ziyaret edilir.\n\n• Giriş: ücretsiz (resmî uygulama değişebilir)\n• Kapanış: genelde 17:00 — sabah veya öğleden önce git\n• Yeşil kubbe, semahane, Mevlevî kültürü\n\nHarita ve Rotalar sayfalarına bakabilirsin.";
-      }},
-    { id: "etli", keys: ["etli ekmek", "etliekmek", "etli pide", "konya pide"], w: 14,
-      a: function () {
-        return "Etli ekmek Konya’nın imza lezzeti.\n\nİnce hamur, kıyma-soğan-baharat, taş fırın. Yanına ayran.\n• Merkez / Mevlana çevresi öğle 11:30–14:00 yoğun\n• Alternatif: fırın kebabı, tirit\n\nLezzet Haritası sayfasına bak.";
-      }},
+    { id: "mevlana", keys: ["mevlana", "rumi", "yesil kubbe", "sema", "mesnevi"], w: 12,
+      a: function () { return "Mevlana Müzesi: genelde ücretsiz, kapanış ~17:00 (doğrula). Sabah git. Harita/Rotalar sayfalarına bak."; } },
+    { id: "etli", keys: ["etli ekmek", "etliekmek", "etli pide"], w: 14,
+      a: function () { return "Etli ekmek Konya imzası. Taş fırın, yanına ayran. Merkez öğle yoğun."; } },
     { id: "sille", keys: ["sille", "aya eleni"], w: 11,
-      a: function () {
-        return "Sille, merkeze yakın tarihi yerleşim — yarım gün ideal.\n• Taş evler, Aya Eleni Kilisesi, fotoğraf noktaları\nSabah Mevlana + öğleden sonra Sille dengeli bir 1–1,5 günlük plandır.";
-      }},
-    { id: "alaaddin", keys: ["alaaddin", "alaeddin"], w: 10,
-      a: function () {
-        return "Alaaddin Tepesi Konya’nın tarihî çekirdeği. Yakınında İnce Minareli ve Karatay medreseleri var.";
-      }},
-    { id: "medrese", keys: ["ince minare", "karatay", "medrese"], w: 10,
-      a: function () {
-        return "İnce Minareli Medrese taş işçiliği, Karatay Medresesi çini koleksiyonu ile öne çıkar. Alaaddin çevresinde aynı öğleden sonraya sığar.";
-      }},
-    { id: "catal", keys: ["catalhoyuk", "unesco", "neolitik"], w: 11,
-      a: function () {
-        return "Çatalhöyük UNESCO Dünya Mirası — Neolitik. Merkeze göre araç/tur gerekir; sabah planı iyi olur.";
-      }},
-    { id: "beysehir", keys: ["beysehir", "esrefoglu camii"], w: 11,
-      a: function () {
-        return "Beyşehir: göl + Eşrefoğlu Camii. Günübirlik araç rotası. İlçeler sayfasına bak.";
-      }},
-    { id: "esref", keys: ["esrefoglu", "esrefogullari", "esref oglu"], w: 12,
-      a: function () {
-        return "Eşrefoğulları Beyliği (~1280–1326), Beyşehir–Seydişehir hattında. Kurucu Eşrefoğlu Seyfeddin Süleyman Bey. Miras: Eşrefoğlu Camii. Detay Tarihçe sayfasında.";
-      }},
-    { id: "seydi", keys: ["seydisehir", "seyit harun", "seyid harun", "kugulu", "tinaztepe"], w: 11,
-      a: function () {
-        return "Seydişehir: Seyyid Harun Veli Külliyesi, Tınaztepe Mağarası, Kuğulu Park. Araçla günübirlik.";
-      }},
-    { id: "aksehir", keys: ["aksehir", "nasreddin"], w: 11,
-      a: function () {
-        return "Akşehir, Nasreddin Hoca’nın şehri — türbe, Gülmece Parkı, müze. İlçeler sayfasına bak.";
-      }},
-    { id: "meram", keys: ["meram", "meram baglari"], w: 9,
-      a: function () {
-        return "Meram Bağları yeşil vadi ve akşam yürüyüşü için tercih edilir.";
-      }},
-    { id: "yemek", keys: ["firin kebabi", "tandir", "bamya", "arabasi", "tirit", "hosmerim", "cezerye", "ne yenir", "yemek", "mutfak"], w: 9,
+      a: function () { return "Sille yarım gün ideal: taş evler, Aya Eleni. Mevlana sabah + Sille öğleden sonra iyi plan."; } },
+    { id: "alaaddin", keys: ["alaaddin", "alaeddin", "ince minare", "karatay", "medrese"], w: 10,
+      a: function () { return "Alaaddin Tepesi + İnce Minareli / Karatay medreseleri merkez kültür aksı."; } },
+    { id: "catal", keys: ["catalhoyuk", "unesco"], w: 11,
+      a: function () { return "Çatalhöyük UNESCO — araç/tur gerekir."; } },
+    { id: "beysehir", keys: ["beysehir", "esrefoglu", "esrefogullari"], w: 11,
+      a: function () { return "Beyşehir: göl + Eşrefoğlu Camii. Eşrefoğulları ~1280–1326. İlçeler sayfası."; } },
+    { id: "seydi", keys: ["seydisehir", "seyit harun", "kugulu", "tinaztepe"], w: 11,
+      a: function () { return "Seydişehir: Seyyid Harun Veli, Tınaztepe, Kuğulu Park."; } },
+    { id: "yemek", keys: ["firin kebabi", "tandir", "bamya", "arabasi", "tirit", "hosmerim", "cezerye", "yemek", "mutfak"], w: 9,
       a: function (t) {
-        if (hasAny(t, ["bamya"])) return "Bamya çorbası Konya usulünde ekşili; kış ve ramazan sofralarında sevilir.";
-        if (hasAny(t, ["arabasi"])) return "Arabaşı: unlu/kıvamlı kısım + et suyu — İç Anadolu kış klasiği.";
-        if (hasAny(t, ["tirit"])) return "Tirit: ekmek, et suyu, kıyma/kuşbaşı; yoğurt-tereyağı ile.";
-        if (hasAny(t, ["firin", "tandir"])) return "Fırın kebabı uzun pişen kuşbaşı et; tandır aynı aileden.";
-        return "Konya mutfağı: etli ekmek, fırın kebabı/tandır, tirit, bamya, arabaşı, hoşmerim, cezerye. Mutfak sayfasına bak.";
-      }},
-    { id: "ulasim", keys: ["ulasim", "atus", "konyakart", "otobus", "tramvay", "dolmus"], w: 10,
-      a: function () {
-        return "ATUS + Konyakart şehir içi temel. Hat/saat: atus.konya.bel.tr. İlçeler için otogar veya araç.";
-      }},
+        if (hasAny(t, ["bamya"])) return "Bamya çorbası Konya usulü ekşili.";
+        if (hasAny(t, ["arabasi"])) return "Arabaşı: kış klasiği, unlu + et suyu.";
+        if (hasAny(t, ["tirit"])) return "Tirit: ekmek + et suyu + kıyma.";
+        return "Mutfak: etli ekmek, fırın kebabı, tirit, bamya, arabaşı, hoşmerim, cezerye.";
+      } },
+    { id: "ulasim", keys: ["ulasim", "atus", "konyakart", "otobus"], w: 10,
+      a: function () { return "ATUS + Konyakart. atus.konya.bel.tr"; } },
     { id: "plan1", keys: ["1 gun", "bir gun", "tek gun"], w: 13,
-      a: function () {
-        return "1 günlük merkez:\n1) Mevlana (ücretsiz, ~17:00 kapanış)\n2) Etli ekmek\n3) Alaaddin + medreseler\n4) Akşam Meram / park\n\nrota-yazdir.html";
-      }},
+      a: function () { return "1 gün: Mevlana → etli ekmek → Alaaddin/medrese → Meram/park."; } },
     { id: "plan2", keys: ["2 gun", "iki gun", "hafta sonu", "haftasonu"], w: 13,
-      a: function () {
-        return "2 gün:\nCts: Mevlana → etli ekmek → Alaaddin → Meram\nPaz: Sille veya Beyşehir (araç) veya aile park rotası.";
-      }},
-    { id: "tarih", keys: ["tarih", "tarihce", "selcuklu", "osmanli"], w: 9,
-      a: function () {
-        return "Çatalhöyük → İkonion → Anadolu Selçuklu başkenti → Mevlana → Eşrefoğulları → Osmanlı → Cumhuriyet. Detay: Tarihçe sayfası.";
-      }},
-    { id: "self", keys: ["konyago", "sen kimsin", "yapay zeka", "ai misin"], w: 10,
-      a: function () {
-        return "Ben KonyaGo AI. Yerel Konya motoru veya (anahtarlı) Gemini ile çalışırım. Sadece Konya odaklıyım.";
-      }}
+      a: function () { return "2 gün: Cts merkez+Mevlana; Paz Sille veya Beyşehir."; } },
+    { id: "self", keys: ["konyago", "sen kimsin", "ai misin"], w: 10,
+      a: function () { return "KonyaGo AI — Yerel veya Gemini. Sadece Konya."; } }
   ];
 
-  function isOffTopic(t) {
-    return hasAny(t, OFF) && !hasAny(t, KONYA_SIGNALS);
-  }
-
+  function isOffTopic(t) { return hasAny(t, OFF) && !hasAny(t, KONYA_SIGNALS); }
   function isKonyaRelated(t) {
     if (hasAny(t, KONYA_SIGNALS)) return true;
-    if (hasAny(t, ["gez", "turist", "rota", "plan", "tavsiye", "nerede", "ne yenir", "muze", "yemek", "ulasim"])) return true;
-    if (hasAny(t, ["merhaba", "selam", "gunaydin", "tesekkur", "sagol"])) return true;
+    if (hasAny(t, ["gez", "rota", "plan", "nerede", "ne yenir", "muze", "yemek", "ulasim", "merhaba", "selam", "tesekkur"])) return true;
     if (hasAny(t, FOLLOW) && lastTopics.length) return true;
     return false;
   }
-
   function scoreCard(card, t) {
     var score = 0;
     for (var i = 0; i < card.keys.length; i++) {
-      var k = card.keys[i];
-      if (t.indexOf(k) !== -1) score += (card.w || 8) + k.length;
+      if (t.indexOf(card.keys[i]) !== -1) score += (card.w || 8) + card.keys[i].length;
     }
     if (lastTopics.indexOf(card.id) !== -1 && hasAny(t, FOLLOW)) score += 15;
     return score;
   }
-
   function topCards(t, n) {
     var scored = [];
     for (var i = 0; i < CARDS.length; i++) {
@@ -276,23 +228,13 @@
     var t = norm(q);
     turn++;
     if (!t) return "Bir şey yaz — Konya hakkında sor.";
-    if (hasAny(t, ["tesekkur", "sagol"])) return "Rica ederim. Başka Konya sorun olursa buradayım.";
-    if (hasAny(t, ["merhaba", "selam", "gunaydin"])) {
-      return "Merhaba! Yerel KonyaGo AI veya Gemini seçebilirsin. Örnek: «1 günde ne gezilir?»";
-    }
-    if (isOffTopic(t)) {
-      return "Bu konu alanım değil. Yalnızca Konya (gezi, mutfak, tarih, ulaşım).";
-    }
-    if (hasAny(t, FOLLOW) && lastTopics.length && !hasAny(t, KONYA_SIGNALS)) {
-      t = norm(t + " " + lastTopics.join(" "));
-    }
-    if (!isKonyaRelated(t) && t.split(" ").length > 3) {
-      return "Sadece Konya odaklıyım. «Mevlana», «2 günlük plan», «Arabaşı» dene.";
-    }
+    if (hasAny(t, ["tesekkur", "sagol"])) return "Rica ederim.";
+    if (hasAny(t, ["merhaba", "selam", "gunaydin"])) return "Merhaba! Yerel veya Gemini seç, Konya sor.";
+    if (isOffTopic(t)) return "Sadece Konya (gezi, mutfak, tarih, ulaşım).";
+    if (hasAny(t, FOLLOW) && lastTopics.length && !hasAny(t, KONYA_SIGNALS)) t = norm(t + " " + lastTopics.join(" "));
+    if (!isKonyaRelated(t) && t.split(" ").length > 3) return "Sadece Konya. «Mevlana», «2 günlük plan» dene.";
     var tops = topCards(t, 2);
-    if (!tops.length) {
-      return "Konya ile ilgili görünüyor ama net bağlayamadım. İlçe / gün / yemek mi tarih mi netleştir.";
-    }
+    if (!tops.length) return "Biraz netleştir: ilçe / gün / yemek mi tarih mi?";
     lastTopics = tops.map(function (x) { return x.card.id; });
     var parts = [];
     for (var i = 0; i < tops.length; i++) {
@@ -303,25 +245,22 @@
   }
 
   /* ========== GEMINI ========== */
-  var SYSTEM = [
-    "Sen KonyaGo AI’sın. Yalnızca Konya (Türkiye) ili ve ilçeleri hakkında yardımcı olursun.",
-    "Konular: gezi, tarih, mutfak, ulaşım, konaklama, etkinlik, ilçeler (Selçuklu, Meram, Karatay, Beyşehir, Seydişehir, Akşehir vb.).",
-    "Konya dışı sorularda nazikçe reddet ve Konya’ya yönlendir.",
-    "Türkçe, samimi, kısa-orta uzunlukta cevap ver. Madde işaretleri kullanabilirsin.",
-    "Bilinmeyen saat/ücret için ‘resmî kaynaktan doğrula’ de. Uydurma telefon/adres verme.",
-    "Mevlana Müzesi genelde ücretsiz ve kapanış ~17:00 olabilir; değişebilir diye belirt.",
-    "Sen bir rehber asistanısın; tıbbi/hukuki/yatırım tavsiyesi verme."
-  ].join(" ");
+  var SYSTEM = "Sen KonyaGo AI’sın. Yalnızca Konya (Türkiye) ili ve ilçeleri hakkında yardımcı ol. Gezi, tarih, mutfak, ulaşım, konaklama, etkinlik. Konya dışı sorularda nazikçe reddet. Türkçe, samimi, kısa-orta cevap. Uydurma telefon/adres verme. Saat/ücret için resmî kaynak de. Tıbbi/hukuki/yatırım tavsiyesi verme. Mevlana Müzesi genelde ücretsiz, kapanış ~17:00 olabilir (değişebilir).";
 
   var GEMINI_MODELS = [
     "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
-    "gemini-2.0-flash"
+    "gemini-flash-latest",
+    "gemini-2.0-flash",
+    "gemini-1.5-flash"
   ];
 
   function callGemini(userText) {
     var key = getKey();
     if (!key) return Promise.reject(new Error("no-key"));
+    if (!looksLikeGeminiKey(key)) {
+      return Promise.reject(new Error("bad-key-format"));
+    }
 
     geminiHistory.push({ role: "user", parts: [{ text: userText }] });
     if (geminiHistory.length > 16) geminiHistory = geminiHistory.slice(-16);
@@ -329,15 +268,15 @@
     var body = {
       systemInstruction: { parts: [{ text: SYSTEM }] },
       contents: geminiHistory,
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 1024
-      }
+      generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
     };
+
+    var errors = [];
 
     function tryModel(idx) {
       if (idx >= GEMINI_MODELS.length) {
-        return Promise.reject(new Error("all-models-failed"));
+        lastGeminiError = errors.slice(0, 3).join(" | ");
+        return Promise.reject(new Error("all-models-failed: " + lastGeminiError));
       }
       var model = GEMINI_MODELS[idx];
       var url = "https://generativelanguage.googleapis.com/v1beta/models/" +
@@ -351,11 +290,14 @@
         return r.json().then(function (j) {
           if (!r.ok) {
             var msg = (j && j.error && j.error.message) || ("HTTP " + r.status);
-            // kota / model yoksa sonraki modele
-            if (r.status === 404 || r.status === 429 || /not found|quota|RESOURCE_EXHAUSTED/i.test(msg)) {
-              return tryModel(idx + 1);
+            errors.push(model + ": " + String(msg).slice(0, 80));
+            if (r.status === 400 || r.status === 403) {
+              // key hatasi — diger model ayni key ile yine duser, yine de dene
+              if (/API[_ ]?key|invalid|permission|expired/i.test(msg) && idx >= 1) {
+                throw new Error(msg);
+              }
             }
-            throw new Error(msg);
+            return tryModel(idx + 1);
           }
           var text = "";
           try {
@@ -364,12 +306,17 @@
               text = cands[0].content.parts.map(function (p) { return p.text || ""; }).join("");
             }
           } catch (e) {}
-          if (!text) throw new Error("Boş cevap");
+          if (!text) {
+            errors.push(model + ": empty");
+            return tryModel(idx + 1);
+          }
           geminiHistory.push({ role: "model", parts: [{ text: text }] });
           return text;
         });
       }).catch(function (err) {
+        errors.push(model + ": " + String(err && err.message || err).slice(0, 60));
         if (idx + 1 < GEMINI_MODELS.length) return tryModel(idx + 1);
+        lastGeminiError = errors.slice(0, 3).join(" | ");
         throw err;
       });
     }
@@ -427,7 +374,7 @@
   }
 
   addMsg(
-    "Merhaba! Aynı sohbette iki motor var:\n\n• Yerel — anahtarsız, anında Konya motoru\n• Gemini — Google AI (yukarıya ücretsiz API key)\n\nÜstten motor seç, sorunu yaz.",
+    "Merhaba! İki motor: Yerel (anahtarsız) · Gemini (AIzaSy… key).\n\nKey: aistudio.google.com/apikey → Create API key → buraya yapıştır → Kaydet → Gemini.",
     "bot"
   );
 
@@ -454,14 +401,19 @@
 
     function fail(err) {
       tip.remove();
+      var raw = (err && err.message) || "";
       var msg = "Gemini yanıt veremedi.";
-      if (err && err.message) {
-        if (/no-key/i.test(err.message)) msg = "Gemini anahtarı yok. Yukarıdan kaydet veya Yerel moda geç.";
-        else if (/API_KEY|invalid|403/i.test(err.message)) msg = "API anahtarı geçersiz veya kısıtlı. AI Studio’dan yeni key dene.";
-        else if (/429|quota|RESOURCE/i.test(err.message)) msg = "Gemini kotası doldu. Biraz bekle veya Yerel moda geç — Yerel her zaman çalışır.";
-        else msg = "Gemini hatası: " + String(err.message).slice(0, 180) + "\n\nYerel moda geçip soruyu tekrarlayabilirsin.";
+      if (/no-key/i.test(raw)) msg = "Anahtar yok. Yukarıdan AIzaSy… key kaydet.";
+      else if (/bad-key-format/i.test(raw)) {
+        msg = "Kayıtlı anahtar yanlış formatta.\n\nGemini key genelde AIzaSy ile başlar.\n1) Sil’e bas\n2) aistudio.google.com/apikey → Create API key\n3) Tamamını kopyala → Kaydet\n4) Gemini seç\n\nŞimdilik Yerel motora geçebilirsin.";
+      } else if (/API[_ ]?key|invalid|403|permission|expired/i.test(raw)) {
+        msg = "API anahtarı geçersiz veya yetkisiz.\nYeni key al (AIzaSy…), Sil → Kaydet.\n\nDetay: " + raw.slice(0, 120);
+      } else if (/429|quota|RESOURCE/i.test(raw)) {
+        msg = "Gemini kotası doldu. Biraz bekle veya Yerel kullan.";
+      } else {
+        msg = "Gemini hatası: " + String(raw).slice(0, 220) + "\n\nYerel moda geçebilirsin.";
       }
-      done(msg, "hata · yerel motora geçebilirsin");
+      done(msg, "hata");
     }
 
     if (mode === "gemini") {
@@ -471,7 +423,7 @@
     } else {
       setTimeout(function () {
         done(answerLocal(q), "Yerel motor");
-      }, 200 + Math.random() * 300);
+      }, 200 + Math.random() * 280);
     }
   });
 })();
