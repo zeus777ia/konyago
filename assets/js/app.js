@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  // Daily visitor counter (per browser, resets each calendar day)
+  // Daily visitor counter
   try {
     var key = "konyago_visit_day";
     var countKey = "konyago_visit_count";
@@ -21,9 +21,26 @@
     if (el) el.textContent = String(count);
   } catch (e) {}
 
+  // Service worker: register + force update (eski cache temizlensin)
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("./sw.js").catch(function () {});
+      navigator.serviceWorker.register("./sw.js").then(function (reg) {
+        reg.update();
+        if (reg.waiting) {
+          reg.waiting.postMessage({ type: "SKIP_WAITING" });
+        }
+      }).catch(function () {});
+
+      // Eski cache isimlerini temizle
+      if (window.caches) {
+        caches.keys().then(function (keys) {
+          keys.forEach(function (k) {
+            if (k.indexOf("konyago") === 0 && k !== "konyago-v5") {
+              caches.delete(k);
+            }
+          });
+        });
+      }
     });
   }
 })();
