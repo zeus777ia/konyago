@@ -4,11 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="Konya mutfağı ve lezzetleri — etli ekmek, fırın kebabı, tirit, bamya çorbası ve daha fazlası.">
+<meta name="description" content="Konya mutfağı ve lezzetleri — etli ekmek, fırın kebabı, tirit, hoşmerim ve daha fazlası.">
 <title>Konya Mutfağı | KonyaGo</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css">
+<style>
+.food-gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;background:var(--green-mid)}
+.food-gallery img{width:100%;height:120px;object-fit:cover;background:#e8f5ee}
+@media(min-width:900px){.food-gallery img{height:150px}}
+</style>
 </head>
 <body>
 
@@ -37,69 +42,93 @@
   <div class="page-head">
     <a href="index.html">← Ana sayfa</a>
     <h1>Konya mutfağı & lezzetler</h1>
-    <p>Selçuklu sofrasından bugüne: etli ekmek, fırın, çorba ve tatlılar.</p>
+    <p>Etli ekmekten hoşmerime — görsellerle yöresel tatlar.</p>
   </div>
 
-  <div class="ad-banner">Restoran / marka tanıtımı için — <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Mutfak%20Reklam">cnrtech@outlook.com.tr</a></div>
+  <div class="ad-banner">Restoran / marka tanıtımı — <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Mutfak%20Reklam">cnrtech@outlook.com.tr</a></div>
 
   <div class="prose">
-    <p>Konya mutfağı, bozkırın sade ama doyurucu geleneğini taşır. Et, hamur ve fırın kültürü öne çıkar; misafirperverlik sofranın parçasıdır. Aşağıda şehri ziyaret ederken mutlaka denemeniz gereken lezzetler var.</p>
+    <p>Konya mutfağı et, hamur ve fırın kültürüyle öne çıkar. Aşağıdaki lezzetler şehri ziyaret ederken mutlaka denenmeye değer.</p>
   </div>
 
   <h2 class="section-title">Ana <span>lezzetler</span></h2>
   <div class="grid grid-2">
 
     <article class="place">
-      <div class="place-img" style="height:120px;background:linear-gradient(135deg,#0d7a4f,#c9a227);display:grid;place-items:center;font-size:2.8rem">🫓</div>
+      <div class="food-gallery">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Etli_ekmek.jpg/640px-Etli_ekmek.jpg" alt="Etli ekmek" loading="lazy" width="640" height="400">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Etliekmek.jpg/640px-Etliekmek.jpg" alt="Etli ekmek dilim" loading="lazy" width="640" height="400">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Konya_Etli_Ekmek.jpg/640px-Konya_Etli_Ekmek.jpg" alt="Konya etli ekmek" loading="lazy" width="640" height="400">
+      </div>
       <div class="place-body">
         <h2>Etli ekmek</h2>
-        <p>Konya’nın en bilinen yemeği. İnce açılmış hamur üzerine kıyma, soğan ve baharat; taş fırında pişer. Dilim dilim yenir; ayran ile tamamlanır.</p>
+        <p>Konya’nın imza yemeği. İnce hamur, kıyma, soğan ve baharat; taş fırında pişer. Ayran ile yenir.</p>
         <div class="tags"><span class="tag">İmza lezzet</span><span class="tag">Fırın</span></div>
       </div>
     </article>
 
     <article class="place">
-      <div class="place-img" style="height:120px;background:linear-gradient(135deg,#8a3a1a,#c9a227);display:grid;place-items:center;font-size:2.8rem">🍖</div>
+      <div class="food-gallery">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Etli_ekmek_in_Konya_turkey_By_Mardetanha_%286%29.JPG" alt="Etli ekmek Konya" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/F%C4%B1r%C4%B1n_Kebab%C4%B1_212213_02.jpg?width=640" alt="Fırın kebabı" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/F%C4%B1r%C4%B1n_Kebab%C4%B1.jpg?width=640" alt="Fırın kebabı 2" loading="lazy" width="640" height="400">
+      </div>
       <div class="place-body">
         <h2>Fırın kebabı</h2>
-        <p>Kuşbaşı et, soğan ve domatesle tencere veya fırın kabında uzun süre pişer. Ekmekle sosu sopalanır; ev ve lokanta sofralarının klasikidir.</p>
+        <p>Kuşbaşı et, soğan ve domatesle uzun süre fırında pişer. Sosu ekmekle sopalanır; klasik Konya sofrası.</p>
         <div class="tags"><span class="tag">Et</span><span class="tag">Geleneksel</span></div>
       </div>
     </article>
 
     <article class="place">
-      <div class="place-img" style="height:120px;background:linear-gradient(135deg,#5c3a1a,#0d7a4f);display:grid;place-items:center;font-size:2.8rem">🍲</div>
+      <div class="food-gallery">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Konya_Usul%C3%BC_Tirit_Yeme%C4%9Fi.jpg?width=640" alt="Konya tirit" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tirit_Kofte.jpg?width=640" alt="Tirit köfte" loading="lazy" width="640" height="400">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Etli_ekmek.jpg/640px-Etli_ekmek.jpg" alt="Sofra" loading="lazy" width="640" height="400" style="filter:saturate(.85)">
+      </div>
       <div class="place-body">
         <h2>Tirit</h2>
-        <p>Bayat ekmek dilimleri üzerine et suyu ve kıyma/kuşbaşı; üzerine yoğurt ve tereyağı. Düğün ve özel gün yemeği olarak da bilinir.</p>
+        <p>Ekmek dilimleri, et suyu ve kıyma/kuşbaşı; yoğurt ve tereyağı ile. Düğün ve özel gün yemeği olarak da bilinir.</p>
         <div class="tags"><span class="tag">Geleneksel</span><span class="tag">Doyurucu</span></div>
       </div>
     </article>
 
     <article class="place">
-      <div class="place-img" style="height:120px;background:linear-gradient(135deg,#2a6a3a,#c5e6d4);display:grid;place-items:center;font-size:2.8rem">🥣</div>
+      <div class="food-gallery">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Konya_style_kuzu_tand%C4%B1r.jpg?width=640" alt="Kuzu tandır" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/F%C4%B1r%C4%B1n_Kebab%C4%B1_212213_01.jpg?width=640" alt="Fırın yemeği" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/F%C4%B1r%C4%B1n_Kebab%C4%B1_212213_03.jpg?width=640" alt="Et yemeği" loading="lazy" width="640" height="400">
+      </div>
+      <div class="place-body">
+        <h2>Tandır & sac kavurma</h2>
+        <p>Kuzu tandır ve sac kavurma Konya etçi kültürünün güçlü parçası. Yanında piyaz, ezme ve taze ekmek.</p>
+        <div class="tags"><span class="tag">Et</span><span class="tag">Izgara</span></div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="food-gallery">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Etliekmek.jpg/640px-Etliekmek.jpg" alt="Yöresel sofra" loading="lazy" width="640" height="400" style="filter:hue-rotate(25deg)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Konya_Etli_Ekmek.jpg/640px-Konya_Etli_Ekmek.jpg" alt="Hamur işi" loading="lazy" width="640" height="400" style="filter:hue-rotate(15deg)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Etli_ekmek_in_Konya_turkey_By_Mardetanha_%286%29.JPG" alt="Fırın lezzeti" loading="lazy" width="640" height="400" style="filter:saturate(.9)">
+      </div>
       <div class="place-body">
         <h2>Bamya çorbası</h2>
-        <p>Konya usulü bamya; ekşili, etli veya sade. Özellikle ramazan ve kış sofralarında sık görülür. Ekmekle yenir.</p>
+        <p>Konya usulü bamya; ekşili, etli veya sade. Özellikle kış ve ramazan sofralarında sık görülür.</p>
         <div class="tags"><span class="tag">Çorba</span><span class="tag">Yöresel</span></div>
       </div>
     </article>
 
     <article class="place">
-      <div class="place-img" style="height:120px;background:linear-gradient(135deg,#6a4a2a,#f5ecd0);display:grid;place-items:center;font-size:2.8rem">🥖</div>
-      <div class="place-body">
-        <h2>Arabaşı (veya benzeri kış lezzetleri)</h2>
-        <p>Bölgede kışın sevilen hamur ve et suyu temelli yemekler; lokantalarda “Konya usulü” menülerde yer bulur. Mevsime göre sorun.</p>
-        <div class="tags"><span class="tag">Kış</span><span class="tag">Yöresel</span></div>
+      <div class="food-gallery">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pide_and_ayran.jpg?width=640" alt="Pide ve ayran" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pide_(meal).jpg?width=640" alt="Pide" loading="lazy" width="640" height="400">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Etli_ekmek.jpg/640px-Etli_ekmek.jpg" alt="Ekmek üstü" loading="lazy" width="640" height="400">
       </div>
-    </article>
-
-    <article class="place">
-      <div class="place-img" style="height:120px;background:linear-gradient(135deg,#0a5c3a,#e8f5ee);display:grid;place-items:center;font-size:2.8rem">🥗</div>
       <div class="place-body">
-        <h2>Sac kavurma & ızgara</h2>
-        <p>Konya etçi kültüründe sac ve ızgara çeşitleri yaygındır. Yanında piyaz, ezme ve taze ekmek ile sunulur.</p>
-        <div class="tags"><span class="tag">Et</span><span class="tag">Izgara</span></div>
+        <h2>Ayran eşliğinde</h2>
+        <p>Etli ekmek ve kebap yanının vazgeçilmezi ayran. Pide–ayran ikilisi Anadolu sofrasının klasiklerindendir.</p>
+        <div class="tags"><span class="tag">İçecek</span><span class="tag">Klasik</span></div>
       </div>
     </article>
 
@@ -109,38 +138,28 @@
   <div class="grid grid-2">
 
     <article class="place">
-      <div class="place-img" style="height:110px;background:linear-gradient(135deg,#c9a227,#f5ecd0);display:grid;place-items:center;font-size:2.5rem">🍮</div>
+      <div class="food-gallery">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Cezerye.jpg" alt="Cezerye" loading="lazy" width="640" height="400">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cezerye.jpg?width=640" alt="Cezerye dilim" loading="lazy" width="640" height="400">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Etliekmek.jpg/640px-Etliekmek.jpg" alt="Tatlı sofra" loading="lazy" width="640" height="400" style="filter:sepia(.25)">
+      </div>
+      <div class="place-body">
+        <h2>Cezerye</h2>
+        <p>Havuçlu, fıstıklı tatlı; hediyelik olarak da alınır. Çarşı dükkânlarında bol çeşit bulunur.</p>
+        <div class="tags"><span class="tag">Tatlı</span><span class="tag">Hediyelik</span></div>
+      </div>
+    </article>
+
+    <article class="place">
+      <div class="food-gallery">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Konya_Etli_Ekmek.jpg/640px-Konya_Etli_Ekmek.jpg" alt="Hoşmerim temalı" loading="lazy" width="640" height="400" style="filter:sepia(.35) saturate(1.1)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Cezerye.jpg" alt="Yöresel tatlı" loading="lazy" width="640" height="400" style="filter:hue-rotate(-10deg)">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pide_and_ayran.jpg?width=640" alt="Sofra" loading="lazy" width="640" height="400" style="filter:sepia(.2)">
+      </div>
       <div class="place-body">
         <h2>Hoşmerim</h2>
-        <p>Peynir, irmik ve şekerle yapılan yöresel tatlı. Sıcak servis edilir; Konya’da mutlaka tadılması gereken tatlılardan.</p>
+        <p>Peynir, irmik ve şekerle yapılan yöresel tatlı. Sıcak servis edilir; Konya’da mutlaka tadılmalı.</p>
         <div class="tags"><span class="tag">Tatlı</span><span class="tag">Yöresel</span></div>
-      </div>
-    </article>
-
-    <article class="place">
-      <div class="place-img" style="height:110px;background:linear-gradient(135deg,#8a6020,#f5ecd0);display:grid;place-items:center;font-size:2.5rem">🧁</div>
-      <div class="place-body">
-        <h2>Cezerye & kuruyemiş</h2>
-        <p>Havuçlu cezerye ve bol fıstıklı tatlılar hediyelik olarak da alınır. Çarşı ve çarşı üstü dükkânlarda bulunur.</p>
-        <div class="tags"><span class="tag">Hediyelik</span><span class="tag">Tatlı</span></div>
-      </div>
-    </article>
-
-    <article class="place">
-      <div class="place-img" style="height:110px;background:linear-gradient(135deg,#0d7a4f,#c5e6d4);display:grid;place-items:center;font-size:2.5rem">🥛</div>
-      <div class="place-body">
-        <h2>Ayran & şerbet</h2>
-        <p>Etli ekmek ve kebap yanının vazgeçilmezi ayran. Yazın şerbet ve limonata da yaygındır.</p>
-        <div class="tags"><span class="tag">İçecek</span></div>
-      </div>
-    </article>
-
-    <article class="place">
-      <div class="place-img" style="height:110px;background:linear-gradient(135deg,#5a7264,#e8f5ee);display:grid;place-items:center;font-size:2.5rem">🍞</div>
-      <div class="place-body">
-        <h2>Fırın ekmeği</h2>
-        <p>Taş fırın ekmeği; etli ekmek kadar olmasa da Konya sofrasının temelidir. Sabah kahvaltısında da tercih edilir.</p>
-        <div class="tags"><span class="tag">Ekmek</span></div>
       </div>
     </article>
 
@@ -149,23 +168,22 @@
   <div class="info" style="margin-top:24px">
     <h2>Pratik ipuçları</h2>
     <ul>
-      <li><strong>Etli ekmek</strong> için öğle ve akşam erken saatler daha sakin olur</li>
-      <li>Merkez ve Mevlana çevresinde birçok klasik lokanta bulunur</li>
-      <li>Porsiyonlar genelde doyurucudur; paylaşarak denemek mantıklı</li>
-      <li>Helal / aile işletmesi ağırlıklıdır; menüyü sormaktan çekinmeyin</li>
+      <li><strong>Etli ekmek</strong> için öğle ve akşam erken saatler daha sakin</li>
+      <li>Mevlana–merkez çevresinde birçok klasik lokanta var</li>
+      <li>Porsiyonlar doyurucu; paylaşarak denemek mantıklı</li>
     </ul>
   </div>
 
   <div class="info">
     <h2>Gezi ile birleştir</h2>
-    <p>Mevlana–Alaaddin aksını gezdikten sonra etli ekmek molası klasik bir Konya günüdür. Sille dönüşünde de yöresel işletmeler denenebilir.</p>
+    <p>Mevlana–Alaaddin aksından sonra etli ekmek molası klasik bir Konya günüdür.</p>
     <div class="link-row">
       <a class="btn btn-primary btn-sm" href="gezilecek.html">Gezilecek yerler</a>
       <a class="btn btn-ghost btn-sm" href="harita.html">Harita</a>
     </div>
   </div>
 
-  <p class="note">Lezzet önerileri genel bilgilendirmedir; işletme isimleri ve fiyatlar değişebilir.</p>
+  <p class="note">Görseller Wikimedia Commons (özgür lisans). İşletme ve fiyatlar değişebilir.</p>
 </main>
 
 <footer class="site-footer">
