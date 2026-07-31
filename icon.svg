@@ -1,12 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="KonyaGo">
-  <rect width="512" height="512" rx="108" fill="#0b1220"/>
-  <circle cx="256" cy="256" r="178" fill="#0f766e"/>
-  <circle cx="256" cy="256" r="178" fill="url(#g)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <defs>
-    <linearGradient id="g" x1="80" y1="80" x2="420" y2="420" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2dd4bf"/>
-      <stop offset="1" stop-color="#0f766e"/>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0e6b8"/>
+      <stop offset="50%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8a7010"/>
     </linearGradient>
   </defs>
-  <text x="256" y="292" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="168" font-weight="800" fill="#ecfdf5">K</text>
+  <rect width="200" height="200" rx="36" fill="#0a0f0c"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <path fill="none" stroke="url(#gold)" stroke-width="3.5" stroke-linejoin="round"
+    d="M100 28 L116 62 L156 56 L136 90 L164 118 L122 118 L100 156 L78 118 L36 118 L64 90 L44 56 L84 62 Z"/>
+  <g fill="url(#gold)">
+    <ellipse cx="100" cy="106" rx="13" ry="18"/>
+    <path d="M88 98 C72 88 54 92 44 106 C58 100 72 106 88 110 Z"/>
+    <path d="M112 98 C128 88 146 92 156 106 C142 100 128 106 112 110 Z"/>
+    <circle cx="90" cy="82" r="10"/>
+    <circle cx="110" cy="82" r="10"/>
+    <path d="M82 80 L73 75 L82 86 Z"/>
+    <path d="M118 80 L127 75 L118 86 Z"/>
+    <path d="M91 122 L100 144 L109 122 Z"/>
+  </g>
+  <circle cx="87" cy="80" r="2" fill="#0a0f0c"/>
+  <circle cx="107" cy="80" r="2" fill="#0a0f0c"/>
 </svg>

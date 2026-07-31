@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-label="KonyaGo">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0e6b8"/>
+      <stop offset="45%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8a7010"/>
+    </linearGradient>
+    <linearGradient id="t" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d7a4f"/>
+      <stop offset="100%" stop-color="#063d28"/>
+    </linearGradient>
+  </defs>
+  <!-- mark -->
+  <g transform="translate(4,4) scale(0.32)">
+    <circle cx="100" cy="100" r="88" fill="#0a0f0c"/>
+    <circle cx="100" cy="100" r="86" fill="none" stroke="url(#g)" stroke-width="4"/>
+    <path fill="none" stroke="url(#g)" stroke-width="5" stroke-linejoin="round"
+      d="M100 22 L118 62 L162 54 L138 92 L170 122 L122 122 L100 168 L78 122 L30 122 L62 92 L38 54 L82 62 Z"/>
+    <g fill="url(#g)">
+      <ellipse cx="100" cy="108" rx="14" ry="20"/>
+      <path d="M88 100 C70 88 52 92 42 108 C58 102 72 108 88 112 Z"/>
+      <path d="M112 100 C130 88 148 92 158 108 C142 102 128 108 112 112 Z"/>
+      <circle cx="90" cy="82" r="11"/>
+      <circle cx="110" cy="82" r="11"/>
+      <path d="M82 80 L72 74 L82 86 Z"/>
+      <path d="M118 80 L128 74 L118 86 Z"/>
+      <path d="M90 124 L100 148 L110 124 Z"/>
+    </g>
+    <circle cx="87" cy="80" r="2.2" fill="#0a0f0c"/>
+    <circle cx="107" cy="80" r="2.2" fill="#0a0f0c"/>
+  </g>
+  <!-- wordmark -->
+  <text x="78" y="48" font-family="Segoe UI, system-ui, sans-serif" font-size="36" font-weight="800" fill="url(#t)">KonyaGo</text>
+  <text x="80" y="64" font-family="Segoe UI, system-ui, sans-serif" font-size="11" font-weight="600" fill="#5a7264" letter-spacing="0.12em">SELÇUKLU · MEVLANA · KONYA</text>
+</svg>
