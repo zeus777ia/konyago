@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Selcuklu cift basli kartal">
+  <circle cx="60" cy="60" r="56" fill="#0d7a4f"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#c9a227" stroke-width="3"/>
+  <!-- simplified double-headed eagle -->
+  <g fill="#f7faf8" stroke="#c9a227" stroke-width="1.2" stroke-linejoin="round">
+    <!-- body -->
+    <ellipse cx="60" cy="68" rx="14" ry="18"/>
+    <!-- left wing -->
+    <path d="M46 62 C28 50 18 58 16 72 C28 68 40 72 48 74 Z"/>
+    <!-- right wing -->
+    <path d="M74 62 C92 50 102 58 104 72 C92 68 80 72 72 74 Z"/>
+    <!-- left head -->
+    <circle cx="48" cy="42" r="10"/>
+    <path d="M40 40 L32 36 L40 44 Z"/>
+    <!-- right head -->
+    <circle cx="72" cy="42" r="10"/>
+    <path d="M80 40 L88 36 L80 44 Z"/>
+    <!-- tail -->
+    <path d="M54 84 L60 98 L66 84 Z"/>
+  </g>
+  <circle cx="45" cy="40" r="2" fill="#0a5c3a"/>
+  <circle cx="69" cy="40" r="2" fill="#0a5c3a"/>
+</svg>
