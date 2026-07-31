@@ -1,4 +1,4 @@
-/* KonyaGo AI v2 — baglamli, cok niyetli, Konya-only akilli asistan */
+/* KonyaGo AI — Yerel motor + Google Gemini (ayni sohbet) */
 (function () {
   "use strict";
 
@@ -8,10 +8,102 @@
   var sendBtn = document.getElementById("aiSend");
   if (!chat || !form || !input) return;
 
+  var KEY_LS = "konyago_gemini_key";
+  var MODE_LS = "konyago_ai_mode";
+  var mode = "local"; // local | gemini
+  try {
+    var savedMode = localStorage.getItem(MODE_LS);
+    if (savedMode === "gemini" || savedMode === "local") mode = savedMode;
+  } catch (e) {}
+
   var history = [];
+  var geminiHistory = [];
   var lastTopics = [];
   var turn = 0;
 
+  var btnLocal = document.getElementById("modeLocal");
+  var btnGemini = document.getElementById("modeGemini");
+  var titleEl = document.getElementById("aiTitle");
+  var subEl = document.getElementById("aiSubtitle");
+  var keyInput = document.getElementById("geminiKeyInput");
+  var keySave = document.getElementById("geminiKeySave");
+  var keyClear = document.getElementById("geminiKeyClear");
+  var statusEl = document.getElementById("geminiStatus");
+
+  function getKey() {
+    try { return (localStorage.getItem(KEY_LS) || "").trim(); } catch (e) { return ""; }
+  }
+
+  function setKey(k) {
+    try {
+      if (k) localStorage.setItem(KEY_LS, k);
+      else localStorage.removeItem(KEY_LS);
+    } catch (e) {}
+  }
+
+  function updateStatus() {
+    var k = getKey();
+    if (!statusEl) return;
+    if (k) {
+      statusEl.className = "gemini-status ok";
+      statusEl.textContent = "Anahtar kayıtlı (" + k.slice(0, 6) + "…" + k.slice(-4) + "). Gemini modunu seçebilirsin.";
+    } else {
+      statusEl.className = "gemini-status";
+      statusEl.textContent = "Anahtar yok — şimdilik Yerel motor kullanılabilir.";
+    }
+  }
+
+  function setMode(m) {
+    mode = m === "gemini" ? "gemini" : "local";
+    try { localStorage.setItem(MODE_LS, mode); } catch (e) {}
+    if (btnLocal) btnLocal.classList.toggle("active", mode === "local");
+    if (btnGemini) btnGemini.classList.toggle("active", mode === "gemini");
+    if (titleEl) titleEl.textContent = mode === "gemini" ? "KonyaGo · Gemini" : "KonyaGo AI";
+    if (subEl) {
+      subEl.textContent = mode === "gemini"
+        ? "Google Gemini · Konya-only · ücretsiz kota"
+        : "Yerel motor · sınırsız · Konya-only";
+    }
+  }
+
+  if (btnLocal) btnLocal.addEventListener("click", function () { setMode("local"); });
+  if (btnGemini) btnGemini.addEventListener("click", function () {
+    if (!getKey()) {
+      addMsg("Gemini için önce yukarıya API anahtarını kaydet. Anahtar yokken Yerel motoru kullanabilirsin.", "bot");
+      setMode("local");
+      var box = document.getElementById("geminiSetup");
+      if (box) box.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    setMode("gemini");
+  });
+
+  if (keySave) keySave.addEventListener("click", function () {
+    var v = (keyInput && keyInput.value || "").trim();
+    if (!v || v.length < 20) {
+      if (statusEl) {
+        statusEl.className = "gemini-status err";
+        statusEl.textContent = "Geçerli bir API anahtarı yapıştır (aistudio.google.com/apikey).";
+      }
+      return;
+    }
+    setKey(v);
+    if (keyInput) keyInput.value = "";
+    updateStatus();
+    addMsg("Gemini anahtarı kaydedildi. Üstten «Gemini» butonuna basarak gerçek modele geçebilirsin.", "bot");
+  });
+
+  if (keyClear) keyClear.addEventListener("click", function () {
+    setKey("");
+    updateStatus();
+    setMode("local");
+    addMsg("Gemini anahtarı silindi. Yerel motora döndün.", "bot");
+  });
+
+  updateStatus();
+  setMode(mode === "gemini" && getKey() ? "gemini" : "local");
+
+  /* ========== YEREL MOTOR (önceki v2) ========== */
   function norm(s) {
     return (s || "")
       .toLowerCase()
@@ -22,10 +114,6 @@
       .replace(/[^a-z0-9\s]/g, " ")
       .replace(/\s+/g, " ")
       .trim();
-  }
-
-  function tokens(t) {
-    return t.split(" ").filter(function (w) { return w.length > 1; });
   }
 
   function hasAny(t, words) {
@@ -68,299 +156,108 @@
     "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "meke", "kilistra",
     "eflatun", "muze", "sema", "seydisehir", "seyit", "harun", "kugulu", "tinaztepe",
     "esref", "beylik", "aksehir", "nasreddin", "japon parki", "kelebek", "firin kebabi",
-    "tandir", "yesil kubbe", "mesnevi", "mevlevi", "iconium", "konyakart"
+    "tandir", "yesil kubbe", "mesnevi", "mevlevi", "iconium"
   ];
 
   var FOLLOW = [
     "oraya", "orasi", "nasil giderim", "yol tarifi", "ne kadar surer", "ucreti ne",
-    "acik mi", "saat kac", "daha fazla", "anlat", "detay", "peki", "ya", "baska",
+    "acik mi", "saat kac", "daha fazla", "anlat", "detay", "peki", "baska",
     "yaninda ne var", "ne yenir orada", "yakinda"
   ];
 
-  /* Bilgi kartlari: id, keys, weight, answer builder */
   var CARDS = [
-    {
-      id: "mevlana",
-      keys: ["mevlana", "rumi", "yesil kubbe", "sema", "mesnevi", "celaleddin", "mevlevi", "turbe mevlana"],
-      w: 12,
+    { id: "mevlana", keys: ["mevlana", "rumi", "yesil kubbe", "sema", "mesnevi", "celaleddin", "mevlevi"], w: 12,
       a: function () {
-        return "Mevlana Celaleddin Rumi’nin makamı bugün Mevlana Müzesi olarak ziyaret edilir; Konya’nın en bilinen duraklarından.\n\n" +
-          "• Giriş: ücretsiz (resmî uygulama değişebilir)\n" +
-          "• Kapanış: genelde 17:00 — sabah veya öğleden önce git, kalabalıktan kaç\n" +
-          "• Ne beklemeli: Yeşil kubbe, semahane atmosferi, Mevlevî kültürü\n" +
-          "• İpucu: kıyafet ve sessizlik kurallarına uy; fotoğraf kısıtları olabilir\n\n" +
-          "Yol tarifi için Harita sayfasına, çevre planı için Rotalar’a bakabilirsin.";
-      }
-    },
-    {
-      id: "etli",
-      keys: ["etli ekmek", "etliekmek", "etli pide", "konya pide"],
-      w: 14,
+        return "Mevlana Celaleddin Rumi’nin makamı bugün Mevlana Müzesi olarak ziyaret edilir.\n\n• Giriş: ücretsiz (resmî uygulama değişebilir)\n• Kapanış: genelde 17:00 — sabah veya öğleden önce git\n• Yeşil kubbe, semahane, Mevlevî kültürü\n\nHarita ve Rotalar sayfalarına bakabilirsin.";
+      }},
+    { id: "etli", keys: ["etli ekmek", "etliekmek", "etli pide", "konya pide"], w: 14,
       a: function () {
-        return "Etli ekmek Konya’nın imza lezzeti.\n\n" +
-          "İnce açılmış hamur üzerine kıyma, soğan ve baharat; taş fırında kısa sürede pişer. Genelde dilim dilim kesilir, yanına ayran yakışır.\n\n" +
-          "• En pratik: Mevlana / merkez çevresi (öğle 11:30–14:00 yoğun)\n" +
-          "• Porsiyon: tek kişi için yarım veya dilim dilim paylaşmak yaygın\n" +
-          "• Alternatif: fırın kebabı, tirit\n\n" +
-          "Semt önerileri için Lezzet Haritası sayfasına bak.";
-      }
-    },
-    {
-      id: "sille",
-      keys: ["sille", "aya eleni", "sille koy"],
-      w: 11,
+        return "Etli ekmek Konya’nın imza lezzeti.\n\nİnce hamur, kıyma-soğan-baharat, taş fırın. Yanına ayran.\n• Merkez / Mevlana çevresi öğle 11:30–14:00 yoğun\n• Alternatif: fırın kebabı, tirit\n\nLezzet Haritası sayfasına bak.";
+      }},
+    { id: "sille", keys: ["sille", "aya eleni"], w: 11,
       a: function () {
-        return "Sille, merkeze yakın tarihi bir yerleşim — yarım günlük gezi için ideal.\n\n" +
-          "• Taş evler ve sokak dokusu\n" +
-          "• Aya Eleni Kilisesi\n" +
-          "• Mağara / fotoğraf noktaları\n\n" +
-          "Sabah Mevlana + öğleden sonra Sille, 1–1,5 günlük planın en dengeli hali. Ulaşım için toplu taşıma veya kısa taksi/araç pratik olur; güncel hat için ATUS’a bak.";
-      }
-    },
-    {
-      id: "alaaddin",
-      keys: ["alaaddin", "alaeddin", "alaaddin tepesi"],
-      w: 10,
+        return "Sille, merkeze yakın tarihi yerleşim — yarım gün ideal.\n• Taş evler, Aya Eleni Kilisesi, fotoğraf noktaları\nSabah Mevlana + öğleden sonra Sille dengeli bir 1–1,5 günlük plandır.";
+      }},
+    { id: "alaaddin", keys: ["alaaddin", "alaeddin"], w: 10,
       a: function () {
-        return "Alaaddin Tepesi, Konya’nın tarihî çekirdeği. Selçuklu izleri, cami ve şehir manzarası bir arada.\n\n" +
-          "Yakınında İnce Minareli Medrese ve Karatay Medresesi ile merkez kültür aksını tamamlar. Öğleden sonra için ideal; yazın gölge ve su molası planla.";
-      }
-    },
-    {
-      id: "medrese",
-      keys: ["ince minare", "karatay", "medrese", "cini"],
-      w: 10,
+        return "Alaaddin Tepesi Konya’nın tarihî çekirdeği. Yakınında İnce Minareli ve Karatay medreseleri var.";
+      }},
+    { id: "medrese", keys: ["ince minare", "karatay", "medrese"], w: 10,
       a: function () {
-        return "İnce Minareli Medrese taş işçiliğiyle, Karatay Medresesi çini koleksiyonuyla öne çıkar. İkisi de Alaaddin çevresinde; aynı öğleden sonraya sığdırılabilir.\n\nMüze saatleri dönemsel değişir — kapıda veya resmî kanaldan doğrula.";
-      }
-    },
-    {
-      id: "catal",
-      keys: ["catalhoyuk", "catal hoyuk", "unesco", "neolitik"],
-      w: 11,
+        return "İnce Minareli Medrese taş işçiliği, Karatay Medresesi çini koleksiyonu ile öne çıkar. Alaaddin çevresinde aynı öğleden sonraya sığar.";
+      }},
+    { id: "catal", keys: ["catalhoyuk", "unesco", "neolitik"], w: 11,
       a: function () {
-        return "Çatalhöyük, Neolitik dönemin en önemli yerleşimlerinden ve UNESCO Dünya Mirası Listesi’nde.\n\n" +
-          "Merkeze göre araç veya tur gerekir; sabah çıkıp öğleden önce bitirmek iyi plan. Sadece müze vitrini değil, höyük alanı da hikâyenin parçası — rahat ayakkabı al.";
-      }
-    },
-    {
-      id: "beysehir",
-      keys: ["beysehir", "beysehir gol", "esrefoglu camii"],
-      w: 11,
+        return "Çatalhöyük UNESCO Dünya Mirası — Neolitik. Merkeze göre araç/tur gerekir; sabah planı iyi olur.";
+      }},
+    { id: "beysehir", keys: ["beysehir", "esrefoglu camii"], w: 11,
       a: function () {
-        return "Beyşehir: göl + Eşrefoğlu Camii kombinasyonu.\n\n" +
-          "Türkiye’nin büyük tatlı su göllerinden; kıyı yürüyüşü ve kuş gözlemi mümkün. Eşrefoğlu Camii ahşap direkli mimarisiyle Anadolu’nun önemli örneklerinden.\n\n" +
-          "Günübirlik araç rotası. Detay: İlçeler sayfası.";
-      }
-    },
-    {
-      id: "esref",
-      keys: ["esrefoglu", "esref oglu", "esrefogullari", "esrefogullari", "suleyman bey"],
-      w: 12,
+        return "Beyşehir: göl + Eşrefoğlu Camii. Günübirlik araç rotası. İlçeler sayfasına bak.";
+      }},
+    { id: "esref", keys: ["esrefoglu", "esrefogullari", "esref oglu"], w: 12,
       a: function () {
-        return "Eşrefoğulları Beyliği (yaklaşık 1280–1326), Beyşehir–Seydişehir hattında kurulmuş bir Anadolu beyliğidir.\n\n" +
-          "• Kurucu: Eşrefoğlu Seyfeddin Süleyman Bey (başkent Beyşehir)\n" +
-          "• 1326 civarı İlhanlı müdahalesiyle fiilen sona erer\n" +
-          "• Mimari miras: Beyşehir Eşrefoğlu Camii\n\n" +
-          "Daha derin metin Tarihçe sayfasında.";
-      }
-    },
-    {
-      id: "seydi",
-      keys: ["seydisehir", "seyit harun", "seyid harun", "harun veli", "kugulu", "tinaztepe", "tinaz tepe"],
-      w: 11,
+        return "Eşrefoğulları Beyliği (~1280–1326), Beyşehir–Seydişehir hattında. Kurucu Eşrefoğlu Seyfeddin Süleyman Bey. Miras: Eşrefoğlu Camii. Detay Tarihçe sayfasında.";
+      }},
+    { id: "seydi", keys: ["seydisehir", "seyit harun", "seyid harun", "kugulu", "tinaztepe"], w: 11,
       a: function () {
-        return "Seydişehir günübirlik doğa + inanç rotası:\n\n" +
-          "• Seyyid Harun Veli Külliyesi\n" +
-          "• Tınaztepe Mağarası (saatleri kontrol et)\n" +
-          "• Kuğulu Park — aile / dinlenme\n\n" +
-          "Araçla planlamak en rahatı. İlçeler sayfasında özet var.";
-      }
-    },
-    {
-      id: "aksehir",
-      keys: ["aksehir", "nasreddin", "nasreddin hoca", "gulmece"],
-      w: 11,
+        return "Seydişehir: Seyyid Harun Veli Külliyesi, Tınaztepe Mağarası, Kuğulu Park. Araçla günübirlik.";
+      }},
+    { id: "aksehir", keys: ["aksehir", "nasreddin"], w: 11,
       a: function () {
-        return "Akşehir, Nasreddin Hoca’nın şehri.\n\n" +
-          "Türbe, Gülmece Parkı, müze ve göl efsaneleriyle kültür ağırlıklı bir ilçe günü çıkar. Mizah + tarih arayanlara birebir.\n\nİlçeler sayfasına bak.";
-      }
-    },
-    {
-      id: "meram",
-      keys: ["meram", "meram baglari", "baglar"],
-      w: 9,
+        return "Akşehir, Nasreddin Hoca’nın şehri — türbe, Gülmece Parkı, müze. İlçeler sayfasına bak.";
+      }},
+    { id: "meram", keys: ["meram", "meram baglari"], w: 9,
       a: function () {
-        return "Meram Bağları yeşil vadi, mesire ve akşam yürüyüşü için tercih edilir. Yaz sıcağında öğleni merkeze, akşamı Meram’a kaydırmak klasik Konya planıdır.";
-      }
-    },
-    {
-      id: "yemek",
-      keys: ["firin kebabi", "tandir", "bamya", "arabasi", "tirit", "hosmerim", "cezerye", "ne yenir", "yemek", "lezzet", "mutfak"],
-      w: 9,
+        return "Meram Bağları yeşil vadi ve akşam yürüyüşü için tercih edilir.";
+      }},
+    { id: "yemek", keys: ["firin kebabi", "tandir", "bamya", "arabasi", "tirit", "hosmerim", "cezerye", "ne yenir", "yemek", "mutfak"], w: 9,
       a: function (t) {
-        if (hasAny(t, ["bamya"])) return "Bamya çorbası Konya usulünde ekşili, etli veya sade yapılır; özellikle kış ve ramazan sofralarında sevilir.";
-        if (hasAny(t, ["arabasi"])) return "Arabaşı İç Anadolu’nun kış yemeğidir: unlu/kıvamlı kısım + et suyu veya etli harç. Soğuk akşamlara yakışır.";
-        if (hasAny(t, ["tirit"])) return "Tirit: ekmek, et suyu ve kıyma/kuşbaşı; üzerine yoğurt-tereyağı. Düğün ve özel gün klasiği.";
-        if (hasAny(t, ["firin", "tandir"])) return "Fırın kebabı kuşbaşı etin soğan-domatesle uzun pişmesiyle yapılır; sosu ekmekle yenir. Tandır da aynı aileden.";
-        if (hasAny(t, ["hosmerim", "cezerye", "tatli"])) return "Tatlıda hoşmerim (peynir–irmik–şeker, sıcak) ve cezerye (havuçlu, hediyelik) öne çıkar.";
-        return "Konya mutfağı özeti:\n• Etli ekmek (imza)\n• Fırın kebabı / tandır\n• Tirit, bamya, arabaşı (mevsim)\n• Hoşmerim, cezerye\n\nDetay: Mutfak + Lezzet Haritası sayfaları.";
-      }
-    },
-    {
-      id: "ulasim",
-      keys: ["ulasim", "atus", "konyakart", "otobus", "tramvay", "toplu tasima", "dolmus", "nasil gider"],
-      w: 10,
+        if (hasAny(t, ["bamya"])) return "Bamya çorbası Konya usulünde ekşili; kış ve ramazan sofralarında sevilir.";
+        if (hasAny(t, ["arabasi"])) return "Arabaşı: unlu/kıvamlı kısım + et suyu — İç Anadolu kış klasiği.";
+        if (hasAny(t, ["tirit"])) return "Tirit: ekmek, et suyu, kıyma/kuşbaşı; yoğurt-tereyağı ile.";
+        if (hasAny(t, ["firin", "tandir"])) return "Fırın kebabı uzun pişen kuşbaşı et; tandır aynı aileden.";
+        return "Konya mutfağı: etli ekmek, fırın kebabı/tandır, tirit, bamya, arabaşı, hoşmerim, cezerye. Mutfak sayfasına bak.";
+      }},
+    { id: "ulasim", keys: ["ulasim", "atus", "konyakart", "otobus", "tramvay", "dolmus"], w: 10,
       a: function () {
-        return "Şehir içi ulaşımda ATUS ve Konyakart temel araçtır.\n\n" +
-          "• Hat / saat: atus.konya.bel.tr veya ATUS uygulaması\n" +
-          "• İlçe (Beyşehir, Seydişehir, Akşehir) için genelde otogar + otobüs veya özel araç\n" +
-          "• Merkez müzeleri yürüme / kısa toplu taşıma ile bağlanır\n\nUlaşım sayfasında da özet var.";
-      }
-    },
-    {
-      id: "konak",
-      keys: ["konaklama", "otel", "nerede kal", "pansiyon", "hotel"],
-      w: 9,
+        return "ATUS + Konyakart şehir içi temel. Hat/saat: atus.konya.bel.tr. İlçeler için otogar veya araç.";
+      }},
+    { id: "plan1", keys: ["1 gun", "bir gun", "tek gun"], w: 13,
       a: function () {
-        return "Konaklama ipucu:\n\n" +
-          "• Merkez / Mevlana yakını → yürüme mesafesi, pratik\n" +
-          "• Selçuklu tarafı → daha yeni stok, araçlı geziler için uygun\n" +
-          "• Meram → sakin, akşam yürüyüşü sevenlere\n\n" +
-          "Şeb-i Arus (aralık) ve bayramlarda erken rezervasyon şart.";
-      }
-    },
-    {
-      id: "plan1",
-      keys: ["1 gun", "bir gun", "tek gun", "gunubirlik merkez"],
-      w: 13,
+        return "1 günlük merkez:\n1) Mevlana (ücretsiz, ~17:00 kapanış)\n2) Etli ekmek\n3) Alaaddin + medreseler\n4) Akşam Meram / park\n\nrota-yazdir.html";
+      }},
+    { id: "plan2", keys: ["2 gun", "iki gun", "hafta sonu", "haftasonu"], w: 13,
       a: function () {
-        var h = hourTR();
-        var tip = h < 11
-          ? "Şu an sabah — Mevlana ile başla."
-          : (h < 16 ? "Öğleden sonra için Alaaddin + medrese aksına kayabilirsin." : "Akşam için Meram veya park yürüyüşü mantıklı.");
-        return "1 günlük merkez planı:\n\n" +
-          "1) Mevlana Müzesi (ücretsiz, genelde 17:00 kapanış — erken git)\n" +
-          "2) Öğle: etli ekmek + ayran\n" +
-          "3) Alaaddin Tepesi + İnce Minare / Karatay\n" +
-          "4) Akşam: Meram veya Japon Parkı\n\n" +
-          tip + "\nYazdırılabilir sürüm: rota-yazdir.html";
-      }
-    },
-    {
-      id: "plan2",
-      keys: ["2 gun", "iki gun", "hafta sonu", "haftasonu", "cumartesi", "pazar plan", "weekend"],
-      w: 13,
+        return "2 gün:\nCts: Mevlana → etli ekmek → Alaaddin → Meram\nPaz: Sille veya Beyşehir (araç) veya aile park rotası.";
+      }},
+    { id: "tarih", keys: ["tarih", "tarihce", "selcuklu", "osmanli"], w: 9,
       a: function () {
-        return "2 gün / hafta sonu planı:\n\n" +
-          "CUMARTESİ\n• Sabah Mevlana → öğle etli ekmek → Alaaddin + medreseler → akşam Meram\n\n" +
-          "PAZAR (birini seç)\n• Sille yarım gün\n• Araç varsa Beyşehir Gölü + Eşrefoğlu\n• Aile: park / Kelebek + hafif tempo\n\n" +
-          "Yazın öğleni kapalı mekâna al; kışın tirit–bamya–arabaşı dene.";
-      }
-    },
-    {
-      id: "aile",
-      keys: ["aile", "cocuk", "kelebek", "japon parki", "cocuklu"],
-      w: 10,
+        return "Çatalhöyük → İkonion → Anadolu Selçuklu başkenti → Mevlana → Eşrefoğulları → Osmanlı → Cumhuriyet. Detay: Tarihçe sayfası.";
+      }},
+    { id: "self", keys: ["konyago", "sen kimsin", "yapay zeka", "ai misin"], w: 10,
       a: function () {
-        return "Aile / çocuklu plan:\n\n" +
-          "• Mevlana’yı kısa tut\n" +
-          "• Kelebek Bahçesi veya park molası\n" +
-          "• Öğle yemeğinde sade porsiyon\n" +
-          "• Müze yığınından kaçın; dinlenme aralığı bırak\n\nSeydişehir Kuğulu Park da iyi bir günübirlik seçenek.";
-      }
-    },
-    {
-      id: "tarih",
-      keys: ["tarih", "tarihce", "selcuklu", "osmanli", "beylik", "iconium"],
-      w: 9,
-      a: function () {
-        return "Konya tarih çizgisi (özet):\n\n" +
-          "Çatalhöyük (Neolitik) → antik İkonion → Anadolu Selçuklu başkenti → Mevlana ve Mevlevîlik → Eşrefoğulları (Beyşehir–Seydişehir) → Osmanlı → Cumhuriyet.\n\n" +
-          "Derin anlatım Tarihçe sayfasında; Selçuklu mimarisi için Alaaddin, İnce Minare, Karatay.";
-      }
-    },
-    {
-      id: "sebi",
-      keys: ["seb i arus", "sebi arus", "aralik etkinlik", "vuslat"],
-      w: 11,
-      a: function () {
-        return "Şeb-i Arus, Mevlana’nın vuslat yıldönümü etkinlikleridir; genelde aralık ayında yoğunlaşır.\n\n" +
-          "Sema, konser ve kültür programları artar; konaklama ve merkez doluluğu yükselir. Biletli etkinlikleri yalnızca resmî kanallardan takip et. Etkinlikler sayfasında dönem notları var.";
-      }
-    },
-    {
-      id: "hava",
-      keys: ["hava", "mevsim", "ne zaman gel", "sicak", "soguk", "yagmur"],
-      w: 8,
-      a: function () {
-        var m = monthTR();
-        var s = (m >= 6 && m <= 8) ? "Yaz: öğlen dış mekânı kısalt, su ve şapka şart."
-          : (m === 12 || m <= 2) ? "Kış: katmanlı giyin; arabaşı–tirit–bamya zamanı."
-          : "İlkbahar/sonbahar gezi için genelde en rahat dönemler.";
-        return s + "\n\nAna sayfada Konya anlık hava kutusu var (Open-Meteo). Resmî tahmin: mgm.gov.tr";
-      }
-    },
-    {
-      id: "acil",
-      keys: ["acil", "112", "polis", "itfaiye", "hastane", "afad"],
-      w: 12,
-      a: function () {
-        return "Acil durum:\n\n• Tek numara: 112\n• Polis 155 · Jandarma 156 · İtfaiye 110 · AFAD 122\n\nPratik sayfada tel: linkleri var. KonyaGo acil çağrı merkezi değildir.";
-      }
-    },
-    {
-      id: "hediye",
-      keys: ["hediye", "hediyelik", "ne al", "cezerye al"],
-      w: 8,
-      a: function () {
-        return "Hediyelik: cezerye, çini/seramik, Mevlana temalı ürünler, el işi. Mevlana çevresi ve çarşılarda seçenek fazla. Hediyelik sayfasına bak.";
-      }
-    },
-    {
-      id: "harita",
-      keys: ["harita", "konum", "haritada", "google maps"],
-      w: 8,
-      a: function () {
-        return "Harita sayfasında Mevlana, Sille, ilçe noktaları ve yol tarifi bağlantıları var. Gezilecek kartlarında da Google/Yandex yönlendirmesi bulunur.";
-      }
-    },
-    {
-      id: "self",
-      keys: ["konyago", "sen kimsin", "yapay zeka", "ai misin", "ne is yaparsin"],
-      w: 10,
-      a: function () {
-        return "Ben KonyaGo AI — yalnızca Konya odaklı gezi asistanıyım.\n\n" +
-          "Soru limiti yok, üyelik yok. Gezi, mutfak, tarih, ulaşım, rota ve ilçeler hakkında yardımcı olurum. Konya dışı konularda yönlendirmem.\n\n" +
-          "Resmî belediye/müze sitesi değilim; saat ve ücret için güncel resmî kaynakları kontrol et.";
-      }
-    }
+        return "Ben KonyaGo AI. Yerel Konya motoru veya (anahtarlı) Gemini ile çalışırım. Sadece Konya odaklıyım.";
+      }}
   ];
 
   function isOffTopic(t) {
-    if (hasAny(t, OFF) && !hasAny(t, KONYA_SIGNALS)) return true;
-    return false;
+    return hasAny(t, OFF) && !hasAny(t, KONYA_SIGNALS);
   }
 
   function isKonyaRelated(t) {
     if (hasAny(t, KONYA_SIGNALS)) return true;
-    if (hasAny(t, ["gez", "turist", "rota", "plan", "tavsiye", "nerede", "ne yenir", "ne gezilir", "kac gun", "nasil", "otel", "konak", "muze", "yemek", "lezzet", "mutfak", "ulasim", "harita"])) return true;
-    if (hasAny(t, ["merhaba", "selam", "gunaydin", "iyi gunler", "tesekkur", "sagol", "eyvallah", "nasilsin"])) return true;
+    if (hasAny(t, ["gez", "turist", "rota", "plan", "tavsiye", "nerede", "ne yenir", "muze", "yemek", "ulasim"])) return true;
+    if (hasAny(t, ["merhaba", "selam", "gunaydin", "tesekkur", "sagol"])) return true;
     if (hasAny(t, FOLLOW) && lastTopics.length) return true;
     return false;
   }
 
   function scoreCard(card, t) {
     var score = 0;
-    var keys = card.keys;
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i];
-      if (t.indexOf(k) !== -1) {
-        score += (card.w || 8) + k.length;
-        if (t === k || t.indexOf(k) === 0) score += 4;
-      }
+    for (var i = 0; i < card.keys.length; i++) {
+      var k = card.keys[i];
+      if (t.indexOf(k) !== -1) score += (card.w || 8) + k.length;
     }
-    // baglam: onceki konuyla ayni kart
     if (lastTopics.indexOf(card.id) !== -1 && hasAny(t, FOLLOW)) score += 15;
     return score;
   }
@@ -375,130 +272,162 @@
     return scored.slice(0, n || 2);
   }
 
-  function greet(t) {
-    if (hasAny(t, ["tesekkur", "sagol", "eyvallah"])) {
-      return "Rica ederim. Başka bir Konya sorusun olursa buradayım — iyi geziler!";
-    }
-    if (hasAny(t, ["nasilsin", "naber"])) {
-      return "İyiyim, teşekkürler! Konya planın için hazırım. Mevlana, etli ekmek, rota veya ilçe sorabilirsin.";
-    }
-    if (hasAny(t, ["merhaba", "selam", "gunaydin", "iyi gunler", "hey"])) {
-      var h = hourTR();
-      var part = h < 12 ? "Günaydın" : (h < 18 ? "Merhaba" : "İyi akşamlar");
-      return part + "! Ben KonyaGo AI. Konya gezi, yemek, tarih ve ulaşımda yardımcı olurum — limit yok.\n\nÖrnek: «1 günde ne gezilir?», «Etli ekmek», «Hafta sonu planı»";
-    }
-    return null;
-  }
-
-  function answer(q) {
+  function answerLocal(q) {
     var t = norm(q);
     turn++;
-
-    if (!t) return "Bir şey yazman yeterli — Konya hakkında ne merak ediyorsan sor.";
-
-    var g = greet(t);
-    if (g) return g;
-
+    if (!t) return "Bir şey yaz — Konya hakkında sor.";
+    if (hasAny(t, ["tesekkur", "sagol"])) return "Rica ederim. Başka Konya sorun olursa buradayım.";
+    if (hasAny(t, ["merhaba", "selam", "gunaydin"])) {
+      return "Merhaba! Yerel KonyaGo AI veya Gemini seçebilirsin. Örnek: «1 günde ne gezilir?»";
+    }
     if (isOffTopic(t)) {
-      return "Bu konu benim alanım değil. Ben yalnızca Konya ile ilgili sorulara cevap veriyorum.\n\nGezi, mutfak, rota, Mevlana, Sille, Beyşehir… bunlardan sorabilirsin.";
+      return "Bu konu alanım değil. Yalnızca Konya (gezi, mutfak, tarih, ulaşım).";
     }
-
-    // takip sorusu: net anahtar yoksa son konulara bagla
     if (hasAny(t, FOLLOW) && lastTopics.length && !hasAny(t, KONYA_SIGNALS)) {
-      var synthetic = t + " " + lastTopics.join(" ");
-      t = norm(synthetic + " " + lastTopics.map(function (id) {
-        for (var i = 0; i < CARDS.length; i++) if (CARDS[i].id === id) return CARDS[i].keys[0];
-        return id;
-      }).join(" "));
+      t = norm(t + " " + lastTopics.join(" "));
     }
-
-    if (!isKonyaRelated(t) && tokens(t).length > 3) {
-      return "KonyaGo AI sadece Konya odaklı çalışır.\n\nŞunu dene:\n• «Mevlana ücretsiz mi?»\n• «2 günlük plan»\n• «Seydişehir’de ne gezilir?»\n• «Arabaşı nedir?»";
+    if (!isKonyaRelated(t) && t.split(" ").length > 3) {
+      return "Sadece Konya odaklıyım. «Mevlana», «2 günlük plan», «Arabaşı» dene.";
     }
-
     var tops = topCards(t, 2);
     if (!tops.length) {
-      // zayif sinyal ama konya baglamı
-      if (lastTopics.length) {
-        tops = lastTopics.slice(0, 1).map(function (id) {
-          for (var i = 0; i < CARDS.length; i++) {
-            if (CARDS[i].id === id) return { card: CARDS[i], s: 5 };
-          }
-          return null;
-        }).filter(Boolean);
-      }
+      return "Konya ile ilgili görünüyor ama net bağlayamadım. İlçe / gün / yemek mi tarih mi netleştir.";
     }
-
-    if (!tops.length) {
-      return "Soru Konya ile ilgili görünüyor ama net bağlayamadım. Biraz daha açabilir misin?\n\nÖrneğin: hangi ilçe, kaç gün, yemek mi tarih mi?";
-    }
-
     lastTopics = tops.map(function (x) { return x.card.id; });
-
     var parts = [];
     for (var i = 0; i < tops.length; i++) {
       if (i > 0 && tops[i].s < tops[0].s * 0.45) break;
-      var fn = tops[i].card.a;
-      parts.push(typeof fn === "function" ? fn(t) : String(fn));
+      parts.push(typeof tops[i].card.a === "function" ? tops[i].card.a(t) : String(tops[i].card.a));
     }
-
-    var out = parts[0];
-    if (parts.length > 1) {
-      out += "\n\n———\n\nİlgili not:\n" + parts[1];
-    }
-
-    // kisa takip onerisi
-    if (turn < 8 && tops[0].card.id === "mevlana") {
-      out += "\n\nİstersen yanına «etli ekmek» veya «1 günlük plan» da sorabilirsin.";
-    } else if (tops[0].card.id === "plan1" || tops[0].card.id === "plan2") {
-      out += "\n\nHava ve anlık öneri için ana sayfadaki «Bugün ne yapmalı?» kutusuna da bak.";
-    }
-
-    return out;
+    return parts.length > 1 ? parts[0] + "\n\n———\n\n" + parts[1] : parts[0];
   }
 
-  function addMsg(text, who) {
+  /* ========== GEMINI ========== */
+  var SYSTEM = [
+    "Sen KonyaGo AI’sın. Yalnızca Konya (Türkiye) ili ve ilçeleri hakkında yardımcı olursun.",
+    "Konular: gezi, tarih, mutfak, ulaşım, konaklama, etkinlik, ilçeler (Selçuklu, Meram, Karatay, Beyşehir, Seydişehir, Akşehir vb.).",
+    "Konya dışı sorularda nazikçe reddet ve Konya’ya yönlendir.",
+    "Türkçe, samimi, kısa-orta uzunlukta cevap ver. Madde işaretleri kullanabilirsin.",
+    "Bilinmeyen saat/ücret için ‘resmî kaynaktan doğrula’ de. Uydurma telefon/adres verme.",
+    "Mevlana Müzesi genelde ücretsiz ve kapanış ~17:00 olabilir; değişebilir diye belirt.",
+    "Sen bir rehber asistanısın; tıbbi/hukuki/yatırım tavsiyesi verme."
+  ].join(" ");
+
+  var GEMINI_MODELS = [
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash"
+  ];
+
+  function callGemini(userText) {
+    var key = getKey();
+    if (!key) return Promise.reject(new Error("no-key"));
+
+    geminiHistory.push({ role: "user", parts: [{ text: userText }] });
+    if (geminiHistory.length > 16) geminiHistory = geminiHistory.slice(-16);
+
+    var body = {
+      systemInstruction: { parts: [{ text: SYSTEM }] },
+      contents: geminiHistory,
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 1024
+      }
+    };
+
+    function tryModel(idx) {
+      if (idx >= GEMINI_MODELS.length) {
+        return Promise.reject(new Error("all-models-failed"));
+      }
+      var model = GEMINI_MODELS[idx];
+      var url = "https://generativelanguage.googleapis.com/v1beta/models/" +
+        model + ":generateContent?key=" + encodeURIComponent(key);
+
+      return fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      }).then(function (r) {
+        return r.json().then(function (j) {
+          if (!r.ok) {
+            var msg = (j && j.error && j.error.message) || ("HTTP " + r.status);
+            // kota / model yoksa sonraki modele
+            if (r.status === 404 || r.status === 429 || /not found|quota|RESOURCE_EXHAUSTED/i.test(msg)) {
+              return tryModel(idx + 1);
+            }
+            throw new Error(msg);
+          }
+          var text = "";
+          try {
+            var cands = j.candidates || [];
+            if (cands[0] && cands[0].content && cands[0].content.parts) {
+              text = cands[0].content.parts.map(function (p) { return p.text || ""; }).join("");
+            }
+          } catch (e) {}
+          if (!text) throw new Error("Boş cevap");
+          geminiHistory.push({ role: "model", parts: [{ text: text }] });
+          return text;
+        });
+      }).catch(function (err) {
+        if (idx + 1 < GEMINI_MODELS.length) return tryModel(idx + 1);
+        throw err;
+      });
+    }
+
+    return tryModel(0);
+  }
+
+  /* ========== UI ========== */
+  function addMsg(text, who, meta) {
     var div = document.createElement("div");
     div.className = "ai-msg ai-" + who;
     div.textContent = text;
+    if (meta) {
+      var m = document.createElement("div");
+      m.className = "ai-meta";
+      m.textContent = meta;
+      div.appendChild(m);
+    }
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
     return div;
   }
 
-  function typeOut(text, cb) {
+  function typeOut(text, meta, cb) {
     var div = document.createElement("div");
     div.className = "ai-msg ai-bot";
     chat.appendChild(div);
     var i = 0;
-    var step = Math.max(2, Math.floor(text.length / 40));
+    var step = Math.max(2, Math.floor(text.length / 50));
     function tick() {
       i = Math.min(text.length, i + step);
       div.textContent = text.slice(0, i);
       chat.scrollTop = chat.scrollHeight;
-      if (i < text.length) {
-        setTimeout(tick, 16);
-      } else if (cb) cb();
+      if (i < text.length) setTimeout(tick, 12);
+      else {
+        if (meta) {
+          var m = document.createElement("div");
+          m.className = "ai-meta";
+          m.textContent = meta;
+          div.appendChild(m);
+        }
+        if (cb) cb();
+      }
     }
     tick();
   }
 
-  function addTyping(then) {
+  function addTyping() {
     var tip = document.createElement("div");
     tip.className = "ai-msg ai-bot ai-typing";
-    tip.textContent = "Düşünüyor…";
+    tip.textContent = mode === "gemini" ? "Gemini düşünüyor…" : "Düşünüyor…";
     chat.appendChild(tip);
     chat.scrollTop = chat.scrollHeight;
-    setTimeout(function () {
-      tip.remove();
-      then();
-    }, 280 + Math.random() * 420);
+    return tip;
   }
 
   addMsg(
-    "Merhaba! Ben KonyaGo AI — Konya’ya özel asistanın.\n\n" +
-    "Gezi rotası, Mevlana, etli ekmek, ilçeler, tarih ve ulaşım… hepsini sorabilirsin. Soru limiti yok.\n\n" +
-    "Hızlı başla: «Hafta sonu planı» · «Mevlana» · «Sille»",
+    "Merhaba! Aynı sohbette iki motor var:\n\n• Yerel — anahtarsız, anında Konya motoru\n• Gemini — Google AI (yukarıya ücretsiz API key)\n\nÜstten motor seç, sorunu yaz.",
     "bot"
   );
 
@@ -510,14 +439,39 @@
     history.push({ role: "user", text: q });
     input.value = "";
     if (sendBtn) sendBtn.disabled = true;
-    addTyping(function () {
-      var a = answer(q);
-      history.push({ role: "bot", text: a });
-      if (history.length > 24) history = history.slice(-24);
-      typeOut(a, function () {
+
+    var tip = addTyping();
+
+    function done(text, meta) {
+      tip.remove();
+      history.push({ role: "bot", text: text });
+      if (history.length > 30) history = history.slice(-30);
+      typeOut(text, meta, function () {
         if (sendBtn) sendBtn.disabled = false;
         input.focus();
       });
-    });
+    }
+
+    function fail(err) {
+      tip.remove();
+      var msg = "Gemini yanıt veremedi.";
+      if (err && err.message) {
+        if (/no-key/i.test(err.message)) msg = "Gemini anahtarı yok. Yukarıdan kaydet veya Yerel moda geç.";
+        else if (/API_KEY|invalid|403/i.test(err.message)) msg = "API anahtarı geçersiz veya kısıtlı. AI Studio’dan yeni key dene.";
+        else if (/429|quota|RESOURCE/i.test(err.message)) msg = "Gemini kotası doldu. Biraz bekle veya Yerel moda geç — Yerel her zaman çalışır.";
+        else msg = "Gemini hatası: " + String(err.message).slice(0, 180) + "\n\nYerel moda geçip soruyu tekrarlayabilirsin.";
+      }
+      done(msg, "hata · yerel motora geçebilirsin");
+    }
+
+    if (mode === "gemini") {
+      callGemini(q).then(function (text) {
+        done(text, "Gemini · KonyaGo");
+      }).catch(fail);
+    } else {
+      setTimeout(function () {
+        done(answerLocal(q), "Yerel motor");
+      }, 200 + Math.random() * 300);
+    }
   });
 })();
