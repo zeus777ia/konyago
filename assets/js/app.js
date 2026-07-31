@@ -28,6 +28,16 @@
     }
   } catch (e) {}
 
+  /* Nöbetçi eczane kayan şerit */
+  try {
+    if (!document.querySelector("script[data-nobetci]")) {
+      var ns = document.createElement("script");
+      ns.src = "assets/js/nobetci.js";
+      ns.setAttribute("data-nobetci", "1");
+      document.head.appendChild(ns);
+    }
+  } catch (e) {}
+
   try {
     if (!localStorage.getItem("konyago_cookie_choice") && !document.getElementById("cookieBar")) {
       var bar = document.createElement("div");
@@ -129,10 +139,6 @@
     setTimeout(checkDuyuruNotify, 800);
   }
 
-  // =====================================================================
-  // PAYLAŞIMLI ZİYARET SAYAÇLARI — günlük + toplam
-  // Oturum başına 1 kez artar; tüm tarayıcılarda aynı değer.
-  // =====================================================================
   (function sharedVisitCounter() {
     var elDay = document.getElementById("visitCount");
     var elTotal = document.getElementById("visitTotal");
