@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  // --- Üst kayan reklam şeridi ---
   try {
     if (!document.querySelector(".ad-ticker")) {
       var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
@@ -29,7 +28,6 @@
     }
   } catch (e) {}
 
-  // --- Çerez / bildirim (önceki mantık) ---
   try {
     if (!localStorage.getItem("konyago_cookie_choice") && !document.getElementById("cookieBar")) {
       var bar = document.createElement("div");
@@ -132,18 +130,17 @@
   }
 
   // =====================================================================
-  // PAYLAŞIMLI ZİYARET SAYACI
-  // Eski localStorage sayacı tarayıcıya özeldi → her tarayıcıda farklı sayı.
-  // Artık ortak API: tüm ziyaretçiler aynı sayıyı görür.
-  // Oturum başına 1 kez artar (aynı sekme/oturumda sayfa geçişleri şişirmez).
+  // PAYLAŞIMLI ZİYARET SAYAÇLARI — günlük + toplam
+  // Oturum başına 1 kez artar; tüm tarayıcılarda aynı değer.
   // =====================================================================
   (function sharedVisitCounter() {
-    var el = document.getElementById("visitCount");
-    if (!el) return;
+    var elDay = document.getElementById("visitCount");
+    var elTotal = document.getElementById("visitTotal");
+    if (!elDay && !elTotal) return;
 
-    el.textContent = "…";
+    if (elDay) elDay.textContent = "…";
+    if (elTotal) elTotal.textContent = "…";
 
-    // İstanbul günü (UTC+3 yaklaşık; ISO date Europe/Istanbul için basit offset)
     function istanbulDay() {
       try {
         return new Intl.DateTimeFormat("en-CA", {
@@ -151,7 +148,7 @@
           year: "numeric",
           month: "2-digit",
           day: "2-digit"
-        }).format(new Date()); // YYYY-MM-DD
+        }).format(new Date());
       } catch (e) {
         return new Date().toISOString().slice(0, 10);
       }
@@ -159,7 +156,8 @@
 
     var day = istanbulDay();
     var ns = "konyago.com.tr";
-    var key = "visits-" + day;
+    var keyDay = "visits-" + day;
+    var keyTotal = "visits-total";
     var sessionFlag = "konyago_shared_hit_" + day;
     var alreadyHit = false;
     try {
@@ -178,15 +176,21 @@
       return null;
     }
 
-    function show(n) {
-      if (n == null || !isFinite(n) || n < 0) {
-        el.textContent = "—";
-        return;
-      }
-      el.textContent = String(n);
+    function showDay(n) {
+      if (!elDay) return;
+      if (n == null || !isFinite(n) || n < 0) { elDay.textContent = "—"; return; }
+      elDay.textContent = String(n);
       try {
-        // Admin paneli / yedek için son bilinen ortak değer
         localStorage.setItem("konyago_shared_last", JSON.stringify({ day: day, count: n, t: Date.now() }));
+      } catch (e) {}
+    }
+
+    function showTotal(n) {
+      if (!elTotal) return;
+      if (n == null || !isFinite(n) || n < 0) { elTotal.textContent = "—"; return; }
+      elTotal.textContent = String(n);
+      try {
+        localStorage.setItem("konyago_shared_total", JSON.stringify({ count: n, t: Date.now() }));
       } catch (e) {}
     }
 
@@ -194,74 +198,83 @@
       try { sessionStorage.setItem(sessionFlag, "1"); } catch (e) {}
     }
 
-    // 1) CountAPI.xyz
-    function viaCountApi() {
-      var url = alreadyHit
-        ? "https://api.countapi.xyz/get/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key)
-        : "https://api.countapi.xyz/hit/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
-      return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
-        if (!r.ok) throw new Error("countapi " + r.status);
-        return r.json();
-      }).then(function (data) {
-        var n = parseCount(data);
-        if (n == null) throw new Error("countapi parse");
-        if (!alreadyHit) markHit();
-        return n;
-      });
+    function fetchKey(key, hit) {
+      function viaCountApi() {
+        var url = hit
+          ? "https://api.countapi.xyz/hit/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key)
+          : "https://api.countapi.xyz/get/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
+        return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
+          if (!r.ok) throw new Error("countapi");
+          return r.json();
+        }).then(function (data) {
+          var n = parseCount(data);
+          if (n == null) throw new Error("parse");
+          return n;
+        });
+      }
+      function viaCounterApiDev() {
+        var base = "https://api.counterapi.dev/v1/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
+        var url = hit ? base + "/up" : base;
+        return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
+          if (!r.ok) throw new Error("counterapi");
+          return r.json();
+        }).then(function (data) {
+          var n = parseCount(data);
+          if (n == null) throw new Error("parse");
+          return n;
+        });
+      }
+      function viaAbacus() {
+        var path = hit ? "hit" : "get";
+        var url = "https://abacus.jasoncameron.dev/" + path + "/" +
+          encodeURIComponent(ns) + "/" + encodeURIComponent(key);
+        return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
+          if (!r.ok) throw new Error("abacus");
+          return r.text();
+        }).then(function (txt) {
+          var n = parseCount(txt);
+          if (n == null) {
+            try { n = parseCount(JSON.parse(txt)); } catch (e) {}
+          }
+          if (n == null) throw new Error("parse");
+          return n;
+        });
+      }
+      return viaCountApi()
+        .catch(function () { return viaCounterApiDev(); })
+        .catch(function () { return viaAbacus(); });
     }
 
-    // 2) CounterAPI.dev v1 (workspace gerektirmeyen eski yol)
-    function viaCounterApiDev() {
-      var base = "https://api.counterapi.dev/v1/" + encodeURIComponent(ns) + "/" + encodeURIComponent(key);
-      var url = alreadyHit ? base : base + "/up";
-      return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
-        if (!r.ok) throw new Error("counterapi " + r.status);
-        return r.json();
-      }).then(function (data) {
-        var n = parseCount(data);
-        if (n == null) throw new Error("counterapi parse");
-        if (!alreadyHit) markHit();
-        return n;
-      });
-    }
+    var doHit = !alreadyHit;
 
-    // 3) Abacus (yedek)
-    function viaAbacus() {
-      var path = alreadyHit ? "get" : "hit";
-      var url = "https://abacus.jasoncameron.dev/" + path + "/" +
-        encodeURIComponent(ns) + "/" + encodeURIComponent(key);
-      return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(function (r) {
-        if (!r.ok) throw new Error("abacus " + r.status);
-        return r.text();
-      }).then(function (txt) {
-        var n = parseCount(txt);
-        if (n == null) {
-          try { n = parseCount(JSON.parse(txt)); } catch (e) {}
-        }
-        if (n == null) throw new Error("abacus parse");
-        if (!alreadyHit) markHit();
-        return n;
-      });
-    }
+    Promise.all([
+      elDay ? fetchKey(keyDay, doHit).catch(function () { return null; }) : Promise.resolve(null),
+      elTotal ? fetchKey(keyTotal, doHit).catch(function () { return null; }) : Promise.resolve(null)
+    ]).then(function (results) {
+      var dayN = results[0];
+      var totalN = results[1];
+      if (doHit && (dayN != null || totalN != null)) markHit();
 
-    viaCountApi()
-      .catch(function () { return viaCounterApiDev(); })
-      .catch(function () { return viaAbacus(); })
-      .then(function (n) { show(n); })
-      .catch(function () {
-        // Son çare: daha önce başarılı kayıt varsa onu göster
+      if (dayN != null) showDay(dayN);
+      else {
         try {
           var last = JSON.parse(localStorage.getItem("konyago_shared_last") || "null");
-          if (last && last.day === day && typeof last.count === "number") {
-            show(last.count);
-            return;
-          }
-        } catch (e) {}
-        el.textContent = "—";
-      });
+          if (last && last.day === day && typeof last.count === "number") showDay(last.count);
+          else showDay(null);
+        } catch (e) { showDay(null); }
+      }
+
+      if (totalN != null) showTotal(totalN);
+      else {
+        try {
+          var lastT = JSON.parse(localStorage.getItem("konyago_shared_total") || "null");
+          if (lastT && typeof lastT.count === "number") showTotal(lastT.count);
+          else showTotal(null);
+        } catch (e) { showTotal(null); }
+      }
+    });
   })();
 
-  // --- Yerel analitik (sadece admin paneli / bu tarayıcı) ---
   try {
     var path = (location.pathname || "/").replace(/\\/g, "/");
     if (path.indexOf("admin") === -1) {
