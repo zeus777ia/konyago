@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo — Konya şehir rehberi: gezilecek yerler, mutfak, rotalar, harita, ulaşım, konaklama ve pratik bilgiler.">
-<meta name="keywords" content="Konya, Mevlana, etli ekmek, Sille, Çatalhöyük, gezi rehberi, KonyaGo">
+<meta name="description" content="KonyaGo — Konya şehir rehberi ve KonyaGo AI asistanı.">
+<meta name="keywords" content="Konya, Mevlana, etli ekmek, KonyaGo AI, gezi rehberi">
 <title>KonyaGo | Konya Şehir Rehberi</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
@@ -13,20 +13,11 @@
 </head>
 <body>
 
-<!-- Masaüstü yan reklamlar (sadece ≥900px) -->
 <aside class="ad-rail ad-rail-left" aria-label="Reklam">
-  <div class="ad-box">
-    <strong>Reklam alanı</strong>
-    İş birliği için yazın
-    <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">İletişim</a>
-  </div>
+  <div class="ad-box"><strong>Reklam alanı</strong>İş birliği<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">İletişim</a></div>
 </aside>
 <aside class="ad-rail ad-rail-right" aria-label="Reklam">
-  <div class="ad-box">
-    <strong>Reklam alanı</strong>
-    KonyaGo’da yer alın
-    <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Teklif al</a>
-  </div>
+  <div class="ad-box"><strong>Reklam alanı</strong>Yer alın<a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Teklif al</a></div>
 </aside>
 
 <header class="site-header">
@@ -37,11 +28,11 @@
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
       <a href="index.html" aria-current="page">Ana</a>
+      <a href="ai.html">AI</a>
       <a href="gezilecek.html">Gezilecek</a>
       <a href="rotalar.html">Rotalar</a>
       <a href="mutfak.html">Mutfak</a>
       <a href="harita.html">Harita</a>
-      <a href="ulasim.html">Ulaşım</a>
       <a href="sss.html">SSS</a>
     </nav>
   </div>
@@ -55,14 +46,14 @@
   <section class="hero">
     <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="">
     <h1>Konya’yı keşfet</h1>
-    <p>Selçuklu’nun başkenti, Mevlana’nın şehri. Gezilecek yerler, mutfak, rotalar, harita ve pratik bilgiler — tek rehberde.</p>
+    <p>Selçuklu’nun başkenti, Mevlana’nın şehri. Gezi, mutfak, rotalar — ve <strong>KonyaGo AI</strong> ile sınırsız soru.</p>
     <div class="actions">
-      <a class="btn btn-primary" href="rotalar.html">Gezi rotaları</a>
+      <a class="btn btn-primary" href="ai.html">✨ KonyaGo AI</a>
+      <a class="btn btn-ghost" href="rotalar.html">Gezi rotaları</a>
       <a class="btn btn-ghost" href="gezilecek.html">Gezilecek yerler</a>
     </div>
   </section>
 
-  <!-- Mobil reklam şeridi -->
   <div class="ad-mobile ad-mobile-compact">
     <div>
       <strong>Reklam & iş birliği</strong>
@@ -71,11 +62,17 @@
     <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Yazın</a>
   </div>
 
-  <!-- Masaüstü banner -->
   <div class="ad-banner">
     <strong>Reklam & iş birliği</strong> —
     <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">cnrtech@outlook.com.tr</a>
   </div>
+
+  <!-- AI öne çıkan kart -->
+  <a class="card" href="ai.html" style="margin-bottom:14px;border-color:rgba(13,122,79,.35);background:linear-gradient(135deg,#e8f5ee,#f5ecd0)">
+    <div class="ico">✨</div>
+    <h3>KonyaGo AI</h3>
+    <p>Sadece Konya hakkında sor — gezi, yemek, tarih, ulaşım. Soru limiti yok.</p>
+  </a>
 
   <section class="grid grid-2 grid-4" aria-label="Bölümler">
     <a class="card" href="tarihce.html"><div class="ico">📜</div><h3>Tarihçe</h3><p>Çatalhöyük’ten Selçuklu’ya.</p></a>
@@ -88,7 +85,6 @@
     <a class="card" href="hediyelik.html"><div class="ico">🎁</div><h3>Hediyelik</h3><p>Cezerye, çini, hatıra.</p></a>
   </section>
 
-  <!-- Mobil orta reklam -->
   <div class="ad-mobile">
     <strong>İşletmenizi tanıtın</strong>
     Restoran, otel veya tur — KonyaGo’da görünün.
@@ -98,42 +94,31 @@
   <section class="section">
     <h2 class="section-title">Hızlı <span>erişim</span></h2>
     <div class="grid grid-2">
-      <a class="card" href="etkinlikler.html"><div class="ico">📅</div><h3>Etkinlikler</h3><p>Şeb-i Arus ve dönem notları.</p></a>
+      <a class="card" href="ai.html"><div class="ico">✨</div><h3>AI Asistan</h3><p>Sınırsız Konya soru-cevap.</p></a>
+      <a class="card" href="etkinlikler.html"><div class="ico">📅</div><h3>Etkinlikler</h3><p>Şeb-i Arus notları.</p></a>
       <a class="card" href="sss.html"><div class="ico">❓</div><h3>SSS</h3><p>Sık sorulan sorular.</p></a>
-      <a class="card" href="pratik.html"><div class="ico">ℹ️</div><h3>Pratik</h3><p>Acil numaralar ve linkler.</p></a>
-      <a class="card" href="iletisim.html"><div class="ico">✉️</div><h3>İletişim</h3><p>Öneri ve reklam.</p></a>
+      <a class="card" href="pratik.html"><div class="ico">ℹ️</div><h3>Pratik</h3><p>Acil numaralar.</p></a>
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title">Öne çıkan <span>duraklar</span></h2>
-    <div class="grid grid-2">
-      <div class="card"><div class="ico">🕌</div><h3>Mevlana Müzesi</h3><p>Yeşil kubbe ve Mevlevî mirası.</p></div>
-      <div class="card"><div class="ico">🫓</div><h3>Etli ekmek</h3><p>Konya’nın imza lezzeti.</p></div>
-      <div class="card"><div class="ico">🏘️</div><h3>Sille</h3><p>Taş köy ve tarihi doku.</p></div>
-      <div class="card"><div class="ico">🪨</div><h3>Çatalhöyük</h3><p>Neolitik dünya mirası.</p></div>
-    </div>
-  </section>
-
-  <p class="note">konyago.com.tr · Bağımsız rehber · Resmi kurum sitesi değildir. · <a href="gizlilik.html">Gizlilik</a></p>
+  <p class="note">konyago.com.tr · Bağımsız rehber · <a href="gizlilik.html">Gizlilik</a></p>
 </main>
 
 <footer class="site-footer">
   <div class="container">
     © 2026 KonyaGo
+    · <a href="ai.html">AI</a>
     · <a href="rotalar.html">Rotalar</a>
     · <a href="mutfak.html">Mutfak</a>
-    · <a href="sss.html">SSS</a>
     · <a href="iletisim.html">İletişim</a>
-    · <a href="gizlilik.html">Gizlilik</a>
     · <a href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam">Reklam</a>
   </div>
 </footer>
 
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
+  <a href="ai.html"><span class="i">✨</span>AI</a>
   <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-  <a href="rotalar.html"><span class="i">🧭</span>Rota</a>
   <a href="mutfak.html"><span class="i">🍽️</span>Mutfak</a>
   <a href="harita.html"><span class="i">🗺️</span>Harita</a>
 </nav>
