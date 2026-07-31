@@ -41,31 +41,30 @@
 </header>
 
 <main class="admin-wrap">
-  <!-- GİRİŞ -->
   <div id="loginBox" class="admin-card">
     <h1>Gizli yönetim</h1>
-    <p>Bu sayfa herkese açık listede yok. Yalnızca şifre ile açılır. Kamu ziyaretçi sayacı burada <strong>şişirilmez</strong>.</p>
+    <p>Bu sayfa menüde yok. Yalnızca şifre ile açılır.</p>
     <label for="adminPass">Şifre</label>
     <input class="admin-input" id="adminPass" type="password" autocomplete="current-password" placeholder="Yönetim şifresi">
     <button type="button" class="btn btn-primary" id="adminLogin" style="width:100%">Giriş</button>
     <p class="err hidden" id="loginErr">Şifre hatalı.</p>
   </div>
 
-  <!-- PANEL -->
   <div id="dashBox" class="hidden">
     <div class="admin-card">
       <h1>Ziyaret özeti</h1>
-      <p class="ok">Oturum açık · veriler bu tarayıcıda toplanan gerçek kayıtlardır.</p>
+      <p class="ok">Oturum açık.</p>
       <div class="stat-grid" style="margin-top:14px">
-        <div class="stat-box"><strong id="sToday">0</strong><span>Bugün (bu cihaz)</span></div>
-        <div class="stat-box"><strong id="sPublic">0</strong><span>Kamu sayaç (bugün)</span></div>
-        <div class="stat-box"><strong id="sSessions">0</strong><span>Oturum kaydı</span></div>
-        <div class="stat-box"><strong id="sPages">0</strong><span>Sayfa görüntüleme</span></div>
+        <div class="stat-box"><strong id="sToday">0</strong><span>Bu cihaz (bugün)</span></div>
+        <div class="stat-box"><strong id="sPublic">0</strong><span>Kamu ortak sayaç</span></div>
+        <div class="stat-box"><strong id="sSessions">0</strong><span>Oturum (bu cihaz)</span></div>
+        <div class="stat-box"><strong id="sPages">0</strong><span>Olay kaydı</span></div>
       </div>
+      <p id="sPublicNote" style="margin-top:10px;font-size:.8rem;color:var(--muted)"></p>
       <div class="admin-actions">
         <button type="button" class="btn btn-ghost btn-sm" id="btnRefresh">Yenile</button>
         <button type="button" class="btn btn-ghost btn-sm" id="btnExport">JSON indir</button>
-        <button type="button" class="btn btn-ghost btn-sm" id="btnClear">Kayıtları sil</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnClear">Yerel kayıtları sil</button>
         <button type="button" class="btn btn-ghost btn-sm" id="btnLogout">Çıkış</button>
       </div>
     </div>
@@ -86,13 +85,13 @@
     </div>
 
     <div class="admin-card">
-      <h2>Önemli sınır</h2>
+      <h2>Sayaç nasıl çalışır?</h2>
       <ul>
-        <li>Site <strong>statik GitHub Pages</strong> olduğu için ziyaretçi IP’leri sunucuda tutulmaz.</li>
-        <li>Bu panel, tarayıcıda biriken <strong>gerçek</strong> sayfa/oturum kayıtlarını gösterir — sayı şişirme yok.</li>
-        <li>Tüm dünyadan gelen ziyaretçileri tek yerde görmek için ücretsiz <strong>Cloudflare Web Analytics</strong> (veya Plausible/Umami) bağla; orası gerçek paneldır.</li>
+        <li><strong>Kamu sayaç:</strong> Ortak API — Chrome, Safari, Opera, telefon hepsi aynı sayıyı görür. Günlük (İstanbul saati) sıfırlanır. Oturum başına 1 artış.</li>
+        <li><strong>Bu cihaz:</strong> Sadece senin tarayıcındaki localStorage kayıtları.</li>
+        <li>IP listesi için Cloudflare Web Analytics önerilir.</li>
       </ul>
-      <p style="margin-top:10px">Panel adresi (yer imi yap, menüde yok): <code>https://konyago.com.tr/admin.html</code></p>
+      <p style="margin-top:10px">Panel: <code>https://konyago.com.tr/admin.html</code></p>
     </div>
   </div>
 </main>
