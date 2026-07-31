@@ -4,12 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo — Konya şehir rehberi: gezi, mutfak, rotalar, hava, AI asistan.">
+<meta name="description" content="KonyaGo — Konya şehir rehberi: keşfet, gezi, mutfak, hava, nöbetçi eczane, AI.">
 <title>KonyaGo | Konya Şehir Rehberi</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css">
 <link rel="stylesheet" href="assets/css/wx.css">
+<style>
+.ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+@media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
+.ilce-pill{
+  display:block;text-align:center;padding:12px 8px;border-radius:14px;
+  background:var(--green-soft);border:1px solid var(--border);color:var(--green-deep);
+  font-weight:700;font-size:.85rem;text-decoration:none
+}
+.ilce-pill small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);margin-top:2px}
+.ilce-pill:hover{border-color:var(--green);background:#e2f3ea}
+.quick-search{
+  display:flex;gap:8px;margin:12px 0;flex-wrap:wrap
+}
+.quick-search input{
+  flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);
+  border-radius:999px;font:inherit;font-size:.92rem
+}
+.hot-list{display:grid;gap:10px;margin-top:8px}
+@media(min-width:640px){.hot-list{grid-template-columns:1fr 1fr}}
+.hot-item{
+  display:block;padding:12px 14px;border-radius:14px;background:var(--white);
+  border:1px solid var(--border);text-decoration:none;color:inherit
+}
+.hot-item strong{color:var(--green-deep);display:block;margin-bottom:2px}
+.hot-item span{font-size:.8rem;color:var(--muted)}
+</style>
 </head>
 <body>
 
@@ -30,11 +56,11 @@
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
       <a href="index.html" aria-current="page">Ana</a>
+      <a href="kesfet.html">Keşfet</a>
       <a href="ai.html">AI</a>
       <a href="gezilecek.html">Gezi</a>
       <a href="rotalar.html">Rotalar</a>
-      <a href="mutfak.html">Mutfak</a>
-      <a href="ilceler.html">İlçeler</a>
+      <a href="ara.html">Ara</a>
       <a href="en.html">EN</a>
     </nav>
   </div>
@@ -49,20 +75,45 @@
   <section class="hero">
     <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="">
     <h1>Konya’yı keşfet</h1>
-    <p>Selçuklu’nun başkenti · Mevlana’nın şehri · Gezi, mutfak, rotalar ve <strong>KonyaGo AI</strong></p>
+    <p>Selçuklu’nun başkenti · Mevlana’nın şehri · Gezi, mutfak, keşfet ve <strong>KonyaGo AI</strong></p>
     <div class="actions">
-      <a class="btn btn-primary" href="ai.html">✨ KonyaGo AI</a>
-      <a class="btn btn-ghost" href="rotalar.html">Rotalar</a>
-      <a class="btn btn-ghost" href="en.html">English</a>
+      <a class="btn btn-primary" href="kesfet.html">🔍 Keşfet</a>
+      <a class="btn btn-ghost" href="ai.html">✨ AI</a>
+      <a class="btn btn-ghost" href="ara.html">Ara</a>
     </div>
   </section>
 
+  <form class="quick-search" action="ara.html" method="get" role="search">
+    <input type="search" name="q" id="homeQ" placeholder="İşletme, müze, yemek, eczane…" aria-label="Ara">
+    <button type="submit" class="btn btn-primary">Ara</button>
+  </form>
+
   <div class="wx-card" id="weatherBox" aria-live="polite"></div>
+  <p class="note" style="margin-top:4px"><a href="hava.html">7 günlük hava detayı →</a></p>
 
   <div class="info" id="todayPlan" style="margin-top:12px">
     <h2>Bugün ne yapmalı?</h2>
     <p>Plan hazırlanıyor…</p>
   </div>
+
+  <section class="section" aria-label="İlçeler">
+    <h2 class="section-title">İlçe <span>keşfi</span></h2>
+    <div class="ilce-strip">
+      <a class="ilce-pill" href="ilceler.html#beysehir">Beyşehir<small>Göl · Eşrefoğlu</small></a>
+      <a class="ilce-pill" href="ilceler.html#seydisehir">Seydişehir<small>Külliye · mağara</small></a>
+      <a class="ilce-pill" href="ilceler.html#aksehir">Akşehir<small>Nasreddin</small></a>
+      <a class="ilce-pill" href="gezilecek.html">Merkez<small>Mevlana · Sille</small></a>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Öne çıkan">
+    <h2 class="section-title">Öne <span>çıkanlar</span></h2>
+    <div class="hot-list" id="hotList"></div>
+    <div class="link-row" style="margin-top:10px">
+      <a class="btn btn-ghost btn-sm" href="kesfet.html">Tümünü filtrele</a>
+      <a class="btn btn-ghost btn-sm" href="katki.html">İşletmemi ekle</a>
+    </div>
+  </section>
 
   <section class="section" aria-label="Duyurular">
     <h2 class="section-title">Son <span>duyuru</span></h2>
@@ -72,58 +123,82 @@
     </div>
   </section>
 
-  <a class="card" href="ai.html" style="margin-bottom:14px;border-color:rgba(13,122,79,.35);background:linear-gradient(135deg,#e8f5ee,#f5ecd0)">
+  <section class="section" aria-label="Şehir hizmetleri">
+    <h2 class="section-title">Şehir <span>hizmetleri</span></h2>
+    <div class="grid grid-2">
+      <a class="card" href="nobetci-eczane.html"><div class="ico">💊</div><h3>Nöbetçi eczane</h3><p>Resmî sorgu linkleri</p></a>
+      <a class="card" href="kesintiler.html"><div class="ico">⚡</div><h3>Kesintiler</h3><p>Elektrik / su duyuru</p></a>
+      <a class="card" href="hava.html"><div class="ico">🌤️</div><h3>Hava detay</h3><p>7 günlük özet</p></a>
+      <a class="card" href="pratik.html"><div class="ico">🆘</div><h3>Acil</h3><p>112 ve numaralar</p></a>
+    </div>
+  </section>
+
+  <a class="card" href="ai.html" style="margin:14px 0;border-color:rgba(13,122,79,.35);background:linear-gradient(135deg,#e8f5ee,#f5ecd0)">
     <div class="ico">✨</div>
     <h3>KonyaGo AI</h3>
-    <p>Sınırsız Konya soru-cevap · hafta sonu planı tek tıkla</p>
+    <p>Sınırsız Konya soru-cevap · bağlamlı asistan</p>
   </a>
 
   <section class="grid grid-2 grid-4" aria-label="Bölümler">
-    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek</h3><p>Müze, Sille, merkez.</p></a>
-    <a class="card" href="ilceler.html"><div class="ico">🏞️</div><h3>İlçeler</h3><p>Beyşehir, Seydişehir, Akşehir.</p></a>
-    <a class="card" href="rotalar.html"><div class="ico">🧭</div><h3>Rotalar</h3><p>1–2 gün planları.</p></a>
-    <a class="card" href="rota-yazdir.html"><div class="ico">🖨️</div><h3>Yazdır</h3><p>1 günlük rota çıktısı.</p></a>
-    <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Mutfak</h3><p>Etli ekmek ve lezzetler.</p></a>
-    <a class="card" href="lezzet-haritasi.html"><div class="ico">📍</div><h3>Lezzet haritası</h3><p>Konyalı gibi ye.</p></a>
-    <a class="card" href="dinle.html"><div class="ico">🎧</div><h3>Dinle</h3><p>Sesli kısa anlatımlar.</p></a>
-    <a class="card" href="etkinlikler.html"><div class="ico">📅</div><h3>Etkinlikler</h3><p>Şeb-i Arus ve takvim.</p></a>
-    <a class="card" href="pratik.html"><div class="ico">🆘</div><h3>Pratik / Acil</h3><p>112 ve faydalı numaralar.</p></a>
-    <a class="card" href="harita.html"><div class="ico">🗺️</div><h3>Harita</h3><p>Noktalar + yol tarifi.</p></a>
-    <a class="card" href="katki.html"><div class="ico">✉️</div><h3>Katkı & işletme</h3><p>Not gönder · yer al.</p></a>
-    <a class="card" href="gizlilik.html"><div class="ico">🔒</div><h3>Gizlilik</h3><p>KVKK aydınlatma.</p></a>
+    <a class="card" href="kesfet.html"><div class="ico">🔍</div><h3>Keşfet</h3><p>Kategori + ilçe filtre</p></a>
+    <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek</h3><p>Müze, Sille, merkez</p></a>
+    <a class="card" href="rotalar.html"><div class="ico">🧭</div><h3>Rotalar</h3><p>1–2 gün planları</p></a>
+    <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Mutfak</h3><p>Etli ekmek & lezzet</p></a>
+    <a class="card" href="etkinlikler.html"><div class="ico">📅</div><h3>Etkinlikler</h3><p>Şeb-i Arus</p></a>
+    <a class="card" href="harita.html"><div class="ico">🗺️</div><h3>Harita</h3><p>Yol tarifi</p></a>
+    <a class="card" href="katki.html"><div class="ico">✉️</div><h3>Başvuru</h3><p>İşletme / katkı</p></a>
+    <a class="card" href="gizlilik.html"><div class="ico">🔒</div><h3>Gizlilik</h3><p>KVKK</p></a>
   </section>
 
-  <p class="note">konyago.com.tr · <a href="gizlilik.html">Gizlilik</a> · <a href="en.html">English guide</a></p>
+  <p class="note">konyago.com.tr · <a href="gizlilik.html">Gizlilik</a> · <a href="en.html">English</a></p>
 </main>
 
 <footer class="site-footer">
   <div class="container">
     © 2026 KonyaGo
-    · <a href="duyurular.html">Duyurular</a>
+    · <a href="kesfet.html">Keşfet</a>
+    · <a href="nobetci-eczane.html">Eczane</a>
     · <a href="katki.html">Katkı</a>
     · <a href="gizlilik.html">Gizlilik</a>
-    · <a href="iletisim.html">İletişim</a>
   </div>
 </footer>
 
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
+  <a href="kesfet.html"><span class="i">🔍</span>Keşfet</a>
   <a href="ai.html"><span class="i">✨</span>AI</a>
   <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
-  <a href="rotalar.html"><span class="i">🧭</span>Rota</a>
   <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
 </nav>
 
 <script src="assets/js/duyurular.js"></script>
+<script src="assets/js/kesfet-data.js"></script>
 <script src="assets/js/features.js"></script>
 <script src="assets/js/app.js" defer></script>
 <script>
 (function(){
   var box=document.getElementById('homeDuyuru');
   var D=window.KONYAGO_DUYURULAR;
-  if(!box||!D||!D.items||!D.items[0])return;
-  var it=D.items[0];
-  box.innerHTML='<h2>'+it.title+'</h2><p style="font-size:.75rem;color:#8a7010;font-weight:700;margin-bottom:6px">'+it.date+'</p><p>'+it.body+'</p><div class="link-row"><a class="btn btn-ghost btn-sm" href="duyurular.html">Tüm duyurular</a></div>';
+  if(box&&D&&D.items&&D.items[0]){
+    var it=D.items[0];
+    box.innerHTML='<h2>'+it.title+'</h2><p style="font-size:.75rem;color:#8a7010;font-weight:700;margin-bottom:6px">'+it.date+'</p><p>'+it.body+'</p><div class="link-row"><a class="btn btn-ghost btn-sm" href="duyurular.html">Tüm duyurular</a></div>';
+  }
+  var hot=document.getElementById('hotList');
+  var data=(window.KONYAGO_KESFET||[]).filter(function(x){return x.hot}).slice(0,6);
+  if(hot){
+    hot.innerHTML=data.map(function(x){
+      return '<a class="hot-item" href="'+x.href+'"><strong>'+x.name+'</strong><span>'+x.ilce+' · '+x.tag+'</span></a>';
+    }).join('');
+  }
+  var hq=document.getElementById('homeQ');
+  var form=hq&&hq.form;
+  if(form){
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var v=(hq.value||'').trim();
+      location.href='ara.html'+(v?('?q='+encodeURIComponent(v)):'');
+    });
+  }
 })();
 </script>
 </body>
