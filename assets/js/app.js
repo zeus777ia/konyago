@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  // --- Üst kayan reklam şeridi ---
   try {
     if (!document.querySelector(".ad-ticker")) {
       var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
@@ -29,7 +28,6 @@
     }
   } catch (e) {}
 
-  // --- Çerez / depolama onayı (KVKK bilgilendirme) ---
   try {
     if (!localStorage.getItem("konyago_cookie_choice") && !document.getElementById("cookieBar")) {
       var bar = document.createElement("div");
@@ -92,12 +90,10 @@
     } catch (e) {}
   }
 
-  // --- Duyuru bildirimi (izin + yeni id) ---
   function checkDuyuruNotify() {
     try {
       if (!("Notification" in window) || Notification.permission !== "granted") return;
       if (localStorage.getItem("konyago_notif_pref") !== "on") return;
-
       function run(D) {
         if (!D || !D.latestId) return;
         var seen = localStorage.getItem("konyago_duyuru_seen");
@@ -119,7 +115,6 @@
           new Notification(item.title || "KonyaGo", opts);
         }
       }
-
       if (window.KONYAGO_DUYURULAR) run(window.KONYAGO_DUYURULAR);
       else {
         var s = document.createElement("script");
@@ -134,7 +129,6 @@
     setTimeout(checkDuyuruNotify, 800);
   }
 
-  // --- Kamu ziyaretçi sayacı ---
   try {
     var key = "konyago_visit_day";
     var countKey = "konyago_visit_count";
@@ -154,7 +148,6 @@
     if (el) el.textContent = String(count);
   } catch (e) {}
 
-  // --- Analitik (admin) ---
   try {
     var path = (location.pathname || "/").replace(/\\/g, "/");
     if (path.indexOf("admin") === -1) {
@@ -188,7 +181,7 @@
       if (window.caches) {
         caches.keys().then(function (keys) {
           keys.forEach(function (k) {
-            if (k.indexOf("konyago") === 0 && k !== "konyago-v6") caches.delete(k);
+            if (k.indexOf("konyago") === 0 && k !== "konyago-v7") caches.delete(k);
           });
         });
       }
