@@ -10,7 +10,6 @@
 <meta name="author" content="KonyaGo">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://konyago.com.tr/">
-
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:site_name" content="KonyaGo">
@@ -18,82 +17,28 @@
 <meta property="og:description" content="Mevlana’dan etli ekmeğe, Sille’den Beyşehir’e — Konya gezi, mutfak, rota ve pratik bilgiler.">
 <meta property="og:url" content="https://konyago.com.tr/">
 <meta property="og:image" content="https://konyago.com.tr/assets/img/eagle.svg">
-
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KonyaGo | Konya Şehir Rehberi">
 <meta name="twitter:description" content="Konya gezilecek yerler, mutfak, rotalar ve AI asistanı.">
-
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<link rel="stylesheet" href="assets/css/app.css?v=9">
+<link rel="stylesheet" href="assets/css/app.css?v=10">
 <link rel="stylesheet" href="assets/css/wx.css">
-
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "KonyaGo",
-  "alternateName": "Konya Şehir Rehberi",
-  "url": "https://konyago.com.tr/",
-  "description": "Konya gezilecek yerler, mutfak, rotalar, tarihçe ve şehir rehberi.",
-  "inLanguage": "tr-TR",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://konyago.com.tr/ara.html?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "KonyaGo",
-    "url": "https://konyago.com.tr/",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://konyago.com.tr/assets/img/eagle.svg"
-    }
-  }
-}
+{"@context":"https://schema.org","@type":"WebSite","name":"KonyaGo","url":"https://konyago.com.tr/","description":"Konya gezilecek yerler, mutfak, rotalar ve şehir rehberi.","inLanguage":"tr-TR"}
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "TouristInformationCenter",
-  "name": "KonyaGo",
-  "url": "https://konyago.com.tr/",
-  "description": "Konya için dijital şehir rehberi: gezi, mutfak, ulaşım ve pratik bilgiler.",
-  "areaServed": {
-    "@type": "City",
-    "name": "Konya",
-    "address": {
-      "@type": "PostalAddress",
-      "addressRegion": "Konya",
-      "addressCountry": "TR"
-    }
-  }
-}
-</script>
-
 <style>
 .ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
 @media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
-.ilce-pill{
-  display:block;text-align:center;padding:12px 8px;border-radius:14px;
-  background:var(--green-soft);border:1px solid var(--border);color:var(--green-deep);
-  font-weight:700;font-size:.85rem;text-decoration:none
-}
+.ilce-pill{display:block;text-align:center;padding:12px 8px;border-radius:14px;background:var(--green-soft);border:1px solid var(--border);color:var(--green-deep);font-weight:700;font-size:.85rem;text-decoration:none}
 .ilce-pill small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);margin-top:2px}
 .ilce-pill:hover{border-color:var(--green);background:#e2f3ea}
 .quick-search{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
-.quick-search input{
-  flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);
-  border-radius:999px;font:inherit;font-size:.92rem
-}
+.quick-search input{flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);border-radius:999px;font:inherit;font-size:.92rem}
 .hot-list{display:grid;gap:10px;margin-top:8px}
 @media(min-width:640px){.hot-list{grid-template-columns:1fr 1fr}}
-.hot-item{
-  display:block;padding:12px 14px;border-radius:14px;background:var(--white);
-  border:1px solid var(--border);text-decoration:none;color:inherit
-}
+.hot-item{display:block;padding:12px 14px;border-radius:14px;background:var(--white);border:1px solid var(--border);text-decoration:none;color:inherit}
 .hot-item strong{color:var(--green-deep);display:block;margin-bottom:2px}
 .hot-item span{font-size:.8rem;color:var(--muted)}
 </style>
@@ -129,9 +74,53 @@
 
 <main class="container">
   <div class="visit-row" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 4px">
-    <div class="visit-chip">👁 Bugün: <span id="visitCount">…</span></div>
-    <div class="visit-chip">📊 Toplam: <span id="visitTotal">…</span></div>
+    <div class="visit-chip">👁 Bugün: <span id="visitCount">0</span></div>
+    <div class="visit-chip">📊 Toplam: <span id="visitTotal">0</span></div>
   </div>
+  <!-- Sayaç: harici API yok, anında çalışır -->
+  <script>
+  (function () {
+    try {
+      var day;
+      try {
+        day = new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Europe/Istanbul",
+          year: "numeric", month: "2-digit", day: "2-digit"
+        }).format(new Date());
+      } catch (e) {
+        day = new Date().toISOString().slice(0, 10);
+      }
+      var KEY = "konyago_visits_v3";
+      var sess = "konyago_v3_" + day;
+      var dayN = 0, totalN = 0;
+      try {
+        var o = JSON.parse(localStorage.getItem(KEY) || "{}");
+        totalN = typeof o.total === "number" ? o.total : 0;
+        if (o.day === day && typeof o.dayCount === "number") dayN = o.dayCount;
+      } catch (e) {}
+      var hit = false;
+      try { hit = sessionStorage.getItem(sess) === "1"; } catch (e) {}
+      if (!hit) {
+        dayN += 1;
+        totalN += 1;
+        try {
+          localStorage.setItem(KEY, JSON.stringify({ day: day, dayCount: dayN, total: totalN, t: Date.now() }));
+          sessionStorage.setItem(sess, "1");
+        } catch (e) {}
+      }
+      var elD = document.getElementById("visitCount");
+      var elT = document.getElementById("visitTotal");
+      if (elD) elD.textContent = String(dayN);
+      if (elT) elT.textContent = String(totalN);
+      window.__konyagoVisitDone = true;
+    } catch (e) {
+      var elD2 = document.getElementById("visitCount");
+      var elT2 = document.getElementById("visitTotal");
+      if (elD2) elD2.textContent = "1";
+      if (elT2) elT2.textContent = "1";
+    }
+  })();
+  </script>
 
   <section class="hero">
     <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="">
@@ -204,7 +193,7 @@
     <a class="card" href="kesfet.html"><div class="ico">🔍</div><h3>Keşfet</h3><p>Kategori + ilçe filtre</p></a>
     <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek yerler</h3><p>Mevlana, Sille, merkez</p></a>
     <a class="card" href="rotalar.html"><div class="ico">🧭</div><h3>Rotalar</h3><p>1–2 gün planları</p></a>
-    <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Konya mutfağı</h3><p>Etli ekmek &amp; lezzet</p></a>
+    <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Konya mutfağı</h3><p>Etli ekmek & lezzet</p></a>
     <a class="card" href="tarihce.html"><div class="ico">📜</div><h3>Tarihçe</h3><p>Selçuklu ve ötesi</p></a>
     <a class="card" href="harita.html"><div class="ico">🗺️</div><h3>Harita</h3><p>Yol tarifi</p></a>
     <a class="card" href="katki.html"><div class="ico">✉️</div><h3>Başvuru</h3><p>İşletme / katkı</p></a>
@@ -235,7 +224,7 @@
 <script src="assets/js/duyurular.js"></script>
 <script src="assets/js/kesfet-data.js"></script>
 <script src="assets/js/features.js"></script>
-<script src="assets/js/app.js?v=9" defer></script>
+<script src="assets/js/app.js?v=10" defer></script>
 <script>
 (function(){
   var box=document.getElementById('homeDuyuru');
