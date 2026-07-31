@@ -18,13 +18,16 @@
 <meta property="og:url" content="https://konyago.com.tr/">
 <meta property="og:image" content="https://konyago.com.tr/assets/img/eagle.svg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KonyaGo | Konya Şehir Rehberi">
-<meta name="twitter:description" content="Konya gezilecek yerler, mutfak, rotalar ve AI asistanı.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<link rel="stylesheet" href="assets/css/app.css?v=10">
-<link rel="stylesheet" href="assets/css/wx.css">
+<link rel="dns-prefetch" href="https://api.open-meteo.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://api.open-meteo.com" crossorigin>
+<link rel="stylesheet" href="assets/css/app.css?v=11">
+<link rel="stylesheet" href="assets/css/perf.css?v=1">
+<link rel="stylesheet" href="assets/css/wx.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="assets/css/wx.css"></noscript>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"KonyaGo","url":"https://konyago.com.tr/","description":"Konya gezilecek yerler, mutfak, rotalar ve şehir rehberi.","inLanguage":"tr-TR"}
 </script>
@@ -33,7 +36,6 @@
 @media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
 .ilce-pill{display:block;text-align:center;padding:12px 8px;border-radius:14px;background:var(--green-soft);border:1px solid var(--border);color:var(--green-deep);font-weight:700;font-size:.85rem;text-decoration:none}
 .ilce-pill small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);margin-top:2px}
-.ilce-pill:hover{border-color:var(--green);background:#e2f3ea}
 .quick-search{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
 .quick-search input{flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);border-radius:999px;font:inherit;font-size:.92rem}
 .hot-list{display:grid;gap:10px;margin-top:8px}
@@ -57,7 +59,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
-      <img class="logo-mark" src="assets/img/eagle.svg" width="48" height="48" alt="KonyaGo Selçuklu kartal logosu">
+      <img class="logo-mark" src="assets/img/eagle.svg" width="48" height="48" alt="KonyaGo Selçuklu kartal logosu" decoding="async" fetchpriority="high">
       <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
@@ -77,19 +79,13 @@
     <div class="visit-chip">👁 Bugün: <span id="visitCount">0</span></div>
     <div class="visit-chip">📊 Toplam: <span id="visitTotal">0</span></div>
   </div>
-  <!-- Sayaç: harici API yok, anında çalışır -->
   <script>
   (function () {
     try {
       var day;
       try {
-        day = new Intl.DateTimeFormat("en-CA", {
-          timeZone: "Europe/Istanbul",
-          year: "numeric", month: "2-digit", day: "2-digit"
-        }).format(new Date());
-      } catch (e) {
-        day = new Date().toISOString().slice(0, 10);
-      }
+        day = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+      } catch (e) { day = new Date().toISOString().slice(0, 10); }
       var KEY = "konyago_visits_v3";
       var sess = "konyago_v3_" + day;
       var dayN = 0, totalN = 0;
@@ -101,8 +97,7 @@
       var hit = false;
       try { hit = sessionStorage.getItem(sess) === "1"; } catch (e) {}
       if (!hit) {
-        dayN += 1;
-        totalN += 1;
+        dayN += 1; totalN += 1;
         try {
           localStorage.setItem(KEY, JSON.stringify({ day: day, dayCount: dayN, total: totalN, t: Date.now() }));
           sessionStorage.setItem(sess, "1");
@@ -114,16 +109,16 @@
       if (elT) elT.textContent = String(totalN);
       window.__konyagoVisitDone = true;
     } catch (e) {
-      var elD2 = document.getElementById("visitCount");
-      var elT2 = document.getElementById("visitTotal");
-      if (elD2) elD2.textContent = "1";
-      if (elT2) elT2.textContent = "1";
+      var a = document.getElementById("visitCount");
+      var b = document.getElementById("visitTotal");
+      if (a) a.textContent = "1";
+      if (b) b.textContent = "1";
     }
   })();
   </script>
 
   <section class="hero">
-    <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="">
+    <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="" decoding="async">
     <h1>Konya gezilecek yerler ve şehir rehberi</h1>
     <p>Selçuklu’nun başkenti · Mevlana’nın şehri · Gezi, mutfak, rotalar ve <strong>KonyaGo AI</strong></p>
     <div class="actions">
@@ -221,35 +216,35 @@
   <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
 </nav>
 
-<script src="assets/js/duyurular.js"></script>
-<script src="assets/js/kesfet-data.js"></script>
-<script src="assets/js/features.js"></script>
-<script src="assets/js/app.js?v=10" defer></script>
+<script src="assets/js/duyurular.js" defer></script>
+<script src="assets/js/kesfet-data.js" defer></script>
+<script src="assets/js/features.js" defer></script>
+<script src="assets/js/app.js?v=11" defer></script>
 <script>
-(function(){
-  var box=document.getElementById('homeDuyuru');
-  var D=window.KONYAGO_DUYURULAR;
-  if(box&&D&&D.items&&D.items[0]){
-    var it=D.items[0];
-    box.innerHTML='<h2>'+it.title+'</h2><p style="font-size:.75rem;color:#8a7010;font-weight:700;margin-bottom:6px">'+it.date+'</p><p>'+it.body+'</p><div class="link-row"><a class="btn btn-ghost btn-sm" href="duyurular.html">Tüm duyurular</a></div>';
+window.addEventListener("DOMContentLoaded", function () {
+  var box = document.getElementById("homeDuyuru");
+  var D = window.KONYAGO_DUYURULAR;
+  if (box && D && D.items && D.items[0]) {
+    var it = D.items[0];
+    box.innerHTML = "<h2>" + it.title + "</h2><p style=\"font-size:.75rem;color:#8a7010;font-weight:700;margin-bottom:6px\">" + it.date + "</p><p>" + it.body + "</p><div class=\"link-row\"><a class=\"btn btn-ghost btn-sm\" href=\"duyurular.html\">Tüm duyurular</a></div>";
   }
-  var hot=document.getElementById('hotList');
-  var data=(window.KONYAGO_KESFET||[]).filter(function(x){return x.hot}).slice(0,6);
-  if(hot){
-    hot.innerHTML=data.map(function(x){
-      return '<a class="hot-item" href="'+x.href+'"><strong>'+x.name+'</strong><span>'+x.ilce+' · '+x.tag+'</span></a>';
-    }).join('');
+  var hot = document.getElementById("hotList");
+  var data = (window.KONYAGO_KESFET || []).filter(function (x) { return x.hot; }).slice(0, 6);
+  if (hot) {
+    hot.innerHTML = data.map(function (x) {
+      return '<a class="hot-item" href="' + x.href + '"><strong>' + x.name + "</strong><span>" + x.ilce + " · " + x.tag + "</span></a>";
+    }).join("");
   }
-  var hq=document.getElementById('homeQ');
-  var form=hq&&hq.form;
-  if(form){
-    form.addEventListener('submit',function(e){
+  var hq = document.getElementById("homeQ");
+  var form = hq && hq.form;
+  if (form) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var v=(hq.value||'').trim();
-      location.href='ara.html'+(v?('?q='+encodeURIComponent(v)):'');
+      var v = (hq.value || "").trim();
+      location.href = "ara.html" + (v ? ("?q=" + encodeURIComponent(v)) : "");
     });
   }
-})();
+});
 </script>
 </body>
 </html>
