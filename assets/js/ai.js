@@ -40,8 +40,8 @@
       a: "Mevlana Müzesi ücretsizdir. Genelde 17:00’de kapanır; sabah veya öğleden önce gitmek kalabalıktan kaçmak için iyi olur. Yeşil kubbe Konya’nın simgesi, sema ve Mevlevî kültürünün merkezidir. Kıyafet ve sessizlik kurallarına dikkat et. Yol tarifi: Gezilecek / Harita."
     },
     {
-      keys: ["seyit harun", "seyid harun", "harun veli", "sey disehir", "sey disehir", "seydisehir", "kugulu", "kugulu park"],
-      a: "Seydişehir’de Seyit Harun Veli Hazretleri türbesi ilçenin manevi duraklarındandır. Aynı gezide Kuğulu Park’a uğrayabilirsin — yürüyüş ve aile molası için uygun. İkisi de Seydişehir merkezine yakın; araçla günübirlik planlanabilir. Gezilecek ve Harita sayfalarında konumlar var."
+      keys: ["seyit harun", "seyid harun", "harun veli", "seydisehir", "kugulu", "kugulu park", "tinaztepe", "tinaz tepe", "ferzene", "seydisehir kale", "halife sultan", "ilica seydisehir"],
+      a: "Seydişehir tarihi özeti:\n• Seyyid Harun Veli Camii & Türbesi (yaklaşık 1310) — külliyede Halife Sultan, Rüstem Bey–Sultan Hatun türbeleri de vardır\n• Seydişehir Kalesi kalıntıları\n• Kuğulu Park (merkez mola)\n• Tınaztepe Mağarası (sarkıt–dikit, araçla; Antalya yolu üzeri)\n• Ferzene / Güvercinlik mağaraları\n• Ilıca termal notu\nGünübirlik için araç önerilir. Detay: Gezilecek → Seydişehir bölümü ve Harita."
     },
     {
       keys: ["etli ekmek", "etliekmek", "pide konya"],
@@ -89,7 +89,7 @@
     },
     {
       keys: ["beysehir", "gol", "meke", "kilistra", "eflatun"],
-      a: "Günübirlik öneriler: Beyşehir Gölü, Meke Gölü, Kilistra, Eflatunpınar ve Seydişehir (Seyit Harun Veli + Kuğulu Park). Araç planı gerekir. Rotalar ve Harita sayfalarına bak."
+      a: "Günübirlik öneriler: Beyşehir Gölü, Meke Gölü, Kilistra, Eflatunpınar ve Seydişehir (külliye, kale, Tınaztepe). Araç planı gerekir. Rotalar ve Harita sayfalarına bak."
     },
     {
       keys: ["ulasim", "otobus", "tramvay", "atus", "konyakart", "toplu tasima", "dolmus"],
@@ -97,7 +97,7 @@
     },
     {
       keys: ["kac gun", "ne kadar kal", "1 gun", "2 gun", "rota", "plan"],
-      a: "Merkez (Mevlana ücretsiz, ~17:00 kapanış + müzeler + etli ekmek) için 1 tam gün yetebilir; Mevlana’ya erken uğra. Sille, Seydişehir veya Çatalhöyük ekleyeceksen 2 gün daha rahat. Rotalar sayfasında planlar var."
+      a: "Merkez (Mevlana ücretsiz, ~17:00 kapanış + müzeler + etli ekmek) için 1 tam gün yetebilir; Mevlana’ya erken uğra. Sille, Seydişehir (Tınaztepe) veya Çatalhöyük ekleyeceksen 2 gün daha rahat. Rotalar sayfasında planlar var."
     },
     {
       keys: ["konaklama", "otel", "nerede kal", "pansiyon"],
@@ -109,7 +109,7 @@
     },
     {
       keys: ["tarih", "selcuklu", "tarihce", "osmanli"],
-      a: "Konya; Çatalhöyük’ten Roma/Bizans’a, Anadolu Selçuklu başkentliğine ve Mevlana mirasına uzanan derin bir tarihe sahiptir. Özet için sitede Tarihçe sayfası var."
+      a: "Konya; Çatalhöyük’ten Roma/Bizans’a, Anadolu Selçuklu başkentliğine ve Mevlana mirasına uzanan derin bir tarihe sahiptir. Seydişehir ise 14. yy. Seyyid Harun külliyesiyle öne çıkar. Özet: Tarihçe + Gezilecek."
     },
     {
       keys: ["hava", "mevsim", "ne zaman gel", "yaz", "kis"],
@@ -125,7 +125,7 @@
     },
     {
       keys: ["harita", "yol tarifi", "nasil giderim", "konum"],
-      a: "Sitede Harita sayfasında önemli noktalar işaretli (Mevlana, Sille, Seydişehir vb.); Gezilecek kartlarında Google yol tarifi butonları var."
+      a: "Sitede Harita sayfasında önemli noktalar işaretli (Mevlana, Sille, Seydişehir, Tınaztepe vb.); Gezilecek kartlarında Google yol tarifi butonları var."
     },
     {
       keys: ["kelebek", "japon parki", "aile", "cocuk"],
@@ -152,7 +152,7 @@
       "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "meke",
       "kilistra", "gez", "turist", "otel", "konak", "harita", "rota",
       "mutfak", "yemek", "lezzet", "muze", "sema", "seydisehir", "seyit",
-      "harun", "kugulu", "ucretsiz"
+      "harun", "kugulu", "ucretsiz", "tinaztepe", "ferzene"
     ])) return true;
     if (hasAny(t, ["nerede", "ne yenir", "ne gezilir", "kac gun", "nasil gider", "ne yapilir", "tavsiye"])) return true;
     if (hasAny(t, ["merhaba", "selam", "tesekkur", "konyago", "sen kimsin"])) return true;
@@ -168,7 +168,7 @@
     }
 
     if (!isKonyaRelated(t) && t.split(" ").length > 2) {
-      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Mevlana ücretsiz mi?», «Etli ekmek nerede yenir?», «Seydişehir’de ne gezilir?» — bu tarz sorulara sınırsız cevap verebilirim.";
+      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Mevlana ücretsiz mi?», «Seydişehir’de ne gezilir?», «Tınaztepe nerede?» — bu tarz sorulara sınırsız cevap verebilirim.";
     }
 
     var best = null;
@@ -187,7 +187,7 @@
 
     if (best && bestScore > 0) return best.a;
 
-    return "Konya ile ilgili anladım ama net eşleştiremedim. Şunlardan birini deneyebilirsin:\n• Mevlana (ücretsiz, ~17:00)\n• Sille / Seydişehir (Seyit Harun, Kuğulu Park)\n• Etli ekmek, bamya, tirit\n• 1–2 günlük rota, ATUS\n\nSorunu biraz daha açarsan yardımcı olayım.";
+    return "Konya ile ilgili anladım ama net eşleştiremedim. Şunlardan birini deneyebilirsin:\n• Mevlana (ücretsiz, ~17:00)\n• Seydişehir: Seyyid Harun, kale, Tınaztepe\n• Etli ekmek, bamya, tirit\n• 1–2 günlük rota, ATUS\n\nSorunu biraz daha açarsan yardımcı olayım.";
   }
 
   function addMsg(text, who) {
@@ -210,7 +210,7 @@
     }, 400 + Math.random() * 500);
   }
 
-  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya hakkında sorulara cevap veririm — limit yok.\n\nÖrnek: «Mevlana ücretsiz mi?» · «Seydişehir’de ne var?» · «1 günde ne gezilir?»", "bot");
+  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya hakkında sorulara cevap veririm — limit yok.\n\nÖrnek: «Mevlana ücretsiz mi?» · «Seydişehir tarihi yerler?» · «Tınaztepe nedir?»", "bot");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
