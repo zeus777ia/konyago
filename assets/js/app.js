@@ -1,6 +1,16 @@
 (function () {
   "use strict";
 
+  /* Tema — tüm sayfalarda */
+  try {
+    if (!document.querySelector("script[data-theme-js]")) {
+      var ts = document.createElement("script");
+      ts.src = "assets/js/theme.js?v=1";
+      ts.setAttribute("data-theme-js", "1");
+      document.head.appendChild(ts);
+    }
+  } catch (e) {}
+
   function onIdle(fn) {
     if (typeof requestIdleCallback === "function") {
       requestIdleCallback(fn, { timeout: 2500 });
@@ -14,7 +24,6 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
-  /* Reklam şeridi — HTML'de slot varsa doldur, yoksa ekle */
   try {
     var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
     var items = [
@@ -68,7 +77,6 @@
     });
   });
 
-  /* Çerez — erişilebilir dialog adı zorunlu */
   afterLoad(function () {
     setTimeout(function () {
       try {
@@ -183,7 +191,7 @@
       if (window.caches) {
         caches.keys().then(function (keys) {
           keys.forEach(function (k) {
-            if (k.indexOf("konyago") === 0 && k !== "konyago-v11") caches.delete(k);
+            if (k.indexOf("konyago") === 0 && k !== "konyago-v12") caches.delete(k);
           });
         });
       }
