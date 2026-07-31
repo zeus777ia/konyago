@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<title>Ara | KonyaGo</title>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Ara</small></span></a>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana</a>
+    <h1>Site içi ara</h1>
+    <p>Sayfa ve konu başlıklarında hızlı bul.</p>
+  </div>
+  <div class="info">
+    <label for="siteQ" style="font-weight:700;color:var(--green-dark)">Ne arıyorsun?</label>
+    <input id="siteQ" type="search" placeholder="ör. Mevlana, etli ekmek, eczane…" style="width:100%;margin-top:8px;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font:inherit;font-size:1rem">
+  </div>
+  <div id="siteResults" style="margin-top:12px"></div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
+<script src="assets/js/app.js" defer></script>
+<script>
+(function(){
+  var PAGES = [
+    { t: 'Ana sayfa', d: 'Hava, bugün planı, duyuru', u: 'index.html', k: 'ana hava plan' },
+    { t: 'Keşfet', d: 'Kategori ve ilçe filtreli yerler', u: 'kesfet.html', k: 'kesfet filtre isletme' },
+    { t: 'Gezilecek yerler', d: 'Mevlana, Sille, müzeler', u: 'gezilecek.html', k: 'mevlana sille muze alaaddin' },
+    { t: 'İlçeler', d: 'Beyşehir Seydişehir Akşehir', u: 'ilceler.html', k: 'beysehir seydisehir aksehir nasreddin' },
+    { t: 'Rotalar', d: '1-2 gün planları', u: 'rotalar.html', k: 'rota plan gun' },
+    { t: 'Mutfak', d: 'Etli ekmek bamya arabaşı', u: 'mutfak.html', k: 'etli ekmek yemek lezzet' },
+    { t: 'Lezzet haritası', d: 'Semt semt ne yenir', u: 'lezzet-haritasi.html', k: 'lezzet yemek' },
+    { t: 'KonyaGo AI', d: 'Akıllı Konya asistanı', u: 'ai.html', k: 'ai asistan soru' },
+    { t: 'Harita', d: 'Noktalar ve yol tarifi', u: 'harita.html', k: 'harita konum' },
+    { t: 'Ulaşım', d: 'ATUS Konyakart', u: 'ulasim.html', k: 'otobus atus ulasim' },
+    { t: 'Pratik / Acil', d: '112 ve numaralar', u: 'pratik.html', k: 'acil 112 polis' },
+    { t: 'Nöbetçi eczane', d: 'Resmî kaynak linkleri', u: 'nobetci-eczane.html', k: 'eczane nobetci ilac' },
+    { t: 'Hava durumu', d: 'Konya detaylı hava', u: 'hava.html', k: 'hava sicak yagmur' },
+    { t: 'Kesintiler', d: 'Elektrik su duyuru linkleri', u: 'kesintiler.html', k: 'elektrik su kesinti' },
+    { t: 'Etkinlikler', d: 'Şeb-i Arus takvim', u: 'etkinlikler.html', k: 'etkinlik sebi arus' },
+    { t: 'Konaklama', d: 'Bölge ipuçları', u: 'konaklama.html', k: 'otel konaklama' },
+    { t: 'Katkı / işletme', d: 'Başvuru formu', u: 'katki.html', k: 'basvuru isletme reklam' },
+    { t: 'Tarihçe', d: 'Selçuklu Eşrefoğlu', u: 'tarihce.html', k: 'tarih selcuklu' },
+    { t: 'Gizlilik KVKK', d: 'Aydınlatma metni', u: 'gizlilik.html', k: 'kvkk gizlilik' },
+    { t: 'English guide', d: 'Mini English', u: 'en.html', k: 'english en' }
+  ];
+  var box = document.getElementById('siteResults');
+  var input = document.getElementById('siteQ');
+  function run(){
+    var q = (input.value || '').toLowerCase().trim();
+    var rows = !q ? PAGES.slice(0, 8) : PAGES.filter(function(p){
+      return (p.t + ' ' + p.d + ' ' + p.k).toLowerCase().indexOf(q) !== -1;
+    });
+    if (!rows.length) { box.innerHTML = '<div class="info"><p>Sonuç yok. Keşfet veya AI dene.</p></div>'; return; }
+    box.innerHTML = rows.map(function(p){
+      return '<a class="card" href="' + p.u + '" style="margin-bottom:10px;display:block"><h3>' + p.t + '</h3><p>' + p.d + '</p></a>';
+    }).join('');
+  }
+  input.addEventListener('input', run);
+  run();
+  input.focus();
+})();
+</script>
+</body>
+</html>

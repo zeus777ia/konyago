@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<meta name="description" content="Konya keşfet — kategori ve ilçe ile yer, lezzet, müze filtrele.">
+<title>Keşfet | KonyaGo</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.filter-bar select,.filter-bar input{
+  border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;font:inherit;font-size:.9rem;background:#fff;min-height:44px
+}
+.filter-bar input{flex:1;min-width:160px}
+.kesfet-grid{display:grid;gap:12px}
+@media(min-width:640px){.kesfet-grid{grid-template-columns:1fr 1fr}}
+.kesfet-card{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;
+  box-shadow:0 4px 14px rgba(13,122,79,.05);display:flex;flex-direction:column;gap:6px
+}
+.kesfet-card h3{margin:0;font-size:1.05rem;color:var(--green-deep)}
+.kesfet-card .meta{font-size:.75rem;color:var(--muted);font-weight:600}
+.kesfet-card p{margin:0;font-size:.88rem;color:var(--text);line-height:1.45;flex:1}
+.kesfet-card.hot{border-color:rgba(201,162,39,.5);background:linear-gradient(180deg,#fffef8,#fff)}
+#kesfetEmpty{display:none;text-align:center;padding:24px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Keşfet</small></span></a>
+    <nav class="nav-desktop">
+      <a href="index.html">Ana</a>
+      <a href="kesfet.html" aria-current="page">Keşfet</a>
+      <a href="ara.html">Ara</a>
+      <a href="ilceler.html">İlçeler</a>
+    </nav>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana</a>
+    <h1>Keşfet</h1>
+    <p>Kategori ve ilçe ile Konya noktalarını daralt. Bilgilendirme amaçlıdır; işletme reklamı ayrı başvuruya tabidir.</p>
+  </div>
+
+  <div class="filter-bar">
+    <input type="search" id="q" placeholder="İsim veya kelime…" autocomplete="off">
+    <select id="cat" aria-label="Kategori">
+      <option value="">Tüm kategoriler</option>
+      <option value="muze">Müze / kültür</option>
+      <option value="gezi">Gezi / doğa</option>
+      <option value="yemek">Yemek</option>
+      <option value="otel">Konaklama</option>
+      <option value="ilce">İlçe rotası</option>
+      <option value="ulasim">Ulaşım</option>
+      <option value="alisveris">Alışveriş</option>
+      <option value="etkinlik">Etkinlik</option>
+    </select>
+    <select id="ilce" aria-label="İlçe">
+      <option value="">Tüm ilçeler</option>
+      <option>Karatay</option>
+      <option>Selçuklu</option>
+      <option>Meram</option>
+      <option>Beyşehir</option>
+      <option>Seydişehir</option>
+      <option>Akşehir</option>
+      <option>Çumra</option>
+      <option>Merkez</option>
+    </select>
+  </div>
+
+  <div class="kesfet-grid" id="kesfetList"></div>
+  <p id="kesfetEmpty">Sonuç yok — filtreyi genişlet veya <a href="ara.html">site aramasını</a> dene.</p>
+
+  <div class="info" style="margin-top:16px">
+    <h2>İşletmeni ekle</h2>
+    <p>Restoran, otel veya marka kartı için başvuru formu.</p>
+    <a class="btn btn-primary btn-sm" href="katki.html">Başvuru</a>
+  </div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
+<nav class="mnav">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="kesfet.html" aria-current="page"><span class="i">🔍</span>Keşfet</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="ai.html"><span class="i">✨</span>AI</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+</nav>
+<script src="assets/js/kesfet-data.js"></script>
+<script src="assets/js/app.js" defer></script>
+<script>
+(function(){
+  var data = window.KONYAGO_KESFET || [];
+  var list = document.getElementById('kesfetList');
+  var empty = document.getElementById('kesfetEmpty');
+  var q = document.getElementById('q');
+  var cat = document.getElementById('cat');
+  var ilce = document.getElementById('ilce');
+
+  function render(){
+    var qq = (q.value || '').toLowerCase().trim();
+    var c = cat.value;
+    var il = ilce.value;
+    var rows = data.filter(function(item){
+      if (c && item.cat !== c) return false;
+      if (il && item.ilce !== il) return false;
+      if (qq) {
+        var hay = (item.name + ' ' + item.desc + ' ' + item.tag + ' ' + item.ilce).toLowerCase();
+        if (hay.indexOf(qq) === -1) return false;
+      }
+      return true;
+    });
+    list.innerHTML = '';
+    if (!rows.length) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    rows.forEach(function(item){
+      var a = document.createElement('a');
+      a.className = 'kesfet-card' + (item.hot ? ' hot' : '');
+      a.href = item.href;
+      a.innerHTML = '<div class="meta">' + item.ilce + ' · ' + item.tag + (item.hot ? ' · Öne çıkan' : '') + '</div>' +
+        '<h3>' + item.name + '</h3><p>' + item.desc + '</p>' +
+        '<span class="btn btn-ghost btn-sm" style="align-self:flex-start;margin-top:6px">İncele</span>';
+      list.appendChild(a);
+    });
+  }
+  q.addEventListener('input', render);
+  cat.addEventListener('change', render);
+  ilce.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

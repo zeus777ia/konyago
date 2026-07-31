@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<meta name="description" content="Konya hava durumu — anlık ve 7 günlük özet.">
+<title>Hava Durumu | KonyaGo</title>
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/wx.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Hava</small></span></a>
+  </div>
+</header>
+<main class="container">
+  <div class="page-head">
+    <a href="index.html">← Ana</a>
+    <h1>Konya hava durumu</h1>
+    <p>Anlık + önümüzdeki günler. Bilgilendirme amaçlıdır.</p>
+  </div>
+  <div class="wx-card" id="weatherBox"></div>
+  <div class="wx-card" id="weatherWeek" style="margin-top:12px"></div>
+  <div class="info">
+    <h2>Gezi ipucu</h2>
+    <p id="havaTip">Yükleniyor…</p>
+  </div>
+  <div class="info">
+    <h2>Resmî kaynak</h2>
+    <p><a href="https://www.mgm.gov.tr" target="_blank" rel="noopener">Meteoroloji Genel Müdürlüğü (MGM)</a></p>
+  </div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · Open-Meteo</div></footer>
+<script src="assets/js/features.js"></script>
+<script src="assets/js/app.js" defer></script>
+<script>
+(function(){
+  var el = document.getElementById('weatherWeek');
+  var tip = document.getElementById('havaTip');
+  if (!el) return;
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude=37.8746&longitude=32.4932&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FIstanbul&forecast_days=7';
+  var WMO = {0:'Açık',1:'Çoğunlukla açık',2:'Parçalı bulutlu',3:'Bulutlu',45:'Sis',61:'Yağmur',63:'Yağmur',80:'Sağanak',95:'Gök gürültülü'};
+  fetch(url).then(function(r){return r.json()}).then(function(d){
+    var daily = d.daily || {};
+    var html = '<h2 style="margin:0 0 10px;font-size:1rem;color:var(--green-deep)">7 günlük özet</h2><div class="wx-days" style="grid-template-columns:repeat(auto-fill,minmax(100px,1fr))">';
+    (daily.time||[]).forEach(function(day,i){
+      var label = day.slice(5);
+      html += '<div class="wx-day"><span class="wx-dlabel">'+label+'</span><span>'+(WMO[daily.weather_code[i]]||'—')+'</span><strong>'+Math.round(daily.temperature_2m_max[i])+'° / '+Math.round(daily.temperature_2m_min[i])+'°</strong><span>%'+ (daily.precipitation_probability_max[i]||0) +' yağış</span></div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+    var max = daily.temperature_2m_max && daily.temperature_2m_max[0];
+    if (tip) {
+      if (max >= 32) tip.textContent = 'Bugün sıcak: müze ve kapalı mekân öğlene kaydır, su al.';
+      else if (max <= 5) tip.textContent = 'Soğuk gün: katmanlı giyin; arabaşı–tirit iyi gider.';
+      else tip.textContent = 'Gezi için makul bir gün görünüyor; yine de yağış olasılığını kontrol et.';
+    }
+  }).catch(function(){
+    el.innerHTML = '<p>Haftalık veri alınamadı. <a href="https://www.mgm.gov.tr" target="_blank" rel="noopener">MGM</a></p>';
+  });
+})();
+</script>
+</body>
+</html>
