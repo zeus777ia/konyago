@@ -1,0 +1,9 @@
+/* KonyaGo performans katmanı */
+img,svg{content-visibility:auto}
+.section,.place,.card,.info,.prose,.grid{content-visibility:auto;contain-intrinsic-size:auto 120px}
+.ad-rail{content-visibility:auto}
+@media (prefers-reduced-motion:reduce){
+  .hero-eagle,.logo-mark{animation:none!important;transition:none!important}
+}
+/* sticky ticker GPU */
+.ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track{transform:translateZ(0);backface-visibility:hidden}
