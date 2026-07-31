@@ -34,118 +34,115 @@
     "hack", "sifre kir", "silah", "uyusturucu"
   ];
 
+  var WEEKEND =
+    "Hafta sonu Konya planı (esnek):\n\n" +
+    "CUMARTESİ\n" +
+    "• Sabah: Mevlana Müzesi (ücretsiz; kapanış genelde 17:00 — sabah git)\n" +
+    "• Öğle: merkezde etli ekmek + ayran\n" +
+    "• Öğleden sonra: Alaaddin Tepesi + İnce Minare / Karatay\n" +
+    "• Akşam: Meram veya park yürüyüşü\n\n" +
+    "PAZAR (seç birini)\n" +
+    "• Sille yarım gün (köy + kilise + fotoğraf)\n" +
+    "• veya araç varsa Beyşehir Gölü + Eşrefoğlu Camii\n" +
+    "• veya aile: Kelebek / park + hafif tempo\n\n" +
+    "Yazın öğleni kapalı mekâna kaydır; kışın tirit–bamya–arabaşı dene. Yazdırılabilir rota: rota-yazdir.html";
+
   var KB = [
+    {
+      keys: ["hafta sonu", "haftasonu", "cumartesi", "pazar plan", "weekend"],
+      a: WEEKEND
+    },
     {
       keys: ["mevlana", "mevlevi", "yesil kubbe", "sema", "mesnevi", "celaleddin", "ucretsiz", "kapanis", "saat kac"],
       a: "Mevlana Müzesi ücretsizdir. Genelde 17:00’de kapanır; sabah veya öğleden önce gitmek kalabalıktan kaçmak için iyi olur. Yeşil kubbe Konya’nın simgesi, sema ve Mevlevî kültürünün merkezidir. Kıyafet ve sessizlik kurallarına dikkat et. Yol tarifi: Gezilecek / Harita."
     },
     {
       keys: ["esrefoglu", "esref oglu", "esrefogullari", "esrefogullari", "suleyman bey", "mubarizuddin", "esrefoglu camii", "esrefoglu cami"],
-      a: "Eşrefoğulları Beyliği (yaklaşık 1280–1326), Beyşehir–Seydişehir hattında kurulan Anadolu beyliğidir.\n• Kurucu: Eşrefoğlu Seyfeddin Süleyman Bey (başkent Beyşehir)\n• Sonra: Mübârizüddin Mehmed Bey; ardından II. Süleyman\n• 1326’da İlhanlı emiri Demirtaş müdahalesiyle fiilen biter; topraklar Hamîdoğulları vb. arasında paylaşılır\n• Mimari miras: Beyşehir Eşrefoğlu Camii (ahşap direkli, Anadolu’nun önemli örneklerinden)\n• Seydişehir / Seyyid Harun külliyesi ile aynı coğrafyada; Mehmed Bey döneminde destek/vakıf ilişkisi anlatılır\nDetaylı metin: Tarihçe sayfası → Eşrefoğulları bölümü."
+      a: "Eşrefoğulları Beyliği (yaklaşık 1280–1326), Beyşehir–Seydişehir hattında kurulan Anadolu beyliğidir.\n• Kurucu: Eşrefoğlu Seyfeddin Süleyman Bey (başkent Beyşehir)\n• 1326’da İlhanlı müdahalesiyle fiilen biter\n• Mimari miras: Beyşehir Eşrefoğlu Camii\nDetay: Tarihçe sayfası."
     },
     {
-      keys: ["seyit harun", "seyid harun", "harun veli", "seydisehir", "kugulu", "kugulu park", "tinaztepe", "tinaz tepe", "ferzene", "seydisehir kale", "halife sultan", "ilica seydisehir"],
-      a: "Seydişehir tarihi özeti:\n• Seyyid Harun Veli Camii & Türbesi (~1310) — Halife Sultan, Rüstem Bey–Sultan Hatun türbeleri\n• Seydişehir Kalesi\n• Kuğulu Park\n• Tınaztepe Mağarası\n• Ferzene / Güvercinlik mağaraları\nBölge Eşrefoğulları toprakları içindeydi. Detay: Gezilecek + Tarihçe."
+      keys: ["seyit harun", "seyid harun", "harun veli", "seydisehir", "kugulu", "tinaztepe"],
+      a: "Seydişehir: Seyyid Harun Veli külliyesi, Kuğulu Park, Tınaztepe Mağarası. Araçlı günübirlik planlanır. İlçeler sayfasına bak."
+    },
+    {
+      keys: ["aksehir", "nasreddin"],
+      a: "Akşehir: Nasreddin Hoca türbesi, Gülmece Parkı, müze ve göl efsaneleri. İlçeler sayfasında özet var."
     },
     {
       keys: ["etli ekmek", "etliekmek", "pide konya"],
-      a: "Etli ekmek Konya’nın imza lezzetidir: ince hamur, kıyma, soğan ve baharat; taş fırında pişer. Genelde dilim dilim, ayran ile yenir. Öğle 11–14 arası birçok fırında taze çıkar. Detay: Mutfak sayfası."
+      a: "Etli ekmek Konya’nın imza lezzetidir: ince hamur, kıyma, soğan ve baharat; taş fırında pişer. Genelde dilim dilim, ayran ile yenir. Lezzet haritası: lezzet-haritasi.html"
     },
     {
       keys: ["firin kebabi", "firin kebab", "tandir"],
-      a: "Fırın kebabı kuşbaşı etin soğan ve domatesle uzun süre fırın/tencerede pişmesiyle yapılır; sosu ekmekle yenir. Tandır ve sac kavurma da Konya et kültüründe yaygındır."
+      a: "Fırın kebabı kuşbaşı etin soğan ve domatesle uzun süre pişmesiyle yapılır; sosu ekmekle yenir."
     },
     {
-      keys: ["bamya", "bamya corbasi"],
-      a: "Bamya çorbası Konya usulüyle ekşili, etli veya sade yapılır. Özellikle kış ve ramazan sofralarında sevilir."
-    },
-    {
-      keys: ["arabasi", "araba si"],
-      a: "Arabaşı, İç Anadolu’nun kış yemeğidir; unlu/kıvamlı kısım ve et suyu veya etli harçla yenir."
-    },
-    {
-      keys: ["tirit", "tirid"],
-      a: "Tirit: ekmek dilimleri, et suyu ve kıyma/kuşbaşı; üzerine yoğurt ve tereyağı. Düğün ve özel gün sofralarının klasiğidir."
-    },
-    {
-      keys: ["hosmerim", "cezerye", "tatli"],
-      a: "Hoşmerim (peynir–irmik–şeker) sıcak servis edilen yöresel tatlıdır. Cezerye ise havuçlu, fıstıklı; hediyelik olarak da alınır."
+      keys: ["bamya", "arabasi", "tirit", "hosmerim", "cezerye"],
+      a: "Bamya çorbası, arabaşı (kış), tirit, hoşmerim ve cezerye Konya sofrasının parçasıdır. Mutfak sayfasında detay var."
     },
     {
       keys: ["sille"],
-      a: "Sille, merkeze yakın tarihi bir yerleşimdir: taş evler, Aya Eleni Kilisesi, mağaralar. Yarım günlük gezi için idealdir."
+      a: "Sille, merkeze yakın tarihi yerleşim: taş evler, Aya Eleni, mağaralar. Yarım gün ideal."
     },
     {
-      keys: ["catalhoyuk", "catal hoyuk", "unesco"],
-      a: "Çatalhöyük, Neolitik dönem yerleşimi ve UNESCO dünya mirasıdır. Araç veya tur ile günübirlik planlanır."
+      keys: ["catalhoyuk", "unesco"],
+      a: "Çatalhöyük Neolitik yerleşim ve UNESCO mirasıdır. Araç veya tur ile planlanır."
     },
     {
-      keys: ["alaaddin", "alaeddin", "tepe"],
-      a: "Alaaddin Tepesi, Selçuklu döneminin simge noktalarındandır; cami, park ve şehir manzarası sunar."
+      keys: ["alaaddin", "alaeddin", "ince minare", "karatay"],
+      a: "Alaaddin Tepesi + İnce Minare + Karatay, merkez kültür aksıdır."
     },
     {
-      keys: ["ince minare", "karatay", "medrese", "cini"],
-      a: "İnce Minareli Medrese taş işçiliğiyle; Karatay Medresesi çini eserleriyle bilinir. Merkez kültür aksındadır."
+      keys: ["ulasim", "atus", "konyakart", "otobus"],
+      a: "ATUS ve Konyakart şehir içi ulaşımın omurgasıdır. Güncel hat: atus.konya.bel.tr"
     },
     {
-      keys: ["meram", "baglar"],
-      a: "Meram Bağları yeşil vadi, mesire ve yürüyüş alanlarıyla bilinir. Yaz akşamları serinlemek için tercih edilir."
+      keys: ["kac gun", "1 gun", "2 gun", "rota", "plan"],
+      a: "Merkez 1 gün yetebilir. Sille / ilçe / Çatalhöyük için 2 gün daha rahat. Hafta sonu planı için «hafta sonu planı» yaz."
     },
     {
-      keys: ["beysehir", "gol", "meke", "kilistra", "eflatun"],
-      a: "Günübirlik: Beyşehir Gölü + Eşrefoğlu Camii, Meke, Kilistra, Eflatunpınar, Seydişehir (külliye, Tınaztepe). Araç planı gerekir."
+      keys: ["konaklama", "otel"],
+      a: "Merkez/Mevlana yakını pratik; Selçuklu daha yeni stok; Meram sakin. Yoğun dönemde erken rezervasyon."
     },
     {
-      keys: ["ulasim", "otobus", "tramvay", "atus", "konyakart", "toplu tasima", "dolmus"],
-      a: "Şehir içi ulaşımda ATUS ve Konyakart kullanılır. Güncel hat için belediye ATUS uygulaması/sitesi en doğru kaynaktır."
+      keys: ["seb i arus", "sebi arus", "etkinlik"],
+      a: "Şeb-i Arus genelde aralıkta yoğunlaşır. Etkinlikler sayfasına ve resmî duyurulara bak."
     },
     {
-      keys: ["kac gun", "ne kadar kal", "1 gun", "2 gun", "rota", "plan"],
-      a: "Merkez için 1 gün yetebilir (Mevlana ücretsiz, ~17:00). Sille, Seydişehir, Beyşehir (Eşrefoğlu Camii) veya Çatalhöyük için 2 gün daha rahat."
+      keys: ["tarih", "selcuklu", "tarihce"],
+      a: "Konya: Çatalhöyük → Selçuklu başkenti → Mevlana → Eşrefoğulları → Osmanlı–Cumhuriyet. Tarihçe sayfası derinlemesine anlatır."
     },
     {
-      keys: ["konaklama", "otel", "nerede kal", "pansiyon"],
-      a: "Merkez/Mevlana yürüme mesafesi için pratik; Selçuklu daha yeni; Meram sakin. Yoğun dönemlerde erken rezervasyon."
+      keys: ["hava", "mevsim"],
+      a: "İlkbahar–sonbahar gezi için ılımandır. Ana sayfada Konya hava durumu kutusu var (Open-Meteo)."
     },
     {
-      keys: ["seb i arus", "sebi arus", "aralik etkinlik", "etkinlik"],
-      a: "Şeb-i Arus, Mevlana’nın vuslat yıldönümü etkinlikleridir (genelde aralık). Şehir yoğunlaşır; konaklamayı erken ayarla."
+      keys: ["acil", "112"],
+      a: "Acil: 112. Pratik sayfada tüm numaralar."
     },
     {
-      keys: ["tarih", "selcuklu", "tarihce", "osmanli", "beylik"],
-      a: "Konya: Çatalhöyük → İkonium → Selçuklu başkenti → Mevlana → Eşrefoğulları (Beyşehir–Seydişehir, 1280–1326) → Osmanlı–Cumhuriyet. Detay: Tarihçe sayfası."
+      keys: ["hediye", "hediyelik"],
+      a: "Cezerye, çini, Mevlana temalı ürünler. Hediyelik sayfasına bak."
     },
     {
-      keys: ["hava", "mevsim", "ne zaman gel", "yaz", "kis"],
-      a: "İlkbahar ve sonbahar gezi için daha ılımandır. Yaz öğlenleri sıcak olur. Kışın tirit, bamya, arabaşı ayrı güzeldir."
+      keys: ["harita", "yol tarifi"],
+      a: "Harita sayfasında noktalar ve yol tarifi bağlantıları var."
     },
     {
-      keys: ["acil", "polis", "itfaiye", "112", "hastane"],
-      a: "Acil Çağrı: 112. Polis 155, jandarma 156, itfaiye 110. Pratik sayfada linkler var."
+      keys: ["aile", "cocuk", "kelebek"],
+      a: "Aile: Mevlana (kısa), parklar, Kelebek; tempo düşük tut."
     },
     {
-      keys: ["hediye", "hediyelik", "ne al"],
-      a: "Cezerye, çini/seramik, Mevlana temalı ürünler, el işi. Mevlana çevresi ve çarşılarda seçenek boldur."
+      keys: ["konyago", "sen kimsin", "ai"],
+      a: "Ben KonyaGo AI — sadece Konya. Limit yok."
     },
     {
-      keys: ["harita", "yol tarifi", "nasil giderim", "konum"],
-      a: "Harita sayfasında Mevlana, Sille, Seydişehir, Tınaztepe vb. işaretli; Gezilecek’te Google yol tarifi butonları var."
+      keys: ["merhaba", "selam", "gunaydin"],
+      a: "Merhaba! Konya hakkında ne sormak istersin? «Hafta sonu planı» yazabilirsin."
     },
     {
-      keys: ["kelebek", "japon parki", "aile", "cocuk"],
-      a: "Aile: Mevlana (ücretsiz, 17:00 öncesi), Kelebek Bahçesi, parklar; Seydişehir Kuğulu Park. Sonra etli ekmek."
-    },
-    {
-      keys: ["konyago", "bu site", "sen kimsin", "yapay zeka", "ai"],
-      a: "Ben KonyaGo AI — sadece Konya ile ilgili sorulara yardımcı olurum. Soru sınırın yok."
-    },
-    {
-      keys: ["merhaba", "selam", "gunaydin", "iyi gunler", "hey"],
-      a: "Merhaba! Ben KonyaGo AI. Konya hakkında ne sormak istersin? Limit yok."
-    },
-    {
-      keys: ["tesekkur", "sagol", "eyvallah"],
-      a: "Rica ederim. Başka Konya sorusun olursa yaz. İyi geziler!"
+      keys: ["tesekkur", "sagol"],
+      a: "Rica ederim. İyi geziler!"
     }
   ];
 
@@ -156,10 +153,10 @@
       "hosmerim", "cezerye", "karatay", "ince minare", "beysehir", "meke",
       "kilistra", "gez", "turist", "otel", "konak", "harita", "rota",
       "mutfak", "yemek", "lezzet", "muze", "sema", "seydisehir", "seyit",
-      "harun", "kugulu", "ucretsiz", "tinaztepe", "ferzene", "esref",
-      "beylik", "suleyman bey"
+      "harun", "kugulu", "ucretsiz", "tinaztepe", "esref", "beylik",
+      "hafta sonu", "haftasonu", "cumartesi", "pazar", "aksehir", "nasreddin"
     ])) return true;
-    if (hasAny(t, ["nerede", "ne yenir", "ne gezilir", "kac gun", "nasil gider", "ne yapilir", "tavsiye"])) return true;
+    if (hasAny(t, ["nerede", "ne yenir", "ne gezilir", "kac gun", "nasil gider", "tavsiye", "plan"])) return true;
     if (hasAny(t, ["merhaba", "selam", "tesekkur", "konyago", "sen kimsin"])) return true;
     return false;
   }
@@ -167,32 +164,22 @@
   function answer(q) {
     var t = norm(q);
     if (!t) return "Bir şey yaz, Konya hakkında yardımcı olayım.";
-
     if (hasAny(t, OFF) && !isKonyaRelated(t)) {
-      return "Bu konuda yardımcı olamıyorum. Ben yalnızca Konya ile ilgili sorulara cevap veriyorum."
+      return "Bu konuda yardımcı olamıyorum. Ben yalnızca Konya ile ilgili sorulara cevap veriyorum.";
     }
-
     if (!isKonyaRelated(t) && t.split(" ").length > 2) {
-      return "KonyaGo AI sadece Konya odaklıdır. Örneğin: «Eşrefoğulları nedir?», «Mevlana ücretsiz mi?», «Seydişehir’de ne gezilir?»"
+      return "KonyaGo AI sadece Konya odaklıdır. Örnek: «Hafta sonu planı», «Mevlana ücretsiz mi?», «Akşehir’de ne gezilir?»";
     }
-
-    var best = null;
-    var bestScore = 0;
+    var best = null, bestScore = 0;
     for (var i = 0; i < KB.length; i++) {
-      var score = 0;
-      var keys = KB[i].keys;
+      var score = 0, keys = KB[i].keys;
       for (var k = 0; k < keys.length; k++) {
         if (t.indexOf(keys[k]) !== -1) score += keys[k].length;
       }
-      if (score > bestScore) {
-        bestScore = score;
-        best = KB[i];
-      }
+      if (score > bestScore) { bestScore = score; best = KB[i]; }
     }
-
     if (best && bestScore > 0) return best.a;
-
-    return "Konya ile ilgili anladım ama net eşleştiremedim. Deneyebilirsin:\n• Eşrefoğulları Beyliği\n• Mevlana / Seydişehir / Beyşehir\n• Etli ekmek, rota, ATUS\n\nSorunu biraz daha aç."
+    return "Konya ile ilgili anladım ama net eşleştiremedim. «Hafta sonu planı», Mevlana, etli ekmek, Sille, Beyşehir dene.";
   }
 
   function addMsg(text, who) {
@@ -209,13 +196,10 @@
     tip.textContent = "Yazıyor…";
     chat.appendChild(tip);
     chat.scrollTop = chat.scrollHeight;
-    setTimeout(function () {
-      tip.remove();
-      cb();
-    }, 400 + Math.random() * 500);
+    setTimeout(function () { tip.remove(); cb(); }, 400 + Math.random() * 500);
   }
 
-  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya — limit yok.\n\nÖrnek: «Eşrefoğulları nedir?» · «Mevlana ücretsiz mi?» · «Seydişehir tarihi»", "bot");
+  addMsg("Merhaba! Ben KonyaGo AI. Sadece Konya — limit yok.\n\nHızlı: «Hafta sonu planı» · «Mevlana» · «Etli ekmek»", "bot");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();

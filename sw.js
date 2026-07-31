@@ -1,17 +1,35 @@
-/* KonyaGo SW v6 — bildirim + cache */
-var CACHE = "konyago-v6";
+/* KonyaGo SW v7 — offline temel sayfalar + bildirim */
+var CACHE = "konyago-v7";
+var PRECACHE = [
+  "./",
+  "./index.html",
+  "./assets/css/app.css",
+  "./assets/css/wx.css",
+  "./assets/js/app.js",
+  "./assets/js/features.js",
+  "./assets/img/eagle.svg",
+  "./pratik.html",
+  "./rotalar.html",
+  "./rota-yazdir.html",
+  "./gizlilik.html",
+  "./manifest.json"
+];
 
 self.addEventListener("install", function (e) {
-  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE).then(function (c) {
+      return c.addAll(PRECACHE).catch(function () {});
+    }).then(function () { return self.skipWaiting(); })
+  );
 });
 
 self.addEventListener("activate", function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
-      return Promise.all(keys.map(function (k) { return caches.delete(k); }));
-    }).then(function () {
-      return self.clients.claim();
-    })
+      return Promise.all(keys.map(function (k) {
+        if (k !== CACHE) return caches.delete(k);
+      }));
+    }).then(function () { return self.clients.claim(); })
   );
 });
 
@@ -39,27 +57,27 @@ self.addEventListener("fetch", function (e) {
   var isHTML = e.request.mode === "navigate" ||
     (e.request.headers.get("accept") || "").indexOf("text/html") !== -1 ||
     /\.html?$/.test(url.pathname) ||
-    url.pathname === "/" ||
-    url.pathname === "";
+    url.pathname === "/" || url.pathname === "";
 
   if (isHTML) {
     e.respondWith(
-      fetch(e.request).then(function (res) {
-        return res;
-      }).catch(function () {
-        return caches.match("./index.html");
+      fetch(e.request).then(function (res) { return res; }).catch(function () {
+        return caches.match(e.request).then(function (c) {
+          return c || caches.match("./index.html");
+        });
       })
     );
     return;
   }
 
   e.respondWith(
-    fetch(e.request).then(function (res) {
-      var copy = res.clone();
-      caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
-      return res;
-    }).catch(function () {
-      return caches.match(e.request);
+    caches.match(e.request).then(function (cached) {
+      var net = fetch(e.request).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+        return res;
+      }).catch(function () { return cached; });
+      return cached || net;
     })
   );
 });
