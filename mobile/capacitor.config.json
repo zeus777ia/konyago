@@ -1,0 +1,43 @@
+{
+  "appId": "tr.com.konyago.app",
+  "appName": "KonyaGo",
+  "webDir": "www",
+  "server": {
+    "url": "https://konyago.com.tr",
+    "cleartext": false,
+    "allowNavigation": [
+      "konyago.com.tr",
+      "*.konyago.com.tr",
+      "www.google.com",
+      "maps.google.com",
+      "yandex.com.tr",
+      "*.openstreetmap.org",
+      "*.tile.openstreetmap.org",
+      "atus.konya.bel.tr",
+      "www.konya.bel.tr",
+      "www.mgm.gov.tr"
+    ]
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "backgroundColor": "#0d7a4f",
+      "showSpinner": false,
+      "androidSplashResourceName": "splash",
+      "launchAutoHide": true
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0d7a4f"
+    }
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#f7faf8"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#f7faf8",
+    "preferredContentMode": "mobile"
+  }
+}
