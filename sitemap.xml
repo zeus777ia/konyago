@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://konyago.com.tr/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://konyago.com.tr/gezilecek.html</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://konyago.com.tr/album.html</loc><changefreq>weekly</changefreq><priority>0.88</priority></url>
   <url><loc>https://konyago.com.tr/sille.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://konyago.com.tr/etli-ekmek.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://konyago.com.tr/mutfak.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
