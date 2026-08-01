@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
+<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
 <title>Konya Fotoğraf Albümü | Telifsiz Görseller — KonyaGo</title>
-<meta name="description" content="Konya fotoğraf albümü: Mevlana, Sille, Alaaddin, Çatalhöyük, Beyşehir. Wikimedia Commons telifsiz / Creative Commons görseller.">
+<meta name="description" content="Konya fotoğraf albümü: Mevlana, Sille, Alaaddin, Çatalhöyük, Beyşehir. Wikimedia Commons telifsiz görseller.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://konyago.com.tr/album.html">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css?v=15">
-<link rel="stylesheet" href="assets/css/theme.css?v=1">
+<link rel="stylesheet" href="assets/css/theme.css?v=2">
 <style>
 .album-filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
 .album-filters button{
@@ -20,10 +21,7 @@
 .album-filters button.active,.album-filters button:hover{
   background:var(--green);color:#fff;border-color:var(--green)
 }
-.album-grid{
-  display:grid;gap:12px;
-  grid-template-columns:repeat(2,1fr);
-}
+.album-grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
 @media(min-width:700px){.album-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1000px){.album-grid{grid-template-columns:repeat(4,1fr)}}
 .album-card{
@@ -32,34 +30,18 @@
   display:flex;flex-direction:column;cursor:zoom-in;transition:transform .2s,box-shadow .2s
 }
 .album-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(13,122,79,.14)}
-.album-card img{
-  width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#1a3d2e
-}
-.album-card figcaption{
-  padding:10px 12px 12px;font-size:.78rem;color:var(--muted);line-height:1.35
-}
+.album-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#1a3d2e}
+.album-card figcaption{padding:10px 12px 12px;font-size:.78rem;color:var(--muted);line-height:1.35}
 .album-card figcaption strong{display:block;color:var(--green-deep);font-size:.88rem;margin-bottom:2px}
 .album-card .lic{font-size:.68rem;opacity:.85}
-.album-card.hidden{display:none}
-
-/* Lightbox */
-.lb{
-  position:fixed;inset:0;z-index:9999;background:rgba(6,20,14,.92);
-  display:none;align-items:center;justify-content:center;padding:16px;
-  flex-direction:column;gap:10px
-}
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(6,20,14,.92);display:none;align-items:center;justify-content:center;padding:16px;flex-direction:column;gap:10px}
 .lb.open{display:flex}
 .lb img{max-width:min(96vw,1100px);max-height:78vh;object-fit:contain;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .lb p{color:#dce8e2;font-size:.85rem;text-align:center;max-width:640px;margin:0}
-.lb .lb-close{
-  position:absolute;top:12px;right:14px;width:42px;height:42px;border-radius:50%;
-  border:0;background:#fff;color:#063d28;font-size:1.4rem;cursor:pointer;font-weight:700
-}
+.lb .lb-close{position:absolute;top:12px;right:14px;width:42px;height:42px;border-radius:50%;border:0;background:#fff;color:#063d28;font-size:1.4rem;cursor:pointer;font-weight:700}
 .lb .lb-nav{display:flex;gap:10px}
-.lb .lb-nav button{
-  border:0;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;
-  background:var(--green);color:#fff
-}
+.lb .lb-nav button{border:0;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--green);color:#fff}
+.album-count{font-size:.8rem;color:var(--muted);margin:0 0 8px}
 </style>
 </head>
 <body>
@@ -70,10 +52,10 @@
       <span class="logo-text"><strong>KonyaGo</strong><small>Albüm</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Menü">
-      <a href="gezilecek.html">Gezi</a>
+      <a href="index.html">Ana</a>
+      <a href="kesfet.html">Keşfet</a>
       <a href="album.html" aria-current="page">Albüm</a>
-      <a href="mutfak.html">Mutfak</a>
-      <a href="harita.html">Harita</a>
+      <a href="gezilecek.html">Gezi</a>
     </nav>
   </div>
 </header>
@@ -86,9 +68,10 @@
   </div>
 
   <div class="prose">
-    <p>Seçilmiş Konya görselleri. Kaynak <strong>Wikimedia Commons</strong>; lisanslar genelde CC BY / CC BY-SA. Ticari kullanımda ilgili lisans metnine uyun; yazar adı ve kaynak linki bırakın.</p>
+    <p>Seçilmiş Konya görselleri. Kaynak <strong>Wikimedia Commons</strong> (CC BY / CC BY-SA). Ticari kullanımda yazar ve kaynak atfı yapın.</p>
   </div>
 
+  <p class="album-count" id="albumCount"></p>
   <div class="album-filters" role="group" aria-label="Filtre">
     <button type="button" class="active" data-f="all">Tümü</button>
     <button type="button" data-f="mevlana">Mevlana</button>
@@ -98,8 +81,7 @@
   </div>
 
   <div class="album-grid" id="albumGrid"></div>
-
-  <p class="note" style="margin-top:18px">Görseller Wikimedia Commons üzerinden sunulur. Tam dosya ve lisans için karttaki kaynak linkine tıklayın. · <a href="gezilecek.html">Gezilecek yerler</a></p>
+  <p class="note" style="margin-top:18px">Tam dosya ve lisans: karttaki Kaynak linki. · <a href="gezilecek.html">Gezilecek yerler</a></p>
 </main>
 
 <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Büyük görsel">
@@ -112,159 +94,70 @@
   </div>
 </div>
 
-<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="gizlilik.html">Gizlilik</a> · Görseller © ilgili yazarlar (CC)</div></footer>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · Görseller © ilgili yazarlar (CC)</div></footer>
 <nav class="mnav" aria-label="Mobil">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
-  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="kesfet.html"><span class="i">🔍</span>Keşfet</a>
   <a href="album.html" aria-current="page"><span class="i">📷</span>Albüm</a>
-  <a href="mutfak.html"><span class="i">🍽️</span>Mutfak</a>
-  <a href="harita.html"><span class="i">🗺️</span>Harita</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="ai.html"><span class="i">✨</span>AI</a>
 </nav>
 
-<script src="assets/js/theme.js?v=1"></script>
+<script src="assets/js/theme.js?v=2"></script>
 <script src="assets/js/app.js?v=15" defer></script>
 <script>
 (function () {
+  function P(cat, title, file, credit, lic) {
+    var enc = encodeURIComponent(file).replace(/%2F/g, "/");
+    /* file path hash: use full commons Special:FilePath for reliability */
+    return {
+      cat: cat,
+      title: title,
+      src: "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(file) + "?width=960",
+      full: "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(file),
+      credit: credit || "Wikimedia Commons",
+      page: "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(file).replace(/%20/g, "_"),
+      lic: lic || "CC (Commons)"
+    };
+  }
+  /* Direkt thumb URL'ler (daha hızlı) + yedek isimler */
   var photos = [
-    {
-      cat: "mevlana",
-      title: "Mevlana Müzesi — avlu & şadırvan",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Konya_Mevlana_Museum_072.jpg/960px-Konya_Mevlana_Museum_072.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Konya_Mevlana_Museum_072.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Konya_Mevlana_Museum_072.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "mevlana",
-      title: "Mevlana — yeşil kubbe",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Mevlana_Mausoleum_Museum_-_52551844264.jpg/960px-Mevlana_Mausoleum_Museum_-_52551844264.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/b/bd/Mevlana_Mausoleum_Museum_-_52551844264.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Mevlana_Mausoleum_Museum_-_52551844264.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "mevlana",
-      title: "Mevlana — yeşil türbe detay",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2818%29.JPG/960px-Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2818%29.JPG",
-      full: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2818%29.JPG",
-      credit: "Mardetanha / Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Mevlana_Museum_(Green_Mausoleum)_in_Konya_Turkey_By_Mardetanha_(18).JPG",
-      lic: "CC BY-SA"
-    },
-    {
-      cat: "mevlana",
-      title: "Mevlana Müzesi — iç mekân",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Mevlana_Mausoleum_Museum_Interior.jpg/960px-Mevlana_Mausoleum_Museum_Interior.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/5/59/Mevlana_Mausoleum_Museum_Interior.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Mevlana_Mausoleum_Museum_Interior.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "mevlana",
-      title: "Mevlana — dış görünüm",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Mevlana_Museum_%2806072024%29.jpg/960px-Mevlana_Museum_%2806072024%29.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Mevlana_Museum_%2806072024%29.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Mevlana_Museum_(06072024).jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "mevlana",
-      title: "Konya silueti — yeşil kubbe",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Konya_230DSC_0138_%2833919220818%29.jpg/960px-Konya_230DSC_0138_%2833919220818%29.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Konya_230DSC_0138_%2833919220818%29.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Konya_230DSC_0138_(33919220818).jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "selcuklu",
-      title: "Alaaddin Camii",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Alaeddin_Mosque_%28Konya%29%2C_Turkey_01.jpg/960px-Alaeddin_Mosque_%28Konya%29%2C_Turkey_01.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/0/08/Alaeddin_Mosque_%28Konya%29%2C_Turkey_01.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Alaeddin_Mosque_(Konya),_Turkey_01.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "selcuklu",
-      title: "Alaaddin Camii — detay",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Alaeddin_Mosque_%28Konya%29_4170.jpg/960px-Alaeddin_Mosque_%28Konya%29_4170.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Alaeddin_Mosque_%28Konya%29_4170.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Alaeddin_Mosque_(Konya)_4170.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "sille",
-      title: "Sille — Aya Eleni",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Agia_Eleni_Sille.jpg/960px-Agia_Eleni_Sille.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Agia_Eleni_Sille.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Agia_Eleni_Sille.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "sille",
-      title: "Sille Baraj Gölü",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Sille_Dam%2C_Konya.jpg/960px-Sille_Dam%2C_Konya.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Sille_Dam%2C_Konya.jpg",
-      credit: "General Sisi / Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Sille_Dam,_Konya.jpg",
-      lic: "CC BY-SA"
-    },
-    {
-      cat: "sille",
-      title: "Sille köy dokusu",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/0909130231GTRX.JPG/960px-0909130231GTRX.JPG",
-      full: "https://upload.wikimedia.org/wikipedia/commons/6/68/0909130231GTRX.JPG",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:0909130231GTRX.JPG",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "doga",
-      title: "Çatalhöyük",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Catal_H%C3%BCy%C3%BCk_1.JPG/960px-Catal_H%C3%BCy%C3%BCk_1.JPG",
-      full: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Catal_H%C3%BCy%C3%BCk_1.JPG",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Catal_H%C3%BCy%C3%BCk_1.JPG",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "doga",
-      title: "Beyşehir Gölü",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Beysehir_from_Lake_Beysehir.jpg/960px-Beysehir_from_Lake_Beysehir.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Beysehir_from_Lake_Beysehir.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:Beysehir_from_Lake_Beysehir.jpg",
-      lic: "CC (Commons)"
-    },
-    {
-      cat: "doga",
-      title: "Beyşehir Gölü — kıyı",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg/960px-2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg",
-      full: "https://upload.wikimedia.org/wikipedia/commons/a/af/2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg",
-      credit: "Wikimedia Commons",
-      page: "https://commons.wikimedia.org/wiki/File:2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC,_Bey%C5%9Fehir._Konya.jpg",
-      lic: "CC (Commons)"
-    }
+    {cat:"mevlana",title:"Mevlana — avlu & şadırvan",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Konya_Mevlana_Museum_072.jpg/960px-Konya_Mevlana_Museum_072.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/5/5f/Konya_Mevlana_Museum_072.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Konya_Mevlana_Museum_072.jpg",lic:"CC"},
+    {cat:"mevlana",title:"Mevlana — yeşil kubbe",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Mevlana_Mausoleum_Museum_-_52551844264.jpg/960px-Mevlana_Mausoleum_Museum_-_52551844264.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/b/bd/Mevlana_Mausoleum_Museum_-_52551844264.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Mevlana_Mausoleum_Museum_-_52551844264.jpg",lic:"CC"},
+    {cat:"mevlana",title:"Mevlana — türbe detay",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2818%29.JPG/960px-Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2818%29.JPG",full:"https://upload.wikimedia.org/wikipedia/commons/f/f9/Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2818%29.JPG",credit:"Mardetanha",page:"https://commons.wikimedia.org/wiki/File:Mevlana_Museum_(Green_Mausoleum)_in_Konya_Turkey_By_Mardetanha_(18).JPG",lic:"CC BY-SA"},
+    {cat:"mevlana",title:"Mevlana — türbe (2)",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2819%29.JPG/960px-Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2819%29.JPG",full:"https://upload.wikimedia.org/wikipedia/commons/d/d3/Mevlana_Museum_%28Green_Mausoleum%29_in_Konya_Turkey_By_Mardetanha_%2819%29.JPG",credit:"Mardetanha",page:"https://commons.wikimedia.org/wiki/File:Mevlana_Museum_(Green_Mausoleum)_in_Konya_Turkey_By_Mardetanha_(19).JPG",lic:"CC BY-SA"},
+    {cat:"mevlana",title:"Mevlana — iç mekân",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Mevlana_Mausoleum_Museum_Interior.jpg/960px-Mevlana_Mausoleum_Museum_Interior.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/5/59/Mevlana_Mausoleum_Museum_Interior.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Mevlana_Mausoleum_Museum_Interior.jpg",lic:"CC"},
+    {cat:"mevlana",title:"Mevlana — dış görünüm",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Mevlana_Museum_%2806072024%29.jpg/960px-Mevlana_Museum_%2806072024%29.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/e/e8/Mevlana_Museum_%2806072024%29.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Mevlana_Museum_(06072024).jpg",lic:"CC"},
+    {cat:"mevlana",title:"Mevlana — kompleks",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Mevlana_Museum_%2806072024%29_2.jpg/960px-Mevlana_Museum_%2806072024%29_2.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/3/39/Mevlana_Museum_%2806072024%29_2.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Mevlana_Museum_(06072024)_2.jpg",lic:"CC"},
+    {cat:"mevlana",title:"Konya silueti — yeşil kubbe",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Konya_230DSC_0138_%2833919220818%29.jpg/960px-Konya_230DSC_0138_%2833919220818%29.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/e/e7/Konya_230DSC_0138_%2833919220818%29.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Konya_230DSC_0138_(33919220818).jpg",lic:"CC"},
+    {cat:"mevlana",title:"Mevlana — sanduka alanı",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Grave_of_Mevlana.jpg/960px-Grave_of_Mevlana.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/d/d9/Grave_of_Mevlana.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Grave_of_Mevlana.jpg",lic:"CC"},
+    {cat:"selcuklu",title:"Alaaddin Camii",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Alaeddin_Mosque_%28Konya%29%2C_Turkey_01.jpg/960px-Alaeddin_Mosque_%28Konya%29%2C_Turkey_01.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/0/08/Alaeddin_Mosque_%28Konya%29%2C_Turkey_01.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Alaeddin_Mosque_(Konya),_Turkey_01.jpg",lic:"CC"},
+    {cat:"selcuklu",title:"Alaaddin Camii — detay",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Alaeddin_Mosque_%28Konya%29_4170.jpg/960px-Alaeddin_Mosque_%28Konya%29_4170.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/d/d5/Alaeddin_Mosque_%28Konya%29_4170.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Alaeddin_Mosque_(Konya)_4170.jpg",lic:"CC"},
+    {cat:"selcuklu",title:"Alaaddin — panoramik",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Alaadin_Mosque_-_panoramio.jpg/960px-Alaadin_Mosque_-_panoramio.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/d/d3/Alaadin_Mosque_-_panoramio.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Alaadin_Mosque_-_panoramio.jpg",lic:"CC"},
+    {cat:"sille",title:"Sille — Aya Eleni",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Agia_Eleni_Sille.jpg/960px-Agia_Eleni_Sille.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/8/8a/Agia_Eleni_Sille.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Agia_Eleni_Sille.jpg",lic:"CC"},
+    {cat:"sille",title:"Sille Baraj Gölü",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Sille_Dam%2C_Konya.jpg/960px-Sille_Dam%2C_Konya.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/f/fd/Sille_Dam%2C_Konya.jpg",credit:"General Sisi",page:"https://commons.wikimedia.org/wiki/File:Sille_Dam,_Konya.jpg",lic:"CC BY-SA"},
+    {cat:"sille",title:"Sille köy dokusu",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/0909130231GTRX.JPG/960px-0909130231GTRX.JPG",full:"https://upload.wikimedia.org/wikipedia/commons/6/68/0909130231GTRX.JPG",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:0909130231GTRX.JPG",lic:"CC"},
+    {cat:"doga",title:"Çatalhöyük",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Catal_H%C3%BCy%C3%BCk_1.JPG/960px-Catal_H%C3%BCy%C3%BCk_1.JPG",full:"https://upload.wikimedia.org/wikipedia/commons/d/d3/Catal_H%C3%BCy%C3%BCk_1.JPG",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Catal_H%C3%BCy%C3%BCk_1.JPG",lic:"CC"},
+    {cat:"doga",title:"Çatalhöyük — kazı alanı",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Catal_H%C3%BCy%C3%BCk_10.JPG/960px-Catal_H%C3%BCy%C3%BCk_10.JPG",full:"https://upload.wikimedia.org/wikipedia/commons/9/9e/Catal_H%C3%BCy%C3%BCk_10.JPG",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Catal_H%C3%BCy%C3%BCk_10.JPG",lic:"CC"},
+    {cat:"doga",title:"Çatalhöyük — yapı izleri",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Catal_H%C3%BCy%C3%BCk_11.JPG/960px-Catal_H%C3%BCy%C3%BCk_11.JPG",full:"https://upload.wikimedia.org/wikipedia/commons/3/30/Catal_H%C3%BCy%C3%BCk_11.JPG",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Catal_H%C3%BCy%C3%BCk_11.JPG",lic:"CC"},
+    {cat:"doga",title:"Beyşehir Gölü",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Beysehir_from_Lake_Beysehir.jpg/960px-Beysehir_from_Lake_Beysehir.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/e/e5/Beysehir_from_Lake_Beysehir.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Beysehir_from_Lake_Beysehir.jpg",lic:"CC"},
+    {cat:"doga",title:"Beyşehir Gölü — kıyı",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg/960px-2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/a/af/2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC,_Bey%C5%9Fehir._Konya.jpg",lic:"CC"},
+    {cat:"doga",title:"Beyşehir Gölü — manzara",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Bey%C5%9Fehir_G%C3%B6l_Manzaras%C4%B1.jpg/960px-Bey%C5%9Fehir_G%C3%B6l_Manzaras%C4%B1.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/d/d3/Bey%C5%9Fehir_G%C3%B6l_Manzaras%C4%B1.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:Bey%C5%9Fehir_G%C3%B6l_Manzaras%C4%B1.jpg",lic:"CC"},
+    {cat:"doga",title:"Beyşehir Gölü — su yüzeyi",src:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/2019-05-08_02.23.10_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC.jpg/960px-2019-05-08_02.23.10_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC.jpg",full:"https://upload.wikimedia.org/wikipedia/commons/6/69/2019-05-08_02.23.10_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC.jpg",credit:"Wikimedia Commons",page:"https://commons.wikimedia.org/wiki/File:2019-05-08_02.23.10_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC.jpg",lic:"CC"}
   ];
 
   var grid = document.getElementById("albumGrid");
+  var countEl = document.getElementById("albumCount");
   var visible = photos.slice();
   var idx = 0;
 
   function render(list) {
     visible = list;
+    if (countEl) countEl.textContent = list.length + " görsel";
     grid.innerHTML = "";
     list.forEach(function (p, i) {
       var fig = document.createElement("figure");
       fig.className = "album-card";
-      fig.dataset.i = String(i);
       fig.innerHTML =
         '<img src="' + p.src + '" alt="' + p.title.replace(/"/g, "") + '" loading="lazy" decoding="async" width="480" height="360">' +
         "<figcaption><strong>" + p.title + "</strong>" +
@@ -309,12 +202,8 @@
   }
   document.getElementById("lbClose").onclick = closeLb;
   lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
-  document.getElementById("lbPrev").onclick = function () {
-    openLb((idx - 1 + visible.length) % visible.length);
-  };
-  document.getElementById("lbNext").onclick = function () {
-    openLb((idx + 1) % visible.length);
-  };
+  document.getElementById("lbPrev").onclick = function () { openLb((idx - 1 + visible.length) % visible.length); };
+  document.getElementById("lbNext").onclick = function () { openLb((idx + 1) % visible.length); };
   document.addEventListener("keydown", function (e) {
     if (!lb.classList.contains("open")) return;
     if (e.key === "Escape") closeLb();
