@@ -4,15 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo iletişim ve hakkında.">
+<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
+<meta name="description" content="KonyaGo iletişim — e-posta, Instagram, WhatsApp.">
 <title>İletişim | KonyaGo</title>
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/app.css?v=15">
+<link rel="stylesheet" href="assets/css/theme.css?v=2">
+<style>
+.contact-grid{display:grid;gap:12px;margin-top:8px}
+@media(min-width:560px){.contact-grid{grid-template-columns:1fr 1fr}}
+.contact-card{
+  display:flex;flex-direction:column;gap:8px;padding:16px 18px;
+  border-radius:16px;border:1px solid var(--border);background:var(--white);
+  text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s
+}
+.contact-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(13,122,79,.12)}
+.contact-card .ico{font-size:1.6rem;line-height:1}
+.contact-card strong{color:var(--green-deep);font-size:1.02rem}
+.contact-card span{font-size:.88rem;color:var(--muted);word-break:break-all}
+.contact-card.wa{border-color:rgba(37,211,102,.35)}
+.contact-card.ig{border-color:rgba(225,48,108,.3)}
+</style>
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span></a>
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>İletişim</small></span></a>
     <nav class="nav-desktop" aria-label="Ana menü">
       <a href="index.html">Ana</a>
       <a href="sss.html">SSS</a>
@@ -29,23 +46,44 @@
   <div class="prose">
     <p><strong>KonyaGo</strong>, Konya için bağımsız bir şehir rehberidir. Tarihçe, gezilecek yerler, mutfak, harita ve pratik bilgileri sade bir arayüzde sunar. Resmi belediye veya turizm müdürlüğü sitesi değildir.</p>
   </div>
+
   <div class="info">
-    <h2>İletişim</h2>
-    <p>Öneri, hata bildirimi veya reklam / iş birliği:</p>
-    <div class="link-row">
-      <a class="btn btn-primary" href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Iletisim">cnrtech@outlook.com.tr</a>
+    <h2>Bize ulaşın</h2>
+    <p>Öneri, hata bildirimi, reklam veya iş birliği için:</p>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Iletisim">
+        <span class="ico">✉️</span>
+        <strong>E-posta</strong>
+        <span>cnrtech@outlook.com.tr</span>
+      </a>
+      <a class="contact-card ig" href="https://instagram.com/mehmet_ali_caner_" target="_blank" rel="noopener noreferrer">
+        <span class="ico">📸</span>
+        <strong>Instagram</strong>
+        <span>@mehmet_ali_caner_</span>
+      </a>
+      <a class="contact-card wa" href="https://wa.me/905332595042?text=Merhaba%2C%20KonyaGo%20hakk%C4%B1nda%20yaz%C4%B1yorum." target="_blank" rel="noopener noreferrer">
+        <span class="ico">💬</span>
+        <strong>WhatsApp</strong>
+        <span>0533 259 50 42</span>
+      </a>
+      <a class="contact-card" href="katki.html">
+        <span class="ico">🤝</span>
+        <strong>İş birliği / reklam</strong>
+        <span>Başvuru formu</span>
+      </a>
     </div>
   </div>
+
   <div class="info">
     <h2>Reklam</h2>
-    <p>Site içi reklam ve iş birliği talepleriniz için aynı adrese konu satırına “Reklam” yazarak ulaşabilirsiniz.</p>
+    <p>Site içi reklam ve iş birliği talepleriniz için e-posta veya WhatsApp ile ulaşabilirsiniz. Konu satırına “Reklam” yazmanız yeterli.</p>
   </div>
   <div class="info">
     <h2>Kaynak notu</h2>
     <p>Ulaşım ve resmi duyurular için belediye (ATUS), Kültür ve Turizm kurumları esas alınmalıdır. Görsellerde mümkün olduğunca Wikimedia Commons kullanılmıştır.</p>
   </div>
 </main>
-<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="gizlilik.html">Gizlilik</a></div></footer>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="https://instagram.com/mehmet_ali_caner_" target="_blank" rel="noopener">Instagram</a> · <a href="https://wa.me/905332595042" target="_blank" rel="noopener">WhatsApp</a> · <a href="gizlilik.html">Gizlilik</a></div></footer>
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
   <a href="sss.html"><span class="i">❓</span>SSS</a>
@@ -53,6 +91,7 @@
   <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
   <a href="gizlilik.html"><span class="i">🔒</span>Gizlilik</a>
 </nav>
-<script src="assets/js/app.js" defer></script>
+<script src="assets/js/theme.js?v=2"></script>
+<script src="assets/js/app.js?v=15" defer></script>
 </body>
 </html>
