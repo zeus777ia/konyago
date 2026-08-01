@@ -5,7 +5,7 @@
   try {
     if (!document.querySelector("script[data-theme-js]")) {
       var ts = document.createElement("script");
-      ts.src = "assets/js/theme.js?v=1";
+      ts.src = "assets/js/theme.js?v=2";
       ts.setAttribute("data-theme-js", "1");
       document.head.appendChild(ts);
     }
@@ -59,7 +59,7 @@
       try {
         if (!document.querySelector("script[data-nobetci]")) {
           var ns = document.createElement("script");
-          ns.src = "assets/js/nobetci.js";
+          ns.src = "assets/js/nobetci.js?v=2";
           ns.defer = true;
           ns.setAttribute("data-nobetci", "1");
           document.body.appendChild(ns);
@@ -68,7 +68,7 @@
       try {
         if (!document.querySelector("script[data-borsa]")) {
           var bs = document.createElement("script");
-          bs.src = "assets/js/borsa.js";
+          bs.src = "assets/js/borsa.js?v=3";
           bs.defer = true;
           bs.setAttribute("data-borsa", "1");
           document.body.appendChild(bs);
