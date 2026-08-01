@@ -1,4 +1,4 @@
-/* KonyaGo tema — koyu mod */
+/* KonyaGo tema — koyu mod (geniş uyum) */
 html[data-theme="dark"]{
   color-scheme:dark;
   --green:#3ecf8e;
@@ -26,15 +26,24 @@ html[data-theme="dark"] body::before{
     linear-gradient(180deg,#0e1813 0%,#12201a 100%);
 }
 html[data-theme="dark"] .site-header{
-  background:rgba(14,24,19,.92);
+  background:rgba(14,24,19,.94);
   border-bottom-color:var(--green);
 }
 html[data-theme="dark"] .logo-text strong{color:var(--green)}
+html[data-theme="dark"] .logo-text small{color:var(--muted)}
 html[data-theme="dark"] .nav-desktop a{color:var(--text)}
 html[data-theme="dark"] .nav-desktop a:hover,
 html[data-theme="dark"] .nav-desktop a[aria-current="page"]{
   background:var(--green-soft);color:var(--green);border-color:var(--border)
 }
+html[data-theme="dark"] .page-head h1,
+html[data-theme="dark"] .section-title,
+html[data-theme="dark"] .hero h1{color:var(--green-deep)}
+html[data-theme="dark"] .page-head p,
+html[data-theme="dark"] .hero p{color:var(--muted)}
+html[data-theme="dark"] .page-head a{color:var(--green)}
+
+/* Kartlar & kutular */
 html[data-theme="dark"] .card,
 html[data-theme="dark"] .info,
 html[data-theme="dark"] .prose,
@@ -42,29 +51,60 @@ html[data-theme="dark"] .place,
 html[data-theme="dark"] .hot-item,
 html[data-theme="dark"] .t-item,
 html[data-theme="dark"] .price-card,
-html[data-theme="dark"] .visit-stat{
-  background:var(--white);
-  border-color:var(--border);
+html[data-theme="dark"] .visit-stat,
+html[data-theme="dark"] .kesfet-card,
+html[data-theme="dark"] .album-card,
+html[data-theme="dark"] .wx-card{
+  background:var(--white) !important;
+  border-color:var(--border) !important;
   color:var(--text);
+  box-shadow:var(--shadow);
+}
+html[data-theme="dark"] .kesfet-card.hot{
+  background:linear-gradient(180deg,#1c2e24,#16241c) !important;
+  border-color:rgba(224,195,92,.4) !important;
 }
 html[data-theme="dark"] .card h2,
 html[data-theme="dark"] .card h3,
 html[data-theme="dark"] .info h2,
 html[data-theme="dark"] .place-body h2,
-html[data-theme="dark"] .section-title,
-html[data-theme="dark"] .page-head h1,
-html[data-theme="dark"] .hero h1{
-  color:var(--green-deep);
+html[data-theme="dark"] .kesfet-card h3{
+  color:var(--green-deep) !important;
 }
 html[data-theme="dark"] .card p,
 html[data-theme="dark"] .info p,
 html[data-theme="dark"] .info li,
 html[data-theme="dark"] .place-body p,
-html[data-theme="dark"] .hero p,
 html[data-theme="dark"] .prose p,
-html[data-theme="dark"] .note{
-  color:var(--muted);
+html[data-theme="dark"] .note,
+html[data-theme="dark"] .kesfet-card p,
+html[data-theme="dark"] .kesfet-card .meta{
+  color:var(--muted) !important;
 }
+
+/* Form elemanları — parlak beyazı kır */
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] .filter-bar input,
+html[data-theme="dark"] .filter-bar select,
+html[data-theme="dark"] .quick-search input,
+html[data-theme="dark"] .form-grid input,
+html[data-theme="dark"] .form-grid textarea,
+html[data-theme="dark"] .form-grid select{
+  background:#12201a !important;
+  border-color:var(--border) !important;
+  color:var(--text) !important;
+  color-scheme:dark;
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder{
+  color:#7a9588 !important;
+}
+html[data-theme="dark"] option{
+  background:#12201a;color:var(--text);
+}
+
 html[data-theme="dark"] .btn-ghost{
   background:transparent;color:var(--green);border-color:var(--green)
 }
@@ -73,7 +113,7 @@ html[data-theme="dark"] .btn-primary{
   background:linear-gradient(135deg,#2aad72,#1e8a5a);color:#fff
 }
 html[data-theme="dark"] .mnav{
-  background:rgba(14,24,19,.96);
+  background:rgba(14,24,19,.97);
   border-top-color:var(--green);
 }
 html[data-theme="dark"] .mnav a{color:var(--muted)}
@@ -87,16 +127,12 @@ html[data-theme="dark"] .site-footer{
 html[data-theme="dark"] .cookie-bar{
   background:var(--white);
   border-color:var(--border);
+  color:var(--text);
 }
 html[data-theme="dark"] .ilce-pill{
   background:var(--green-soft);
   border-color:var(--border);
   color:var(--green);
-}
-html[data-theme="dark"] .quick-search input{
-  background:var(--white);
-  border-color:var(--border);
-  color:var(--text);
 }
 html[data-theme="dark"] .tag{
   background:var(--green-soft);
@@ -108,6 +144,9 @@ html[data-theme="dark"] .ad-box{
   border-color:var(--green-mid);
   color:var(--muted);
 }
+html[data-theme="dark"] .ad-ticker{
+  background:linear-gradient(90deg,#0a3d2a,#0d5c3d);
+}
 html[data-theme="dark"] .map-list button{
   background:var(--white);
   border-color:var(--border);
@@ -118,6 +157,10 @@ html[data-theme="dark"] .info.warn{
   border-color:rgba(224,195,92,.35);
 }
 html[data-theme="dark"] .info.warn h2{color:var(--gold)}
+html[data-theme="dark"] a{color:var(--green)}
+html[data-theme="dark"] .kesfet-card a,
+html[data-theme="dark"] .kesfet-card{text-decoration:none;color:inherit}
+html[data-theme="dark"] #kesfetEmpty{color:var(--muted)}
 
 /* Tema butonu */
 .theme-toggle{

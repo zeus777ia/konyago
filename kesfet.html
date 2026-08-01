@@ -4,21 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
+<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
 <meta name="description" content="Konya keşfet — kategori ve ilçe ile yer, lezzet, müze filtrele.">
 <title>Keşfet | KonyaGo</title>
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/app.css?v=15">
+<link rel="stylesheet" href="assets/css/theme.css?v=2">
 <style>
 .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
 .filter-bar select,.filter-bar input{
-  border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;font:inherit;font-size:.9rem;background:#fff;min-height:44px
+  border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;font:inherit;font-size:.9rem;
+  background:var(--white);color:var(--text);min-height:44px
 }
 .filter-bar input{flex:1;min-width:160px}
 .kesfet-grid{display:grid;gap:12px}
 @media(min-width:640px){.kesfet-grid{grid-template-columns:1fr 1fr}}
 .kesfet-card{
   background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;
-  box-shadow:0 4px 14px rgba(13,122,79,.05);display:flex;flex-direction:column;gap:6px
+  box-shadow:0 4px 14px rgba(13,122,79,.05);display:flex;flex-direction:column;gap:6px;
+  text-decoration:none;color:inherit
 }
 .kesfet-card h3{margin:0;font-size:1.05rem;color:var(--green-deep)}
 .kesfet-card .meta{font-size:.75rem;color:var(--muted);font-weight:600}
@@ -34,8 +38,8 @@
     <nav class="nav-desktop">
       <a href="index.html">Ana</a>
       <a href="kesfet.html" aria-current="page">Keşfet</a>
+      <a href="album.html">Albüm</a>
       <a href="ara.html">Ara</a>
-      <a href="ilceler.html">İlçeler</a>
     </nav>
   </div>
 </header>
@@ -81,16 +85,17 @@
     <a class="btn btn-primary btn-sm" href="katki.html">Başvuru</a>
   </div>
 </main>
-<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="album.html">Albüm</a></div></footer>
 <nav class="mnav">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
   <a href="kesfet.html" aria-current="page"><span class="i">🔍</span>Keşfet</a>
+  <a href="album.html"><span class="i">📷</span>Albüm</a>
   <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
   <a href="ai.html"><span class="i">✨</span>AI</a>
-  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
 </nav>
+<script src="assets/js/theme.js?v=2"></script>
 <script src="assets/js/kesfet-data.js"></script>
-<script src="assets/js/app.js" defer></script>
+<script src="assets/js/app.js?v=15" defer></script>
 <script>
 (function(){
   var data = window.KONYAGO_KESFET || [];
