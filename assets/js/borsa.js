@@ -1,15 +1,17 @@
-/* KonyaGo — döviz & altın kayan şerit
-   Öncelik: Truncgil (TR) → open.er-api + goldprice → fawaz xau
-   Bilgilendirme amaçlıdır.
+/* KonyaGo — canlı döviz & altın şeridi
+   Kaynak: finans.truncgil.com (TR piyasa) + open.er-api / gold-api yedek
+   Her 30 sn yenilenir. Bilgilendirme amaçlıdır.
 */
 (function () {
   "use strict";
 
   if (document.querySelector(".borsa-ticker")) return;
 
-  var REFRESH_MS = 60 * 1000;
+  var REFRESH_MS = 30 * 1000;
   var OZ_TO_GRAM = 31.1034768;
   var last = null;
+  var bar = null;
+  var track = null;
 
   function fmt(n, dig) {
     if (n == null || !isFinite(n)) return "—";
@@ -24,33 +26,24 @@
     }
   }
 
-  function parseTrNumber(s) {
-    if (typeof s === "number" && isFinite(s)) return s;
-    if (s == null) return null;
-    var t = String(s).trim().replace(/\s/g, "");
-    if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t)) {
-      t = t.replace(/\./g, "").replace(",", ".");
-    } else if (t.indexOf(",") !== -1 && t.indexOf(".") === -1) {
-      t = t.replace(",", ".");
-    }
+  function num(v) {
+    if (typeof v === "number" && isFinite(v)) return v;
+    if (v == null) return null;
+    var t = String(v).trim().replace(/\s/g, "");
+    if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t)) t = t.replace(/\./g, "").replace(",", ".");
+    else if (t.indexOf(",") !== -1 && t.indexOf(".") === -1) t = t.replace(",", ".");
     var n = parseFloat(t);
     return isFinite(n) ? n : null;
   }
 
-  function pickPrice(obj) {
+  function selling(obj) {
     if (!obj || typeof obj !== "object") return null;
-    var keys = [
-      "Satış", "satis", "Satis", "Selling", "selling",
-      "Alış", "alis", "Alis", "Buying", "buying",
-      "Fiyat", "fiyat", "price", "Price"
-    ];
-    for (var i = 0; i < keys.length; i++) {
-      if (obj[keys[i]] != null) {
-        var n = parseTrNumber(obj[keys[i]]);
-        if (n != null) return n;
-      }
-    }
-    return null;
+    return num(obj.Selling != null ? obj.Selling : obj.satis != null ? obj.satis : obj.Satış);
+  }
+
+  function changeOf(obj) {
+    if (!obj || typeof obj !== "object") return null;
+    return num(obj.Change != null ? obj.Change : obj.change);
   }
 
   function nowLabel() {
@@ -66,281 +59,218 @@
     }
   }
 
-  function buildTrack(data) {
-    var items = [
-      { icon: "💵", label: "Dolar", text: data.usd == null ? "—" : fmt(data.usd, 2) + " ₺" },
-      { icon: "💶", label: "Euro", text: data.eur == null ? "—" : fmt(data.eur, 2) + " ₺" },
-      { icon: "💷", label: "Sterlin", text: data.gbp == null ? "—" : fmt(data.gbp, 2) + " ₺" },
-      { icon: "🥇", label: "Gram Altın", text: data.goldGram == null ? "—" : fmt(data.goldGram, 2) + " ₺" },
-      { icon: "🥈", label: "Ons Altın", text: data.goldOz == null ? "—" : "$" + fmt(data.goldOz, 2) }
+  function chSpan(ch) {
+    if (ch == null || !isFinite(ch)) return "";
+    var cls = ch > 0 ? "up" : ch < 0 ? "down" : "flat";
+    var arrow = ch > 0 ? "▲" : ch < 0 ? "▼" : "•";
+    return '<span class="borsa-ch ' + cls + '">' + arrow + " " + fmt(Math.abs(ch), 2) + "%</span>";
+  }
+
+  function ensureBar() {
+    if (bar && document.body.contains(bar)) return;
+    bar = document.createElement("div");
+    bar.className = "borsa-ticker";
+    bar.setAttribute("role", "complementary");
+    bar.setAttribute("aria-label", "Döviz ve altın kurları");
+    bar.innerHTML =
+      '<div class="borsa-ticker-label"><span class="borsa-live" aria-hidden="true"></span> Kur</div>' +
+      '<div class="borsa-ticker-viewport"><div class="borsa-ticker-track"></div></div>';
+    track = bar.querySelector(".borsa-ticker-track");
+
+    // Nöbetçi şeridinin altına, yoksa reklam altına, yoksa en üste
+    var anchor = document.querySelector(".eczane-ticker") || document.querySelector(".ad-ticker");
+    if (anchor && anchor.parentNode) {
+      anchor.parentNode.insertBefore(bar, anchor.nextSibling);
+    } else if (document.body) {
+      document.body.insertBefore(bar, document.body.firstChild);
+    }
+  }
+
+  function render(data) {
+    ensureBar();
+    if (!track) return;
+    last = data;
+
+    var rows = [
+      { icon: "💵", label: "Dolar", val: data.usd, dig: 2, suffix: " ₺", ch: data.usdCh },
+      { icon: "💶", label: "Euro", val: data.eur, dig: 2, suffix: " ₺", ch: data.eurCh },
+      { icon: "💷", label: "Sterlin", val: data.gbp, dig: 2, suffix: " ₺", ch: data.gbpCh },
+      { icon: "🥇", label: "Gram Altın", val: data.goldGram, dig: 2, suffix: " ₺", ch: data.goldCh },
+      { icon: "🪙", label: "Ons Altın", val: data.goldOz, dig: 2, suffix: " $", prefix: "$", ch: null }
     ];
+
     var parts = [];
-    for (var i = 0; i < items.length; i++) {
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var text = r.val == null ? "—" : (r.prefix || "") + fmt(r.val, r.dig) + (r.prefix ? "" : r.suffix);
+      if (r.prefix && r.val != null) text = "$" + fmt(r.val, r.dig);
       parts.push(
         '<span class="borsa-ticker-item">' +
         '<span class="borsa-ticker-dot" aria-hidden="true"></span>' +
-        items[i].icon + " " + items[i].label + ": " + items[i].text +
+        r.icon + " <strong>" + r.label + ":</strong> " + text + " " + chSpan(r.ch) +
         "</span>"
       );
     }
     parts.push(
-      '<span class="borsa-ticker-item"><span class="borsa-ticker-dot"></span>⏱ ' +
-      (data.t || "") + "</span>"
+      '<span class="borsa-ticker-item borsa-meta">⏱ ' + (data.t || nowLabel()) +
+      (data.src ? " · " + data.src : "") + "</span>"
     );
-    return parts.join("") + parts.join("");
+
+    var html = parts.join("") + parts.join("");
+    track.innerHTML = html;
+    track.style.animation = "none";
+    void track.offsetWidth;
+    track.style.animation = "";
   }
 
-  function ensureBar() {
-    var bar = document.querySelector(".borsa-ticker");
-    if (bar) return bar;
-    bar = document.createElement("div");
-    bar.className = "borsa-ticker";
-    bar.setAttribute("role", "complementary");
-    bar.setAttribute("aria-label", "Döviz ve altın");
-    bar.innerHTML =
-      '<div class="borsa-ticker-label">📈 Kur</div>' +
-      '<div class="borsa-ticker-viewport"><div class="borsa-ticker-track">' +
-      '<span class="borsa-ticker-item">Kurlar yükleniyor…</span></div></div>';
-    var after = document.querySelector(".eczane-ticker") || document.querySelector(".ad-ticker");
-    if (after && after.parentNode) after.parentNode.insertBefore(bar, after.nextSibling);
-    else document.body.insertBefore(bar, document.body.firstChild);
-    return bar;
-  }
-
-  function render(data) {
-    last = data;
-    var track = ensureBar().querySelector(".borsa-ticker-track");
-    if (track) track.innerHTML = buildTrack(data);
-  }
-
-  function completeGold(data) {
-    if (!data) return data;
-    if (data.goldGram == null && data.goldOz != null && data.usd != null) {
-      data.goldGram = (data.goldOz * data.usd) / OZ_TO_GRAM;
-    }
-    if (data.goldOz == null && data.goldGram != null && data.usd != null) {
-      data.goldOz = (data.goldGram * OZ_TO_GRAM) / data.usd;
-    }
-    return data;
-  }
-
-  function mergePreferGold(a, b) {
-    if (!a) return b;
-    if (!b) return a;
-    return {
-      usd: a.usd != null ? a.usd : b.usd,
-      eur: a.eur != null ? a.eur : b.eur,
-      gbp: a.gbp != null ? a.gbp : b.gbp,
-      goldGram: a.goldGram != null ? a.goldGram : b.goldGram,
-      goldOz: a.goldOz != null ? a.goldOz : b.goldOz
-    };
-  }
-
-  /* 1) Truncgil — TR piyasası */
   function viaTruncgil() {
     return fetch("https://finans.truncgil.com/v4/today.json", {
-      method: "GET", mode: "cors", cache: "no-store"
+      mode: "cors",
+      cache: "no-store",
+      credentials: "omit"
     }).then(function (r) {
-      if (!r.ok) throw new Error("truncgil");
+      if (!r.ok) throw new Error("truncgil " + r.status);
       return r.json();
-    }).then(function (j) {
-      if (!j || typeof j !== "object") throw new Error("empty");
-
-      var usd = pickPrice(j.USD);
-      var eur = pickPrice(j.EUR);
-      var gbp = pickPrice(j.GBP) || pickPrice(j.STERLIN);
-
-      var gramKeys = [
-        "gram-altin", "GRAMALTIN", "Gram Altın", "gram_altin",
-        "GA", "altin", "ALTIN", "Gramaltın", "gramaltin"
-      ];
-      var goldGram = null;
-      for (var i = 0; i < gramKeys.length; i++) {
-        if (j[gramKeys[i]]) {
-          goldGram = pickPrice(j[gramKeys[i]]);
-          if (goldGram != null) break;
-        }
+    }).then(function (d) {
+      if (!d || !d.USD) throw new Error("truncgil empty");
+      var usd = selling(d.USD);
+      var eur = selling(d.EUR);
+      var gbp = selling(d.GBP);
+      var gram = selling(d.HAS);
+      var oz = selling(d.ONS);
+      if ((!oz || oz <= 0) && gram != null && usd != null && usd > 0) {
+        oz = (gram * OZ_TO_GRAM) / usd;
       }
-
-      var onsKeys = ["ons", "ONS", "ons-altin", "XAU", "xau", "ONSALTIN", "ons_altin"];
-      var goldOzTry = null;
-      var goldOzUsd = null;
-      for (var k = 0; k < onsKeys.length; k++) {
-        if (j[onsKeys[k]]) {
-          var p = pickPrice(j[onsKeys[k]]);
-          if (p != null) {
-            if (p > 5000) goldOzTry = p;
-            else goldOzUsd = p;
-            break;
-          }
-        }
-      }
-
-      if (goldGram == null && goldOzTry != null) goldGram = goldOzTry / OZ_TO_GRAM;
-      if (goldOzUsd == null && goldOzTry != null && usd) goldOzUsd = goldOzTry / usd;
-      if (goldOzUsd == null && goldGram != null && usd) goldOzUsd = (goldGram * OZ_TO_GRAM) / usd;
-
-      if (usd == null && eur == null && goldGram == null) throw new Error("parse");
-
-      return { usd: usd, eur: eur, gbp: gbp, goldGram: goldGram, goldOz: goldOzUsd };
+      return {
+        usd: usd,
+        eur: eur,
+        gbp: gbp,
+        goldGram: gram,
+        goldOz: oz && oz > 0 ? oz : null,
+        usdCh: changeOf(d.USD),
+        eurCh: changeOf(d.EUR),
+        gbpCh: changeOf(d.GBP),
+        goldCh: changeOf(d.HAS),
+        src: "Truncgil",
+        updated: d.Update_Date || null
+      };
     });
   }
 
-  /* 2) Altın ons USD */
-  function fetchGoldOzUsd() {
-    function goldpriceOrg() {
-      return fetch("https://data-asg.goldprice.org/dbXRates/USD", {
-        mode: "cors", cache: "no-store"
-      }).then(function (r) {
-        if (!r.ok) throw new Error("gp");
-        return r.json();
-      }).then(function (j) {
-        var item = j && j.items && j.items[0];
-        var p = item && item.xauPrice;
-        if (p == null || !isFinite(Number(p))) throw new Error("gp parse");
-        return Number(p);
-      });
-    }
-    function goldApiCom() {
-      return fetch("https://api.gold-api.com/price/XAU", {
-        mode: "cors", cache: "no-store"
-      }).then(function (r) {
-        if (!r.ok) throw new Error("ga");
-        return r.json();
-      }).then(function (j) {
-        var p = j && j.price;
-        if (p == null || !isFinite(Number(p))) throw new Error("ga parse");
-        return Number(p);
-      });
-    }
-    function metalsLive() {
-      return fetch("https://api.metals.live/v1/spot/gold", {
-        mode: "cors", cache: "no-store"
-      }).then(function (r) {
-        if (!r.ok) throw new Error("metals");
-        return r.json();
-      }).then(function (arr) {
-        if (Array.isArray(arr) && arr.length >= 2) return Number(arr[1]);
-        if (arr && typeof arr.price === "number") return arr.price;
-        throw new Error("metals parse");
-      });
-    }
-    return goldpriceOrg()
-      .catch(function () { return goldApiCom(); })
-      .catch(function () { return metalsLive(); });
-  }
-
-  /* 3) open.er-api + gold */
   function viaOpenEr() {
     return fetch("https://open.er-api.com/v6/latest/USD", {
-      method: "GET", mode: "cors", cache: "no-store"
+      mode: "cors",
+      cache: "no-store"
     }).then(function (r) {
-      if (!r.ok) throw new Error("er");
+      if (!r.ok) throw new Error("er-api");
       return r.json();
-    }).then(function (json) {
-      var rates = (json && json.rates) || {};
-      var usdTry = rates.TRY;
-      if (!usdTry) throw new Error("no TRY");
-      var base = {
-        usd: usdTry,
-        eur: rates.EUR ? usdTry / rates.EUR : null,
-        gbp: rates.GBP ? usdTry / rates.GBP : null,
+    }).then(function (d) {
+      var rates = d && d.rates;
+      if (!rates || !rates.TRY) throw new Error("no TRY");
+      var usd = rates.TRY;
+      return {
+        usd: usd,
+        eur: rates.EUR ? usd / rates.EUR : null,
+        gbp: rates.GBP ? usd / rates.GBP : null,
         goldGram: null,
-        goldOz: null
+        goldOz: null,
+        usdCh: null, eurCh: null, gbpCh: null, goldCh: null,
+        src: "ER-API"
       };
-      return fetchGoldOzUsd()
-        .then(function (ozUsd) {
-          base.goldOz = ozUsd;
-          base.goldGram = (ozUsd * usdTry) / OZ_TO_GRAM;
-          return base;
-        })
-        .catch(function () { return base; });
     });
   }
 
-  /* 4) fawaz — xau.json doğrudan */
+  function viaGoldApi() {
+    return fetch("https://api.gold-api.com/price/XAU", {
+      mode: "cors",
+      cache: "no-store"
+    }).then(function (r) {
+      if (!r.ok) throw new Error("gold-api");
+      return r.json();
+    }).then(function (d) {
+      var oz = num(d && d.price);
+      if (!oz) throw new Error("no gold");
+      return { goldOz: oz };
+    });
+  }
+
   function viaFawaz() {
-    var base = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/";
-    var alt = "https://latest.currency-api.pages.dev/v1/currencies/";
-
-    function get(path) {
-      return fetch(base + path, { mode: "cors", cache: "no-store" })
-        .catch(function () {
-          return fetch(alt + path, { mode: "cors", cache: "no-store" });
-        })
-        .then(function (r) {
-          if (!r.ok) throw new Error("fawaz");
-          return r.json();
-        });
-    }
-
-    return Promise.all([
-      get("usd.min.json"),
-      get("xau.min.json").catch(function () { return null; })
-    ]).then(function (pair) {
-      var usdMap = (pair[0] && pair[0].usd) || {};
-      var xauMap = (pair[1] && pair[1].xau) || null;
-      var usdTry = usdMap.try;
+    return fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json", {
+      mode: "cors",
+      cache: "no-store"
+    }).then(function (r) {
+      if (!r.ok) throw new Error("fawaz");
+      return r.json();
+    }).then(function (d) {
+      var u = (d && d.usd) || {};
+      var usdTry = num(u.try);
       if (!usdTry) throw new Error("no try");
-
-      var goldOzUsd = null;
-      var goldGram = null;
-
-      // 1 ons altın = xau.try TRY
-      if (xauMap && xauMap.try != null && isFinite(Number(xauMap.try))) {
-        var xauTry = Number(xauMap.try);
-        goldGram = xauTry / OZ_TO_GRAM;
-        goldOzUsd = xauTry / usdTry;
-      } else if (usdMap.xau != null && Number(usdMap.xau) > 0) {
-        // usd.xau = 1 USD kaç ons
-        goldOzUsd = 1 / Number(usdMap.xau);
-        goldGram = (goldOzUsd * usdTry) / OZ_TO_GRAM;
-      }
-
+      var goldOz = u.xau && num(u.xau) > 0 ? 1 / num(u.xau) : null;
+      var goldGram = goldOz != null ? (goldOz * usdTry) / OZ_TO_GRAM : null;
       return {
         usd: usdTry,
-        eur: usdMap.eur ? usdTry / usdMap.eur : null,
-        gbp: usdMap.gbp ? usdTry / usdMap.gbp : null,
+        eur: u.eur ? usdTry / num(u.eur) : null,
+        gbp: u.gbp ? usdTry / num(u.gbp) : null,
         goldGram: goldGram,
-        goldOz: goldOzUsd
+        goldOz: goldOz,
+        usdCh: null, eurCh: null, gbpCh: null, goldCh: null,
+        src: "Fawaz"
       };
     });
+  }
+
+  function mergeGold(base, gold) {
+    if (!base) return null;
+    if (gold && gold.goldOz != null) {
+      base.goldOz = gold.goldOz;
+      if (base.goldGram == null && base.usd) {
+        base.goldGram = (gold.goldOz * base.usd) / OZ_TO_GRAM;
+      }
+    }
+    return base;
   }
 
   function load() {
     ensureBar();
-
     viaTruncgil()
-      .catch(function () { return null; })
-      .then(function (primary) {
-        if (primary && primary.goldGram != null && primary.goldOz != null) {
-          return primary;
+      .then(function (data) {
+        if (data.goldOz == null) {
+          return viaGoldApi()
+            .then(function (g) { return mergeGold(data, g); })
+            .catch(function () { return data; });
         }
+        return data;
+      })
+      .catch(function () {
         return viaOpenEr()
-          .catch(function () { return viaFawaz(); })
-          .then(function (sec) {
-            return mergePreferGold(primary, sec);
+          .then(function (data) {
+            return viaGoldApi()
+              .then(function (g) { return mergeGold(data, g); })
+              .catch(function () { return data; });
           })
-          .catch(function () {
-            if (primary) return primary;
-            return viaFawaz();
-          });
+          .catch(function () { return viaFawaz(); });
       })
       .then(function (data) {
-        if (!data) throw new Error("all failed");
-        data = completeGold(data);
-        data.t = nowLabel();
+        if (!data) throw new Error("empty");
+        data.t = data.updated ? String(data.updated).slice(-8) : nowLabel();
+        if (!data.t || data.t.length < 4) data.t = nowLabel();
+        // Truncgil Update_Date: "2026-08-01 13:41:01" → show time part
+        if (data.updated && /\d{2}:\d{2}/.test(data.updated)) {
+          var m = data.updated.match(/(\d{2}:\d{2}:\d{2})/);
+          if (m) data.t = m[1];
+        }
         render(data);
       })
       .catch(function () {
         if (last) {
           last.t = nowLabel() + " (önbellek)";
+          last.src = (last.src || "") + "*";
           render(last);
         } else {
           render({
             usd: null, eur: null, gbp: null,
             goldGram: null, goldOz: null,
-            t: "veri alınamadı"
+            t: "veri yok", src: ""
           });
         }
       });
@@ -348,4 +278,9 @@
 
   load();
   setInterval(load, REFRESH_MS);
+
+  // Sekme tekrar görünür olunca hemen yenile
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") load();
+  });
 })();
