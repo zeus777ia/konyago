@@ -4,70 +4,61 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="Konya nöbetçi eczaneler — ilçe ilçe liste ve kayan şerit.">
+<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
+<meta name="description" content="Konya nöbetçi eczaneler — bugünün listesi, ilçe ilçe. Resmî teyit linkleri.">
 <title>Nöbetçi Eczane | KonyaGo</title>
-<link rel="stylesheet" href="assets/css/app.css">
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css?v=15">
+<link rel="stylesheet" href="assets/css/theme.css?v=2">
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Eczane</small></span></a>
+    <nav class="nav-desktop">
+      <a href="index.html">Ana</a>
+      <a href="nobetci-eczane.html" aria-current="page">Nöbetçi</a>
+      <a href="pratik.html">Pratik</a>
+      <a href="iletisim.html">İletişim</a>
+    </nav>
   </div>
 </header>
 <main class="container">
   <div class="page-head">
-    <a href="pratik.html">← Pratik</a>
+    <a href="index.html">← Ana</a>
     <h1>Nöbetçi eczaneler</h1>
-    <p id="nobetciDate">İlçe ilçe liste · kayan şerit üstte</p>
+    <p id="nobetciDate">Bugün · yükleniyor…</p>
   </div>
 
   <div class="info warn">
-    <h2>Önemli</h2>
-    <p>Liste bilgilendirme amaçlıdır ve günlük değişir. Nihai teyit için <a href="https://www.turkiye.gov.tr/saglik-titck-nobetci-eczane-sorgulama" target="_blank" rel="noopener">e-Devlet TİTCK</a> veya <a href="https://www.keo.org.tr/" target="_blank" rel="noopener">Konya Eczacı Odası</a> kullanın.</p>
+    <h2>Resmî teyit</h2>
+    <p>Bu sayfa bilgilendirme amaçlıdır. Nöbet listesi her gün değişir; <strong>ilaç almadan önce</strong> resmî kaynaktan doğrulayın.</p>
+    <div class="link-row" style="margin-top:10px">
+      <a class="btn btn-primary btn-sm" href="https://www.turkiye.gov.tr/saglik-titck-nobetci-eczane-sorgulama" target="_blank" rel="noopener">e-Devlet TİTCK</a>
+      <a class="btn btn-ghost btn-sm" href="https://www.konyanobetcieczaneleri.com/" target="_blank" rel="noopener">Konya listesi</a>
+      <a class="btn btn-ghost btn-sm" href="https://www.eczaneler.gen.tr/nobetci-konya" target="_blank" rel="noopener">eczaneler.gen.tr</a>
+    </div>
   </div>
 
-  <div id="nobetciList" class="info">
-    <h2>Bugünkü liste</h2>
-    <p>Yükleniyor…</p>
+  <div class="info" id="nobetciList">
+    <p>Liste yükleniyor…</p>
   </div>
 
-  <div class="info">
-    <h2>Acil</h2>
-    <div class="row"><span>Acil çağrı</span><strong><a href="tel:112">112</a></strong></div>
-    <div class="row"><span>Sağlık danışma</span><strong><a href="tel:184">184</a></strong></div>
-  </div>
-
-  <div class="link-row">
-    <a class="btn btn-primary btn-sm" href="pratik.html">Pratik numaralar</a>
+  <div class="link-row" style="margin-top:16px">
+    <a class="btn btn-ghost btn-sm" href="pratik.html">Pratik numaralar</a>
     <a class="btn btn-ghost btn-sm" href="kesintiler.html">Kesintiler</a>
   </div>
 </main>
-<footer class="site-footer"><div class="container">© 2026 KonyaGo</div></footer>
-<script src="assets/js/nobetci.js"></script>
-<script src="assets/js/app.js" defer></script>
-<script>
-(function(){
-  var D = window.KONYAGO_NOBETCI;
-  var box = document.getElementById('nobetciList');
-  var dateEl = document.getElementById('nobetciDate');
-  if (!D || !box) return;
-  if (dateEl) dateEl.textContent = (D.label || D.date) + ' · ilçe ilçe';
-  var by = {};
-  (D.items||[]).forEach(function(it){
-    var k = it.ilce || 'Diğer';
-    if (!by[k]) by[k] = [];
-    by[k].push(it.name);
-  });
-  var keys = Object.keys(by).sort(function(a,b){ return a.localeCompare(b,'tr'); });
-  var html = '<h2>Bugünkü liste (' + (D.label||'') + ')</h2>';
-  keys.forEach(function(k){
-    html += '<p style="margin-top:10px"><strong style="color:var(--green-deep)">' + k + '</strong><br>';
-    html += by[k].map(function(n){ return '💊 ' + n; }).join('<br>');
-    html += '</p>';
-  });
-  html += '<p style="margin-top:12px;font-size:.8rem">' + (D.sourceNote||'') + '</p>';
-  box.innerHTML = html;
-})();
-</script>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · Bilgilendirme amaçlıdır</div></footer>
+<nav class="mnav">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="nobetci-eczane.html" aria-current="page"><span class="i">💊</span>Eczane</a>
+  <a href="pratik.html"><span class="i">ℹ️</span>Pratik</a>
+  <a href="iletisim.html"><span class="i">✉️</span>İletişim</a>
+  <a href="gizlilik.html"><span class="i">🔒</span>Gizlilik</a>
+</nav>
+<script src="assets/js/theme.js?v=2"></script>
+<script src="assets/js/nobetci.js?v=2"></script>
+<script src="assets/js/app.js?v=15" defer></script>
 </body>
 </html>
