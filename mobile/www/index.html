@@ -2,20 +2,101 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta http-equiv="refresh" content="0;url=https://konyago.com.tr">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#0d7a4f">
+  <meta name="color-scheme" content="light dark">
   <title>KonyaGo</title>
   <style>
-    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-      font-family:system-ui,sans-serif;background:#0d7a4f;color:#fff;text-align:center}
-    a{color:#f5ecd0;font-weight:700}
+    :root { --g:#0d7a4f; --gd:#063d28; --gold:#c9a227; --cream:#f7faf8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: linear-gradient(165deg, var(--gd) 0%, var(--g) 55%, #0a5c3a 100%);
+      color: #fff; text-align: center;
+      padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+    }
+    .mark {
+      width: 72px; height: 72px; border-radius: 18px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(201,162,39,.45);
+      display: grid; place-items: center;
+      margin: 0 auto 16px;
+      font-size: 1.6rem;
+    }
+    h1 { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .sub { opacity: .85; font-size: .95rem; margin-bottom: 22px; }
+    .spinner {
+      width: 28px; height: 28px; margin: 0 auto 18px;
+      border: 3px solid rgba(255,255,255,.25);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; }
+    a.btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 44px; padding: 10px 18px; border-radius: 999px;
+      font-weight: 700; font-size: .92rem; text-decoration: none;
+      background: #fff; color: var(--gd);
+    }
+    a.btn.ghost {
+      background: transparent; color: #f5ecd0;
+      border: 1.5px solid rgba(245,236,208,.55);
+    }
+    .hint { margin-top: 20px; font-size: .78rem; opacity: .7; max-width: 28ch; }
+    .offline { display: none; margin-top: 12px; padding: 12px 14px; border-radius: 12px;
+      background: rgba(0,0,0,.2); font-size: .88rem; max-width: 32ch; }
+    body.is-offline .offline { display: block; }
+    body.is-offline .spinner { display: none; }
   </style>
 </head>
 <body>
-  <div>
-    <p style="font-size:1.4rem;font-weight:800;margin:0 0 8px">KonyaGo</p>
-    <p>Yükleniyor…</p>
-    <p><a href="https://konyago.com.tr">Siteye git</a></p>
+  <div class="mark" aria-hidden="true">🦅</div>
+  <h1>KonyaGo</h1>
+  <p class="sub">Konya şehir rehberi</p>
+  <div class="spinner" aria-hidden="true"></div>
+  <p id="status">Bağlanıyor…</p>
+  <div class="offline" id="offlineBox">
+    İnternet bağlantısı yok. Bağlantı gelince uygulama otomatik açılır.
   </div>
+  <div class="actions">
+    <a class="btn" id="openSite" href="https://konyago.com.tr/">Siteyi aç</a>
+    <a class="btn ghost" href="https://konyago.com.tr/gizlilik.html">Gizlilik</a>
+  </div>
+  <p class="hint">Bu ekran yalnızca native kabuk ve çevrimdışı durum içindir.</p>
+
+  <script>
+    (function () {
+      var TARGET = "https://konyago.com.tr/";
+      var statusEl = document.getElementById("status");
+
+      function go() {
+        window.location.replace(TARGET);
+      }
+
+      function online() {
+        document.body.classList.remove("is-offline");
+        if (statusEl) statusEl.textContent = "Bağlanıyor…";
+        // Capacitor server.url zaten canlı siteyi yükler; fallback için yönlendir
+        setTimeout(go, 400);
+      }
+
+      function offline() {
+        document.body.classList.add("is-offline");
+        if (statusEl) statusEl.textContent = "Çevrimdışı";
+      }
+
+      if (navigator.onLine === false) offline();
+      else online();
+
+      window.addEventListener("online", online);
+      window.addEventListener("offline", offline);
+    })();
+  </script>
 </body>
 </html>
