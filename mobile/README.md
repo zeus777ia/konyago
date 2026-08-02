@@ -1,9 +1,32 @@
 # KonyaGo Mobil Uygulama
 
-Capacitor ile **App Store** ve **Google Play** yayını için hazır iskelet.
+**Capacitor 6** iskeleti — Google Play ve App Store yayını için.
 
-Uygulama canlı siteyi açar: **https://konyago.com.tr**  
-Site güncellenince uygulama da güncellenir (yeni mağaza sürümü şart değil).
+| | |
+|--|--|
+| **Paket / Bundle ID** | `tr.com.konyago.app` |
+| **Uygulama adı** | KonyaGo |
+| **İçerik kaynağı** | Canlı site: https://konyago.com.tr |
+| **Gizlilik** | https://konyago.com.tr/gizlilik.html |
+| **Destek** | cnrtech@outlook.com.tr |
+
+Site (GitHub Pages) güncellenince uygulama içeriği de güncellenir; her içerik değişiminde mağaza sürümü şart değildir.
+
+---
+
+## Mimari
+
+```
+mobile/
+├── capacitor.config.json   # appId, splash, status bar, izinli domainler
+├── package.json            # Capacitor 6 + eklentiler
+├── www/                    # Yerel kabuk (splash / çevrimdışı fallback)
+│   └── index.html
+├── android/                # npm run add:android sonrası (gitignore)
+└── ios/                    # npm run add:ios sonrası — yalnızca Mac (gitignore)
+```
+
+Uygulama **WebView** içinde `https://konyago.com.tr` yükler. Harita, Instagram, WhatsApp gibi dış linkler `allowNavigation` listesinde tanımlıdır.
 
 ---
 
@@ -11,97 +34,159 @@ Site güncellenince uygulama da güncellenir (yeni mağaza sürümü şart deği
 
 | Platform | Gereken |
 |----------|---------|
-| Android | Node 18+, Android Studio, JDK 17 |
-| iOS | Mac + Xcode 15+, Apple Developer hesabı |
+| Ortak | **Node.js 18+**, npm |
+| Android | Android Studio (Ladybug+), JDK 17, Android SDK |
+| iOS | macOS, **Xcode 15+**, CocoaPods, Apple Developer hesabı |
 
 ---
 
-## Kurulum (tek sefer)
+## Kurulum (ilk sefer)
 
 ```bash
 cd mobile
 npm install
-npx cap add android
-npx cap add ios    # sadece Mac
-npx cap sync
+
+# Platform ekle
+npm run add:android
+npm run add:ios          # sadece Mac
+
+# Yapılandırmayı native projelere işle
+npm run sync
+```
+
+Kontrol:
+
+```bash
+npm run doctor
 ```
 
 ---
 
-## Android (Google Play)
+## Geliştirme
 
 ```bash
-npx cap open android
+# Android Studio
+npm run android
+
+# Xcode
+npm run ios
+
+# Cihazda / emülatörde çalıştır
+npm run run:android
+npm run run:ios
 ```
 
-Android Studio’da:
+Config veya `www/` değişince:
 
-1. `Build > Generate Signed Bundle / APK` → **Android App Bundle (.aab)**
-2. Keystore oluştur / kullan
-3. [Google Play Console](https://play.google.com/console) → uygulama oluştur
-4. Paket adı: `tr.com.konyago.app`
-5. AAB yükle, mağaza listesi (açıklama, ekran görüntüleri, ikon) doldur
-6. İçerik derecelendirme + gizlilik politikası: https://konyago.com.tr/gizlilik.html
+```bash
+npm run sync
+```
+
+---
+
+## Android → Google Play
+
+1. `npm run android` ile Android Studio’yu aç  
+2. **Build → Generate Signed Bundle / APK → Android App Bundle (.aab)**  
+3. Keystore oluştur (yedekle; kaybedersen güncelleme yapamazsın)  
+4. [Play Console](https://play.google.com/console) → uygulama oluştur  
+5. Paket adı: **`tr.com.konyago.app`**  
+6. AAB yükle, mağaza listesi + ekran görüntüleri + ikon  
+7. Gizlilik politikası: `https://konyago.com.tr/gizlilik.html`  
+8. İçerik derecelendirme anketini doldur  
 
 ### İkon / splash
-`android/app/src/main/res/` altına adaptive icon koy.  
-Kaynak: `../assets/img/eagle.svg` veya `../icon.svg`
+
+- Adaptive icon: `android/app/src/main/res/mipmap-*`  
+- Splash: `android/app/src/main/res/drawable` (config: `androidSplashResourceName: splash`)  
+- Kaynak logo: repo kökü `assets/img/eagle.svg` / `icon.svg`  
+
+Önerilen araç: [Capacitor Assets](https://github.com/ionic-team/capacitor-assets) veya Android Studio Image Asset Studio.
 
 ---
 
-## iOS (App Store)
+## iOS → App Store
+
+1. `npm run ios` → Xcode  
+2. **Signing & Capabilities** → Team seç  
+3. Bundle ID: **`tr.com.konyago.app`**  
+4. **Product → Archive → Distribute App → App Store Connect**  
+5. [App Store Connect](https://appstoreconnect.apple.com) meta verileri doldur  
+
+### Apple inceleme notu
+
+Sadece web sitesi saran (thin WebView) uygulamalar reddedilebilir. Riski azaltmak için:
+
+- Mağaza metninde “Konya şehir rehberi uygulaması” vurgula  
+- Destek URL + gizlilik politikası ekle  
+- Mümkünse native katkı ekle (paylaşım, çevrimdışı kabuk, durum çubuğu — iskelette hazır)  
+- Ekran görüntülerinde gezi / mutfak / AI ekranlarını göster  
+
+---
+
+## Mağaza metinleri (hazır kopyala)
+
+**Kısa açıklama (≤80 karakter)**  
+`Konya şehir rehberi — Mevlana, rotalar, mutfak, harita ve AI asistan.`
+
+**Uzun açıklama**  
+`KonyaGo ile Konya’yı keşfedin. Mevlana Müzesi, Sille, Selçuklu mirası ve ilçe rehberleri. 1–2 günlük gezi rotaları, etli ekmek ve yöresel lezzetler, harita, nöbetçi eczane, hava durumu ve KonyaGo AI asistanı. Ücretsiz, sade ve mobil uyumlu.`
+
+**Anahtar kelimeler**  
+`Konya, Mevlana, gezi, rehber, etli ekmek, Sille, harita, turizm, eczane`
+
+**Kategori**  
+Seyahat / Travel  
+
+**İletişim**  
+- Destek: cnrtech@outlook.com.tr  
+- Site: https://konyago.com.tr  
+- Gizlilik: https://konyago.com.tr/gizlilik.html  
+
+---
+
+## Eklentiler (yüklü)
+
+| Paket | Amaç |
+|-------|------|
+| `@capacitor/app` | Geri tuşu, app state |
+| `@capacitor/browser` | Harici tarayıcı |
+| `@capacitor/network` | Online / offline |
+| `@capacitor/splash-screen` | Açılış ekranı |
+| `@capacitor/status-bar` | Durum çubuğu rengi |
+| `@capacitor/keyboard` | Klavye / form |
+| `@capacitor/share` | Sistem paylaşımı |
+
+---
+
+## Sürüm numarası
+
+- **package.json** `version` → örn. `1.1.0`  
+- Android: `android/app/build.gradle` → `versionName` / `versionCode`  
+- iOS: Xcode → General → Version / Build  
+
+Mağazaya her native değişiklik için **versionCode / Build** artırılmalıdır.
+
+---
+
+## Alternatif: mağaza olmadan
+
+Kullanıcı tarayıcıdan **Ana ekrana ekle** (PWA) ile kurabilir. Site `manifest.json` + service worker içerir.
+
+Android’de **TWA (Trusted Web Activity)** ile PWA’yı Play’e sarmak için: [PWABuilder](https://www.pwabuilder.com/) / Bubblewrap.
+
+---
+
+## Sorun giderme
+
+| Sorun | Çözüm |
+|-------|--------|
+| `cap sync` hata | `rm -rf node_modules && npm install` sonra tekrar sync |
+| Beyaz ekran | Cihaz internetini kontrol et; `server.url` = konyago.com.tr |
+| SSL / mixed content | Yalnızca HTTPS; `cleartext: false` |
+| iOS pod hata | `cd ios/App && pod install --repo-update` |
+| Android build | JDK 17 seçili mi kontrol et |
 
 ```bash
-npx cap open ios
+npm run doctor
 ```
-
-Xcode’da:
-
-1. Signing & Capabilities → Team seç
-2. Bundle ID: `tr.com.konyago.app`
-3. Archive → Distribute App → App Store Connect
-4. [App Store Connect](https://appstoreconnect.apple.com) meta verileri doldur
-
-**Önemli (Apple):** Sadece web sitesi saran uygulamalar reddedilebilir.  
-Kabul şansını artırmak için:
-- Push / konum / çevrimdışı gibi native özellik ekle
-- Mağaza açıklamasında “Konya rehberi uygulaması” vurgula
-- Gizlilik politikası ve destek URL’si ekle
-
----
-
-## Mağaza metinleri (hazır)
-
-**Kısa açıklama (80 karakter):**  
-`Konya şehir rehberi — Mevlana, rotalar, mutfak, harita ve ulaşım.`
-
-**Uzun açıklama:**  
-`KonyaGo ile Konya’yı keşfedin. Mevlana Müzesi, Sille, Çatalhöyük ve daha fazlası. 1–2 günlük gezi rotaları, etli ekmek ve yöresel lezzetler, interaktif harita, ATUS ulaşım bilgileri ve pratik acil numaralar. Ücretsiz, sade ve hızlı.`
-
-**Anahtar kelimeler:**  
-`Konya, Mevlana, gezi, rehber, etli ekmek, Sille, harita, turizm`
-
-**Destek e-posta:** cnrtech@outlook.com.tr  
-**Gizlilik:** https://konyago.com.tr/gizlilik.html  
-**Site:** https://konyago.com.tr
-
----
-
-## Güncelleme
-
-Site (GitHub Pages) değişince uygulama içeriği de değişir.  
-Sadece native ayar / ikon değişirse:
-
-```bash
-npx cap sync
-# sonra yeni AAB / IPA yükle
-```
-
----
-
-## Alternatif: PWA (mağaza olmadan)
-
-Kullanıcılar tarayıcıdan **Ana ekrana ekle** ile uygulamayı kurabilir.  
-Site zaten `manifest.json` + service worker içerir.
-
-Android için ayrıca **TWA (Trusted Web Activity)** ile Play’e PWA yüklenebilir (Bubblewrap / PWABuilder).
