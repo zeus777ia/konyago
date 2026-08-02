@@ -68,7 +68,7 @@
       try {
         if (!document.querySelector("script[data-borsa]")) {
           var bs = document.createElement("script");
-          bs.src = "assets/js/borsa.js?v=3";
+          bs.src = "assets/js/borsa.js?v=4";
           bs.defer = true;
           bs.setAttribute("data-borsa", "1");
           document.body.appendChild(bs);
