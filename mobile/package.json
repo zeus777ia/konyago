@@ -1,27 +1,38 @@
 {
   "name": "konyago",
-  "version": "1.0.0",
-  "description": "KonyaGo — Konya şehir rehberi mobil uygulaması",
+  "version": "1.1.0",
+  "description": "KonyaGo — Konya şehir rehberi mobil uygulaması (Capacitor)",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
-    "build": "echo 'Web zaten konyago.com.tr üzerinde canlı'",
+    "postinstall": "echo 'KonyaGo mobile hazır. npx cap add android | ios sonra: npm run sync'",
     "sync": "npx cap sync",
+    "copy": "npx cap copy",
+    "update": "npx cap update",
+    "doctor": "npx cap doctor",
     "android": "npx cap open android",
     "ios": "npx cap open ios",
     "add:android": "npx cap add android",
-    "add:ios": "npx cap add ios"
+    "add:ios": "npx cap add ios",
+    "run:android": "npx cap run android",
+    "run:ios": "npx cap run ios"
   },
   "dependencies": {
     "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.2",
+    "@capacitor/browser": "^6.0.3",
     "@capacitor/core": "^6.2.0",
     "@capacitor/ios": "^6.2.0",
-    "@capacitor/app": "^6.0.0",
-    "@capacitor/browser": "^6.0.0",
-    "@capacitor/network": "^6.0.0",
-    "@capacitor/splash-screen": "^6.0.0",
-    "@capacitor/status-bar": "^6.0.0"
+    "@capacitor/keyboard": "^6.0.3",
+    "@capacitor/network": "^6.0.3",
+    "@capacitor/share": "^6.0.3",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/status-bar": "^6.0.2"
   },
   "devDependencies": {
     "@capacitor/cli": "^6.2.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
