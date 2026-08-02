@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#0d7a4f">
+<meta name="referrer" content="no-referrer">
 <title>Yönetim | KonyaGo</title>
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css">
@@ -42,18 +43,19 @@
 
 <main class="admin-wrap">
   <div id="loginBox" class="admin-card">
-    <h1>Gizli yönetim</h1>
-    <p>Bu sayfa menüde yok. Yalnızca şifre ile açılır.</p>
+    <h1 id="loginTitle">Yönetim girişi</h1>
+    <p id="loginHint">Şifre yalnızca bu tarayıcıda saklanır; repoda veya sunucuda yoktur.</p>
     <label for="adminPass">Şifre</label>
-    <input class="admin-input" id="adminPass" type="password" autocomplete="current-password" placeholder="Yönetim şifresi">
+    <input class="admin-input" id="adminPass" type="password" autocomplete="current-password" placeholder="En az 8 karakter" minlength="8">
     <button type="button" class="btn btn-primary" id="adminLogin" style="width:100%">Giriş</button>
     <p class="err hidden" id="loginErr">Şifre hatalı.</p>
+    <p style="margin-top:12px;font-size:.8rem">Bu sayfa <code>noindex</code> ve robots ile kapalıdır. Gerçek güvenlik için GitHub 2FA kullan.</p>
   </div>
 
   <div id="dashBox" class="hidden">
     <div class="admin-card">
       <h1>Ziyaret özeti</h1>
-      <p class="ok">Oturum açık.</p>
+      <p class="ok">Oturum açık (bu cihaz).</p>
       <div class="stat-grid" style="margin-top:14px">
         <div class="stat-box"><strong id="sToday">0</strong><span>Bu cihaz (bugün)</span></div>
         <div class="stat-box"><strong id="sPublic">0</strong><span>Kamu ortak sayaç</span></div>
@@ -65,6 +67,7 @@
         <button type="button" class="btn btn-ghost btn-sm" id="btnRefresh">Yenile</button>
         <button type="button" class="btn btn-ghost btn-sm" id="btnExport">JSON indir</button>
         <button type="button" class="btn btn-ghost btn-sm" id="btnClear">Yerel kayıtları sil</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnResetPass">Şifreyi sıfırla</button>
         <button type="button" class="btn btn-ghost btn-sm" id="btnLogout">Çıkış</button>
       </div>
     </div>
@@ -85,17 +88,18 @@
     </div>
 
     <div class="admin-card">
-      <h2>Sayaç nasıl çalışır?</h2>
+      <h2>Güvenlik notu</h2>
       <ul>
-        <li><strong>Kamu sayaç:</strong> Ortak API — Chrome, Safari, Opera, telefon hepsi aynı sayıyı görür. Günlük (İstanbul saati) sıfırlanır. Oturum başına 1 artış.</li>
-        <li><strong>Bu cihaz:</strong> Sadece senin tarayıcındaki localStorage kayıtları.</li>
-        <li>IP listesi için Cloudflare Web Analytics önerilir.</li>
+        <li>Şifre hash’i yalnızca <strong>bu tarayıcının localStorage</strong> alanında durur; GitHub’a yazılmaz.</li>
+        <li>Gemini API anahtarı da sadece senin cihazında tutulur.</li>
+        <li>Gerçek koruma: GitHub + domain panelinde <strong>2FA</strong>.</li>
+        <li>İsteğe bağlı: Cloudflare (bot / WAF / rate limit).</li>
       </ul>
       <p style="margin-top:10px">Panel: <code>https://konyago.com.tr/admin.html</code></p>
     </div>
   </div>
 </main>
 
-<script src="assets/js/admin.js"></script>
+<script src="assets/js/admin.js?v=2"></script>
 </body>
 </html>
