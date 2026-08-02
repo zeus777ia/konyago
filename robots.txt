@@ -1,9 +1,24 @@
 User-agent: *
 Allow: /
 
+# Yönetim ve hata sayfaları dizine girmez
 Disallow: /admin.html
+Disallow: /404.html
+Disallow: /rota-yazdir.html
+
+# Google
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /404.html
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+Disallow: /404.html
 
 Sitemap: https://konyago.com.tr/sitemap.xml
 
-# AI / LLM bilgilendirme
+# LLM / AI crawlers bilgilendirme
 # https://konyago.com.tr/llms.txt
