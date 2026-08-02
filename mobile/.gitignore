@@ -4,4 +4,15 @@ ios/
 .DS_Store
 *.keystore
 *.jks
+*.p8
+*.mobileprovision
 local.properties
+.idea/
+*.iml
+.gradle/
+build/
+dist/
+.cap*
+*.log
+.env
+.env.*
