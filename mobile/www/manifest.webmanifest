@@ -1,0 +1,11 @@
+{
+  "name": "KonyaGo",
+  "short_name": "KonyaGo",
+  "description": "Konya şehir rehberi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d7a4f",
+  "theme_color": "#0d7a4f",
+  "lang": "tr",
+  "icons": []
+}
