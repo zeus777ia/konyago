@@ -1,6 +1,17 @@
 (function () {
   "use strict";
 
+  /* Elite tasarım katmanı — tüm sayfalar */
+  try {
+    if (!document.querySelector("link[data-elite-css]")) {
+      var el = document.createElement("link");
+      el.rel = "stylesheet";
+      el.href = "assets/css/elite.css?v=1";
+      el.setAttribute("data-elite-css", "1");
+      document.head.appendChild(el);
+    }
+  } catch (e) {}
+
   /* Tema — tüm sayfalarda */
   try {
     if (!document.querySelector("script[data-theme-js]")) {
@@ -191,7 +202,7 @@
       if (window.caches) {
         caches.keys().then(function (keys) {
           keys.forEach(function (k) {
-            if (k.indexOf("konyago") === 0 && k !== "konyago-v12") caches.delete(k);
+            if (k.indexOf("konyago") === 0 && k !== "konyago-v13") caches.delete(k);
           });
         });
       }
