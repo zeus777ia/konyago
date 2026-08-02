@@ -2,42 +2,66 @@
   "appId": "tr.com.konyago.app",
   "appName": "KonyaGo",
   "webDir": "www",
+  "bundledWebRuntime": false,
   "server": {
     "url": "https://konyago.com.tr",
     "cleartext": false,
+    "androidScheme": "https",
     "allowNavigation": [
       "konyago.com.tr",
       "*.konyago.com.tr",
       "www.google.com",
       "maps.google.com",
+      "maps.app.goo.gl",
+      "www.google.com.tr",
       "yandex.com.tr",
+      "yandex.ru",
       "*.openstreetmap.org",
       "*.tile.openstreetmap.org",
       "atus.konya.bel.tr",
       "www.konya.bel.tr",
-      "www.mgm.gov.tr"
+      "www.mgm.gov.tr",
+      "finans.truncgil.com",
+      "api.open-meteo.com",
+      "upload.wikimedia.org",
+      "live.staticflickr.com",
+      "instagram.com",
+      "www.instagram.com",
+      "wa.me",
+      "api.whatsapp.com"
     ]
   },
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 1200,
+      "launchShowDuration": 1500,
+      "launchAutoHide": true,
       "backgroundColor": "#0d7a4f",
-      "showSpinner": false,
       "androidSplashResourceName": "splash",
-      "launchAutoHide": true
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
     },
     "StatusBar": {
       "style": "DARK",
-      "backgroundColor": "#0d7a4f"
+      "backgroundColor": "#0d7a4f",
+      "overlaysWebView": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "resizeOnFullScreen": true
     }
   },
   "android": {
     "allowMixedContent": false,
-    "backgroundColor": "#f7faf8"
+    "backgroundColor": "#f7faf8",
+    "webContentsDebuggingEnabled": false
   },
   "ios": {
     "contentInset": "automatic",
     "backgroundColor": "#f7faf8",
-    "preferredContentMode": "mobile"
+    "preferredContentMode": "mobile",
+    "scrollEnabled": true,
+    "allowsLinkPreview": false
   }
 }
