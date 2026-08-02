@@ -1,9 +1,9 @@
-/* KonyaGo gizli yönetim */
+/* KonyaGo gizli yönetim — şifre yalnızca bu cihazda (localStorage) */
 (function () {
   "use strict";
 
-  var PASS_HASH = "09a7dc2b02e24fa2d2c8e84e12aabd905d7738357253e2624918887b4820cdda";
   var AUTH_KEY = "konyago_admin_ok";
+  var HASH_KEY = "konyago_admin_hash_v1";
 
   function $(id) { return document.getElementById(id); }
 
@@ -14,6 +14,14 @@
         return ("0" + b.toString(16)).slice(-2);
       }).join("");
     });
+  }
+
+  function getStoredHash() {
+    try { return (localStorage.getItem(HASH_KEY) || "").trim(); } catch (e) { return ""; }
+  }
+
+  function setStoredHash(h) {
+    try { localStorage.setItem(HASH_KEY, h); } catch (e) {}
   }
 
   function isAuthed() {
@@ -60,10 +68,10 @@
     var day = (data.days && data.days[today]) || { hits: 0, sessions: 0 };
     var shared = sharedLast();
 
-    $("sToday").textContent = String(day.hits || 0);
-    $("sPublic").textContent = shared && shared.day === today ? String(shared.count) : (shared ? String(shared.count) + "*" : "—");
-    $("sSessions").textContent = String(day.sessions || 0);
-    $("sPages").textContent = String((data.events && data.events.length) || 0);
+    if ($("sToday")) $("sToday").textContent = String(day.hits || 0);
+    if ($("sPublic")) $("sPublic").textContent = shared && shared.day === today ? String(shared.count) : (shared ? String(shared.count) + "*" : "—");
+    if ($("sSessions")) $("sSessions").textContent = String(day.sessions || 0);
+    if ($("sPages")) $("sPages").textContent = String((data.events && data.events.length) || 0);
 
     var pubNote = $("sPublicNote");
     if (pubNote) {
@@ -83,10 +91,11 @@
       });
       html += "</ul>";
     }
-    $("pageBreak").innerHTML = html;
+    if ($("pageBreak")) $("pageBreak").innerHTML = html;
 
     var ev = (data.events || []).slice().reverse().slice(0, 50);
     var tb = $("logBody");
+    if (!tb) return;
     tb.innerHTML = "";
     if (!ev.length) {
       tb.innerHTML = "<tr><td colspan=\"3\">Kayıt yok</td></tr>";
@@ -100,51 +109,106 @@
   }
 
   function showDash(on) {
-    $("loginBox").classList.toggle("hidden", on);
-    $("dashBox").classList.toggle("hidden", !on);
+    if ($("loginBox")) $("loginBox").classList.toggle("hidden", on);
+    if ($("dashBox")) $("dashBox").classList.toggle("hidden", !on);
     if (on) render();
   }
 
-  $("adminLogin").addEventListener("click", function () {
-    var pass = ($("adminPass").value || "").trim();
-    $("loginErr").classList.add("hidden");
+  function updateLoginUI() {
+    var has = !!getStoredHash();
+    var title = $("loginTitle");
+    var hint = $("loginHint");
+    var btn = $("adminLogin");
+    if (title) title.textContent = has ? "Yönetim girişi" : "İlk kurulum";
+    if (hint) {
+      hint.textContent = has
+        ? "Şifre yalnızca bu tarayıcıda saklanır; repoda veya sunucuda yoktur."
+        : "Bu cihazda ilk kez bir yönetim şifresi belirle (en az 8 karakter). Şifre sunucuya gitmez.";
+    }
+    if (btn) btn.textContent = has ? "Giriş" : "Şifreyi kaydet ve gir";
+  }
+
+  function loginOrSetup() {
+    var pass = (($("adminPass") && $("adminPass").value) || "").trim();
+    var err = $("loginErr");
+    if (err) {
+      err.classList.add("hidden");
+      err.textContent = "Şifre hatalı.";
+    }
+    if (pass.length < 8) {
+      if (err) {
+        err.textContent = "En az 8 karakter gir.";
+        err.classList.remove("hidden");
+      }
+      return;
+    }
+    var stored = getStoredHash();
     sha256(pass).then(function (h) {
-      if (h === PASS_HASH) {
+      if (!stored) {
+        setStoredHash(h);
         setAuth(true);
         showDash(true);
-      } else {
-        $("loginErr").classList.remove("hidden");
+        updateLoginUI();
+        return;
+      }
+      if (h === stored) {
+        setAuth(true);
+        showDash(true);
+      } else if (err) {
+        err.classList.remove("hidden");
       }
     });
-  });
+  }
 
-  $("adminPass").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") $("adminLogin").click();
-  });
+  if ($("adminLogin")) $("adminLogin").addEventListener("click", loginOrSetup);
+  if ($("adminPass")) {
+    $("adminPass").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") loginOrSetup();
+    });
+  }
 
-  $("btnLogout").addEventListener("click", function () {
-    setAuth(false);
-    showDash(false);
-  });
+  if ($("btnLogout")) {
+    $("btnLogout").addEventListener("click", function () {
+      setAuth(false);
+      showDash(false);
+      updateLoginUI();
+    });
+  }
 
-  $("btnRefresh").addEventListener("click", render);
+  if ($("btnRefresh")) $("btnRefresh").addEventListener("click", render);
 
-  $("btnExport").addEventListener("click", function () {
-    var blob = new Blob([JSON.stringify({
-      analytics: loadAnalytics(),
-      shared: sharedLast()
-    }, null, 2)], { type: "application/json" });
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "konyago-analytics-" + new Date().toISOString().slice(0, 10) + ".json";
-    a.click();
-  });
+  if ($("btnExport")) {
+    $("btnExport").addEventListener("click", function () {
+      var blob = new Blob([JSON.stringify({
+        analytics: loadAnalytics(),
+        shared: sharedLast()
+      }, null, 2)], { type: "application/json" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "konyago-analytics-" + new Date().toISOString().slice(0, 10) + ".json";
+      a.click();
+    });
+  }
 
-  $("btnClear").addEventListener("click", function () {
-    if (!confirm("Yerel analitik kayıtları silinsin mi? (Ortak ziyaret sayacı silinmez)")) return;
-    localStorage.removeItem("konyago_analytics");
-    render();
-  });
+  if ($("btnClear")) {
+    $("btnClear").addEventListener("click", function () {
+      if (!confirm("Yerel analitik kayıtları silinsin mi? (Ortak ziyaret sayacı silinmez)")) return;
+      localStorage.removeItem("konyago_analytics");
+      render();
+    });
+  }
 
-  if (isAuthed()) showDash(true);
+  if ($("btnResetPass")) {
+    $("btnResetPass").addEventListener("click", function () {
+      if (!confirm("Bu tarayıcıdaki yönetim şifresi sıfırlansın mı? Yeni şifre belirlemen gerekir.")) return;
+      try { localStorage.removeItem(HASH_KEY); } catch (e) {}
+      setAuth(false);
+      showDash(false);
+      updateLoginUI();
+    });
+  }
+
+  updateLoginUI();
+  if (isAuthed() && getStoredHash()) showDash(true);
+  else showDash(false);
 })();
