@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KonyaGo | Yükleniyor…</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<style>body{font-family:system-ui,sans-serif;background:#f7faf8;color:#1a2e24;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}.box{text-align:center;padding:24px}a{color:#0d7a4f}</style>
+</head>
+<body>
+<div class="box" id="boot">
+  <p><strong>KonyaGo</strong> yükleniyor…</p>
+  <p style="font-size:.85rem;color:#5a7264">Sayfa birkaç saniye içinde açılır.</p>
+  <p style="font-size:.8rem"><a href="gezilecek.html">Gezilecek yerler</a> · <a href="kesfet.html">Keşfet</a></p>
+</div>
+<script>
+(function () {
+  var urls = [
+    "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html",
+    "https://raw.githack.com/zeus777ia/konyago/dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html"
+  ];
+  function patch(html) {
+    html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=19");
+    html = html.replace(/assets\/css\/app\.css\?v=\d+/g, "assets/css/app.css?v=19");
+    if (html.indexOf("sponsor.css") === -1) {
+      html = html.replace(
+        /(<link rel="stylesheet" href="assets\/css\/app\.css\?v=19">)/,
+        '$1\n<link rel="stylesheet" href="assets/css/sponsor.css?v=1">'
+      );
+    }
+    return html;
+  }
+  function tryFetch(i) {
+    if (i >= urls.length) {
+      document.getElementById("boot").innerHTML =
+        "<p><strong>Yükleme başarısız</strong></p><p><a href=\"gezilecek.html\">Gezilecek yerler</a></p>";
+      return;
+    }
+    fetch(urls[i], { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("bad"); return r.text(); })
+      .then(function (html) {
+        document.open();
+        document.write(patch(html));
+        document.close();
+      })
+      .catch(function () { tryFetch(i + 1); });
+  }
+  tryFetch(0);
+})();
+</script>
+</body>
+</html>
