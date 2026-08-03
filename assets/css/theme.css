@@ -82,7 +82,7 @@ html[data-theme="dark"] .kesfet-card .meta{
   color:var(--muted) !important;
 }
 
-/* Form elemanları — parlak beyazı kır */
+/* Form elemanları */
 html[data-theme="dark"] input,
 html[data-theme="dark"] select,
 html[data-theme="dark"] textarea,
@@ -119,74 +119,83 @@ html[data-theme="dark"] .mnav{
 html[data-theme="dark"] .mnav a{color:var(--muted)}
 html[data-theme="dark"] .mnav a[aria-current="page"],
 html[data-theme="dark"] .mnav a:hover{color:var(--green);background:var(--green-soft)}
-html[data-theme="dark"] .site-footer{
-  background:var(--white);
-  border-top-color:var(--green-mid);
-  color:var(--muted);
-}
-html[data-theme="dark"] .cookie-bar{
-  background:var(--white);
-  border-color:var(--border);
-  color:var(--text);
-}
-html[data-theme="dark"] .ilce-pill{
-  background:var(--green-soft);
-  border-color:var(--border);
-  color:var(--green);
-}
-html[data-theme="dark"] .tag{
-  background:var(--green-soft);
-  color:var(--green);
-  border-color:var(--border);
-}
-html[data-theme="dark"] .ad-box{
-  background:var(--white);
-  border-color:var(--green-mid);
-  color:var(--muted);
-}
-html[data-theme="dark"] .ad-ticker{
-  background:linear-gradient(90deg,#0a3d2a,#0d5c3d);
-}
-html[data-theme="dark"] .map-list button{
-  background:var(--white);
-  border-color:var(--border);
-  color:var(--text);
-}
-html[data-theme="dark"] .info.warn{
-  background:var(--gold-soft);
-  border-color:rgba(224,195,92,.35);
-}
-html[data-theme="dark"] .info.warn h2{color:var(--gold)}
-html[data-theme="dark"] a{color:var(--green)}
-html[data-theme="dark"] .kesfet-card a,
-html[data-theme="dark"] .kesfet-card{text-decoration:none;color:inherit}
-html[data-theme="dark"] #kesfetEmpty{color:var(--muted)}
 
-/* Tema butonu */
-.theme-toggle{
-  flex-shrink:0;
-  width:40px;height:40px;
-  border-radius:50%;
-  border:1.5px solid var(--border);
-  background:var(--white);
-  color:var(--green-dark);
-  cursor:pointer;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-size:1.15rem;line-height:1;
-  transition:background .2s,border-color .2s,transform .15s;
-  margin-left:6px;
+html[data-theme="dark"] .ad-ticker{
+  background:linear-gradient(90deg,#063d28,#0a5c3b 40%,#0d7a4f);
 }
-.theme-toggle:hover{
-  background:var(--green-soft);
-  border-color:var(--green);
-  transform:scale(1.05);
+html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] .footer-elite{
+  background:#0e1813;color:var(--muted);border-top-color:var(--green-mid)
 }
-.theme-toggle:focus-visible{
-  outline:2px solid var(--green);
-  outline-offset:2px;
+html[data-theme="dark"] .footer-elite a{color:var(--green)}
+html[data-theme="dark"] .ilce-pill{
+  background:var(--green-soft);color:var(--green-deep);border-color:var(--border)
 }
-html[data-theme="dark"] .theme-toggle{
-  background:var(--green-soft);
-  color:var(--gold);
-  border-color:var(--border);
+html[data-theme="dark"] .trust-strip,
+html[data-theme="dark"] .trust-item{
+  color:var(--text)
+}
+html[data-theme="dark"] .social-btn{
+  background:var(--white);color:var(--green-deep);border-color:var(--border)
+}
+
+/* ===== AI sohbet kontrast (açık + koyu) ===== */
+#aiChat{background:var(--cream)!important;color:var(--text)!important}
+.ai-bot{
+  background:#ffffff!important;
+  border:1px solid rgba(13,122,79,.22)!important;
+  color:#1a2e24!important;
+}
+.ai-bot *{color:#1a2e24!important}
+.ai-user{background:#0d7a4f!important;color:#ffffff!important}
+.ai-user *{color:#ffffff!important}
+#aiForm{background:var(--white)!important;border-top-color:var(--border)!important}
+#aiInput{
+  background:var(--white)!important;
+  color:var(--text)!important;
+  border-color:var(--border)!important;
+}
+#aiInput::placeholder{color:var(--muted)!important;opacity:1!important}
+.ai-hints button{
+  background:var(--white)!important;
+  color:#063d28!important;
+  border-color:var(--border)!important;
+}
+.ai-hints button.hint-hot{color:#063d28!important}
+
+html[data-theme="dark"] #aiChat{
+  background:linear-gradient(180deg,#0e1813,#12201a)!important;
+  color:#e8f0eb!important;
+}
+html[data-theme="dark"] .ai-bot{
+  background:#1a2e24!important;
+  border-color:rgba(62,207,142,.3)!important;
+  color:#e8f0eb!important;
+}
+html[data-theme="dark"] .ai-bot *{color:#e8f0eb!important}
+html[data-theme="dark"] .ai-user{
+  background:#2aad72!important;
+  color:#fff!important;
+}
+html[data-theme="dark"] #aiForm{background:#16241c!important}
+html[data-theme="dark"] #aiInput{
+  background:#12201a!important;
+  color:#e8f0eb!important;
+  border-color:rgba(62,207,142,.28)!important;
+}
+html[data-theme="dark"] #aiInput::placeholder{color:#9bb5a8!important}
+html[data-theme="dark"] .ai-hints button{
+  background:#16241c!important;
+  color:#3ecf8e!important;
+  border-color:rgba(62,207,142,.28)!important;
+}
+html[data-theme="dark"] .ai-hints button.hint-hot{
+  background:linear-gradient(135deg,#143d2c,#3d3420)!important;
+  color:#e8f0eb!important;
+}
+html[data-theme="dark"] .gemini-box{background:#16241c!important;color:#e8f0eb!important}
+html[data-theme="dark"] .gemini-box h2{color:#3ecf8e!important}
+html[data-theme="dark"] .gemini-row input{
+  background:#12201a!important;color:#e8f0eb!important;
+  border-color:rgba(62,207,142,.28)!important;
 }
