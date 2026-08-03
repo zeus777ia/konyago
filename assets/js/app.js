@@ -64,6 +64,45 @@
     }
   } catch (e) {}
 
+  try {
+    var aysaUrl = "https://aysatekin.com";
+    function aysaBox(title, sub, cta) {
+      return '<div class="ad-box ad-box-gold ad-sponsor-aysa">' +
+        '<span class="ad-label">Sponsor</span><strong>' + title + '</strong>' +
+        (sub ? '<span class="ad-sub">' + sub + '</span>' : '') +
+        '<a href="' + aysaUrl + '" target="_blank" rel="noopener sponsored">' + cta + '</a></div>';
+    }
+    document.querySelectorAll(".ad-rail-left").forEach(function (rail) {
+      if (!rail.querySelector(".ad-sponsor-aysa")) {
+        rail.insertAdjacentHTML("afterbegin", aysaBox("AysaTekin", "En şık abiye · Kalite · %10 indirim", "aysatekin.com"));
+      }
+    });
+    document.querySelectorAll(".ad-rail-right").forEach(function (rail) {
+      if (!rail.querySelector(".ad-sponsor-aysa")) {
+        rail.insertAdjacentHTML("afterbegin", aysaBox("HOSGELDİN10", "Yeni üyelere %10 indirim · Abiye & takım", "Alışverişe git"));
+      }
+    });
+    if (!document.querySelector(".ad-sponsor-card") && document.getElementById("main")) {
+      var banner =
+        '<div class="ad-mobile ad-sponsor-card" role="complementary" aria-label="Sponsor reklam">' +
+        '<span class="ad-label">Sponsor</span>' +
+        '<strong>AysaTekin — En şık abiye elbise modelleri</strong>' +
+        '<span>Kaliteli kumaş · zarif kesim · özel günleriniz için</span>' +
+        '<span class="ad-offer">Yeni üyelere <b>HOSGELDİN10</b> ile %10 indirim</span>' +
+        '<a href="' + aysaUrl + '" target="_blank" rel="noopener sponsored">Koleksiyonu incele →</a></div>' +
+        '<div class="ad-banner-wide ad-sponsor-wide" role="complementary" aria-label="Sponsor reklam">' +
+        '<span>✨ <strong>AysaTekin</strong> — Zarafetin adresi · En şık abiye & takım · <em>HOSGELDİN10</em> ile %10 indirim</span>' +
+        '<a href="' + aysaUrl + '" target="_blank" rel="noopener sponsored">aysatekin.com</a></div>';
+      var main = document.getElementById("main");
+      var trust = main.querySelector(".trust-strip");
+      if (trust) {
+        trust.insertAdjacentHTML("afterend", banner);
+      } else {
+        main.insertAdjacentHTML("afterbegin", banner);
+      }
+    }
+  } catch (e) {}
+
   afterLoad(function () {
     onIdle(function () {
       try {
@@ -198,13 +237,6 @@
           try { reg.waiting.postMessage({ type: "SKIP_WAITING" }); } catch (e) {}
         }
       }).catch(function () {});
-      if (window.caches) {
-        caches.keys().then(function (keys) {
-          keys.forEach(function (k) {
-            if (k.indexOf("konyago") === 0 && k !== "konyago-v13") caches.delete(k);
-          });
-        });
-      }
     });
   }
 })();
