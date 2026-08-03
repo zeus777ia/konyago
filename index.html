@@ -27,7 +27,6 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
 </div>
 <script>
 (function () {
-  /* Eski bozuk cache'i temizle */
   try {
     localStorage.removeItem("konyago_home_html_v21");
     localStorage.removeItem("konyago_home_html_v20");
@@ -35,11 +34,11 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
 
   var urls = [
     "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html",
-    "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0/index.html"
+    "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0/index.html",
+    "https://raw.githack.com/zeus777ia/konyago/dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html"
   ];
 
   function patch(html) {
-    /* Yerel CSS/JS — masaüstü layout bozulmasın */
     html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=22");
     html = html.replace(/assets\/css\/app\.css\?v=\d+/g, "assets/css/app.css?v=22");
     html = html.replace(/perf\.css\?v=\d+/g, "perf.css?v=2");
@@ -52,25 +51,40 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
     return html;
   }
 
+  function fail() {
+    document.getElementById("boot").innerHTML =
+      "<p><strong>Yükleme gecikti</strong></p>" +
+      "<p><a href=\"gezilecek.html\">Gezi</a> · <a href=\"kesfet.html\">Keşfet</a> · <a href=\"mutfak.html\">Mutfak</a> · <a href=\"ai.html\">AI</a> · <a href=\"iletisim.html\">İletişim</a></p>";
+  }
+
   function go(i) {
     if (i >= urls.length) {
-      document.getElementById("boot").innerHTML =
-        "<p><strong>Yükleme hatası</strong></p>" +
-        "<p><a href=\"gezilecek.html\">Gezi</a> · <a href=\"kesfet.html\">Keşfet</a> · <a href=\"ai.html\">AI</a></p>";
+      fail();
       return;
     }
-    fetch(urls[i], { cache: "no-store", mode: "cors" })
+    var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var timer = setTimeout(function () {
+      try { if (ctrl) ctrl.abort(); } catch (e) {}
+      go(i + 1);
+    }, 8000);
+    fetch(urls[i], {
+      cache: "default",
+      mode: "cors",
+      signal: ctrl ? ctrl.signal : undefined
+    })
       .then(function (r) {
         if (!r.ok) throw new Error("http");
         return r.text();
       })
       .then(function (html) {
+        clearTimeout(timer);
         if (!html || html.indexOf("feat-grid") < 0) throw new Error("incomplete");
         document.open();
         document.write(patch(html));
         document.close();
       })
       .catch(function () {
+        clearTimeout(timer);
         go(i + 1);
       });
   }
