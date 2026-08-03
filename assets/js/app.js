@@ -6,6 +6,8 @@
       var el = document.createElement("link");
       el.rel = "stylesheet";
       el.href = "assets/css/elite.css?v=1";
+      el.media = "print";
+      el.onload = function () { this.media = "all"; };
       el.setAttribute("data-elite-css", "1");
       document.head.appendChild(el);
     }
@@ -15,6 +17,7 @@
     if (!document.querySelector("script[data-theme-js]")) {
       var ts = document.createElement("script");
       ts.src = "assets/js/theme.js?v=2";
+      ts.defer = true;
       ts.setAttribute("data-theme-js", "1");
       document.head.appendChild(ts);
     }
@@ -22,9 +25,9 @@
 
   function onIdle(fn) {
     if (typeof requestIdleCallback === "function") {
-      requestIdleCallback(fn, { timeout: 2500 });
+      requestIdleCallback(fn, { timeout: 2800 });
     } else {
-      setTimeout(fn, 400);
+      setTimeout(fn, 500);
     }
   }
 
@@ -32,6 +35,16 @@
     if (document.readyState === "complete") fn();
     else window.addEventListener("load", fn, { once: true });
   }
+
+  /* Kayan şeritler: sekme gizliyken durdur (mobil pil/CPU) */
+  try {
+    document.addEventListener("visibilitychange", function () {
+      var paused = document.hidden;
+      document.querySelectorAll(".ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track").forEach(function (t) {
+        t.style.animationPlayState = paused ? "paused" : "running";
+      });
+    }, { passive: true });
+  } catch (e) {}
 
   try {
     var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
@@ -45,8 +58,14 @@
     var html = "";
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
-      html += '<span class="ad-ticker-item"><span class="ad-ticker-dot" aria-hidden="true"></span>' +
-        it.t + ' · <a href="' + it.href + '" target="_blank" rel="noopener sponsored">' + it.cta + '</a></span>';
+      html +=
+        '<span class="ad-ticker-item"><span class="ad-ticker-dot" aria-hidden="true"></span>' +
+        it.t +
+        ' · <a href="' +
+        it.href +
+        '" target="_blank" rel="noopener sponsored">' +
+        it.cta +
+        "</a></span>";
     }
     var existing = document.querySelector(".ad-ticker");
     if (existing) {
@@ -67,10 +86,18 @@
   try {
     var aysaUrl = "https://aysatekin.com";
     function aysaBox(title, sub, cta) {
-      return '<div class="ad-box ad-box-gold ad-sponsor-aysa">' +
-        '<span class="ad-label">Sponsor</span><strong>' + title + '</strong>' +
-        (sub ? '<span class="ad-sub">' + sub + '</span>' : '') +
-        '<a href="' + aysaUrl + '" target="_blank" rel="noopener sponsored">' + cta + '</a></div>';
+      return (
+        '<div class="ad-box ad-box-gold ad-sponsor-aysa">' +
+        '<span class="ad-label">Sponsor</span><strong>' +
+        title +
+        "</strong>" +
+        (sub ? '<span class="ad-sub">' + sub + "</span>" : "") +
+        '<a href="' +
+        aysaUrl +
+        '" target="_blank" rel="noopener sponsored">' +
+        cta +
+        "</a></div>"
+      );
     }
     document.querySelectorAll(".ad-rail-left").forEach(function (rail) {
       if (!rail.querySelector(".ad-sponsor-aysa")) {
@@ -86,20 +113,21 @@
       var banner =
         '<div class="ad-mobile ad-sponsor-card" role="complementary" aria-label="Sponsor reklam">' +
         '<span class="ad-label">Sponsor</span>' +
-        '<strong>AysaTekin — En şık abiye elbise modelleri</strong>' +
-        '<span>Kaliteli kumaş · zarif kesim · özel günleriniz için</span>' +
+        "<strong>AysaTekin — En şık abiye elbise modelleri</strong>" +
+        "<span>Kaliteli kumaş · zarif kesim · özel günleriniz için</span>" +
         '<span class="ad-offer">Yeni üyelere <b>HOSGELDİN10</b> ile %10 indirim</span>' +
-        '<a href="' + aysaUrl + '" target="_blank" rel="noopener sponsored">Koleksiyonu incele →</a></div>' +
+        '<a href="' +
+        aysaUrl +
+        '" target="_blank" rel="noopener sponsored">Koleksiyonu incele →</a></div>' +
         '<div class="ad-banner-wide ad-sponsor-wide" role="complementary" aria-label="Sponsor reklam">' +
-        '<span>✨ <strong>AysaTekin</strong> — Zarafetin adresi · En şık abiye & takım · <em>HOSGELDİN10</em> ile %10 indirim</span>' +
-        '<a href="' + aysaUrl + '" target="_blank" rel="noopener sponsored">aysatekin.com</a></div>';
+        "<span>✨ <strong>AysaTekin</strong> — Zarafetin adresi · En şık abiye & takım · <em>HOSGELDİN10</em> ile %10 indirim</span>" +
+        '<a href="' +
+        aysaUrl +
+        '" target="_blank" rel="noopener sponsored">aysatekin.com</a></div>';
       var main = document.getElementById("main");
       var trust = main.querySelector(".trust-strip");
-      if (trust) {
-        trust.insertAdjacentHTML("afterend", banner);
-      } else {
-        main.insertAdjacentHTML("afterbegin", banner);
-      }
+      if (trust) trust.insertAdjacentHTML("afterend", banner);
+      else main.insertAdjacentHTML("afterbegin", banner);
     }
   } catch (e) {}
 
@@ -156,7 +184,7 @@
           };
         }
       } catch (e) {}
-    }, 1800);
+    }, 2200);
   });
 
   (function visitCounter() {
@@ -168,7 +196,9 @@
       try {
         return new Intl.DateTimeFormat("en-CA", {
           timeZone: "Europe/Istanbul",
-          year: "numeric", month: "2-digit", day: "2-digit"
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
         }).format(new Date());
       } catch (e) {
         return new Date().toISOString().slice(0, 10);
@@ -177,14 +207,17 @@
     var day = istanbulDay();
     var KEY = "konyago_visits_v3";
     var sess = "konyago_v3_" + day;
-    var dayN = 0, totalN = 0;
+    var dayN = 0,
+      totalN = 0;
     try {
       var o = JSON.parse(localStorage.getItem(KEY) || "{}");
       totalN = typeof o.total === "number" ? o.total : 0;
       if (o.day === day && typeof o.dayCount === "number") dayN = o.dayCount;
     } catch (e) {}
     var hit = false;
-    try { hit = sessionStorage.getItem(sess) === "1"; } catch (e) {}
+    try {
+      hit = sessionStorage.getItem(sess) === "1";
+    } catch (e) {}
     if (!hit) {
       dayN += 1;
       totalN += 1;
@@ -210,7 +243,9 @@
         try {
           dayKey = new Intl.DateTimeFormat("en-CA", {
             timeZone: "Europe/Istanbul",
-            year: "numeric", month: "2-digit", day: "2-digit"
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
           }).format(new Date());
         } catch (e) {
           dayKey = new Date().toISOString().slice(0, 10);
@@ -231,12 +266,17 @@
 
   if ("serviceWorker" in navigator) {
     afterLoad(function () {
-      navigator.serviceWorker.register("./sw.js").then(function (reg) {
-        reg.update();
-        if (reg.waiting) {
-          try { reg.waiting.postMessage({ type: "SKIP_WAITING" }); } catch (e) {}
-        }
-      }).catch(function () {});
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then(function (reg) {
+          reg.update();
+          if (reg.waiting) {
+            try {
+              reg.waiting.postMessage({ type: "SKIP_WAITING" });
+            } catch (e) {}
+          }
+        })
+        .catch(function () {});
     });
   }
 })();
