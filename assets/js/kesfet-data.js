@@ -10,6 +10,7 @@ window.KONYAGO_KESFET = [
   { id: "firin", name: "Fırın kebabı", cat: "yemek", ilce: "Merkez", tag: "Et", desc: "Uzun pişen kuşbaşı; sosu ekmekle.", href: "mutfak.html" },
   { id: "meram", name: "Meram Bağları", cat: "gezi", ilce: "Meram", tag: "Akşam", desc: "Yeşil vadi, yürüyüş ve serin akşam.", href: "gezilecek.html" },
   { id: "beysehir", name: "Beyşehir Gölü", cat: "ilce", ilce: "Beyşehir", tag: "Göl", desc: "Göl kıyısı + Eşrefoğlu Camii günübirlik.", href: "ilceler.html#beysehir", hot: true },
+  { id: "fasillar", name: "Fasıllar Hitit Anıtı", cat: "gezi", ilce: "Beyşehir", tag: "Hitit", desc: "MÖ 13. yy dev kaya anıtı; ~8 m, Kurtbeşiği Tepesi.", href: "gezilecek.html#fasillar", hot: true },
   { id: "seydi", name: "Seyyid Harun Veli", cat: "ilce", ilce: "Seydişehir", tag: "Külliye", desc: "Külliye, Tınaztepe, Kuğulu Park.", href: "ilceler.html#seydisehir" },
   { id: "aksehir", name: "Nasreddin Hoca rotası", cat: "ilce", ilce: "Akşehir", tag: "Kültür", desc: "Türbe, Gülmece Parkı, müze.", href: "ilceler.html#aksehir" },
   { id: "otel-merkez", name: "Merkez konaklama", cat: "otel", ilce: "Karatay", tag: "Yürüme", desc: "Mevlana yakını pratik konaklama bölgesi.", href: "konaklama.html" },
