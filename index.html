@@ -39,13 +39,14 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
   ];
 
   function patch(html) {
-    html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=22");
+    html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=23");
     html = html.replace(/assets\/css\/app\.css\?v=\d+/g, "assets/css/app.css?v=22");
     html = html.replace(/perf\.css\?v=\d+/g, "perf.css?v=2");
+    html = html.replace(/sponsor\.css\?v=\d+/g, "sponsor.css?v=2");
     if (html.indexOf("sponsor.css") < 0) {
       html = html.replace(
         /(href="assets\/css\/app\.css\?v=22">)/,
-        '$1\n<link rel="stylesheet" href="assets/css/sponsor.css?v=1">'
+        '$1\n<link rel="stylesheet" href="assets/css/sponsor.css?v=2">'
       );
     }
     return html;
