@@ -133,26 +133,6 @@ html[data-theme="dark"] .gemini-row input{background:#12201a;color:#e8f0eb;borde
 </nav>
 <script src="assets/js/theme.js?v=2"></script>
 <script src="assets/js/app.js?v=22" defer></script>
-<script src="assets/js/ai-local.js" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded",function(){
-  var chat=document.getElementById("aiChat");
-  if(chat && !chat.children.length){
-    var welcome=document.createElement("div");
-    welcome.className="ai-msg ai-bot";
-    welcome.textContent="Merhaba! Ben KonyaGo asistanıyım.\n\nKonya’da ne gezilir, nerede ne yenir, nasıl bir rota çıkarılır — sor, birlikte planlayalım.\n\nHızlı başlamak için alttaki önerilere de dokunabilirsin.";
-    chat.appendChild(welcome);
-  }
-  document.querySelectorAll("#aiHints button").forEach(function(b){
-    b.addEventListener("click",function(){
-      var input=document.getElementById("aiInput");
-      var form=document.getElementById("aiForm");
-      if(!input||!form)return;
-      input.value=b.getAttribute("data-q")||"";
-      form.requestSubmit();
-    });
-  });
-});
-</script>
+<script src="assets/js/ai.js?v=10" defer></script>
 </body>
 </html>
