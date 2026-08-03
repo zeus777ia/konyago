@@ -1,9 +1,143 @@
-/* Sponsor — AysaTekin */
-.ad-label{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a7010;background:rgba(201,162,39,.18);padding:2px 8px;border-radius:999px;margin-bottom:6px}
-.ad-sponsor-aysa .ad-sub{display:block;font-size:.68rem;color:var(--muted);margin:4px 0 2px}
-.ad-sponsor-aysa a{margin-top:10px;padding:6px 10px;background:linear-gradient(135deg,#8a7010,#c9a227);color:#fff!important;border-radius:999px;text-decoration:none}
-.ad-sponsor-card{background:linear-gradient(145deg,#fff9e8,#fff,#f3e7c7);border:1px solid rgba(201,162,39,.45);box-shadow:0 8px 24px rgba(138,112,16,.08)}
-.ad-sponsor-card .ad-offer{display:block;margin-top:6px;font-size:.8rem;color:#8a7010;font-weight:700}
-.ad-sponsor-card a{background:linear-gradient(135deg,#8a7010,#c9a227)!important}
-.ad-sponsor-wide{background:linear-gradient(90deg,#5c4a0e,#8a7010,#c9a227)!important;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px}
-.ad-sponsor-wide a{background:rgba(255,255,255,.15);padding:8px 16px;border-radius:999px;text-decoration:none}
+/* Reklam / sponsor kutuları — net dikey düzen */
+.ad-rail .ad-box,
+.ad-box{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start;
+  gap:8px !important;
+  line-height:1.4 !important;
+  text-align:center;
+  padding:14px 10px !important;
+  overflow:hidden;
+  position:relative;
+  box-sizing:border-box;
+}
+.ad-box strong{
+  display:block !important;
+  margin:0 !important;
+  line-height:1.3 !important;
+  position:static !important;
+}
+.ad-box .ad-sub,
+.ad-box > span:not(.ad-label){
+  display:block !important;
+  font-size:.68rem !important;
+  line-height:1.35 !important;
+  color:var(--muted);
+  margin:0 !important;
+  max-width:100%;
+}
+.ad-box a{
+  display:inline-block !important;
+  margin:4px 0 0 !important;
+  padding:6px 10px !important;
+  font-weight:700 !important;
+  font-size:.72rem !important;
+  text-decoration:none !important;
+  border-radius:999px;
+  line-height:1.2 !important;
+  position:static !important;
+  white-space:nowrap;
+}
+
+/* Sponsor etiketi */
+.ad-label{
+  display:inline-block !important;
+  font-size:.62rem !important;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#8a7010;
+  background:rgba(201,162,39,.18);
+  padding:2px 8px;
+  border-radius:999px;
+  margin:0 !important;
+  line-height:1.2;
+}
+
+/* AysaTekin yan kutu */
+.ad-sponsor-aysa{
+  background:linear-gradient(160deg,#f5ecd0,#fff9e8,#fff) !important;
+  border:1px solid rgba(201,162,39,.5) !important;
+}
+.ad-sponsor-aysa strong{color:#8a7010 !important}
+.ad-sponsor-aysa .ad-sub{color:#6b5a20 !important}
+.ad-sponsor-aysa a{
+  background:linear-gradient(135deg,#8a7010,#c9a227) !important;
+  color:#fff !important;
+}
+
+/* Mobil / geniş sponsor kart */
+.ad-sponsor-card{
+  background:linear-gradient(145deg,#fff9e8,#fff,#f3e7c7);
+  border:1px solid rgba(201,162,39,.45);
+  box-shadow:0 8px 24px rgba(138,112,16,.08);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:16px;
+  border-radius:16px;
+  margin:12px 0;
+}
+.ad-sponsor-card .ad-offer{
+  display:block;
+  margin:0;
+  font-size:.8rem;
+  color:#8a7010;
+  font-weight:700;
+}
+.ad-sponsor-card a{
+  align-self:flex-start;
+  background:linear-gradient(135deg,#8a7010,#c9a227) !important;
+  color:#fff !important;
+  padding:8px 14px !important;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+}
+.ad-sponsor-wide{
+  background:linear-gradient(90deg,#5c4a0e,#8a7010,#c9a227) !important;
+  display:flex !important;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  color:#fff !important;
+  padding:16px;
+  border-radius:14px;
+  margin:14px 0;
+}
+.ad-sponsor-wide a{
+  background:rgba(255,255,255,.18) !important;
+  color:#fff !important;
+  padding:8px 16px !important;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:800;
+}
+
+/* Koyu tema */
+html[data-theme="dark"] .ad-box{
+  background:#16241c !important;
+  border-color:rgba(62,207,142,.28) !important;
+  color:#9bb5a8 !important;
+}
+html[data-theme="dark"] .ad-box strong{color:#e8f0eb !important}
+html[data-theme="dark"] .ad-box .ad-sub,
+html[data-theme="dark"] .ad-box > span:not(.ad-label){color:#9bb5a8 !important}
+html[data-theme="dark"] .ad-box a{color:#3ecf8e !important}
+html[data-theme="dark"] .ad-sponsor-aysa{
+  background:linear-gradient(160deg,#2a2410,#1a2e24) !important;
+  border-color:rgba(224,195,92,.4) !important;
+}
+html[data-theme="dark"] .ad-sponsor-aysa strong{color:#e0c35c !important}
+html[data-theme="dark"] .ad-sponsor-aysa .ad-sub{color:#c5b87a !important}
+html[data-theme="dark"] .ad-sponsor-aysa a{
+  background:linear-gradient(135deg,#8a7010,#c9a227) !important;
+  color:#fff !important;
+}
+html[data-theme="dark"] .ad-label{
+  color:#e0c35c;
+  background:rgba(224,195,92,.15);
+}
