@@ -14,6 +14,16 @@
   } catch (e) {}
 
   try {
+    if (!document.querySelector("link[data-sponsor-css]")) {
+      var sp = document.createElement("link");
+      sp.rel = "stylesheet";
+      sp.href = "assets/css/sponsor.css?v=2";
+      sp.setAttribute("data-sponsor-css", "1");
+      document.head.appendChild(sp);
+    }
+  } catch (e) {}
+
+  try {
     if (!document.querySelector("script[data-theme-js]")) {
       var ts = document.createElement("script");
       ts.src = "assets/js/theme.js?v=2";
@@ -36,7 +46,6 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
-  /* Kayan şeritler: sekme gizliyken durdur (mobil pil/CPU) */
   try {
     document.addEventListener("visibilitychange", function () {
       var paused = document.hidden;
@@ -83,12 +92,47 @@
     }
   } catch (e) {}
 
+  /* Yan reklam kutularını düzgün yapıya çevir (metin/link çakışmasın) */
+  try {
+    document.querySelectorAll(".ad-rail .ad-box").forEach(function (box) {
+      if (box.getAttribute("data-fixed") === "1") return;
+      var strong = box.querySelector("strong");
+      var link = box.querySelector("a");
+      if (!strong || !link) return;
+      var title = (strong.textContent || "").trim();
+      var href = link.getAttribute("href") || "#";
+      var cta = (link.textContent || "").trim();
+      var clone = box.cloneNode(true);
+      var rm = clone.querySelectorAll("strong, a, .ad-label, .ad-sub");
+      for (var r = 0; r < rm.length; r++) rm[r].remove();
+      var sub = (clone.textContent || "").replace(/\s+/g, " ").trim();
+      var isSponsor = box.classList.contains("ad-sponsor-aysa") || /aysatekin|hosgeldin/i.test(title + href);
+      var label = isSponsor ? '<span class="ad-label">Sponsor</span>' : "";
+      box.innerHTML =
+        label +
+        "<strong>" +
+        title +
+        "</strong>" +
+        (sub ? '<span class="ad-sub">' + sub + "</span>" : "") +
+        '<a href="' +
+        href +
+        '"' +
+        (href.indexOf("http") === 0 ? ' target="_blank" rel="noopener sponsored"' : "") +
+        ">" +
+        cta +
+        "</a>";
+      box.setAttribute("data-fixed", "1");
+      if (isSponsor) box.classList.add("ad-box-gold", "ad-sponsor-aysa");
+    });
+  } catch (e) {}
+
   try {
     var aysaUrl = "https://aysatekin.com";
     function aysaBox(title, sub, cta) {
       return (
-        '<div class="ad-box ad-box-gold ad-sponsor-aysa">' +
-        '<span class="ad-label">Sponsor</span><strong>' +
+        '<div class="ad-box ad-box-gold ad-sponsor-aysa" data-fixed="1">' +
+        '<span class="ad-label">Sponsor</span>' +
+        "<strong>" +
         title +
         "</strong>" +
         (sub ? '<span class="ad-sub">' + sub + "</span>" : "") +
@@ -114,7 +158,7 @@
         '<div class="ad-mobile ad-sponsor-card" role="complementary" aria-label="Sponsor reklam">' +
         '<span class="ad-label">Sponsor</span>' +
         "<strong>AysaTekin — En şık abiye elbise modelleri</strong>" +
-        "<span>Kaliteli kumaş · zarif kesim · özel günleriniz için</span>" +
+        '<span class="ad-sub">Kaliteli kumaş · zarif kesim · özel günleriniz için</span>' +
         '<span class="ad-offer">Yeni üyelere <b>HOSGELDİN10</b> ile %10 indirim</span>' +
         '<a href="' +
         aysaUrl +
