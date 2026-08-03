@@ -10,6 +10,11 @@ window.KONYAGO_KESFET = [
   { id: "firin", name: "Fırın kebabı", cat: "yemek", ilce: "Merkez", tag: "Et", desc: "Uzun pişen kuşbaşı; sosu ekmekle.", href: "mutfak.html" },
   { id: "meram", name: "Meram Bağları", cat: "gezi", ilce: "Meram", tag: "Akşam", desc: "Yeşil vadi, yürüyüş ve serin akşam.", href: "gezilecek.html" },
   { id: "beysehir", name: "Beyşehir Gölü", cat: "ilce", ilce: "Beyşehir", tag: "Göl", desc: "Göl kıyısı + Eşrefoğlu Camii günübirlik.", href: "ilceler.html#beysehir", hot: true },
+  { id: "sahipata", name: "Sahip Ata Külliyesi", cat: "muze", ilce: "Karatay", tag: "Selçuklu", desc: "Külliye ve vakıf eserleri müzesi; Mevlana yakını.", href: "gezilecek.html" },
+  { id: "sircali", name: "Sırçalı Medrese", cat: "muze", ilce: "Karatay", tag: "Medrese", desc: "13. yy medrese; mezar taşları müzesi.", href: "gezilecek.html" },
+  { id: "aziziye", name: "Aziziye Camii", cat: "muze", ilce: "Karatay", tag: "Osmanlı", desc: "Barok etkili Osmanlı camisi; merkez.", href: "gezilecek.html" },
+  { id: "japon", name: "Japon Parkı", cat: "gezi", ilce: "Selçuklu", tag: "Aile", desc: "Japon bahçesi temalı park; gölet ve yürüyüş.", href: "gezilecek.html", hot: true },
+  { id: "panorama", name: "Panorama Müzesi", cat: "muze", ilce: "Merkez", tag: "Modern", desc: "Panoramik tarih sahneleri; aile rotası.", href: "gezilecek.html" },
   { id: "fasillar", name: "Fasıllar Hitit Anıtı", cat: "gezi", ilce: "Beyşehir", tag: "Hitit", desc: "MÖ 13. yy dev kaya anıtı; ~8 m, Kurtbeşiği Tepesi.", href: "gezilecek.html#fasillar", hot: true },
   { id: "seydi", name: "Seyyid Harun Veli", cat: "ilce", ilce: "Seydişehir", tag: "Külliye", desc: "Külliye, Tınaztepe, Kuğulu Park.", href: "ilceler.html#seydisehir" },
   { id: "aksehir", name: "Nasreddin Hoca rotası", cat: "ilce", ilce: "Akşehir", tag: "Kültür", desc: "Türbe, Gülmece Parkı, müze.", href: "ilceler.html#aksehir" },
@@ -17,6 +22,5 @@ window.KONYAGO_KESFET = [
   { id: "otel-selcuklu", name: "Selçuklu konaklama", cat: "otel", ilce: "Selçuklu", tag: "Yeni stok", desc: "Araçlı geziler ve yeni otel stoğu.", href: "konaklama.html" },
   { id: "atus", name: "ATUS & Konyakart", cat: "ulasim", ilce: "Merkez", tag: "Toplu taşıma", desc: "Hat ve bakiye için resmî ATUS kanalları.", href: "ulasim.html" },
   { id: "hediye", name: "Hediyelik / cezerye", cat: "alisveris", ilce: "Karatay", tag: "Hediye", desc: "Cezerye, çini, Mevlana temalı ürünler.", href: "hediyelik.html" },
-  { id: "sebi", name: "Şeb-i Arus dönemi", cat: "etkinlik", ilce: "Merkez", tag: "Aralık", desc: "Vuslat etkinlikleri; erken konaklama.", href: "etkinlikler.html" },
-  { id: "japon", name: "Japon Parkı / parklar", cat: "gezi", ilce: "Selçuklu", tag: "Aile", desc: "Açık alan molası ve aile rotası.", href: "rotalar.html" }
+  { id: "sebi", name: "Şeb-i Arus dönemi", cat: "etkinlik", ilce: "Merkez", tag: "Aralık", desc: "Vuslat etkinlikleri; erken konaklama.", href: "etkinlikler.html" }
 ];
