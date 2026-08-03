@@ -1,1 +1,158 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<meta name="description" content="KonyaGo AI — Yerel Konya motoru + Google Gemini, aynı sohbet.">
+<title>KonyaGo AI | Yerel + Gemini</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css?v=22">
+<link rel="stylesheet" href="assets/css/theme.css?v=3">
+<style>
+.ai-wrap{max-width:720px;margin:0 auto}
+.ai-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;height:min(72vh,600px);color:var(--text)}
+.ai-head{background:linear-gradient(135deg,var(--green-dark),var(--green));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ai-head img{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12)}
+.ai-head strong{display:block;font-size:1rem;color:#fff}
+.ai-head span{font-size:.75rem;opacity:.95;color:#fff}
+.ai-mode{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.ai-mode button{border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.15);color:#fff;border-radius:999px;padding:6px 12px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit}
+.ai-mode button.active{background:#fff;color:#0a5c3a;border-color:#fff}
+#aiChat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--cream);color:var(--text)}
+.ai-msg{max-width:90%;padding:10px 14px;border-radius:14px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+.ai-bot{align-self:flex-start;background:#fff;border:1px solid rgba(13,122,79,.2);color:#1a2e24!important;border-bottom-left-radius:4px}
+.ai-bot *{color:#1a2e24!important}
+.ai-user{align-self:flex-end;background:var(--green,#0d7a4f);color:#fff!important;border-bottom-right-radius:4px}
+.ai-user *{color:#fff!important}
+.ai-meta{font-size:.68rem;opacity:.75;margin-top:4px}
+.ai-typing{opacity:.85;font-style:italic}
+#aiForm{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border);background:var(--white)}
+#aiInput{flex:1;border:1.5px solid var(--border);border-radius:999px;padding:12px 16px;font:inherit;font-size:.92rem;outline:none;min-height:44px;background:var(--white);color:var(--text)}
+#aiInput::placeholder{color:var(--muted);opacity:1}
+#aiInput:focus{border-color:var(--green)}
+#aiSend{border:none;border-radius:999px;padding:0 18px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;min-height:44px;font-family:inherit}
+#aiSend:disabled{opacity:.5}
+.ai-hints{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.ai-hints button{border:1px solid var(--border);background:var(--white);border-radius:999px;padding:8px 12px;font-size:.78rem;font-weight:600;color:var(--green-deep,#063d28);cursor:pointer;font-family:inherit}
+.ai-hints button:hover{background:var(--green-soft)}
+.ai-hints button.hint-hot{background:linear-gradient(135deg,var(--green-soft),var(--gold-soft));border-color:rgba(13,122,79,.35);color:var(--green-deep,#063d28)}
+.gemini-box{display:none;margin:12px 0;padding:14px;border-radius:14px;border:1px solid var(--border);background:var(--white);color:var(--text)}
+.gemini-box.is-open{display:block}
+.gemini-box h2{font-size:.95rem;color:var(--green-deep);margin-bottom:6px}
+.gemini-box p{font-size:.82rem;color:var(--muted);margin-bottom:8px}
+.gemini-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gemini-row input{flex:1;min-width:180px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit;font-size:.85rem;background:var(--white);color:var(--text)}
+.gemini-status{font-size:.78rem;color:var(--muted);margin-top:8px}
+.gemini-status.ok{color:var(--green);font-weight:700}
+.gemini-status.err{color:#c44;font-weight:700}
+html[data-theme="dark"] #aiChat{background:linear-gradient(180deg,#0e1813,#12201a)}
+html[data-theme="dark"] .ai-bot{background:#1a2e24!important;border-color:rgba(62,207,142,.28)!important;color:#e8f0eb!important}
+html[data-theme="dark"] .ai-bot *{color:#e8f0eb!important}
+html[data-theme="dark"] .ai-user{background:#2aad72!important;color:#fff!important}
+html[data-theme="dark"] #aiForm{background:#16241c;border-top-color:rgba(62,207,142,.22)}
+html[data-theme="dark"] #aiInput{background:#12201a;color:#e8f0eb;border-color:rgba(62,207,142,.28)}
+html[data-theme="dark"] #aiInput::placeholder{color:#9bb5a8}
+html[data-theme="dark"] .ai-hints button{background:#16241c;color:#3ecf8e;border-color:rgba(62,207,142,.28)}
+html[data-theme="dark"] .ai-hints button.hint-hot{background:linear-gradient(135deg,#143d2c,#3d3420);color:#e8f0eb;border-color:rgba(224,195,92,.35)}
+html[data-theme="dark"] .gemini-box{background:#16241c;color:#e8f0eb}
+html[data-theme="dark"] .gemini-box h2{color:#3ecf8e}
+html[data-theme="dark"] .gemini-row input{background:#12201a;color:#e8f0eb;border-color:rgba(62,207,142,.28)}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">İçeriğe atla</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt="">
+      <span class="logo-text"><strong>KonyaGo</strong><small>AI asistan</small></span>
+    </a>
+    <nav class="nav-desktop" aria-label="Ana menü">
+      <a href="index.html">Ana</a>
+      <a href="kesfet.html">Keşfet</a>
+      <a href="ai.html" aria-current="page">AI</a>
+      <a href="gezilecek.html">Gezi</a>
+      <a href="mutfak.html">Mutfak</a>
+    </nav>
+  </div>
+</header>
+<main class="container" id="main">
+  <div class="page-head">
+    <a href="index.html">← Ana sayfa</a>
+    <h1>KonyaGo AI</h1>
+    <p>Yerel Konya motoru veya Gemini — aynı sohbet kutusunda.</p>
+  </div>
+  <div class="ai-wrap">
+    <div class="ai-panel" role="region" aria-label="Sohbet">
+      <div class="ai-head">
+        <img src="assets/img/eagle.svg" width="40" height="40" alt="">
+        <div>
+          <strong>KonyaGo AI</strong>
+          <span id="aiModeLabel">Yerel motor · Konya asistanı</span>
+        </div>
+        <div class="ai-mode" role="group" aria-label="Motor seçimi">
+          <button type="button" id="btnLocal" class="active">Yerel</button>
+          <button type="button" id="btnGemini">Gemini</button>
+        </div>
+      </div>
+      <div id="aiChat" aria-live="polite"></div>
+      <form id="aiForm" autocomplete="off">
+        <input type="text" id="aiInput" placeholder="Konya hakkında sor…" maxlength="500" aria-label="Soru">
+        <button type="submit" id="aiSend">Gönder</button>
+      </form>
+    </div>
+    <div class="ai-hints" id="aiHints">
+      <button type="button" class="hint-hot" data-q="Hafta sonu için 2 günlük Konya planı öner">Hafta sonu planı</button>
+      <button type="button" data-q="1 günde Konya’da ne gezilir?">1 günde ne gezilir?</button>
+      <button type="button" data-q="Mevlana Müzesi hakkında bilgi ver">Mevlana</button>
+      <button type="button" data-q="Etli ekmek nerede yenir?">Etli ekmek</button>
+      <button type="button" data-q="Sille’ye nasıl gidilir?">Sille</button>
+      <button type="button" data-q="Eşrefoğulları Beyliği nedir?">Eşrefoğulları</button>
+      <button type="button" data-q="Konya’da ulaşım nasıl?">Ulaşım</button>
+    </div>
+    <div class="gemini-box" id="geminiBox">
+      <h2>Gemini API anahtarı</h2>
+      <p>Anahtar yalnızca senin tarayıcında saklanır. Sitede herkese gösterilmez.</p>
+      <div class="gemini-row">
+        <input type="password" id="geminiKey" placeholder="AIza… API key" autocomplete="off">
+        <button type="button" class="btn btn-primary btn-sm" id="geminiSave">Kaydet</button>
+      </div>
+      <p class="gemini-status" id="geminiStatus"></p>
+    </div>
+  </div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="gizlilik.html">Gizlilik</a></div></footer>
+<nav class="mnav" aria-label="Mobil menü">
+  <a href="index.html"><span class="i">🏠</span>Ana</a>
+  <a href="kesfet.html"><span class="i">🔍</span>Keşfet</a>
+  <a href="ai.html" aria-current="page"><span class="i">✨</span>AI</a>
+  <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
+  <a href="mutfak.html"><span class="i">🍽️</span>Mutfak</a>
+</nav>
+<script src="assets/js/theme.js?v=2"></script>
+<script src="assets/js/app.js?v=22" defer></script>
+<script src="assets/js/ai-local.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  var chat=document.getElementById("aiChat");
+  if(chat && !chat.children.length){
+    var welcome=document.createElement("div");
+    welcome.className="ai-msg ai-bot";
+    welcome.textContent="Merhaba! Ben KonyaGo asistanıyım.\n\nKonya’da ne gezilir, nerede ne yenir, nasıl bir rota çıkarılır — sor, birlikte planlayalım.\n\nHızlı başlamak için alttaki önerilere de dokunabilirsin.";
+    chat.appendChild(welcome);
+  }
+  document.querySelectorAll("#aiHints button").forEach(function(b){
+    b.addEventListener("click",function(){
+      var input=document.getElementById("aiInput");
+      var form=document.getElementById("aiForm");
+      if(!input||!form)return;
+      input.value=b.getAttribute("data-q")||"";
+      form.requestSubmit();
+    });
+  });
+});
+</script>
+</body>
+</html>
