@@ -22,9 +22,9 @@
 .ai-mode button.active{background:#fff;color:#0a5c3a;border-color:#fff}
 #aiChat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--cream);color:var(--text)}
 .ai-msg{max-width:90%;padding:10px 14px;border-radius:14px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;word-break:break-word}
-.ai-bot{align-self:flex-start;background:#fff;border:1px solid rgba(13,122,79,.2);color:#1a2e24!important;border-bottom-left-radius:4px}
+.ai-bot{align-self:flex-start;background:#fff;border:1px solid rgba(13,122,79,.22);color:#1a2e24!important;border-bottom-left-radius:4px}
 .ai-bot *{color:#1a2e24!important}
-.ai-user{align-self:flex-end;background:var(--green,#0d7a4f);color:#fff!important;border-bottom-right-radius:4px}
+.ai-user{align-self:flex-end;background:#0d7a4f;color:#fff!important;border-bottom-right-radius:4px}
 .ai-user *{color:#fff!important}
 .ai-meta{font-size:.68rem;opacity:.75;margin-top:4px}
 .ai-typing{opacity:.85;font-style:italic}
@@ -35,12 +35,12 @@
 #aiSend{border:none;border-radius:999px;padding:0 18px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;min-height:44px;font-family:inherit}
 #aiSend:disabled{opacity:.5}
 .ai-hints{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
-.ai-hints button{border:1px solid var(--border);background:var(--white);border-radius:999px;padding:8px 12px;font-size:.78rem;font-weight:600;color:var(--green-deep,#063d28);cursor:pointer;font-family:inherit}
+.ai-hints button{border:1px solid var(--border);background:var(--white);border-radius:999px;padding:8px 12px;font-size:.78rem;font-weight:600;color:#063d28;cursor:pointer;font-family:inherit}
 .ai-hints button:hover{background:var(--green-soft)}
-.ai-hints button.hint-hot{background:linear-gradient(135deg,var(--green-soft),var(--gold-soft));border-color:rgba(13,122,79,.35);color:var(--green-deep,#063d28)}
+.ai-hints button.hint-hot{background:linear-gradient(135deg,var(--green-soft),var(--gold-soft));border-color:rgba(13,122,79,.35);color:#063d28}
 .gemini-box{display:none;margin:12px 0;padding:14px;border-radius:14px;border:1px solid var(--border);background:var(--white);color:var(--text)}
 .gemini-box.is-open{display:block}
-.gemini-box h2{font-size:.95rem;color:var(--green-deep);margin-bottom:6px}
+.gemini-box h2{font-size:.95rem;color:var(--green-deep,#063d28);margin-bottom:6px}
 .gemini-box p{font-size:.82rem;color:var(--muted);margin-bottom:8px}
 .gemini-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .gemini-row input{flex:1;min-width:180px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit;font-size:.85rem;background:var(--white);color:var(--text)}
@@ -48,7 +48,7 @@
 .gemini-status.ok{color:var(--green);font-weight:700}
 .gemini-status.err{color:#c44;font-weight:700}
 html[data-theme="dark"] #aiChat{background:linear-gradient(180deg,#0e1813,#12201a)}
-html[data-theme="dark"] .ai-bot{background:#1a2e24!important;border-color:rgba(62,207,142,.28)!important;color:#e8f0eb!important}
+html[data-theme="dark"] .ai-bot{background:#1a2e24!important;border-color:rgba(62,207,142,.3)!important;color:#e8f0eb!important}
 html[data-theme="dark"] .ai-bot *{color:#e8f0eb!important}
 html[data-theme="dark"] .ai-user{background:#2aad72!important;color:#fff!important}
 html[data-theme="dark"] #aiForm{background:#16241c;border-top-color:rgba(62,207,142,.22)}
@@ -59,80 +59,157 @@ html[data-theme="dark"] .ai-hints button.hint-hot{background:linear-gradient(135
 html[data-theme="dark"] .gemini-box{background:#16241c;color:#e8f0eb}
 html[data-theme="dark"] .gemini-box h2{color:#3ecf8e}
 html[data-theme="dark"] .gemini-row input{background:#12201a;color:#e8f0eb;border-color:rgba(62,207,142,.28)}
+html[data-theme="dark"] .ai-mode button.active{color:#0a5c3a}
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main">İçeriğe atla</a>
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
       <img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt="">
-      <span class="logo-text"><strong>KonyaGo</strong><small>AI asistan</small></span>
+      <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
       <a href="index.html">Ana</a>
-      <a href="kesfet.html">Keşfet</a>
       <a href="ai.html" aria-current="page">AI</a>
-      <a href="gezilecek.html">Gezi</a>
-      <a href="mutfak.html">Mutfak</a>
+      <a href="gezilecek.html">Gezilecek</a>
+      <a href="rotalar.html">Rotalar</a>
+      <a href="en.html">EN</a>
     </nav>
   </div>
 </header>
-<main class="container" id="main">
+
+<main class="container">
   <div class="page-head">
     <a href="index.html">← Ana sayfa</a>
     <h1>KonyaGo AI</h1>
-    <p>Yerel Konya motoru veya Gemini — aynı sohbet kutusunda.</p>
+    <p>Aynı sohbet · iki motor: <strong>Yerel KonyaGo AI</strong> + <strong>Google Gemini</strong></p>
   </div>
+
+  <div class="info" style="margin-bottom:12px">
+    <h2>İki motor, bir yer</h2>
+    <ul>
+      <li><strong>Yerel</strong> — Anında Konya bilgi motoru</li>
+      <li><strong>Gemini</strong> — Google AI (üstten motor seç)</li>
+    </ul>
+  </div>
+
+  <div class="gemini-box" id="geminiSetup">
+    <h2>Gemini API ayarı</h2>
+    <p>AI Studio: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> → Create API key → yapıştır. Key yalnızca bu tarayıcıda saklanır.</p>
+    <div class="gemini-row">
+      <input type="password" id="geminiKeyInput" placeholder="AQ. veya AIza… key" autocomplete="off" spellcheck="false">
+      <button type="button" class="btn btn-primary btn-sm" id="geminiKeySave">Kaydet</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="geminiKeyClear">Sil</button>
+    </div>
+    <div class="gemini-status" id="geminiStatus">Anahtar yok.</div>
+  </div>
+
   <div class="ai-wrap">
-    <div class="ai-panel" role="region" aria-label="Sohbet">
+    <div class="ai-panel">
       <div class="ai-head">
-        <img src="assets/img/eagle.svg" width="40" height="40" alt="">
+        <img src="assets/img/eagle.svg" alt="">
         <div>
-          <strong>KonyaGo AI</strong>
-          <span id="aiModeLabel">Yerel motor · Konya asistanı</span>
+          <strong id="aiTitle">KonyaGo AI</strong>
+          <span id="aiSubtitle">Yerel motor · Konya-only</span>
         </div>
         <div class="ai-mode" role="group" aria-label="Motor seçimi">
-          <button type="button" id="btnLocal" class="active">Yerel</button>
-          <button type="button" id="btnGemini">Gemini</button>
+          <button type="button" id="modeLocal" class="active">Yerel</button>
+          <button type="button" id="modeGemini">Gemini</button>
         </div>
       </div>
       <div id="aiChat" aria-live="polite"></div>
       <form id="aiForm" autocomplete="off">
-        <input type="text" id="aiInput" placeholder="Konya hakkında sor…" maxlength="500" aria-label="Soru">
+        <input id="aiInput" type="text" placeholder="Konya hakkında sor…" maxlength="800" enterkeyhint="send">
         <button type="submit" id="aiSend">Gönder</button>
       </form>
     </div>
-    <div class="ai-hints" id="aiHints">
-      <button type="button" class="hint-hot" data-q="Hafta sonu için 2 günlük Konya planı öner">Hafta sonu planı</button>
-      <button type="button" data-q="1 günde Konya’da ne gezilir?">1 günde ne gezilir?</button>
-      <button type="button" data-q="Mevlana Müzesi hakkında bilgi ver">Mevlana</button>
-      <button type="button" data-q="Etli ekmek nerede yenir?">Etli ekmek</button>
+    <div class="ai-hints">
+      <button type="button" class="hint-hot" data-q="Hafta sonu planı">🗓️ Hafta sonu planı</button>
+      <button type="button" data-q="1 günde ne gezilir?">1 günde ne gezilir?</button>
+      <button type="button" data-q="Mevlana ücretsiz mi, saat kaçta kapanıyor?">Mevlana</button>
+      <button type="button" data-q="Etli ekmek nedir, nerede yenir?">Etli ekmek</button>
       <button type="button" data-q="Sille’ye nasıl gidilir?">Sille</button>
-      <button type="button" data-q="Eşrefoğulları Beyliği nedir?">Eşrefoğulları</button>
-      <button type="button" data-q="Konya’da ulaşım nasıl?">Ulaşım</button>
-    </div>
-    <div class="gemini-box" id="geminiBox">
-      <h2>Gemini API anahtarı</h2>
-      <p>Anahtar yalnızca senin tarayıcında saklanır. Sitede herkese gösterilmez.</p>
-      <div class="gemini-row">
-        <input type="password" id="geminiKey" placeholder="AIza… API key" autocomplete="off">
-        <button type="button" class="btn btn-primary btn-sm" id="geminiSave">Kaydet</button>
-      </div>
-      <p class="gemini-status" id="geminiStatus"></p>
+      <button type="button" data-q="Eşrefoğulları nedir?">Eşrefoğulları</button>
+      <button type="button" data-q="ATUS ve Konyakart nasıl kullanılır?">Ulaşım</button>
     </div>
   </div>
+
+  <div class="info warn" style="margin-top:16px">
+    <h2>Not</h2>
+    <p>Yerel motor her zaman hazırdır. Gemini, Google kotasına bağlıdır.</p>
+  </div>
 </main>
-<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="gizlilik.html">Gizlilik</a></div></footer>
+
+<footer class="site-footer"><div class="container">© 2026 KonyaGo AI</div></footer>
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
-  <a href="kesfet.html"><span class="i">🔍</span>Keşfet</a>
   <a href="ai.html" aria-current="page"><span class="i">✨</span>AI</a>
   <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
   <a href="mutfak.html"><span class="i">🍽️</span>Mutfak</a>
+  <a href="harita.html"><span class="i">🗺️</span>Harita</a>
 </nav>
 <script src="assets/js/theme.js?v=2"></script>
 <script src="assets/js/app.js?v=22" defer></script>
 <script src="assets/js/ai.js?v=10" defer></script>
+<script>
+(function(){
+  var box=document.getElementById("geminiSetup");
+  var show=false;
+  try{
+    var q=new URLSearchParams(location.search);
+    if(q.get("setup")==="1"||q.get("admin")==="1"){
+      show=true;
+      try{localStorage.setItem("konyago_ai_setup","1");}catch(e){}
+    } else if(localStorage.getItem("konyago_ai_setup")==="1"){
+      show=true;
+    }
+  }catch(e){}
+  if(box&&show)box.classList.add("is-open");
+
+  function status(msg, ok){
+    var el=document.getElementById("geminiStatus");
+    if(!el)return;
+    el.className="gemini-status "+(ok===true?"ok":ok===false?"err":"");
+    el.textContent=msg;
+  }
+  function saveKey(){
+    var inp=document.getElementById("geminiKeyInput");
+    var v=(inp&&inp.value||"").trim();
+    if(!v||v.length<15){
+      status("Anahtar eksik veya çok kısa.", false);
+      return;
+    }
+    try{localStorage.setItem("konyago_gemini_key", v);}
+    catch(e){status("Kayıt başarısız.", false);return;}
+    if(inp)inp.value="";
+    status("Kayıtlı ("+v.slice(0,6)+"…"+v.slice(-4)+"). Gemini seç.", true);
+  }
+  function clearKey(){
+    try{localStorage.removeItem("konyago_gemini_key");}catch(e){}
+    status("Anahtar silindi.", true);
+  }
+  document.addEventListener("DOMContentLoaded", function(){
+    var s=document.getElementById("geminiKeySave");
+    var c=document.getElementById("geminiKeyClear");
+    if(s)s.addEventListener("click", saveKey);
+    if(c)c.addEventListener("click", clearKey);
+    try{
+      var k=localStorage.getItem("konyago_gemini_key");
+      if(k)status("Kayıtlı ("+k.slice(0,6)+"…"+k.slice(-4)+").", true);
+    }catch(e){}
+  });
+})();
+
+document.querySelectorAll(".ai-hints button").forEach(function(b){
+  b.addEventListener("click",function(){
+    var input=document.getElementById("aiInput");
+    var form=document.getElementById("aiForm");
+    if(!input||!form)return;
+    input.value=b.getAttribute("data-q")||"";
+    form.requestSubmit();
+  });
+});
+</script>
 </body>
 </html>
