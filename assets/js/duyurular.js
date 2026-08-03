@@ -6,7 +6,7 @@ window.KONYAGO_DUYURULAR = {
       id: "2026-08-03-aysa",
       date: "3 Ağustos 2026",
       title: "Sponsor · AysaTekin — En şık abiye elbise modelleri",
-      body: "Kalite ve zarafet bir arada. Yeni üyelere özel <strong>HOSGELDİN10</strong> ile %10 indirim. Abiye, nişan ve özel gün koleksiyonları için AysaTekin’i keşfedin.",
+      body: "Kalite ve zarafet bir arada. Yeni üyelere özel <strong>HOSGELDİN10</strong> ile %10 indirim. Abiye, nişan ve özel gün koleksiyonları için <a href=\"https://aysatekin.com\" target=\"_blank\" rel=\"noopener sponsored\"><strong>aysatekin.com</strong></a> adresini ziyaret edin.",
       href: "https://aysatekin.com",
       cta: "Mağazaya git",
       sponsor: true
