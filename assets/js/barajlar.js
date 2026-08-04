@@ -1,4 +1,4 @@
-/* KonyaGo — Konya baraj doluluk oranlari (KOSKI) */
+/* KonyaGo baraj doluluk (KOSKI) v2 */
 (function (w, d) {
   "use strict";
   if (d.getElementById("kgBarajDone")) return;
@@ -14,10 +14,10 @@
   ];
 
   var DISPLAY = {
-    Altinapa: "Altinapa",
-    Afsar: "Afsar",
-    Bagbasi: "Bagbasi",
-    Bozkir: "Bozkir"
+    Altinapa: "Alt\u0131napa",
+    Afsar: "Af\u015far",
+    Bagbasi: "Ba\u011fba\u015f\u0131",
+    Bozkir: "Bozk\u0131r"
   };
 
   function parseKoski(html, name) {
@@ -84,8 +84,8 @@
 
   function fmtVol(n) {
     if (!n) return "-";
-    if (n >= 1e6) return (n / 1e6).toFixed(1).replace(".", ",") + " milyon m3";
-    return Math.round(n / 1000).toLocaleString("tr-TR") + " bin m3";
+    if (n >= 1e6) return (n / 1e6).toFixed(1).replace(".", ",") + " milyon m\u00b3";
+    return Math.round(n / 1000).toLocaleString("tr-TR") + " bin m\u00b3";
   }
 
   function color(pct) {
@@ -107,11 +107,11 @@
 
     var parts = [];
     parts.push("<div class=\"kg-block\" id=\"kgBarajBox\">");
-    parts.push("<h3>Konya baraj doluluklari</h3>");
+    parts.push("<h3>Konya baraj doluluklar\u0131</h3>");
     parts.push("<p style=\"margin-bottom:10px\">");
-    parts.push(data.live ? "Canli KOSKI verisi · " : "Son kayitli KOSKI verisi · ");
+    parts.push(data.live ? "Canl\u0131 KOSK\u0130 verisi \u00b7 " : "Son kay\u0131tl\u0131 KOSK\u0130 verisi \u00b7 ");
     parts.push(data.updated || "");
-    parts.push(" · Ort. <strong>");
+    parts.push(" \u00b7 Ort. <strong>");
     parts.push(String(Math.round(avg)));
     parts.push("%</strong></p>");
     parts.push("<div class=\"kg-baraj-list\">");
@@ -119,19 +119,20 @@
     data.items.forEach(function (it) {
       var pct = Math.max(0, Math.min(100, it.pct || 0));
       var nm = label(it.name);
+      var col = color(pct);
       parts.push("<div class=\"kg-baraj-row\">");
       parts.push("<div class=\"kg-baraj-meta\">");
       parts.push("<strong>" + nm + "</strong>");
       parts.push("<span>" + fmtVol(it.volume_m3) + "</span>");
-      parts.push("<b style=\"color:" + color(pct) + "\">" + pct + "%</b>");
+      parts.push("<b style=\"color:" + col + \">" + pct + "%</b>");
       parts.push("</div>");
-      parts.push("<div class=\"kg-baraj-track\" role=\"img\" aria-label=\"" + nm + " doluluk " + pct + "%\">");
-      parts.push("<div class=\"kg-baraj-fill\" style=\"width:" + pct + "%;background:" + color(pct) + "\"></div>");
+      parts.push("<div class=\"kg-baraj-track\" role=\"img\" aria-label=\"" + nm + " " + pct + "%\">");
+      parts.push("<div class=\"kg-baraj-fill\" style=\"width:" + pct + "%;background:" + col + "\"></div>");
       parts.push("</div></div>");
     });
 
     parts.push("</div>");
-    parts.push("<p class=\"wx-src\" style=\"margin-top:10px;font-size:.75rem\">Kaynak: <a href=\"https://www.koski.gov.tr\" target=\"_blank\" rel=\"noopener\">KOSKI</a> · Bilgilendirme amacli · Beysehir Golu icin resmi gunluk doluluk % yayinlanmiyor</p>");
+    parts.push("<p class=\"wx-src\" style=\"margin-top:10px;font-size:.75rem\">Kaynak: <a href=\"https://www.koski.gov.tr\" target=\"_blank\" rel=\"noopener\">KOSK\u0130</a> \u00b7 Bilgilendirme ama\u00e7l\u0131 \u00b7 Bey\u015fehir G\u00f6l\u00fc i\u00e7in resmi g\u00fcnl\u00fck % yay\u0131nlanm\u0131yor</p>");
     parts.push("</div>");
     host.innerHTML = parts.join("");
   }
@@ -146,7 +147,7 @@
     if (!anchor) return null;
     var host = d.createElement("div");
     host.id = "kgBarajHost";
-    host.innerHTML = "<div class=\"kg-block\"><p>Baraj doluluklari yukleniyor…</p></div>";
+    host.innerHTML = "<div class=\"kg-block\"><p>Baraj doluluklar\u0131 y\u00fckleniyor\u2026</p></div>";
     anchor.parentNode.insertBefore(host, anchor.nextSibling);
     return host;
   }
@@ -176,7 +177,7 @@
       })
       .catch(function () {
         host.innerHTML =
-          "<div class=\"kg-block\"><p>Baraj verisi alinamadi. <a href=\"https://www.koski.gov.tr\" target=\"_blank\" rel=\"noopener\">KOSKI</a></p></div>";
+          "<div class=\"kg-block\"><p>Baraj verisi al\u0131namad\u0131. <a href=\"https://www.koski.gov.tr\" target=\"_blank\" rel=\"noopener\">KOSK\u0130</a></p></div>";
       });
   }
 
