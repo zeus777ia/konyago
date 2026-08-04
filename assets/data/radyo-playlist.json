@@ -1,0 +1,17 @@
+{
+  "station": "KonyaGo Radyo",
+  "tagline": "Konya’nın sesi · türkü ve Anadolu ezgileri",
+  "note": "Çalma listesi genişletilebilir. Telifli ticari kayıtlar eklenmemelidir.",
+  "tracks": [
+    {
+      "id": "karaman-1",
+      "title": "Gezdim Karamanı",
+      "artist": "Ramazan Koyuncu",
+      "region": "Karaman / İç Anadolu",
+      "mood": "Türkü",
+      "src": "https://archive.org/download/ramazankoyuncugezdimkaramani/Ramazan%20Koyuncu%20-%20Gezdim%20KARAMANI.mp3",
+      "license": "Internet Archive · Public Domain Mark (yükleyen beyanı)",
+      "attribution": "archive.org/details/ramazankoyuncugezdimkaramani"
+    }
+  ]
+}
