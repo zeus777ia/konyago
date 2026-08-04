@@ -213,6 +213,18 @@
     } catch (e) {}
   }
 
+  function injectRadio() {
+    var after = $("#kgQuiz") || $("#kgRain") || $("#todayPlan") || $(".feat-grid");
+    if (!after || $("#kgRadioCta")) return;
+    var node = el(
+      '<div class="kg-block" id="kgRadioCta" style="background:linear-gradient(135deg,rgba(13,122,79,.12),rgba(201,162,39,.1));border-color:rgba(13,122,79,.25)">' +
+        "<h3>KonyaGo Radyo</h3>" +
+        "<p>Konya türküleri ve ezgileri — kendi istasyonumuz.</p>" +
+        '<a class="btn btn-primary btn-sm" href="radyo.html">Radyoyu aç →</a></div>'
+    );
+    after.parentNode.insertBefore(node, after.nextSibling);
+  }
+
   function injectQuiz() {
     var after = $("#kgRain") || $("#kgSpots");
     if (!after || $("#kgQuiz")) return;
@@ -263,6 +275,7 @@
     injectSpots();
     injectRain();
     injectQuiz();
+    injectRadio();
     injectAudioHints();
   }
 
