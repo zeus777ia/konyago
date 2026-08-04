@@ -1,27 +1,37 @@
 {
   "station": "KonyaGo Radyo",
-  "tagline": "Konya’nın sesi · türkü ve Anadolu ezgileri",
-  "note": "Kendi özel istasyonun. Telifsiz veya lisanslı mp3 dosyalarını assets/audio/ altına koyup bu listeye ekle. Ticari türkü kayıtlarını izinsiz ekleme.",
+  "tagline": "Anadolu ezgileri · telifsiz / açık lisans",
+  "note": "Parçalar Creative Commons veya kamu malı kayıtlardır. Atıf: Internet Archive.",
   "tracks": [
     {
-      "id": "ornek-1",
-      "title": "Konya ezgisi (örnek yer tutucu)",
-      "artist": "KonyaGo Radyo",
-      "region": "Konya",
-      "mood": "Türkü",
-      "src": "assets/audio/konya-1.mp3",
-      "license": "Yerel dosya — sen ekleyeceksin",
-      "attribution": "assets/audio/"
+      "id": "istiklal-saz",
+      "title": "İstiklal’de saz (sokak müziği)",
+      "artist": "Sokak müzisyeni · İstanbul kayıt",
+      "region": "Anadolu ruhu",
+      "mood": "Saz",
+      "src": "https://archive.org/download/aporee_5108_6533/Istiklal23809030h.mp3",
+      "license": "CC BY-SA 3.0",
+      "attribution": "archive.org/details/aporee_5108_6533"
     },
     {
-      "id": "ornek-2",
-      "title": "İç Anadolu havası (örnek yer tutucu)",
-      "artist": "KonyaGo Radyo",
-      "region": "İç Anadolu",
-      "mood": "Ezgiler",
-      "src": "assets/audio/konya-2.mp3",
-      "license": "Yerel dosya — sen ekleyeceksin",
-      "attribution": "assets/audio/"
+      "id": "saz-jam",
+      "title": "Saz, keman ve tanbur doğaçlama",
+      "artist": "Açık oturum kaydı",
+      "region": "Anadolu",
+      "mood": "Enstrümantal",
+      "src": "https://archive.org/download/20130117232738/20130117%20232738.mp3",
+      "license": "CC BY-ND 3.0",
+      "attribution": "archive.org/details/20130117232738"
+    },
+    {
+      "id": "odeon-tarihi",
+      "title": "Tarihi plak kaydı (Odeon)",
+      "artist": "Safinaz Hanım dönemi",
+      "region": "Osmanlı / erken Cumhuriyet",
+      "mood": "Arşiv",
+      "src": "https://archive.org/download/odeon-46277-safinaz-hanem-souya-sali-virmior-yenguessi/Odeon%2046277%20-%20Safinaz%20Hanem%20-%20Souya%20Sali%20Virmior%20Yenguessi.mp3",
+      "license": "Public Domain Mark 1.0",
+      "attribution": "archive.org/details/odeon-46277-safinaz-hanem-souya-sali-virmior-yenguessi"
     }
   ]
 }
