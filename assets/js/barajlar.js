@@ -14,10 +14,10 @@
   ];
 
   var DISPLAY = {
-    Altinapa: "Altınapa",
-    Afsar: "Afşar",
-    Bagbasi: "Bağbaşı",
-    Bozkir: "Bozkır"
+    Altinapa: "Altinapa",
+    Afsar: "Afsar",
+    Bagbasi: "Bagbasi",
+    Bozkir: "Bozkir"
   };
 
   function parseKoski(html, name) {
@@ -83,9 +83,9 @@
   }
 
   function fmtVol(n) {
-    if (!n) return "—";
-    if (n >= 1e6) return (n / 1e6).toFixed(1).replace(".", ",") + " milyon m³";
-    return Math.round(n / 1000).toLocaleString("tr-TR") + " bin m³";
+    if (!n) return "-";
+    if (n >= 1e6) return (n / 1e6).toFixed(1).replace(".", ",") + " milyon m3";
+    return Math.round(n / 1000).toLocaleString("tr-TR") + " bin m3";
   }
 
   function color(pct) {
@@ -105,52 +105,35 @@
         return s + (x.pct || 0);
       }, 0) / data.items.length;
 
-    var html =
-      '<div class="kg-block" id="kgBarajBox">' +
-      "<h3>Konya baraj dolulukları</h3>" +
-      '<p style="margin-bottom:10px">' +
-      (data.live ? "Canlı KOSKİ verisi · " : "Son kayıtlı KOSKİ verisi · ") +
-      (data.updated || "") +
-      " · Ort. <strong>" +
-      Math.round(avg) +
-      "%</strong></p>" +
-      '<div class="kg-baraj-list">';
+    var parts = [];
+    parts.push("<div class=\"kg-block\" id=\"kgBarajBox\">");
+    parts.push("<h3>Konya baraj doluluklari</h3>");
+    parts.push("<p style=\"margin-bottom:10px\">");
+    parts.push(data.live ? "Canli KOSKI verisi · " : "Son kayitli KOSKI verisi · ");
+    parts.push(data.updated || "");
+    parts.push(" · Ort. <strong>");
+    parts.push(String(Math.round(avg)));
+    parts.push("%</strong></p>");
+    parts.push("<div class=\"kg-baraj-list\">");
 
     data.items.forEach(function (it) {
       var pct = Math.max(0, Math.min(100, it.pct || 0));
       var nm = label(it.name);
-      html +=
-        '<div class="kg-baraj-row">' +
-        '<div class="kg-baraj-meta">' +
-        "<strong>" +
-        nm +
-        "</strong>" +
-        "<span>" +
-        fmtVol(it.volume_m3) +
-        "</span>" +
-        '<b style="color:' +
-        color(pct) +
-        '">' +
-        pct +
-        "%</b></div>" +
-        '<div class="kg-baraj-track" role="img" aria-label="' +
-        nm +
-        " doluluk " +
-        pct +
-        '%">' +
-        '<div class="kg-baraj-fill" style="width:' +
-        pct +
-        "%;background:" +
-        color(pct) +
-        '"></div></div></div>';
+      parts.push("<div class=\"kg-baraj-row\">");
+      parts.push("<div class=\"kg-baraj-meta\">");
+      parts.push("<strong>" + nm + "</strong>");
+      parts.push("<span>" + fmtVol(it.volume_m3) + "</span>");
+      parts.push("<b style=\"color:" + color(pct) + "\">" + pct + "%</b>");
+      parts.push("</div>");
+      parts.push("<div class=\"kg-baraj-track\" role=\"img\" aria-label=\"" + nm + " doluluk " + pct + "%\">");
+      parts.push("<div class=\"kg-baraj-fill\" style=\"width:" + pct + "%;background:" + color(pct) + "\"></div>");
+      parts.push("</div></div>");
     });
 
-    html +=
-      "</div>" +
-      '<p class="wx-src" style="margin-top:10px;font-size:.75rem">Kaynak: <a href="https://www.koski.gov.tr" target="_blank" rel="noopener">KOSKİ</a> · Bilgilendirme amaçlı · Beyşehir Gölü için resmi günlük doluluk % yayınlanmıyor</p>' +
-      "</div>";
-
-    host.innerHTML = html;
+    parts.push("</div>");
+    parts.push("<p class=\"wx-src\" style=\"margin-top:10px;font-size:.75rem\">Kaynak: <a href=\"https://www.koski.gov.tr\" target=\"_blank\" rel=\"noopener\">KOSKI</a> · Bilgilendirme amacli · Beysehir Golu icin resmi gunluk doluluk % yayinlanmiyor</p>");
+    parts.push("</div>");
+    host.innerHTML = parts.join("");
   }
 
   function injectHost() {
@@ -163,7 +146,7 @@
     if (!anchor) return null;
     var host = d.createElement("div");
     host.id = "kgBarajHost";
-    host.innerHTML = '<div class="kg-block"><p>Baraj dolulukları yükleniyor…</p></div>';
+    host.innerHTML = "<div class=\"kg-block\"><p>Baraj doluluklari yukleniyor…</p></div>";
     anchor.parentNode.insertBefore(host, anchor.nextSibling);
     return host;
   }
@@ -193,7 +176,7 @@
       })
       .catch(function () {
         host.innerHTML =
-          '<div class="kg-block"><p>Baraj verisi alınamadı. <a href="https://www.koski.gov.tr" target="_blank" rel="noopener">KOSKİ</a></p></div>';
+          "<div class=\"kg-block\"><p>Baraj verisi alinamadi. <a href=\"https://www.koski.gov.tr\" target=\"_blank\" rel=\"noopener\">KOSKI</a></p></div>";
       });
   }
 
