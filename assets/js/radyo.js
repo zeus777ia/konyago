@@ -11,7 +11,8 @@
     index: 0,
     playing: false,
     shuffle: false,
-    order: []
+    order: [],
+    errors: 0
   };
 
   function $(id) {
@@ -55,7 +56,7 @@
       row.className = "radyo-track" + (state.order[state.index] === i ? " active" : "");
       row.innerHTML =
         "<strong>" +
-        (tr.title || "Parça") +
+        (tr.title || "Parca") +
         "</strong><span>" +
         (tr.artist || "") +
         (tr.region ? " · " + tr.region : "") +
@@ -63,6 +64,7 @@
       row.addEventListener("click", function () {
         var pos = state.order.indexOf(i);
         state.index = pos >= 0 ? pos : i;
+        state.errors = 0;
         loadAndPlay(true);
       });
       box.appendChild(row);
@@ -77,7 +79,7 @@
     if (sub)
       sub.textContent = tr
         ? [tr.artist, tr.region, tr.mood].filter(Boolean).join(" · ")
-        : "Çalma listesi hazırlanıyor";
+        : "Calma listesi hazirlaniyor";
     if (badge) badge.textContent = state.playing ? "CANLI" : "HAZIR";
   }
 
@@ -105,7 +107,7 @@
   function updatePlayBtn() {
     var btn = $("radyoPlay");
     if (!btn) return;
-    btn.textContent = state.playing ? "⏸ Duraklat" : "▶ Çal";
+    btn.textContent = state.playing ? "Duraklat" : "Cal";
     btn.setAttribute("aria-pressed", state.playing ? "true" : "false");
   }
 
@@ -135,10 +137,12 @@
 
     $("radyoNext") &&
       $("radyoNext").addEventListener("click", function () {
+        state.errors = 0;
         next(1);
       });
     $("radyoPrev") &&
       $("radyoPrev").addEventListener("click", function () {
+        state.errors = 0;
         next(-1);
       });
     $("radyoShuffle") &&
@@ -151,6 +155,7 @@
 
     audio.addEventListener("play", function () {
       state.playing = true;
+      state.errors = 0;
       updatePlayBtn();
       setMeta(currentTrack());
     });
@@ -160,6 +165,17 @@
       setMeta(currentTrack());
     });
     audio.addEventListener("ended", function () {
+      next(1);
+    });
+    audio.addEventListener("error", function () {
+      state.errors += 1;
+      if (state.errors >= state.tracks.length) {
+        var sub = $("radyoSub");
+        if (sub) sub.textContent = "Ses dosyasi yok — assets/audio/ klasorune mp3 ekle";
+        state.playing = false;
+        updatePlayBtn();
+        return;
+      }
       next(1);
     });
     audio.addEventListener("timeupdate", function () {
@@ -197,7 +213,7 @@
       })
       .catch(function () {
         var sub = $("radyoSub");
-        if (sub) sub.textContent = "Liste yüklenemedi";
+        if (sub) sub.textContent = "Liste yuklenemedi";
       });
   }
 
