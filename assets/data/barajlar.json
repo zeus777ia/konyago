@@ -1,0 +1,35 @@
+{
+  "updated": "2026-08-04",
+  "source": "KOSKİ",
+  "note": "Konya içme suyu barajları — resmi günlük doluluk",
+  "items": [
+    {
+      "name": "Altınapa",
+      "date": "04/08/2026",
+      "volume_m3": 22337000,
+      "pct": 70,
+      "source": "KOSKİ"
+    },
+    {
+      "name": "Afşar",
+      "date": "04/08/2026",
+      "volume_m3": 319490000,
+      "pct": 88,
+      "source": "KOSKİ"
+    },
+    {
+      "name": "Bağbaşı",
+      "date": "04/08/2026",
+      "volume_m3": 61710000,
+      "pct": 31,
+      "source": "KOSKİ"
+    },
+    {
+      "name": "Bozkır",
+      "date": "04/08/2026",
+      "volume_m3": 142900000,
+      "pct": 40,
+      "source": "KOSKİ"
+    }
+  ]
+}
