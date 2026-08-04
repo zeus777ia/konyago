@@ -65,10 +65,10 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
     if (html.indexOf("yenilikler.js") < 0) {
       html = html.replace(
         "</body>",
-        '<script src="assets/js/yenilikler.js?v=2" defer><' + '/script></body>'
+        '<script src="assets/js/yenilikler.js?v=3" defer><' + '/script></body>'
       );
     } else {
-      html = html.replace(/yenilikler\.js\?v=\d+/g, "yenilikler.js?v=2");
+      html = html.replace(/yenilikler\.js\?v=\d+/g, "yenilikler.js?v=3");
     }
     if (html.indexOf("barajlar.js") < 0) {
       html = html.replace(
@@ -88,7 +88,7 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
   function fail() {
     document.getElementById("boot").innerHTML =
       "<p><strong>Yükleme gecikti</strong></p>" +
-      "<p><a href=\"gezilecek.html\">Gezi</a> · <a href=\"kesfet.html\">Keşfet</a> · <a href=\"mutfak.html\">Mutfak</a> · <a href=\"quiz.html\">Quiz</a> · <a href=\"ai.html\">AI</a></p>";
+      "<p><a href=\"gezilecek.html\">Gezi</a> · <a href=\"kesfet.html\">Keşfet</a> · <a href=\"mutfak.html\">Mutfak</a> · <a href=\"quiz.html\">Quiz</a> · <a href=\"ai.html\">AI</a> · <a href=\"radyo.html\">Radyo</a></p>";
   }
 
   function go(i) {
