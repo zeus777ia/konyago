@@ -1,0 +1,206 @@
+/* KonyaGo Radyo — ozel istasyon player */
+(function (w, d) {
+  "use strict";
+  if (d.getElementById("kgRadyoDone")) return;
+  var flag = d.createElement("meta");
+  flag.id = "kgRadyoDone";
+  d.head.appendChild(flag);
+
+  var state = {
+    tracks: [],
+    index: 0,
+    playing: false,
+    shuffle: false,
+    order: []
+  };
+
+  function $(id) {
+    return d.getElementById(id);
+  }
+
+  function fmtTime(s) {
+    if (!isFinite(s)) return "0:00";
+    s = Math.max(0, Math.floor(s));
+    var m = Math.floor(s / 60);
+    var r = s % 60;
+    return m + ":" + (r < 10 ? "0" : "") + r;
+  }
+
+  function rebuildOrder() {
+    var n = state.tracks.length;
+    state.order = [];
+    for (var i = 0; i < n; i++) state.order.push(i);
+    if (state.shuffle) {
+      for (var j = n - 1; j > 0; j--) {
+        var k = Math.floor(Math.random() * (j + 1));
+        var t = state.order[j];
+        state.order[j] = state.order[k];
+        state.order[k] = t;
+      }
+    }
+  }
+
+  function currentTrack() {
+    if (!state.tracks.length) return null;
+    return state.tracks[state.order[state.index] % state.tracks.length];
+  }
+
+  function renderList() {
+    var box = $("radyoList");
+    if (!box) return;
+    box.innerHTML = "";
+    state.tracks.forEach(function (tr, i) {
+      var row = d.createElement("button");
+      row.type = "button";
+      row.className = "radyo-track" + (state.order[state.index] === i ? " active" : "");
+      row.innerHTML =
+        "<strong>" +
+        (tr.title || "Parça") +
+        "</strong><span>" +
+        (tr.artist || "") +
+        (tr.region ? " · " + tr.region : "") +
+        "</span>";
+      row.addEventListener("click", function () {
+        var pos = state.order.indexOf(i);
+        state.index = pos >= 0 ? pos : i;
+        loadAndPlay(true);
+      });
+      box.appendChild(row);
+    });
+  }
+
+  function setMeta(tr) {
+    var title = $("radyoTitle");
+    var sub = $("radyoSub");
+    var badge = $("radyoBadge");
+    if (title) title.textContent = tr ? tr.title : "KonyaGo Radyo";
+    if (sub)
+      sub.textContent = tr
+        ? [tr.artist, tr.region, tr.mood].filter(Boolean).join(" · ")
+        : "Çalma listesi hazırlanıyor";
+    if (badge) badge.textContent = state.playing ? "CANLI" : "HAZIR";
+  }
+
+  function loadAndPlay(autoplay) {
+    var audio = $("radyoAudio");
+    var tr = currentTrack();
+    if (!audio || !tr || !tr.src) {
+      setMeta(null);
+      return;
+    }
+    setMeta(tr);
+    renderList();
+    audio.src = tr.src;
+    audio.load();
+    if (autoplay) {
+      var p = audio.play();
+      if (p && p.catch)
+        p.catch(function () {
+          state.playing = false;
+          updatePlayBtn();
+        });
+    }
+  }
+
+  function updatePlayBtn() {
+    var btn = $("radyoPlay");
+    if (!btn) return;
+    btn.textContent = state.playing ? "⏸ Duraklat" : "▶ Çal";
+    btn.setAttribute("aria-pressed", state.playing ? "true" : "false");
+  }
+
+  function next(delta) {
+    if (!state.tracks.length) return;
+    state.index = (state.index + delta + state.tracks.length) % state.tracks.length;
+    loadAndPlay(true);
+  }
+
+  function bind() {
+    var audio = $("radyoAudio");
+    if (!audio) return;
+
+    $("radyoPlay") &&
+      $("radyoPlay").addEventListener("click", function () {
+        if (!state.tracks.length) return;
+        if (state.playing) {
+          audio.pause();
+        } else {
+          if (!audio.src) loadAndPlay(true);
+          else {
+            var p = audio.play();
+            if (p && p.catch) p.catch(function () {});
+          }
+        }
+      });
+
+    $("radyoNext") &&
+      $("radyoNext").addEventListener("click", function () {
+        next(1);
+      });
+    $("radyoPrev") &&
+      $("radyoPrev").addEventListener("click", function () {
+        next(-1);
+      });
+    $("radyoShuffle") &&
+      $("radyoShuffle").addEventListener("click", function () {
+        state.shuffle = !state.shuffle;
+        rebuildOrder();
+        $("radyoShuffle").classList.toggle("on", state.shuffle);
+        renderList();
+      });
+
+    audio.addEventListener("play", function () {
+      state.playing = true;
+      updatePlayBtn();
+      setMeta(currentTrack());
+    });
+    audio.addEventListener("pause", function () {
+      state.playing = false;
+      updatePlayBtn();
+      setMeta(currentTrack());
+    });
+    audio.addEventListener("ended", function () {
+      next(1);
+    });
+    audio.addEventListener("timeupdate", function () {
+      var cur = $("radyoTime");
+      var bar = $("radyoBar");
+      if (cur) cur.textContent = fmtTime(audio.currentTime) + " / " + fmtTime(audio.duration);
+      if (bar && audio.duration) bar.value = String((audio.currentTime / audio.duration) * 100);
+    });
+    var bar = $("radyoBar");
+    if (bar) {
+      bar.addEventListener("input", function () {
+        if (!audio.duration) return;
+        audio.currentTime = (Number(bar.value) / 100) * audio.duration;
+      });
+    }
+  }
+
+  function boot() {
+    bind();
+    fetch("assets/data/radyo-playlist.json?v=" + Date.now(), { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("playlist");
+        return r.json();
+      })
+      .then(function (data) {
+        state.tracks = data.tracks || [];
+        rebuildOrder();
+        renderList();
+        if (state.tracks.length) {
+          loadAndPlay(false);
+          setMeta(currentTrack());
+        }
+        var note = $("radyoNote");
+        if (note && data.note) note.textContent = data.note;
+      })
+      .catch(function () {
+        var sub = $("radyoSub");
+        if (sub) sub.textContent = "Liste yüklenemedi";
+      });
+  }
+
+  if (d.readyState === "loading") d.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})(window, document);
