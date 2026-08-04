@@ -4,48 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<title>KonyaGo Radyo | Anadolu ezgileri</title>
-<meta name="description" content="KonyaGo Radyo — açık lisanslı Anadolu ve saz ezgileri.">
+<title>KonyaGo Radyo | Konya oyun havaları</title>
+<meta name="description" content="KonyaGo Radyo — Konya oyun havaları repertuvarı ve lisanslı yayın.">
 <link rel="canonical" href="https://konyago.com.tr/radyo.html">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css?v=22">
 <style>
 html,body{overflow-x:hidden}
 .radyo-wrap{max-width:720px;margin:0 auto;padding:12px 16px 48px}
-.radyo-hero{
-  border-radius:20px;padding:22px 20px;
-  background:linear-gradient(145deg,#063d28,#0d7a4f 55%,#0a5c3a);
-  color:#fff;box-shadow:0 12px 32px rgba(6,61,40,.22);
-  transform:none !important;
-}
+.radyo-hero{border-radius:20px;padding:22px 20px;background:linear-gradient(145deg,#063d28,#0d7a4f 55%,#0a5c3a);color:#fff;box-shadow:0 12px 32px rgba(6,61,40,.22);transform:none!important}
 .radyo-badge{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.06em;padding:4px 10px;border-radius:999px;background:rgba(201,162,39,.25);color:#f5ecd0;margin-bottom:10px}
 .radyo-hero h1{margin:0 0 6px;font-size:1.45rem;line-height:1.25}
 .radyo-hero .sub{opacity:.92;font-size:.9rem;margin:0 0 14px;min-height:1.2em}
 .radyo-controls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
-.radyo-controls button{
-  border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;
-  background:#fff;color:#0a5c3a;font:inherit;
-  transform:none !important;transition:opacity .15s;
-  -webkit-tap-highlight-color:transparent;
-}
-.radyo-controls button:active{opacity:.85}
+.radyo-controls button{border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:#fff;color:#0a5c3a;font:inherit;transform:none!important;-webkit-tap-highlight-color:transparent}
 .radyo-controls button.ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28)}
 .radyo-controls button.on{background:#c9a227;color:#1a2e24}
 .radyo-progress{width:100%;margin-top:10px;height:8px;accent-color:#c9a227;cursor:pointer}
 .radyo-time{font-size:.8rem;opacity:.88;margin-top:6px;font-variant-numeric:tabular-nums}
-.radyo-list{margin-top:18px;display:flex;flex-direction:column;gap:8px}
-.radyo-track{
-  text-align:left;border:1px solid var(--border,rgba(13,122,79,.18));
-  background:var(--white,#fff);border-radius:14px;padding:12px 14px;cursor:pointer;font:inherit;
-  transform:none !important;transition:border-color .15s,box-shadow .15s;
-  -webkit-tap-highlight-color:transparent;
-}
-[data-theme=dark] .radyo-track{background:#12261c;border-color:rgba(255,255,255,.08);color:#e6f2eb}
-.radyo-track strong{display:block;color:var(--green-dark,#0a5c3a)}
-[data-theme=dark] .radyo-track strong{color:#8fd4b0}
-.radyo-track span{font-size:.82rem;color:var(--muted,#5a7264)}
+.radyo-list,.rep-list{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.radyo-track,.rep-item{text-align:left;border:1px solid var(--border,rgba(13,122,79,.18));background:var(--white,#fff);border-radius:14px;padding:12px 14px;font:inherit;transform:none!important}
+[data-theme=dark] .radyo-track,[data-theme=dark] .rep-item{background:#12261c;border-color:rgba(255,255,255,.08);color:#e6f2eb}
+.radyo-track strong,.rep-item strong{display:block;color:var(--green-dark,#0a5c3a)}
+[data-theme=dark] .radyo-track strong,[data-theme=dark] .rep-item strong{color:#8fd4b0}
+.radyo-track span,.rep-item span{font-size:.82rem;color:var(--muted,#5a7264)}
 .radyo-track.active{border-color:var(--green,#0d7a4f);box-shadow:0 0 0 2px rgba(13,122,79,.18)}
-.radyo-note{font-size:.78rem;color:var(--muted);margin-top:14px;line-height:1.45}
+.radyo-note{font-size:.78rem;color:var(--muted);margin-top:14px;line-height:1.5}
+.rep-head{margin:22px 0 8px;font-size:1.05rem}
 audio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .back{display:inline-block;margin:8px 0 12px;color:var(--green-deep,#0a5c3a);font-weight:600;text-decoration:none}
 </style>
@@ -71,7 +56,7 @@ audio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
   <section class="radyo-hero" aria-label="KonyaGo Radyo">
     <div class="radyo-badge" id="radyoBadge">HAZIR</div>
     <h1 id="radyoTitle">KonyaGo Radyo</h1>
-    <p class="sub" id="radyoSub">Açık lisanslı Anadolu ezgileri</p>
+    <p class="sub" id="radyoSub">Konya oyun havaları · lisanslı yayın</p>
 
     <div class="radyo-controls">
       <button type="button" id="radyoPrev" class="ghost" aria-label="Önceki">⏮</button>
@@ -87,13 +72,17 @@ audio{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
   <h2 style="margin:20px 0 8px;font-size:1.05rem">Çalma listesi</h2>
   <div class="radyo-list" id="radyoList"></div>
   <p class="radyo-note" id="radyoNote"></p>
+
+  <h2 class="rep-head">Konya oyun havaları repertuvarı</h2>
+  <p class="radyo-note" style="margin-top:0">Kültür ve Turizm Bakanlığı kataloğu ve yöre kaynaklarından. İsimler kültürel referanstır; ses kaydı ayrı lisans ister.</p>
+  <div class="rep-list" id="repList"></div>
 </main>
 
 <footer class="site-footer">
-  <div class="container">© 2026 KonyaGo · Açık lisanslı arşiv kayıtları</div>
+  <div class="container">© 2026 KonyaGo · Telifli icra yayınlanmaz</div>
 </footer>
 
 <script src="assets/js/theme.js?v=2"></script>
-<script src="assets/js/radyo.js?v=2"></script>
+<script src="assets/js/radyo.js?v=3"></script>
 </body>
 </html>
