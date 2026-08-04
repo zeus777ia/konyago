@@ -1,1 +1,42 @@
-PLACEHOLDER_TOO_LARGE
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konya Gezilecek Yerler | KonyaGo</title>
+<meta name="description" content="Konya gezilecek yerler: Mevlana, Sille, Fasıllar, 80 Binde, Eflatunpınar ve daha fazlası.">
+<link rel="canonical" href="https://konyago.com.tr/gezilecek.html">
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+</head>
+<body>
+<p style="font-family:system-ui;text-align:center;margin-top:20vh;color:#0a5c3a">KonyaGo gezi listesi yükleniyor…</p>
+<script>
+(function(){
+  var urls=[
+    "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0b005bc8995972caf5133b488f32b5ec38/gezilecek.html",
+    "https://raw.githack.com/zeus777ia/konyago/dbab5e0b005bc8995972caf5133b488f32b5ec38/gezilecek.html"
+  ];
+  function go(i){
+    if(i>=urls.length){
+      document.body.innerHTML='<p style="text-align:center;font-family:system-ui">Yükleme gecikti. <a href="index.html">Ana sayfa</a></p>';
+      return;
+    }
+    fetch(urls[i],{cache:"no-store"}).then(function(r){
+      if(!r.ok) throw 0;
+      return r.text();
+    }).then(function(html){
+      if(html.indexOf("Mevlana")<0) throw 0;
+      html=html.replace(/assets\/js\/app\.js\?v=\d+/g,"assets/js/app.js?v=24");
+      if(html.indexOf("gez-extra.js")<0){
+        html=html.replace("</body",'<script src="assets/js/gez-extra.js?v=1" defer><\\/script></body');
+      }
+      document.open();
+      document.write(html);
+      document.close();
+    }).catch(function(){ go(i+1); });
+  }
+  go(0);
+})();
+</script>
+</body>
+</html>
