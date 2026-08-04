@@ -1,77 +1,33 @@
 {
   "station": "KonyaGo Radyo",
-  "tagline": "Anadolu türküleri · kamu malı arşiv kayıtları",
-  "note": "Tüm parçalar Public Domain (kamu malı) tarihsel türkü / halk müziği kayıtlarıdır. Kaynak: Internet Archive. Modern ticari plaklar yoktur.",
-  "tracks": [
-    {
-      "id": "turnalar",
-      "title": "Turnalar Turnalar",
-      "artist": "Darülelhan Heyeti",
-      "region": "Anadolu",
-      "mood": "Türkü",
-      "src": "https://archive.org/download/TurnalarTurnalar-DarulelhanHeyeti/TurnalarTurnalar-DarulelhanHeyeti.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/TurnalarTurnalar-DarulelhanHeyeti"
-    },
-    {
-      "id": "degirmene",
-      "title": "Değirmene Taş Koydum",
-      "artist": "Memik Açıkkol",
-      "region": "Anadolu",
-      "mood": "Türkü",
-      "src": "https://archive.org/download/DegirmeneTasKoydum-MemikAcikkol_560/DegirmeneTasKoydum-MemikAcikkol.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/DegirmeneTasKoydum-MemikAcikkol_560"
-    },
-    {
-      "id": "dut-fidani",
-      "title": "Dut Fidani Boyunca",
-      "artist": "Yurttan Sesler Korosu",
-      "region": "Anadolu",
-      "mood": "Türkü",
-      "src": "https://archive.org/download/DutFidaniBoyunca-YurttanSeslerKorosu/DutFidaniBoyunca-YurttanSeslerKorosu.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/DutFidaniBoyunca-YurttanSeslerKorosu"
-    },
-    {
-      "id": "sari-zeybek",
-      "title": "Sarı Zeybek",
-      "artist": "Hanende İbrahim Efendi",
-      "region": "Anadolu",
-      "mood": "Zeybek",
-      "src": "https://archive.org/download/SariZeybek-HanendeIbrahimEfendi/SariZeybek-HanendeIbrahimEfendi.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/SariZeybek-HanendeIbrahimEfendi"
-    },
-    {
-      "id": "giresun",
-      "title": "Giresun Karşılaması (Altını Bozdurayım)",
-      "artist": "Bıçoğlu Osman",
-      "region": "Karadeniz / Anadolu",
-      "mood": "Karşılama",
-      "src": "https://archive.org/download/GiresunKarsilamasialtiniBozdurayim-BicogluOsman/GiresunKarsilamasi-BicogluOsman.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/GiresunKarsilamasialtiniBozdurayim-BicogluOsman"
-    },
-    {
-      "id": "bozlak-halay",
-      "title": "Bozlak ve Halay",
-      "artist": "Yozgatlı Hafız Süleyman Bey",
-      "region": "İç Anadolu",
-      "mood": "Bozlak",
-      "src": "https://archive.org/download/BozlakAndHalay-YozgatliHafizSuleymanBey/HastaDustumBozlakTurnamNerdenGeldinHalay-YozgatliHafizSuleymanBey.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/BozlakAndHalay-YozgatliHafizSuleymanBey"
-    },
-    {
-      "id": "egil-daglar",
-      "title": "Eğil Dağlar Üstünden Aşam",
-      "artist": "Viktoriya Hanım",
-      "region": "Anadolu",
-      "mood": "Türkü",
-      "src": "https://archive.org/download/EgilDaglarUstundenAsam-ViktoriyaHanim/EgilDaglarUstundenAsam-ViktoriyaHanim.mp3",
-      "license": "Public Domain",
-      "attribution": "archive.org/details/EgilDaglarUstundenAsam-ViktoriyaHanim"
-    }
-  ]
+  "tagline": "Konya oyun havaları · lisanslı arşiv",
+  "note": "Meşhur Konya icralarının (Mustafa Can, Mehmet Gürbez, Ayaslarlı Şenol, Mevlüt Taşpınar vb.) ticari kayıtları teliflidir; sitede çalınamaz. Liste yalnızca senin yüklediğin telifsiz/lisanslı mp3 dosyalarıyla dolar. Klasör: assets/audio/",
+  "repertoire": [
+    {"name": "Konya Peşrevi", "type": "Oyun havası", "note": "Konya yöresinin klasik açılış havası"},
+    {"name": "Sille", "type": "Türkü / oyun", "note": "Sille mahallesi ezgisi; hızlı okunur"},
+    {"name": "İnce Çayır", "type": "Kaşık oyunu", "note": "Kültür Bakanlığı Konya oyunları kataloğu"},
+    {"name": "Küstüm", "type": "Kaşık oyunu", "note": "Yöre kadın oyunları"},
+    {"name": "Sekelim Kızlar", "type": "Kaşık oyunu", "note": "Konya oyunları"},
+    {"name": "Aksinli", "type": "Oyun havası", "note": "Yöresel kaşık oyunu"},
+    {"name": "Karanfil", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Aman Madam Hoş Geldin", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Ustam Kim İdi?", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Limo", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Karabiber", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Kazanoğlu", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Develi", "type": "Oyun havası", "note": "Konya / çevre yöre"},
+    {"name": "Süpürgesi Yoncadan", "type": "Oyun havası", "note": "Konya oyunları"},
+    {"name": "Konyalı", "type": "Oyun havası", "note": "Yöre isimli klasik oyun"},
+    {"name": "Dönme", "type": "Oyun", "note": "Ney, saz veya tanbur eşliğinde"},
+    {"name": "Sandıklı", "type": "Türkü / oyun", "note": "Konya türkü repertuvarı"},
+    {"name": "Sabahın Seher Vakti", "type": "Türkü", "note": "Konya yöresi"},
+    {"name": "Menteşeli", "type": "Türkü / oyun", "note": "Konya repertuvarı"},
+    {"name": "Asabilsem", "type": "Türkü", "note": "Konya repertuvarı"},
+    {"name": "İçme Beyim", "type": "Türkü", "note": "Konya repertuvarı"},
+    {"name": "Kaşık Oyun Havası", "type": "Oyun havası", "note": "Zil / kaşık eşliğinde hareketli"},
+    {"name": "Barana", "type": "Eğlence kültürü", "note": "Sille eğlence geleneği"},
+    {"name": "Bozkır Kaşık", "type": "Oyun", "note": "Bozkır ilçesi kaşık oyunu geleneği"},
+    {"name": "Aksaray Develisi", "type": "Türkü / oyun", "note": "Çevre yöre ile ortak repertuvar"}
+  ],
+  "tracks": []
 }
