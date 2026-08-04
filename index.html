@@ -56,11 +56,19 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
         '<link rel="stylesheet" href="assets/css/yenilikler.css?v=1"></head>'
       );
     }
+    if (html.indexOf("speak.js") < 0) {
+      html = html.replace(
+        "</body>",
+        '<script src="assets/js/speak.js?v=1"><' + '/script></body>'
+      );
+    }
     if (html.indexOf("yenilikler.js") < 0) {
       html = html.replace(
         "</body>",
-        '<script src="assets/js/yenilikler.js?v=1" defer><' + '/script></body>'
+        '<script src="assets/js/yenilikler.js?v=2" defer><' + '/script></body>'
       );
+    } else {
+      html = html.replace(/yenilikler\.js\?v=\d+/g, "yenilikler.js?v=2");
     }
     if (html.indexOf("barajlar.js") < 0) {
       html = html.replace(
