@@ -1,5 +1,4 @@
-/* KonyaGo — Konya baraj doluluk oranları (KOSKİ)
-   Canlı çekim + yerel yedek JSON + basit çubuk grafik */
+/* KonyaGo — Konya baraj doluluk oranlari (KOSKI) */
 (function (w, d) {
   "use strict";
   if (d.getElementById("kgBarajDone")) return;
@@ -8,15 +7,21 @@
   d.head.appendChild(flag);
 
   var SOURCES = [
-    { name: "Altınapa", url: "https://www.koski.gov.tr/koski/altinapa-baraj-degerleri" },
-    { name: "Afşar", url: "https://www.koski.gov.tr/koski/afsar-baraj-degerleri" },
-    { name: "Bağbaşı", url: "https://www.koski.gov.tr/koski/bagbasi-baraj-degerleri" },
-    { name: "Bozkır", url: "https://www.koski.gov.tr/koski/bozkir-baraj-degerleri" }
+    { name: "Altinapa", url: "https://www.koski.gov.tr/koski/altinapa-baraj-degerleri" },
+    { name: "Afsar", url: "https://www.koski.gov.tr/koski/afsar-baraj-degerleri" },
+    { name: "Bagbasi", url: "https://www.koski.gov.tr/koski/bagbasi-baraj-degerleri" },
+    { name: "Bozkir", url: "https://www.koski.gov.tr/koski/bozkir-baraj-degerleri" }
   ];
 
+  var DISPLAY = {
+    Altinapa: "Altınapa",
+    Afsar: "Afşar",
+    Bagbasi: "Bağbaşı",
+    Bozkir: "Bozkır"
+  };
+
   function parseKoski(html, name) {
-    var re =
-      /<tr[^>]*>\s*<td[^>]*>\s*(\d{2}\/\d{2}\/\d{4})\s*<\/td>\s*<td[^>]*>\s*([^<]+)<\/td>\s*<td[^>]*>\s*([^<]+)<\/td>\s*<td[^>]*>\s*([^<]+)<\/td>\s*<td[^>]*>\s*(\d+)\s*<\/td>/i;
+    var re = /<tr[^>]*>\s*<td[^>]*>\s*(\d{2}\/\d{2}\/\d{4})\s*<\/td>\s*<td[^>]*>\s*([^<]+)<\/td>\s*<td[^>]*>\s*([^<]+)<\/td>\s*<td[^>]*>\s*([^<]+)<\/td>\s*<td[^>]*>\s*(\d+)\s*<\/td>/i;
     var m = html.match(re);
     if (!m) return null;
     var vol = String(m[4]).replace(/\D/g, "");
@@ -25,7 +30,7 @@
       date: m[1].trim(),
       volume_m3: vol ? parseInt(vol, 10) : 0,
       pct: parseInt(m[5], 10),
-      source: "KOSKİ"
+      source: "KOSKI"
     };
   }
 
@@ -36,12 +41,14 @@
     ];
     function tryOne(i) {
       if (i >= proxies.length) return Promise.reject(new Error("proxy"));
-      return fetch(proxies[i], { cache: "no-store" }).then(function (r) {
-        if (!r.ok) throw new Error("http");
-        return r.text();
-      }).catch(function () {
-        return tryOne(i + 1);
-      });
+      return fetch(proxies[i], { cache: "no-store" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("http");
+          return r.text();
+        })
+        .catch(function () {
+          return tryOne(i + 1);
+        });
     }
     return tryOne(0);
   }
@@ -65,18 +72,14 @@
   }
 
   function loadFallback() {
-    return fetch("assets/data/barajlar.json?v=" + Date.now(), {
-      cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("json");
-      return r.json();
-    }).then(function (j) {
-      return {
-        items: j.items || [],
-        live: false,
-        updated: j.updated || ""
-      };
-    });
+    return fetch("assets/data/barajlar.json?v=" + Date.now(), { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("json");
+        return r.json();
+      })
+      .then(function (j) {
+        return { items: j.items || [], live: false, updated: j.updated || "" };
+      });
   }
 
   function fmtVol(n) {
@@ -91,6 +94,10 @@
     return "#c45c26";
   }
 
+  function label(name) {
+    return DISPLAY[name] || name;
+  }
+
   function render(data, host) {
     if (!host || !data || !data.items || !data.items.length) return;
     var avg =
@@ -101,10 +108,8 @@
     var html =
       '<div class="kg-block" id="kgBarajBox">' +
       "<h3>Konya baraj dolulukları</h3>" +
-      "<p style=\"margin-bottom:10px\">" +
-      (data.live
-        ? "Canlı KOSKİ verisi · "
-        : "Son kayıtlı KOSKİ verisi · ") +
+      '<p style="margin-bottom:10px">' +
+      (data.live ? "Canlı KOSKİ verisi · " : "Son kayıtlı KOSKİ verisi · ") +
       (data.updated || "") +
       " · Ort. <strong>" +
       Math.round(avg) +
@@ -113,22 +118,23 @@
 
     data.items.forEach(function (it) {
       var pct = Math.max(0, Math.min(100, it.pct || 0));
+      var nm = label(it.name);
       html +=
         '<div class="kg-baraj-row">' +
         '<div class="kg-baraj-meta">' +
         "<strong>" +
-        it.name +
+        nm +
         "</strong>" +
         "<span>" +
         fmtVol(it.volume_m3) +
         "</span>" +
-        "<b style=\"color:" +
+        '<b style="color:' +
         color(pct) +
-        \">" +
+        '">' +
         pct +
         "%</b></div>" +
         '<div class="kg-baraj-track" role="img" aria-label="' +
-        it.name +
+        nm +
         " doluluk " +
         pct +
         '%">' +
@@ -141,7 +147,7 @@
 
     html +=
       "</div>" +
-      '<p class="wx-src" style="margin-top:10px;font-size:.75rem">Kaynak: <a href="https://www.koski.gov.tr" target="_blank" rel="noopener">KOSKİ</a> · Bilgilendirme amaçlı · Doğal göller (Beyşehir vb.) için resmi günlük % yayınlanmıyor</p>' +
+      '<p class="wx-src" style="margin-top:10px;font-size:.75rem">Kaynak: <a href="https://www.koski.gov.tr" target="_blank" rel="noopener">KOSKİ</a> · Bilgilendirme amaçlı · Beyşehir Gölü için resmi günlük doluluk % yayınlanmıyor</p>' +
       "</div>";
 
     host.innerHTML = html;
@@ -157,13 +163,11 @@
     if (!anchor) return null;
     var host = d.createElement("div");
     host.id = "kgBarajHost";
-    host.innerHTML =
-      '<div class="kg-block"><p>Baraj dolulukları yükleniyor…</p></div>';
+    host.innerHTML = '<div class="kg-block"><p>Baraj dolulukları yükleniyor…</p></div>';
     anchor.parentNode.insertBefore(host, anchor.nextSibling);
     return host;
   }
 
-  /* CSS bir kez */
   if (!d.getElementById("kgBarajCss")) {
     var style = d.createElement("style");
     style.id = "kgBarajCss";
