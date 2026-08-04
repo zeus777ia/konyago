@@ -59,14 +59,7 @@
     { name: "Fasıllar anıtı", tip: "Anıtın tam cephesi", q: "Fasıllar Hitit Anıtı" }
   ];
 
-  var AUDIO = {
-    mevlana:
-      "Mevlana Müzesi, Konya’nın simgesi yeşil kubbenin altında. Giriş ücretsizdir. Kalabalıktan kaçmak için sabah erken veya öğleden sonra geç saatleri tercih edin. Türbe bölümünde sessizliğe saygı gösterin.",
-    sille:
-      "Sille, merkeze yaklaşık sekiz kilometre. Taş evler, Aya Eleni Kilisesi ve dar sokaklarıyla fotoğraf için ideal. Yarım gün ayırın; dönüşte Meram yönüne uğrayabilirsiniz.",
-    alaaddin:
-      "Alaaddin Tepesi, Selçuklu başkentinin çekirdeği. Cami, park ve şehir manzarası bir arada. Kısa bir mola için mükemmel; müzelerle aynı güne birleştirilebilir."
-  };
+  var AUDIO = w.KonyaGoAudio || {};
 
   function $(sel, root) {
     return (root || d).querySelector(sel);
@@ -200,7 +193,6 @@
     );
     after.parentNode.insertBefore(node, after.nextSibling);
 
-    /* Hava yağmurluysa öne çıkar */
     try {
       fetch(
         "https://api.open-meteo.com/v1/forecast?latitude=37.87&longitude=32.49&current=weather_code&timezone=Europe%2FIstanbul"
@@ -234,7 +226,6 @@
   }
 
   function injectAudioHints() {
-    /* İkonik kartlara ses butonu */
     var map = [
       { match: "Mevlana", key: "mevlana" },
       { match: "Sille", key: "sille" },
@@ -252,15 +243,9 @@
         btn.addEventListener("click", function (e) {
           e.preventDefault();
           e.stopPropagation();
-          if (w.KonyaGoFeatures && w.KonyaGoFeatures.speak) {
-            w.KonyaGoFeatures.speak(AUDIO[m.key], btn);
-          } else if (w.speechSynthesis) {
-            w.speechSynthesis.cancel();
-            var u = new SpeechSynthesisUtterance(AUDIO[m.key]);
-            u.lang = "tr-TR";
-            u.rate = 0.95;
-            w.speechSynthesis.speak(u);
-          }
+          var text = (w.KonyaGoAudio && w.KonyaGoAudio[m.key]) || AUDIO[m.key];
+          if (w.KonyaGoSpeak) w.KonyaGoSpeak(text, btn);
+          else if (w.KonyaGoFeatures && w.KonyaGoFeatures.speak) w.KonyaGoFeatures.speak(text, btn);
         });
         var body = card.querySelector(".feat-overlay, .place-body") || card;
         body.appendChild(btn);
@@ -269,6 +254,9 @@
   }
 
   function boot() {
+    try {
+      if (w.speechSynthesis) w.speechSynthesis.getVoices();
+    } catch (e) {}
     enhanceToday();
     injectRoutes();
     injectBadges();
