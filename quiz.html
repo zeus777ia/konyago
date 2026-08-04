@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<title>Sen hangi Konya tipisin? | KonyaGo Quiz</title>
+<meta name="description" content="5 soruluk KonyaGo kişilik quiz’i — sana özel rota önerisi.">
+<link rel="canonical" href="https://konyago.com.tr/quiz.html">
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css?v=22">
+<link rel="stylesheet" href="assets/css/yenilikler.css?v=1">
+<style>
+.quiz-wrap{max-width:560px;margin:0 auto}
+.q-card{padding:18px;border-radius:16px;border:1px solid var(--border);background:var(--white);margin:14px 0}
+[data-theme=dark] .q-card{background:#12261c}
+.q-card h2{font-size:1.05rem;margin:0 0 12px}
+.q-opt{display:block;width:100%;text-align:left;margin:6px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:var(--green-soft);cursor:pointer;font:inherit}
+.q-opt:hover,.q-opt.sel{background:var(--green);color:#fff;border-color:transparent}
+.result{display:none;padding:20px;border-radius:16px;background:linear-gradient(135deg,#0a5c3a,#0d7a4f);color:#fff;margin-top:16px}
+.result h2{margin:0 0 8px;color:#fff}
+.result p{color:#e8f5ee}
+.result a{color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img class="logo-mark" src="assets/img/eagle.svg" width="40" height="40" alt="">
+      <span class="logo-text"><strong>KonyaGo</strong><small>Quiz</small></span>
+    </a>
+    <nav class="nav-desktop"><a href="index.html">Ana</a><a href="gezilecek.html">Gezilecek</a><a href="rotalar.html">Rotalar</a></nav>
+  </div>
+</header>
+<main class="container quiz-wrap">
+  <div class="page-head">
+    <a href="index.html">← Ana sayfa</a>
+    <h1>Sen hangi Konya tipisin?</h1>
+    <p>5 kısa soru · sonuç sadece sende kalır</p>
+  </div>
+  <div id="quizApp"></div>
+  <div class="result" id="quizResult"></div>
+</main>
+<footer class="site-footer"><div class="container">© 2026 KonyaGo · <a href="index.html">Ana sayfa</a></div></footer>
+<script src="assets/js/theme.js?v=2"></script>
+<script>
+(function(){
+  var Q=[
+    {t:"Bir günün olsun. İlk durağın?", o:[["Mevlana Müzesi","tarih"],["Sille sokakları","doga"],["Etli ekmekçiler","lezzet"],["Japon Parkı","aile"]]},
+    {t:"Tempo tercihin?", o:[["Yavaş ve derin","tarih"],["Doğa ve yürüyüş","doga"],["Lezzet avı","lezzet"],["Ailece rahat","aile"]]},
+    {t:"Akşam planı?", o:[["Müze/ medrese notları","tarih"],["Meram yürüyüşü","doga"],["Yerel tatlı + cezerye","lezzet"],["Park ve çocuk alanı","aile"]]},
+    {t:"Bir ilçe seçsen?", o:[["Beyşehir (Fasıllar)","tarih"],["Seydişehir / mağara","doga"],["Merkez mutfak","lezzet"],["Selçuklu parkları","aile"]]},
+    {t:"KonyaGo’da en çok neye bakarsın?", o:[["Tarihçe ve anıtlar","tarih"],["Doğa ve manzara","doga"],["Mutfak rehberi","lezzet"],["Kısa aile rotaları","aile"]]}
+  ];
+  var scores={tarih:0,doga:0,lezzet:0,aile:0};
+  var i=0;
+  var app=document.getElementById("quizApp");
+  var res=document.getElementById("quizResult");
+  function render(){
+    if(i>=Q.length){finish();return;}
+    var q=Q[i];
+    var h='<div class="q-card"><h2>'+(i+1)+'. '+q.t+'</h2>';
+    q.o.forEach(function(opt,idx){
+      h+='<button type="button" class="q-opt" data-k="'+opt[1]+'">'+opt[0]+'</button>';
+    });
+    h+='</div>';
+    app.innerHTML=h;
+    app.querySelectorAll(".q-opt").forEach(function(btn){
+      btn.addEventListener("click",function(){
+        scores[btn.getAttribute("data-k")]++;
+        i++;
+        render();
+      });
+    });
+  }
+  function finish(){
+    app.innerHTML="";
+    var best="tarih",max=-1;
+    Object.keys(scores).forEach(function(k){if(scores[k]>max){max=scores[k];best=k;}});
+    var map={
+      tarih:{title:"Tarih tutkunu",desc:"Senin rotan: Mevlana → İnce Minareli / Karatay → Fasıllar veya Eflatunpınar.",href:"gezilecek.html#fasillar"},
+      doga:{title:"Doğa kaçkını",desc:"Senin rotan: Sille → Meram Bağları → Beyşehir Gölü veya Tınaztepe.",href:"sille.html"},
+      lezzet:{title:"Lezzet avcısı",desc:"Senin rotan: Etli ekmek → fırın kebabı → bamya çorbası / tirit → cezerye.",href:"mutfak.html"},
+      aile:{title:"Aile gezgini",desc:"Senin rotan: Japon Parkı → Kelebek Bahçesi → kısa Mevlana molası.",href:"gezilecek.html"}
+    };
+    var r=map[best];
+    res.style.display="block";
+    res.innerHTML="<h2>"+r.title+"</h2><p>"+r.desc+"</p><p><a href=\""+r.href+"\">Rotaya git →</a> · <a href=\"rotalar.html\">Tüm rotalar</a> · <a href=\"ai.html\">AI ile detaylandır</a></p>";
+  }
+  render();
+})();
+</script>
+</body>
+</html>
