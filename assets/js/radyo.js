@@ -1,4 +1,4 @@
-/* KonyaGo Radyo player v2 */
+/* KonyaGo Radyo player v3 */
 (function (w, d) {
   "use strict";
   if (d.getElementById("kgRadyoDone")) return;
@@ -49,6 +49,11 @@
   function renderList() {
     var box = $("radyoList");
     if (!box) return;
+    if (!state.tracks.length) {
+      box.innerHTML =
+        '<div class="radyo-track" style="cursor:default"><strong>Henüz lisanslı parça yok</strong><span>assets/audio/ klasörüne telifsiz mp3 ekleyip radyo-playlist.json tracks listesine yaz</span></div>';
+      return;
+    }
     var activeIdx = state.order[state.index];
     var html = "";
     state.tracks.forEach(function (tr, i) {
@@ -58,7 +63,7 @@
         '" data-i="' +
         i +
         '"><strong>' +
-        (tr.title || "Parca") +
+        (tr.title || "Parça") +
         "</strong><span>" +
         (tr.artist || "") +
         (tr.region ? " · " + tr.region : "") +
@@ -77,6 +82,25 @@
     };
   }
 
+  function renderRep(list) {
+    var box = $("repList");
+    if (!box) return;
+    if (!list || !list.length) {
+      box.innerHTML = "";
+      return;
+    }
+    var html = "";
+    list.forEach(function (r) {
+      html +=
+        '<div class="rep-item"><strong>' +
+        (r.name || "") +
+        "</strong><span>" +
+        [r.type, r.note].filter(Boolean).join(" · ") +
+        "</span></div>";
+    });
+    box.innerHTML = html;
+  }
+
   function setMeta(tr) {
     var title = $("radyoTitle");
     var sub = $("radyoSub");
@@ -85,7 +109,9 @@
     if (sub)
       sub.textContent = tr
         ? [tr.artist, tr.region, tr.mood].filter(Boolean).join(" · ")
-        : "Liste hazirlaniyor";
+        : state.tracks.length
+          ? "Liste hazır"
+          : "Lisanslı parça bekleniyor";
     if (badge) badge.textContent = state.playing ? "CANLI" : "HAZIR";
   }
 
@@ -98,7 +124,8 @@
     }
     setMeta(tr);
     renderList();
-    if (audio.src !== tr.src) {
+    if (audio.getAttribute("data-src") !== tr.src) {
+      audio.setAttribute("data-src", tr.src);
       audio.src = tr.src;
       audio.load();
     }
@@ -115,7 +142,7 @@
   function updatePlayBtn() {
     var btn = $("radyoPlay");
     if (!btn) return;
-    btn.textContent = state.playing ? "Duraklat" : "Cal";
+    btn.textContent = state.playing ? "Duraklat" : "Çal";
     btn.setAttribute("aria-pressed", state.playing ? "true" : "false");
   }
 
@@ -176,9 +203,9 @@
     });
     audio.addEventListener("error", function () {
       state.errors += 1;
-      if (state.errors >= state.tracks.length) {
+      if (state.errors >= Math.max(1, state.tracks.length)) {
         var sub = $("radyoSub");
-        if (sub) sub.textContent = "Kaynak gecici olarak ulasilamiyor";
+        if (sub) sub.textContent = "Kaynak geçici olarak ulaşılamıyor";
         state.playing = false;
         updatePlayBtn();
         return;
@@ -212,16 +239,15 @@
         state.tracks = data.tracks || [];
         rebuildOrder();
         renderList();
-        if (state.tracks.length) {
-          loadAndPlay(true);
-          setMeta(currentTrack());
-        }
+        renderRep(data.repertoire || []);
+        setMeta(currentTrack());
+        if (state.tracks.length) loadAndPlay(false);
         var note = $("radyoNote");
         if (note && data.note) note.textContent = data.note;
       })
       .catch(function () {
         var sub = $("radyoSub");
-        if (sub) sub.textContent = "Liste yuklenemedi";
+        if (sub) sub.textContent = "Liste yüklenemedi";
       });
   }
 
