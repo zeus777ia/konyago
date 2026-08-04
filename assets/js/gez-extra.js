@@ -1,4 +1,4 @@
-/* KonyaGo — ek yerler + görsel düzeltme */
+/* KonyaGo — ek yerler + görsel düzeltme (Special:FilePath) */
 (function () {
   "use strict";
   if (document.getElementById("gezExtraDone")) return;
@@ -6,39 +6,46 @@
   flag.id = "gezExtraDone";
   document.head.appendChild(flag);
 
-  /* Wikimedia 640px — tarayıcıda stabil thumbnail */
+  /* Wikimedia Special:FilePath — tarayıcıda stabil çalışır */
+  function wiki(file) {
+    return (
+      "https://commons.wikimedia.org/wiki/Special:FilePath/" +
+      encodeURIComponent(file).replace(/%2F/g, "/") +
+      "?width=800"
+    );
+  }
+
   var IMG = {
-    mevlana: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Mevlana_M%C3%BCzesi_01.jpg/640px-Mevlana_M%C3%BCzesi_01.jpg",
-    alaaddin: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Al%C3%A2eddin_Mosque%2C_Konya_02.jpg/640px-Al%C3%A2eddin_Mosque%2C_Konya_02.jpg",
-    ince: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Ince_Minareli_Medrese_01.jpg/640px-Ince_Minareli_Medrese_01.jpg",
-    karatay: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Konya_Karatay_Ceramics_Museum_2808.jpg/640px-Konya_Karatay_Ceramics_Museum_2808.jpg",
-    sahip: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Konya_Sahip_Ata_Vak%C4%B1flar_Eserleri_M%C3%BCzesi_exterior_3604.jpg/640px-Konya_Sahip_Ata_Vak%C4%B1flar_Eserleri_M%C3%BCzesi_exterior_3604.jpg",
-    sircali: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Konya_Sircali_Medrese_3607.jpg/640px-Konya_Sircali_Medrese_3607.jpg",
-    aziziye: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Aziziye_Mosque%2C_Konya%2C_Turkey.jpg/640px-Aziziye_Mosque%2C_Konya%2C_Turkey.jpg",
-    japon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Konya%3B_Japon_Park%C4%B1.jpg/640px-Konya%3B_Japon_Park%C4%B1.jpg",
-    kelebek: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Konya_Tropical_Butterfly_Garden.jpg/640px-Konya_Tropical_Butterfly_Garden.jpg",
-    panorama: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Interior_of_Konya_Panorama_Museum_152248_04.jpg/640px-Interior_of_Konya_Panorama_Museum_152248_04.jpg",
-    sille: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Sille_Village%2C_Konya.jpg/640px-Sille_Village%2C_Konya.jpg",
-    meram: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sille_houses_4689.jpg/640px-Sille_houses_4689.jpg",
-    catal: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/%C3%87atalh%C3%B6y%C3%BCk%2C_7400_BC%2C_Konya%2C_Turkey_-_UNESCO_World_Heritage_Site%2C_02.jpg/640px-%C3%87atalh%C3%B6y%C3%BCk%2C_7400_BC%2C_Konya%2C_Turkey_-_UNESCO_World_Heritage_Site%2C_02.jpg",
-    seyyid: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Muallimhane_Mosque%2C_Seydi%C5%9Fehir.JPG/640px-Muallimhane_Mosque%2C_Seydi%C5%9Fehir.JPG",
-    tinaz: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/T%C4%B1naztepe_ma%C4%9Faras%C4%B1_-_panoramio.jpg/640px-T%C4%B1naztepe_ma%C4%9Faras%C4%B1_-_panoramio.jpg",
-    tinaz2: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/T%C4%B1naztepe_ma%C4%9Faras%C4%B1_1.JPG/640px-T%C4%B1naztepe_ma%C4%9Faras%C4%B1_1.JPG",
-    kugulu: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Seydi%C5%9Fehir_and_Taurus_Mountains_from_Il%C4%B1ca.jpg/640px-Seydi%C5%9Fehir_and_Taurus_Mountains_from_Il%C4%B1ca.jpg",
-    fasillar: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Fasillar.jpg/640px-Fasillar.jpg",
-    lukyanus: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/R%C3%B6mische_Reliefs_bei_Fasillar.jpg/640px-R%C3%B6mische_Reliefs_bei_Fasillar.jpg",
-    beygol: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg/640px-2019-05-08_02.23.01_1_Bey%C5%9Fehir_G%C3%B6l%C3%BC%2C_Bey%C5%9Fehir._Konya.jpg",
-    esref: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/E%C5%9Frefo%C4%9Flu_Camii%2C_Bey%C5%9Fehir%2C_April_2024_06.jpg/640px-E%C5%9Frefo%C4%9Flu_Camii%2C_Bey%C5%9Fehir%2C_April_2024_06.jpg",
-    kultur: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/KONYA_K%C3%9CLT%C3%9CR_PARK_-_2025.jpg/640px-KONYA_K%C3%9CLT%C3%9CR_PARK_-_2025.jpg",
-    hayvan: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Konya_hayvanat_bah%C3%A7esi_2021.jpg/640px-Konya_hayvanat_bah%C3%A7esi_2021.jpg",
-    millet: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Konya_Eski_Stadyum_Yeni_Millet_Bah%C3%A7esi_49.jpg/640px-Konya_Eski_Stadyum_Yeni_Millet_Bah%C3%A7esi_49.jpg",
-    bedesten: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Bedesten_%C3%A7ar%C5%9F%C4%B1s%C4%B1_Konya.jpg/640px-Bedesten_%C3%A7ar%C5%9F%C4%B1s%C4%B1_Konya.jpg",
-    akyokus: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Konya_Akyoku%C5%9F_Nature_Park_Konya_Landscape.jpg/640px-Konya_Akyoku%C5%9F_Nature_Park_Konya_Landscape.jpg",
-    silleDam: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Sille_Dam%2C_Konya.jpg/640px-Sille_Dam%2C_Konya.jpg",
-    eflatun: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Eflatunp%C4%B1nar_Hittite_Water_Monument_5.jpg/640px-Eflatunp%C4%B1nar_Hittite_Water_Monument_5.jpg"
+    mevlana: wiki("Mevlana_Müzesi_01.jpg"),
+    alaaddin: wiki("Alâeddin_Mosque,_Konya_02.jpg"),
+    ince: wiki("Ince_Minareli_Medrese_01.jpg"),
+    karatay: wiki("Konya_Karatay_Ceramics_Museum_2808.jpg"),
+    sahip: wiki("Konya_Sahip_Ata_Vakıflar_Eserleri_Müzesi_exterior_3604.jpg"),
+    sircali: wiki("Konya_Sircali_Medrese_3607.jpg"),
+    aziziye: wiki("Aziziye_Mosque,_Konya,_Turkey.jpg"),
+    japon: wiki("Konya;_Japon_Parkı.jpg"),
+    kelebek: wiki("Konya_Tropical_Butterfly_Garden.jpg"),
+    panorama: wiki("Interior_of_Konya_Panorama_Museum_152248_04.jpg"),
+    sille: wiki("Sille_Village,_Konya.jpg"),
+    meram: wiki("Sille_houses_4689.jpg"),
+    catal: wiki("Çatalhöyük,_7400_BC,_Konya,_Turkey_-_UNESCO_World_Heritage_Site,_02.jpg"),
+    seyyid: wiki("Muallimhane_Mosque,_Seydişehir.JPG"),
+    tinaz: wiki("Tınaztepe_mağarası_-_panoramio.jpg"),
+    tinaz2: wiki("Tınaztepe_mağarası_1.JPG"),
+    kugulu: wiki("Seydişehir_and_Taurus_Mountains_from_Ilıca.jpg"),
+    fasillar: wiki("Fasillar.jpg"),
+    lukyanus: wiki("Römische_Reliefs_bei_Fasillar.jpg"),
+    beygol: wiki("2019-05-08_02.23.01_1_Beyşehir_Gölü,_Beyşehir._Konya.jpg"),
+    esref: wiki("Eşrefoğlu_Camii,_Beyşehir,_April_2024_06.jpg"),
+    kultur: wiki("KONYA_KÜLTÜR_PARK_-_2025.jpg"),
+    hayvan: wiki("Konya_hayvanat_bahçesi_2021.jpg"),
+    millet: wiki("Konya_Eski_Stadyum_Yeni_Millet_Bahçesi_49.jpg"),
+    bedesten: wiki("Bedesten_çarşısı_Konya.jpg"),
+    akyokus: wiki("Konya_Akyokuş_Nature_Park_Konya_Landscape.jpg"),
+    silleDam: wiki("Sille_Dam,_Konya.jpg"),
+    eflatun: wiki("Eflatunpınar_Hittite_Water_Monument_5.jpg")
   };
 
-  /* Mevcut kartlarda kırık/eksik görseli düzelt */
   var FIX = [
     ["Mevlana", IMG.mevlana],
     ["Alaaddin", IMG.alaaddin],
@@ -66,14 +73,18 @@
 
   function setImg(img, url) {
     if (!img || !url) return;
-    img.style.display = "";
-    img.removeAttribute("hidden");
     img.onerror = function () {
       this.onerror = null;
-      this.style.background = "#e8f5ee";
-      this.style.minHeight = "140px";
+      /* son çare: gizleme, soluk placeholder */
+      this.style.background = "linear-gradient(135deg,#e8f5ee,#d4ebe0)";
+      this.style.minHeight = "150px";
+      this.style.objectFit = "cover";
     };
-    if (img.getAttribute("src") !== url) img.src = url;
+    img.style.display = "block";
+    img.removeAttribute("hidden");
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.src = url;
   }
 
   document.querySelectorAll("article.place").forEach(function (art) {
@@ -87,17 +98,6 @@
         break;
       }
     }
-    /* Görsel hiç yüklenmemişse de dene */
-    imgs.forEach(function (img) {
-      if (!img.getAttribute("src")) {
-        for (var k = 0; k < FIX.length; k++) {
-          if (title.indexOf(FIX[k][0]) !== -1) {
-            setImg(img, FIX[k][1]);
-            break;
-          }
-        }
-      }
-    });
   });
 
   function card(title, img, alt, desc, tags, lat, lon) {
