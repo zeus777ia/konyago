@@ -1,4 +1,4 @@
-/* KonyaGo Radyo — ozel istasyon player */
+/* KonyaGo Radyo player v2 */
 (function (w, d) {
   "use strict";
   if (d.getElementById("kgRadyoDone")) return;
@@ -49,26 +49,32 @@
   function renderList() {
     var box = $("radyoList");
     if (!box) return;
-    box.innerHTML = "";
+    var activeIdx = state.order[state.index];
+    var html = "";
     state.tracks.forEach(function (tr, i) {
-      var row = d.createElement("button");
-      row.type = "button";
-      row.className = "radyo-track" + (state.order[state.index] === i ? " active" : "");
-      row.innerHTML =
-        "<strong>" +
+      html +=
+        '<button type="button" class="radyo-track' +
+        (activeIdx === i ? " active" : "") +
+        '" data-i="' +
+        i +
+        '"><strong>' +
         (tr.title || "Parca") +
         "</strong><span>" +
         (tr.artist || "") +
         (tr.region ? " · " + tr.region : "") +
-        "</span>";
-      row.addEventListener("click", function () {
-        var pos = state.order.indexOf(i);
-        state.index = pos >= 0 ? pos : i;
-        state.errors = 0;
-        loadAndPlay(true);
-      });
-      box.appendChild(row);
+        (tr.license ? " · " + tr.license : "") +
+        "</span></button>";
     });
+    box.innerHTML = html;
+    box.onclick = function (e) {
+      var btn = e.target.closest(".radyo-track");
+      if (!btn) return;
+      var i = Number(btn.getAttribute("data-i"));
+      var pos = state.order.indexOf(i);
+      state.index = pos >= 0 ? pos : i;
+      state.errors = 0;
+      loadAndPlay(true);
+    };
   }
 
   function setMeta(tr) {
@@ -79,7 +85,7 @@
     if (sub)
       sub.textContent = tr
         ? [tr.artist, tr.region, tr.mood].filter(Boolean).join(" · ")
-        : "Calma listesi hazirlaniyor";
+        : "Liste hazirlaniyor";
     if (badge) badge.textContent = state.playing ? "CANLI" : "HAZIR";
   }
 
@@ -92,8 +98,10 @@
     }
     setMeta(tr);
     renderList();
-    audio.src = tr.src;
-    audio.load();
+    if (audio.src !== tr.src) {
+      audio.src = tr.src;
+      audio.load();
+    }
     if (autoplay) {
       var p = audio.play();
       if (p && p.catch)
@@ -122,31 +130,31 @@
     if (!audio) return;
 
     $("radyoPlay") &&
-      $("radyoPlay").addEventListener("click", function () {
+      $("radyoPlay").addEventListener("click", function (e) {
+        e.preventDefault();
         if (!state.tracks.length) return;
-        if (state.playing) {
-          audio.pause();
-        } else {
+        if (state.playing) audio.pause();
+        else {
           if (!audio.src) loadAndPlay(true);
-          else {
-            var p = audio.play();
-            if (p && p.catch) p.catch(function () {});
-          }
+          else audio.play().catch(function () {});
         }
       });
 
     $("radyoNext") &&
-      $("radyoNext").addEventListener("click", function () {
+      $("radyoNext").addEventListener("click", function (e) {
+        e.preventDefault();
         state.errors = 0;
         next(1);
       });
     $("radyoPrev") &&
-      $("radyoPrev").addEventListener("click", function () {
+      $("radyoPrev").addEventListener("click", function (e) {
+        e.preventDefault();
         state.errors = 0;
         next(-1);
       });
     $("radyoShuffle") &&
-      $("radyoShuffle").addEventListener("click", function () {
+      $("radyoShuffle").addEventListener("click", function (e) {
+        e.preventDefault();
         state.shuffle = !state.shuffle;
         rebuildOrder();
         $("radyoShuffle").classList.toggle("on", state.shuffle);
@@ -162,7 +170,6 @@
     audio.addEventListener("pause", function () {
       state.playing = false;
       updatePlayBtn();
-      setMeta(currentTrack());
     });
     audio.addEventListener("ended", function () {
       next(1);
@@ -171,7 +178,7 @@
       state.errors += 1;
       if (state.errors >= state.tracks.length) {
         var sub = $("radyoSub");
-        if (sub) sub.textContent = "Ses dosyasi yok — assets/audio/ klasorune mp3 ekle";
+        if (sub) sub.textContent = "Kaynak gecici olarak ulasilamiyor";
         state.playing = false;
         updatePlayBtn();
         return;
@@ -182,7 +189,8 @@
       var cur = $("radyoTime");
       var bar = $("radyoBar");
       if (cur) cur.textContent = fmtTime(audio.currentTime) + " / " + fmtTime(audio.duration);
-      if (bar && audio.duration) bar.value = String((audio.currentTime / audio.duration) * 100);
+      if (bar && audio.duration && d.activeElement !== bar)
+        bar.value = String((audio.currentTime / audio.duration) * 100);
     });
     var bar = $("radyoBar");
     if (bar) {
@@ -205,7 +213,7 @@
         rebuildOrder();
         renderList();
         if (state.tracks.length) {
-          loadAndPlay(false);
+          loadAndPlay(true);
           setMeta(currentTrack());
         }
         var note = $("radyoNote");
