@@ -1,4 +1,4 @@
-/* KonyaGo — ek yerler + görsel düzeltme (Special:FilePath) */
+/* KonyaGo — ek yerler + görsel + filtre */
 (function () {
   "use strict";
   if (document.getElementById("gezExtraDone")) return;
@@ -6,7 +6,6 @@
   flag.id = "gezExtraDone";
   document.head.appendChild(flag);
 
-  /* Wikimedia Special:FilePath — tarayıcıda stabil çalışır */
   function wiki(file) {
     return (
       "https://commons.wikimedia.org/wiki/Special:FilePath/" +
@@ -75,7 +74,6 @@
     if (!img || !url) return;
     img.onerror = function () {
       this.onerror = null;
-      /* son çare: gizleme, soluk placeholder */
       this.style.background = "linear-gradient(135deg,#e8f5ee,#d4ebe0)";
       this.style.minHeight = "150px";
       this.style.objectFit = "cover";
@@ -107,7 +105,9 @@
       })
       .join("");
     return (
-      '<article class="place gez-extra">' +
+      '<article class="place gez-extra" data-tags="' +
+      tags.join(" ").toLowerCase() +
+      '">' +
       '<img class="place-img" src="' +
       img +
       '" alt="' +
@@ -133,33 +133,25 @@
   }
 
   var modern =
-    card("80 Binde Devr-i Alem Parkı", IMG.kultur, "80 Binde Devr-i Alem", "Meram’da üç konseptli tematik park: hareketli dinozorlar, Türk-İslam eser minyatürleri ve masal dünyası. Çocuklu aileler için öne çıkan durak.", ["Aile", "Ücretli", "Çocuk"], "37.8610", "32.4450") +
-    card("Karatay Hayvanat Bahçesi", IMG.hayvan, "Karatay Hayvanat Bahçesi", "Karatay’daki geniş hayvanat bahçesi; aile ve çocuk rotasının klasik durağı.", ["Aile", "Doğa", "Ücretli"], "37.8920", "32.5580") +
-    card("Konya Bilim Merkezi", IMG.panorama, "Konya Bilim Merkezi", "İnteraktif sergilerle bilimi eğlenceli sunan merkez. Aile ve okul grupları için iç mekân alternatifi.", ["Aile", "Eğitim", "Modern"], "37.9480", "32.5020") +
-    card("Meram Millet Bahçesi", IMG.millet, "Meram Millet Bahçesi", "Eski stadyum alanındaki geniş millet bahçesi: yürüyüş ve dinlenme için şehir içi nefes alma noktası.", ["Park", "Ücretsiz", "Yürüyüş"], "37.8715", "32.4845");
+    card("80 Binde Devr-i Alem Parkı", IMG.kultur, "80 Binde", "Meram’da üç konseptli tematik park. Çocuklu aileler için öne çıkan durak.", ["Aile", "Ücretli", "Çocuk"], "37.8610", "32.4450") +
+    card("Karatay Hayvanat Bahçesi", IMG.hayvan, "Hayvanat", "Aile ve çocuk rotasının klasik durağı.", ["Aile", "Doğa", "Ücretli"], "37.8920", "32.5580") +
+    card("Konya Bilim Merkezi", IMG.panorama, "Bilim", "İnteraktif sergiler; aile ve okul grupları için.", ["Aile", "Eğitim", "Modern"], "37.9480", "32.5020") +
+    card("Meram Millet Bahçesi", IMG.millet, "Millet Bahçesi", "Yürüyüş ve dinlenme için şehir içi nefes alma noktası.", ["Park", "Ücretsiz", "Yürüyüş"], "37.8715", "32.4845");
 
   var merkez =
-    card("Bedesten Çarşısı", IMG.bedesten, "Bedesten Çarşısı", "Osmanlı bedesteni; tarihi çarşı dokusunda hediyelik ve yerel ürün için merkezde pratik durak.", ["Tarih", "Alışveriş", "Merkez"], "37.8725", "32.4955") +
-    card("Kapı Camii", IMG.aziziye, "Kapı Camii", "Merkezdeki tarihi Kapı Camii; çarşı çevresiyle kısa kültür molası.", ["Cami", "Tarih", "Merkez"], "37.8710", "32.4965");
+    card("Bedesten Çarşısı", IMG.bedesten, "Bedesten", "Tarihi çarşı dokusunda hediyelik ve yerel ürün.", ["Tarih", "Alışveriş", "Merkez"], "37.8725", "32.4955") +
+    card("Kapı Camii", IMG.aziziye, "Kapı Camii", "Merkezde kısa kültür molası.", ["Cami", "Tarih", "Merkez"], "37.8710", "32.4965");
 
   var yakin =
-    card("Akyokuş Kasrı", IMG.akyokus, "Akyokuş Kasrı", "Modern sosyal tesis: kafe-restoran, seyir noktası ve etkinlik alanları. Şehir manzarası molası için.", ["Seyir", "Modern", "Kafe"], "37.8450", "32.4300") +
-    card("Kızlar Kayası", IMG.akyokus, "Kızlar Kayası", "Meram Dere’de erozyonla şekillenmiş kayalar; Konya’nın peri bacaları. Kısa yürüyüş ve fotoğraf.", ["Doğa", "Fotoğraf", "Ücretsiz"], "37.8300", "32.4500") +
-    card("Sille Baraj Parkı", IMG.silleDam, "Sille Baraj Parkı", "Sille yakınında baraj gölü ve park; piknik ile Sille rotasına doğal devam.", ["Park", "Doğa", "Piknik"], "37.9330", "32.4000") +
-    card("Ecdat Parkı", IMG.kultur, "Ecdat Parkı", "Geniş yeşil alan; aile ve yürüyüş için sakin park.", ["Park", "Aile", "Ücretsiz"], "37.9100", "32.4800") +
-    card("Kestel Göleti", IMG.silleDam, "Kestel Göleti", "Gölet ve çevresi; gün batımı ve kısa doğa molası.", ["Doğa", "Gölet", "Fotoğraf"], "37.9200", "32.4200") +
-    card("Seyir Tepesi Parkı", IMG.akyokus, "Seyir Tepesi Parkı", "Yüksek kotlu park; Konya ovası manzarası için popüler nokta.", ["Seyir", "Park", "Manzara"], "37.9000", "32.4600") +
-    card("Kule Site 42. Kat", IMG.kultur, "Kule Site 42. Kat", "Yüksek kattan panoramik şehir manzarası; modern seyir molası.", ["Seyir", "Modern", "Manzara"], "37.8750", "32.4850");
+    card("Akyokuş Kasrı", IMG.akyokus, "Akyokuş", "Kafe-restoran ve seyir noktası.", ["Seyir", "Modern", "Kafe"], "37.8450", "32.4300") +
+    card("Kızlar Kayası", IMG.akyokus, "Kızlar Kayası", "Konya’nın peri bacaları; fotoğraf için ideal.", ["Doğa", "Fotoğraf", "Ücretsiz"], "37.8300", "32.4500") +
+    card("Sille Baraj Parkı", IMG.silleDam, "Sille Baraj", "Piknik ve Sille rotasına devam.", ["Park", "Doğa", "Piknik"], "37.9330", "32.4000") +
+    card("Ecdat Parkı", IMG.kultur, "Ecdat", "Aile ve yürüyüş için sakin park.", ["Park", "Aile", "Ücretsiz"], "37.9100", "32.4800") +
+    card("Kestel Göleti", IMG.silleDam, "Kestel", "Gün batımı ve kısa doğa molası.", ["Doğa", "Gölet", "Fotoğraf"], "37.9200", "32.4200") +
+    card("Seyir Tepesi Parkı", IMG.akyokus, "Seyir Tepesi", "Ova manzarası için popüler nokta.", ["Seyir", "Park", "Manzara"], "37.9000", "32.4600") +
+    card("Kule Site 42. Kat", IMG.kultur, "Kule Site", "Panoramik şehir manzarası.", ["Seyir", "Modern", "Manzara"], "37.8750", "32.4850");
 
-  var bey = card(
-    "Eflatunpınar Hitit Su Anıtı",
-    IMG.eflatun,
-    "Eflatunpınar",
-    "Beyşehir yakınında Hitit kutsal su anıtı (MÖ 13. yy). UNESCO geçici listesinde; Fasıllar rotasına tamamlayıcı.",
-    ["Hitit", "UNESCO", "Tarih"],
-    "37.6660",
-    "31.7330"
-  );
+  var bey = card("Eflatunpınar Hitit Su Anıtı", IMG.eflatun, "Eflatunpınar", "Hitit kutsal su anıtı; Fasıllar rotasına tamamlayıcı.", ["Hitit", "UNESCO", "Tarih"], "37.6660", "31.7330");
 
   function injectAfterSection(titlePart, htmlCards) {
     var titles = document.querySelectorAll("h2.section-title, h2");
@@ -181,7 +173,54 @@
   injectAfterSection("tarihi yerler", merkez);
   injectAfterSection("aile", modern);
   injectAfterSection("çevre", yakin);
-
   var grids = document.querySelectorAll("main .grid.grid-2");
   if (grids.length) grids[grids.length - 1].insertAdjacentHTML("afterbegin", bey);
+
+  /* Aile / Tek / Çift filtresi */
+  (function addFilter() {
+    var main = document.querySelector("main.container, main");
+    if (!main || document.getElementById("kgFilterBar")) return;
+    var head = main.querySelector(".page-head") || main.firstElementChild;
+    var bar = document.createElement("div");
+    bar.id = "kgFilterBar";
+    bar.className = "kg-filter-bar";
+    bar.innerHTML =
+      "<label>Kimler için?</label>" +
+      '<button type="button" class="kg-chip active" data-f="hepsi">Hepsi</button>' +
+      '<button type="button" class="kg-chip" data-f="aile">Aile</button>' +
+      '<button type="button" class="kg-chip" data-f="tek">Tek</button>' +
+      '<button type="button" class="kg-chip" data-f="cift">Çift</button>';
+    if (head && head.nextSibling) main.insertBefore(bar, head.nextSibling);
+    else main.insertBefore(bar, main.firstChild);
+
+    /* Etiket çıkarımı mevcut kartlardan */
+    function placeMode(art) {
+      var t = ((art.textContent || "") + " " + (art.getAttribute("data-tags") || "")).toLowerCase();
+      var modes = [];
+      if (/aile|çocuk|park|kelebek|hayvan|bilim|japon|millet|oyun/.test(t)) modes.push("aile");
+      if (/müze|medrese|hitit|tarih|cami|anıt|unesco|mevlana|karatay|ince/.test(t)) modes.push("tek");
+      if (/seyir|manzara|göl|sille|meram|romantik|kafe|yürüyüş|bağ/.test(t)) modes.push("cift");
+      if (!modes.length) modes = ["tek", "cift", "aile"];
+      return modes;
+    }
+
+    document.querySelectorAll("article.place").forEach(function (art) {
+      art.setAttribute("data-mode", placeMode(art).join(" "));
+    });
+
+    bar.querySelectorAll(".kg-chip").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        bar.querySelectorAll(".kg-chip").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+        var f = btn.getAttribute("data-f");
+        document.querySelectorAll("article.place").forEach(function (art) {
+          var modes = (art.getAttribute("data-mode") || "").split(/\s+/);
+          var show = f === "hepsi" || modes.indexOf(f) >= 0;
+          art.setAttribute("data-hide", show ? "0" : "1");
+        });
+      });
+    });
+  })();
 })();
