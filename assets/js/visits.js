@@ -1,7 +1,7 @@
-/* KonyaGo profesyonel ziyaretçi sayacı
-   - Tüm tarayıcılarda aynı sayı (paylaşımlı API)
-   - Oturumda 1 kez sayar
-   - Bugün + toplam (geçmiş ziyaretler dahil)
+/* KonyaGo ziyaretçi sayacı v2
+   - Tek birincil API (miles) → tüm tarayıcılarda aynı sayı
+   - Oturumda günde 1 kez artar
+   - API kısmen düşünce eski doğru değeri silmez
 */
 (function () {
   "use strict";
@@ -14,8 +14,8 @@
   window.__konyagoVisitDone = true;
 
   var NS = "konyago-com-tr";
-  /* Sayaç öncesi dönem (site kurulum + test ziyaretleri) — tahmini birleşik sayı */
-  var HISTORIC_BASE = 186;
+  var HISTORIC_BASE = 186; /* sayaç öncesi birleşik geçmiş */
+  var CACHE_KEY = "konyago_visit_cache_v2";
 
   function istanbulDay() {
     try {
@@ -48,177 +48,164 @@
     }
     if (typeof data === "object") {
       if (typeof data.value === "number") return Math.floor(data.value);
-      if (typeof data.value === "string" && /^-?\d+$/.test(data.value)) return parseInt(data.value, 10);
+      if (typeof data.value === "string" && /^-?\d+$/.test(data.value))
+        return parseInt(data.value, 10);
       if (typeof data.count === "number") return Math.floor(data.count);
       if (typeof data.hits === "number") return Math.floor(data.hits);
-      if (data.data && typeof data.data.value === "number") return Math.floor(data.data.value);
     }
     return null;
+  }
+
+  function readCache() {
+    try {
+      return JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function writeCache(dayN, totalN) {
+    try {
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          day: istanbulDay(),
+          dayCount: dayN,
+          total: totalN,
+          t: Date.now()
+        })
+      );
+    } catch (e) {}
   }
 
   function show(dayN, totalN) {
     if (elDay) elDay.textContent = fmt(dayN);
     if (elTotal) elTotal.textContent = fmt(totalN);
     if (elWrap) elWrap.setAttribute("data-ready", "1");
-    try {
-      localStorage.setItem("konyago_visit_cache", JSON.stringify({
-        day: istanbulDay(),
-        dayCount: dayN,
-        total: totalN,
-        t: Date.now()
-      }));
-    } catch (e) {}
+    writeCache(dayN, totalN);
   }
 
-  function showFromCache() {
-    try {
-      var c = JSON.parse(localStorage.getItem("konyago_visit_cache") || "null");
-      if (c && typeof c.total === "number") {
-        var d = c.day === istanbulDay() ? c.dayCount : 0;
-        show(d || 0, c.total);
-        return true;
-      }
-    } catch (e) {}
+  function showCacheOrDash() {
+    var c = readCache();
+    if (c && typeof c.total === "number") {
+      var d = c.day === istanbulDay() ? c.dayCount || 0 : 0;
+      show(d, c.total);
+      return true;
+    }
+    if (elDay) elDay.textContent = "…";
+    if (elTotal) elTotal.textContent = "…";
     return false;
   }
 
-  function milesHit(key) {
-    return fetch("https://countapi.mileshilliard.com/api/v1/hit/" + encodeURIComponent(NS + "_" + key), {
-      method: "GET", mode: "cors", cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("miles");
-      return r.json();
-    }).then(function (j) {
+  /* Birincil: miles (stabil, paylaşımlı) */
+  function miles(path, key) {
+    var url =
+      "https://countapi.mileshilliard.com/api/v1/" +
+      path +
+      "/" +
+      encodeURIComponent(NS + "_" + key);
+    return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(
+      function (r) {
+        if (!r.ok) throw new Error("miles");
+        return r.json();
+      }
+    ).then(function (j) {
       var n = parseN(j);
       if (n == null) throw new Error("parse");
       return n;
     });
   }
 
-  function milesGet(key) {
-    return fetch("https://countapi.mileshilliard.com/api/v1/get/" + encodeURIComponent(NS + "_" + key), {
-      method: "GET", mode: "cors", cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("miles");
-      return r.json();
-    }).then(function (j) {
+  /* Yedek: counterapi */
+  function capi(path, key) {
+    var url =
+      "https://api.counterapi.dev/v1/" +
+      encodeURIComponent(NS) +
+      "/" +
+      encodeURIComponent(key) +
+      (path === "hit" ? "/up" : "");
+    return fetch(url, { method: "GET", mode: "cors", cache: "no-store" }).then(
+      function (r) {
+        if (!r.ok) throw new Error("capi");
+        return r.json();
+      }
+    ).then(function (j) {
       var n = parseN(j);
       if (n == null) throw new Error("parse");
       return n;
     });
   }
 
-  function counterApiHit(key) {
-    return fetch("https://api.counterapi.dev/v1/" + encodeURIComponent(NS) + "/" + encodeURIComponent(key) + "/up", {
-      method: "GET", mode: "cors", cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("capi");
-      return r.json();
-    }).then(function (j) {
-      var n = parseN(j);
-      if (n == null) throw new Error("parse");
-      return n;
+  function hit(key) {
+    return miles("hit", key).catch(function () {
+      return capi("hit", key);
     });
   }
 
-  function counterApiGet(key) {
-    return fetch("https://api.counterapi.dev/v1/" + encodeURIComponent(NS) + "/" + encodeURIComponent(key), {
-      method: "GET", mode: "cors", cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("capi");
-      return r.json();
-    }).then(function (j) {
-      var n = parseN(j);
-      if (n == null) throw new Error("parse");
-      return n;
+  function get(key) {
+    return miles("get", key).catch(function () {
+      return capi("get", key);
     });
-  }
-
-  function abacusHit(key) {
-    return fetch("https://abacus.jasoncameron.dev/hit/" + encodeURIComponent(NS) + "/" + encodeURIComponent(key), {
-      method: "GET", mode: "cors", cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("abacus");
-      return r.text();
-    }).then(function (t) {
-      var n = parseN(t);
-      if (n == null) { try { n = parseN(JSON.parse(t)); } catch (e) {} }
-      if (n == null) throw new Error("parse");
-      return n;
-    });
-  }
-
-  function abacusGet(key) {
-    return fetch("https://abacus.jasoncameron.dev/get/" + encodeURIComponent(NS) + "/" + encodeURIComponent(key), {
-      method: "GET", mode: "cors", cache: "no-store"
-    }).then(function (r) {
-      if (!r.ok) throw new Error("abacus");
-      return r.text();
-    }).then(function (t) {
-      var n = parseN(t);
-      if (n == null) { try { n = parseN(JSON.parse(t)); } catch (e) {} }
-      if (n == null) throw new Error("parse");
-      return n;
-    });
-  }
-
-  function anyHit(key) {
-    return milesHit(key)
-      .catch(function () { return counterApiHit(key); })
-      .catch(function () { return abacusHit(key); });
-  }
-
-  function anyGet(key) {
-    return milesGet(key)
-      .catch(function () { return counterApiGet(key); })
-      .catch(function () { return abacusGet(key); });
   }
 
   var day = istanbulDay();
   var dayKey = "day-" + day;
   var totalKey = "visits-total";
-  var sessFlag = "konyago_pv_" + day;
+  var sessFlag = "konyago_pv_v2_" + day;
 
   var already = false;
-  try { already = sessionStorage.getItem(sessFlag) === "1"; } catch (e) {}
+  try {
+    already = sessionStorage.getItem(sessFlag) === "1";
+  } catch (e) {}
 
-  showFromCache();
+  showCacheOrDash();
 
-  function applyLive(dayRaw, totalRaw) {
-    var dayN = dayRaw != null ? dayRaw : 0;
-    /* Toplam = canlı sayaç + sayaç öncesi birleşik geçmiş */
-    var totalN = (totalRaw != null ? totalRaw : 0) + HISTORIC_BASE;
-    show(dayN, totalN);
-  }
-
-  var pDay = already ? anyGet(dayKey) : anyHit(dayKey);
-  var pTot = already ? anyGet(totalKey) : anyHit(totalKey);
+  var pDay = already ? get(dayKey) : hit(dayKey);
+  var pTot = already ? get(totalKey) : hit(totalKey);
 
   Promise.all([
-    pDay.catch(function () { return null; }),
-    pTot.catch(function () { return null; })
+    pDay.catch(function () {
+      return null;
+    }),
+    pTot.catch(function () {
+      return null;
+    })
   ]).then(function (res) {
     var d = res[0];
     var t = res[1];
-    if (!already && (d != null || t != null)) {
-      try { sessionStorage.setItem(sessFlag, "1"); } catch (e) {}
-    }
+    var c = readCache() || {};
+
+    /* Kısmi başarıda eski doğru değeri koru — sıfırlama yok */
+    var dayN;
+    if (d != null) dayN = d;
+    else if (c.day === day && typeof c.dayCount === "number") dayN = c.dayCount;
+    else dayN = 0;
+
+    var totalN;
+    if (t != null) totalN = t + HISTORIC_BASE;
+    else if (typeof c.total === "number") totalN = c.total;
+    else totalN = HISTORIC_BASE;
+
     if (d != null || t != null) {
-      applyLive(d, t);
-    } else if (!showFromCache()) {
-      var localDay = 1;
-      var localTot = HISTORIC_BASE + 1;
+      if (!already) {
+        try {
+          sessionStorage.setItem(sessFlag, "1");
+        } catch (e) {}
+      }
+      show(dayN, totalN);
+      return;
+    }
+
+    /* API tamamen yok — oturum fallback (paylaşımsız) */
+    if (!already) {
+      dayN = (c.day === day && c.dayCount ? c.dayCount : 0) + 1;
+      totalN = (typeof c.total === "number" ? c.total : HISTORIC_BASE) + 1;
       try {
-        var o = JSON.parse(localStorage.getItem("konyago_visits_fallback") || "{}");
-        if (o.day === day && typeof o.dayCount === "number") localDay = already ? o.dayCount : o.dayCount + 1;
-        else localDay = 1;
-        localTot = (typeof o.total === "number" ? o.total : HISTORIC_BASE) + (already ? 0 : 1);
-        localStorage.setItem("konyago_visits_fallback", JSON.stringify({
-          day: day, dayCount: localDay, total: localTot
-        }));
         sessionStorage.setItem(sessFlag, "1");
       } catch (e) {}
-      show(localDay, localTot);
+      show(dayN, totalN);
+    } else {
+      show(dayN, totalN);
     }
   });
 })();
