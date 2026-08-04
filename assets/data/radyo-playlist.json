@@ -1,17 +1,27 @@
 {
   "station": "KonyaGo Radyo",
   "tagline": "Konya’nın sesi · türkü ve Anadolu ezgileri",
-  "note": "Çalma listesi genişletilebilir. Telifli ticari kayıtlar eklenmemelidir.",
+  "note": "Kendi özel istasyonun. Telifsiz veya lisanslı mp3 dosyalarını assets/audio/ altına koyup bu listeye ekle. Ticari türkü kayıtlarını izinsiz ekleme.",
   "tracks": [
     {
-      "id": "karaman-1",
-      "title": "Gezdim Karamanı",
-      "artist": "Ramazan Koyuncu",
-      "region": "Karaman / İç Anadolu",
+      "id": "ornek-1",
+      "title": "Konya ezgisi (örnek yer tutucu)",
+      "artist": "KonyaGo Radyo",
+      "region": "Konya",
       "mood": "Türkü",
-      "src": "https://archive.org/download/ramazankoyuncugezdimkaramani/Ramazan%20Koyuncu%20-%20Gezdim%20KARAMANI.mp3",
-      "license": "Internet Archive · Public Domain Mark (yükleyen beyanı)",
-      "attribution": "archive.org/details/ramazankoyuncugezdimkaramani"
+      "src": "assets/audio/konya-1.mp3",
+      "license": "Yerel dosya — sen ekleyeceksin",
+      "attribution": "assets/audio/"
+    },
+    {
+      "id": "ornek-2",
+      "title": "İç Anadolu havası (örnek yer tutucu)",
+      "artist": "KonyaGo Radyo",
+      "region": "İç Anadolu",
+      "mood": "Ezgiler",
+      "src": "assets/audio/konya-2.mp3",
+      "license": "Yerel dosya — sen ekleyeceksin",
+      "attribution": "assets/audio/"
     }
   ]
 }
