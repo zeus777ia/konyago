@@ -1,37 +1,77 @@
 {
   "station": "KonyaGo Radyo",
-  "tagline": "Anadolu ezgileri · telifsiz / açık lisans",
-  "note": "Parçalar Creative Commons veya kamu malı kayıtlardır. Atıf: Internet Archive.",
+  "tagline": "Anadolu türküleri · kamu malı arşiv kayıtları",
+  "note": "Tüm parçalar Public Domain (kamu malı) tarihsel türkü / halk müziği kayıtlarıdır. Kaynak: Internet Archive. Modern ticari plaklar yoktur.",
   "tracks": [
     {
-      "id": "istiklal-saz",
-      "title": "İstiklal’de saz (sokak müziği)",
-      "artist": "Sokak müzisyeni · İstanbul kayıt",
-      "region": "Anadolu ruhu",
-      "mood": "Saz",
-      "src": "https://archive.org/download/aporee_5108_6533/Istiklal23809030h.mp3",
-      "license": "CC BY-SA 3.0",
-      "attribution": "archive.org/details/aporee_5108_6533"
-    },
-    {
-      "id": "saz-jam",
-      "title": "Saz, keman ve tanbur doğaçlama",
-      "artist": "Açık oturum kaydı",
+      "id": "turnalar",
+      "title": "Turnalar Turnalar",
+      "artist": "Darülelhan Heyeti",
       "region": "Anadolu",
-      "mood": "Enstrümantal",
-      "src": "https://archive.org/download/20130117232738/20130117%20232738.mp3",
-      "license": "CC BY-ND 3.0",
-      "attribution": "archive.org/details/20130117232738"
+      "mood": "Türkü",
+      "src": "https://archive.org/download/TurnalarTurnalar-DarulelhanHeyeti/TurnalarTurnalar-DarulelhanHeyeti.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/TurnalarTurnalar-DarulelhanHeyeti"
     },
     {
-      "id": "odeon-tarihi",
-      "title": "Tarihi plak kaydı (Odeon)",
-      "artist": "Safinaz Hanım dönemi",
-      "region": "Osmanlı / erken Cumhuriyet",
-      "mood": "Arşiv",
-      "src": "https://archive.org/download/odeon-46277-safinaz-hanem-souya-sali-virmior-yenguessi/Odeon%2046277%20-%20Safinaz%20Hanem%20-%20Souya%20Sali%20Virmior%20Yenguessi.mp3",
-      "license": "Public Domain Mark 1.0",
-      "attribution": "archive.org/details/odeon-46277-safinaz-hanem-souya-sali-virmior-yenguessi"
+      "id": "degirmene",
+      "title": "Değirmene Taş Koydum",
+      "artist": "Memik Açıkkol",
+      "region": "Anadolu",
+      "mood": "Türkü",
+      "src": "https://archive.org/download/DegirmeneTasKoydum-MemikAcikkol_560/DegirmeneTasKoydum-MemikAcikkol.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/DegirmeneTasKoydum-MemikAcikkol_560"
+    },
+    {
+      "id": "dut-fidani",
+      "title": "Dut Fidani Boyunca",
+      "artist": "Yurttan Sesler Korosu",
+      "region": "Anadolu",
+      "mood": "Türkü",
+      "src": "https://archive.org/download/DutFidaniBoyunca-YurttanSeslerKorosu/DutFidaniBoyunca-YurttanSeslerKorosu.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/DutFidaniBoyunca-YurttanSeslerKorosu"
+    },
+    {
+      "id": "sari-zeybek",
+      "title": "Sarı Zeybek",
+      "artist": "Hanende İbrahim Efendi",
+      "region": "Anadolu",
+      "mood": "Zeybek",
+      "src": "https://archive.org/download/SariZeybek-HanendeIbrahimEfendi/SariZeybek-HanendeIbrahimEfendi.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/SariZeybek-HanendeIbrahimEfendi"
+    },
+    {
+      "id": "giresun",
+      "title": "Giresun Karşılaması (Altını Bozdurayım)",
+      "artist": "Bıçoğlu Osman",
+      "region": "Karadeniz / Anadolu",
+      "mood": "Karşılama",
+      "src": "https://archive.org/download/GiresunKarsilamasialtiniBozdurayim-BicogluOsman/GiresunKarsilamasi-BicogluOsman.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/GiresunKarsilamasialtiniBozdurayim-BicogluOsman"
+    },
+    {
+      "id": "bozlak-halay",
+      "title": "Bozlak ve Halay",
+      "artist": "Yozgatlı Hafız Süleyman Bey",
+      "region": "İç Anadolu",
+      "mood": "Bozlak",
+      "src": "https://archive.org/download/BozlakAndHalay-YozgatliHafizSuleymanBey/HastaDustumBozlakTurnamNerdenGeldinHalay-YozgatliHafizSuleymanBey.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/BozlakAndHalay-YozgatliHafizSuleymanBey"
+    },
+    {
+      "id": "egil-daglar",
+      "title": "Eğil Dağlar Üstünden Aşam",
+      "artist": "Viktoriya Hanım",
+      "region": "Anadolu",
+      "mood": "Türkü",
+      "src": "https://archive.org/download/EgilDaglarUstundenAsam-ViktoriyaHanim/EgilDaglarUstundenAsam-ViktoriyaHanim.mp3",
+      "license": "Public Domain",
+      "attribution": "archive.org/details/EgilDaglarUstundenAsam-ViktoriyaHanim"
     }
   ]
 }
