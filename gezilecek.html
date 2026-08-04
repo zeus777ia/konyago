@@ -18,11 +18,11 @@
   ];
   function inject(html) {
     html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=24");
-    html = html.replace(/gez-extra\.js\?v=\d+/g, "gez-extra.js?v=2");
+    html = html.replace(/gez-extra\.js\?v=\d+/g, "gez-extra.js?v=3");
     if (html.indexOf("gez-extra.js") < 0) {
       html = html.replace(
         "</body>",
-        '<script src="assets/js/gez-extra.js?v=2" defer><' + '/script></body>'
+        '<script src="assets/js/gez-extra.js?v=3" defer><' + '/script></body>'
       );
     }
     return html;
