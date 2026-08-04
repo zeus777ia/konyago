@@ -62,6 +62,12 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
         '<script src="assets/js/yenilikler.js?v=1" defer><' + '/script></body>'
       );
     }
+    if (html.indexOf("barajlar.js") < 0) {
+      html = html.replace(
+        "</body>",
+        '<script src="assets/js/barajlar.js?v=1" defer><' + '/script></body>'
+      );
+    }
     return html;
   }
 
