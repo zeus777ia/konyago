@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a4f">
+<title>KonyaGo Radyo | Konya türkü ve ezgileri</title>
+<meta name="description" content="KonyaGo’ya özel radyo: Konya ve İç Anadolu ruhunda türkü ve ezgiler.">
+<link rel="canonical" href="https://konyago.com.tr/radyo.html">
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css?v=22">
+<link rel="stylesheet" href="assets/css/yenilikler.css?v=1">
+<style>
+.radyo-wrap{max-width:720px;margin:0 auto;padding:12px 16px 40px}
+.radyo-hero{border-radius:20px;padding:22px 20px;background:linear-gradient(145deg,#063d28,#0d7a4f 55%,#0a5c3a);color:#fff;box-shadow:0 16px 40px rgba(6,61,40,.25);position:relative;overflow:hidden}
+.radyo-hero::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(201,162,39,.15)}
+.radyo-badge{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.06em;padding:4px 10px;border-radius:999px;background:rgba(201,162,39,.25);color:#f5ecd0;margin-bottom:10px}
+.radyo-hero h1{margin:0 0 6px;font-size:1.55rem}
+.radyo-hero .sub{opacity:.9;font-size:.92rem;margin:0 0 16px}
+.radyo-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.radyo-controls button{border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:#fff;color:#0a5c3a}
+.radyo-controls button.on{background:#c9a227;color:#1a2e24}
+.radyo-controls button.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.radyo-progress{width:100%;margin-top:8px}
+.radyo-time{font-size:.8rem;opacity:.85;margin-top:4px}
+.radyo-list{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.radyo-track{text-align:left;border:1px solid var(--border,rgba(13,122,79,.18));background:var(--white,#fff);border-radius:14px;padding:12px 14px;cursor:pointer;font:inherit}
+[data-theme=dark] .radyo-track{background:#12261c;border-color:rgba(255,255,255,.08);color:#e6f2eb}
+.radyo-track strong{display:block;color:var(--green-dark,#0a5c3a)}
+[data-theme=dark] .radyo-track strong{color:#8fd4b0}
+.radyo-track span{font-size:.82rem;color:var(--muted,#5a7264)}
+.radyo-track.active{border-color:var(--green,#0d7a4f);box-shadow:0 0 0 2px rgba(13,122,79,.2)}
+.radyo-note{font-size:.78rem;color:var(--muted);margin-top:14px;line-height:1.45}
+audio{display:none}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img class="logo-mark" src="assets/img/eagle.svg" width="40" height="40" alt="">
+      <span class="logo-text"><strong>KonyaGo</strong><small>Radyo</small></span>
+    </a>
+    <nav class="nav-desktop">
+      <a href="index.html">Ana</a>
+      <a href="gezilecek.html">Gezi</a>
+      <a href="mutfak.html">Mutfak</a>
+      <a href="radyo.html" aria-current="page">Radyo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="radyo-wrap">
+  <p style="margin:8px 0 12px"><a href="index.html">← Ana sayfa</a></p>
+
+  <section class="radyo-hero" aria-label="KonyaGo Radyo">
+    <div class="radyo-badge" id="radyoBadge">HAZIR</div>
+    <h1 id="radyoTitle">KonyaGo Radyo</h1>
+    <p class="sub" id="radyoSub">Konya’nın sesi · türkü ve Anadolu ezgileri</p>
+
+    <div class="radyo-controls">
+      <button type="button" id="radyoPrev" class="ghost">⏮</button>
+      <button type="button" id="radyoPlay">▶ Çal</button>
+      <button type="button" id="radyoNext" class="ghost">⏭</button>
+      <button type="button" id="radyoShuffle" class="ghost">Karışık</button>
+    </div>
+    <input class="radyo-progress" id="radyoBar" type="range" min="0" max="100" value="0" aria-label="İlerleme">
+    <div class="radyo-time" id="radyoTime">0:00 / 0:00</div>
+    <audio id="radyoAudio" preload="metadata" crossorigin="anonymous"></audio>
+  </section>
+
+  <h2 style="margin:20px 0 8px;font-size:1.05rem">Çalma listesi</h2>
+  <div class="radyo-list" id="radyoList"></div>
+  <p class="radyo-note" id="radyoNote">KonyaGo’ya özel istasyon. Liste telifsiz / uygun lisanslı kayıtlarla genişletilir.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">© 2026 KonyaGo · <a href="index.html">Ana sayfa</a></div>
+</footer>
+
+<script src="assets/js/theme.js?v=2"></script>
+<script src="assets/js/radyo.js?v=1"></script>
+</body>
+</html>
