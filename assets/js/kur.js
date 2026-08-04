@@ -1,7 +1,4 @@
-/* KonyaGo kur + altin paneli
-   USD/EUR: frankfurter + open.er-api yedek
-   Altin: gold-api.com XAU (ons) + TRY cevrimi
-*/
+/* KonyaGo kur + altin + radyo giris */
 (function (w, d) {
   "use strict";
   if (d.getElementById("kgKurDone")) return;
@@ -78,7 +75,13 @@
       ".kg-kur-item span{display:block;font-size:.72rem;color:var(--muted,#5a7264);font-weight:600;margin-bottom:2px}" +
       ".kg-kur-item strong{font-size:1.05rem;color:var(--green-deep,#063d28)}" +
       "[data-theme=dark] .kg-kur-item strong{color:#e6f2eb}" +
-      ".kg-kur-foot{margin:8px 0 0;font-size:.72rem;color:var(--muted,#5a7264)}";
+      ".kg-kur-foot{margin:8px 0 0;font-size:.72rem;color:var(--muted,#5a7264)}" +
+      ".social-btn.radyo{border-color:rgba(201,162,39,.45);color:#8a6d12;background:linear-gradient(135deg,rgba(201,162,39,.14),var(--white,#fff))}" +
+      ".social-btn.radyo:hover{background:rgba(201,162,39,.18)}" +
+      ".kg-mini-radio{position:fixed;left:12px;right:12px;bottom:12px;z-index:90;max-width:420px;margin:0 auto;padding:10px 12px;border-radius:14px;background:rgba(6,61,40,.94);color:#fff;display:flex;align-items:center;gap:10px;box-shadow:0 10px 28px rgba(0,0,0,.25);font-size:.85rem}" +
+      ".kg-mini-radio button{border:0;border-radius:999px;padding:8px 12px;font-weight:700;cursor:pointer;background:#c9a227;color:#1a2e24;font:inherit;transform:none}" +
+      ".kg-mini-radio a{color:#f5ecd0;font-weight:600;margin-left:auto;text-decoration:none}" +
+      ".kg-mini-radio .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}";
     d.head.appendChild(s);
   }
 
@@ -129,7 +132,7 @@
     box.innerHTML = html;
   }
 
-  function boot() {
+  function bootKur() {
     ensureCss();
     var box = host();
     if (!box) return;
@@ -163,24 +166,113 @@
       });
   }
 
-  /* WhatsApp kisisel buton kaldir, kanal kalsin */
   function stripWa() {
-    d.querySelectorAll('a.social-btn.wa:not(.wac)').forEach(function (a) {
+    d.querySelectorAll("a.social-btn.wa:not(.wac)").forEach(function (a) {
       a.remove();
     });
     d.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
       a.remove();
     });
-    /* footer duz metin linkleri */
     d.querySelectorAll("a[href*='wa.me'], a[title='WhatsApp']").forEach(function (a) {
       if ((a.getAttribute("href") || "").indexOf("channel") === -1) a.remove();
     });
   }
 
+  function injectRadioNearWp() {
+    if (d.querySelector("a.social-btn.radyo")) return;
+    var wac = d.querySelector("a.social-btn.wac");
+    var row = d.querySelector(".social-row");
+    var a = d.createElement("a");
+    a.className = "social-btn radyo";
+    a.href = "radyo.html";
+    a.title = "KonyaGo Radyo";
+    a.innerHTML = "📻 Radyo";
+    if (wac && wac.parentNode) wac.parentNode.insertBefore(a, wac.nextSibling);
+    else if (row) row.appendChild(a);
+  }
+
+  /* Ana sayfa mini radyo — giriste calmaya calisir */
+  function startHomeRadio() {
+    if (d.getElementById("kgMiniRadio")) return;
+    fetch("assets/data/radyo-playlist.json?v=" + Date.now(), { cache: "no-store" })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (data) {
+        var tracks = (data && data.tracks) || [];
+        if (!tracks.length || !tracks[0].src) return;
+
+        var audio = d.createElement("audio");
+        audio.id = "kgHomeAudio";
+        audio.playsInline = true;
+        audio.preload = "metadata";
+        audio.src = tracks[0].src;
+
+        var bar = d.createElement("div");
+        bar.id = "kgMiniRadio";
+        bar.className = "kg-mini-radio";
+        bar.innerHTML =
+          '<button type="button" id="kgMiniPlay">Cal</button>' +
+          '<span class="t" id="kgMiniTitle">' +
+          (tracks[0].title || "KonyaGo Radyo") +
+          "</span>" +
+          '<a href="radyo.html">Tam ekran</a>';
+
+        d.body.appendChild(audio);
+        d.body.appendChild(bar);
+
+        var idx = 0;
+        function playAt(i) {
+          idx = i % tracks.length;
+          audio.src = tracks[idx].src;
+          var t = d.getElementById("kgMiniTitle");
+          if (t) t.textContent = tracks[idx].title || "KonyaGo Radyo";
+          audio.play().catch(function () {});
+        }
+
+        audio.addEventListener("ended", function () {
+          playAt(idx + 1);
+        });
+        audio.addEventListener("play", function () {
+          var b = d.getElementById("kgMiniPlay");
+          if (b) b.textContent = "Duraklat";
+        });
+        audio.addEventListener("pause", function () {
+          var b = d.getElementById("kgMiniPlay");
+          if (b) b.textContent = "Cal";
+        });
+
+        d.getElementById("kgMiniPlay").addEventListener("click", function () {
+          if (audio.paused) audio.play().catch(function () {});
+          else audio.pause();
+        });
+
+        /* Tarayici engellerse ilk tiklamada baslat */
+        var p = audio.play();
+        if (p && p.catch) {
+          p.catch(function () {
+            var once = function () {
+              audio.play().catch(function () {});
+              d.removeEventListener("click", once);
+              d.removeEventListener("touchstart", once);
+            };
+            d.addEventListener("click", once, { once: true });
+            d.addEventListener("touchstart", once, { once: true });
+          });
+        }
+      })
+      .catch(function () {});
+  }
+
   function run() {
     stripWa();
-    boot();
-    setTimeout(stripWa, 800);
+    injectRadioNearWp();
+    bootKur();
+    startHomeRadio();
+    setTimeout(function () {
+      stripWa();
+      injectRadioNearWp();
+    }, 800);
   }
 
   if (d.readyState === "loading") d.addEventListener("DOMContentLoaded", run);
