@@ -31,6 +31,7 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
     localStorage.removeItem("konyago_home_html_v21");
     localStorage.removeItem("konyago_home_html_v20");
     localStorage.removeItem("konyago_home_html_v19");
+    localStorage.removeItem("konyago_home_html_v18");
   } catch (e) {}
 
   var urls = [
@@ -40,7 +41,7 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
   ];
 
   function injectOneri(html) {
-    if (html.indexOf("oneriForm") !== -1 || html.indexOf("id=\"oneriOpen\"") !== -1) return html;
+    if (html.indexOf("oneriForm") !== -1 || html.indexOf('id="oneriOpen"') !== -1) return html;
 
     // 1) CSS for pulse button + modal
     var css = '<style id="oneri-css">'
@@ -70,7 +71,7 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
       + 'Öneri'
       + '</a>';
 
-    // Insert after the WP Kanal anchor (unique title or class wac)
+    // Insert after the WP Kanal anchor
     var wacMarker = 'title="KonyaGo WhatsApp Kanalı — duyuru ve güncellemeler">';
     var wacIdx = html.indexOf(wacMarker);
     if (wacIdx !== -1) {
@@ -79,7 +80,6 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
         html = html.slice(0, afterClose + 4) + "\n      " + btn + html.slice(afterClose + 4);
       }
     } else {
-      // fallback: after social-row open
       html = html.replace(
         /(<div class="social-row"[^>]*>)/,
         '$1\n      ' + btn

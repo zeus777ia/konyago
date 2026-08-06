@@ -1,5 +1,5 @@
-/* KonyaGo SW v19 */
-var CACHE = "konyago-v19";
+/* KonyaGo SW v20 */
+var CACHE = "konyago-v20";
 var PRECACHE = ["./", "./index.html", "./assets/css/app.css", "./assets/js/app.js", "./assets/img/eagle.svg", "./manifest.json"];
 
 self.addEventListener("install", function (e) {
