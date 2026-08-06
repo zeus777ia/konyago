@@ -1,4 +1,4 @@
-/* KonyaGo AI — Yerel + Gemini (AIza ve AQ. key destekli) */
+/* KonyaGo AI — Yerel Konya motoru (API key yok) */
 (function () {
   "use strict";
 
@@ -8,114 +8,9 @@
   var sendBtn = document.getElementById("aiSend");
   if (!chat || !form || !input) return;
 
-  var KEY_LS = "konyago_gemini_key";
-  var MODE_LS = "konyago_ai_mode";
-  var mode = "local";
-  try {
-    var savedMode = localStorage.getItem(MODE_LS);
-    if (savedMode === "gemini" || savedMode === "local") mode = savedMode;
-  } catch (e) {}
-
   var history = [];
-  var geminiHistory = [];
   var lastTopics = [];
   var turn = 0;
-
-  var btnLocal = document.getElementById("modeLocal");
-  var btnGemini = document.getElementById("modeGemini");
-  var titleEl = document.getElementById("aiTitle");
-  var subEl = document.getElementById("aiSubtitle");
-  var keyInput = document.getElementById("geminiKeyInput");
-  var keySave = document.getElementById("geminiKeySave");
-  var keyClear = document.getElementById("geminiKeyClear");
-  var statusEl = document.getElementById("geminiStatus");
-
-  function getKey() {
-    try { return (localStorage.getItem(KEY_LS) || "").trim(); } catch (e) { return ""; }
-  }
-
-  function setKey(k) {
-    try {
-      if (k) localStorage.setItem(KEY_LS, k);
-      else localStorage.removeItem(KEY_LS);
-    } catch (e) { throw e; }
-  }
-
-  function looksLikeGeminiKey(k) {
-    k = (k || "").trim();
-    if (k.length < 20) return false;
-    if (/^AIza[0-9A-Za-z_-]{10,}$/.test(k)) return true;
-    if (/^AQ\.[0-9A-Za-z_-]{15,}$/.test(k)) return true;
-    if (/^AQAb[0-9A-Za-z_-]{15,}$/.test(k)) return true;
-    return false;
-  }
-
-  function updateStatus() {
-    var k = getKey();
-    if (!statusEl) return;
-    if (k) {
-      var ok = looksLikeGeminiKey(k);
-      statusEl.className = "gemini-status " + (ok ? "ok" : "err");
-      statusEl.textContent = ok
-        ? "Kayıtlı (" + k.slice(0, 6) + "…" + k.slice(-4) + ")"
-        : "Kayıtlı (format kontrol et)";
-    } else {
-      statusEl.className = "gemini-status";
-      statusEl.textContent = "Anahtar yok.";
-    }
-  }
-
-  function setMode(m) {
-    mode = m === "gemini" ? "gemini" : "local";
-    try { localStorage.setItem(MODE_LS, mode); } catch (e) {}
-    if (btnLocal) btnLocal.classList.toggle("active", mode === "local");
-    if (btnGemini) btnGemini.classList.toggle("active", mode === "gemini");
-    if (titleEl) titleEl.textContent = mode === "gemini" ? "KonyaGo · Gemini" : "KonyaGo AI";
-    if (subEl) {
-      subEl.textContent = mode === "gemini"
-        ? "Google Gemini · Konya asistanı"
-        : "Yerel motor · Konya asistanı";
-    }
-  }
-
-  function saveFromInput() {
-    var v = (keyInput && keyInput.value || "").trim().replace(/\s+/g, "");
-    if (!v || v.length < 20) {
-      if (statusEl) {
-        statusEl.className = "gemini-status err";
-        statusEl.textContent = "Anahtar eksik veya çok kısa.";
-      }
-      return false;
-    }
-    try { setKey(v); } catch (e) { return false; }
-    if (keyInput) keyInput.value = "";
-    updateStatus();
-    return true;
-  }
-
-  if (btnLocal) btnLocal.addEventListener("click", function () { setMode("local"); });
-  if (btnGemini) btnGemini.addEventListener("click", function () {
-    if (!getKey()) {
-      setMode("local");
-      addMsg("Gemini şu an kullanılamıyor. Yerel asistanla devam edebilirsin — Mevlana, rota, lezzet… sor yeter.", "bot");
-      return;
-    }
-    setMode("gemini");
-  });
-
-  if (keySave) keySave.addEventListener("click", function (e) {
-    e.preventDefault();
-    if (saveFromInput()) addMsg("Ayar kaydedildi. Gemini’yi seçip soru sorabilirsin.", "bot");
-  });
-  if (keyClear) keyClear.addEventListener("click", function () {
-    try { setKey(""); } catch (e) {}
-    updateStatus();
-    setMode("local");
-    geminiHistory = [];
-  });
-
-  updateStatus();
-  setMode(mode === "gemini" && getKey() ? "gemini" : "local");
 
   function norm(s) {
     return (s || "").toLowerCase()
@@ -166,90 +61,6 @@
     return typeof scored[0].c.a === "function" ? scored[0].c.a(t) : String(scored[0].c.a);
   }
 
-  var SYSTEM = "Sen KonyaGo AI’sın. Yalnızca Konya (Türkiye) ili ve ilçeleri hakkında yardımcı ol: gezi, tarih, mutfak, ulaşım. Konya dışı sorularda nazikçe reddet. Türkçe, samimi, kısa-orta cevap ver. Uydurma adres veya telefon verme. Saat ve ücret için resmî kaynakları doğrulamayı söyle.";
-
-  var GEMINI_MODELS = [
-    "gemini-2.5-flash",
-    "gemini-2.5-flash-lite",
-    "gemini-flash-latest",
-    "gemini-2.0-flash",
-    "gemini-1.5-flash-latest",
-    "gemini-1.5-flash"
-  ];
-
-  function callGemini(userText) {
-    var key = getKey();
-    if (!key) return Promise.reject(new Error("no-key"));
-
-    geminiHistory.push({ role: "user", parts: [{ text: userText }] });
-    if (geminiHistory.length > 12) geminiHistory = geminiHistory.slice(-12);
-
-    var body = {
-      systemInstruction: { parts: [{ text: SYSTEM }] },
-      contents: geminiHistory,
-      generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
-    };
-
-    var errors = [];
-
-    function tryModel(idx) {
-      if (idx >= GEMINI_MODELS.length) {
-        return Promise.reject(new Error("all-models-failed: " + errors.slice(0, 2).join(" | ")));
-      }
-      var model = GEMINI_MODELS[idx];
-      var base = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent";
-
-      function doFetch(useHeader) {
-        var url = useHeader ? base : (base + "?key=" + encodeURIComponent(key));
-        var headers = { "Content-Type": "application/json" };
-        if (useHeader) headers["x-goog-api-key"] = key;
-        return fetch(url, { method: "POST", headers: headers, body: JSON.stringify(body) });
-      }
-
-      return doFetch(true)
-        .then(function (r) {
-          if (r.status === 400 || r.status === 401 || r.status === 403) {
-            return doFetch(false).then(function (r2) { return { r: r2 }; });
-          }
-          return { r: r };
-        })
-        .then(function (pack) {
-          var r = pack.r;
-          return r.json().then(function (j) {
-            if (!r.ok) {
-              var msg = (j && j.error && j.error.message) || ("HTTP " + r.status);
-              errors.push(model + ": " + String(msg).slice(0, 100));
-              if (/API key not valid|INVALID_ARGUMENT.*key|PERMISSION_DENIED/i.test(msg) && idx >= 1) {
-                throw new Error(msg);
-              }
-              return tryModel(idx + 1);
-            }
-            var text = "";
-            try {
-              var parts = j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts;
-              if (parts) text = parts.map(function (p) { return p.text || ""; }).join("");
-            } catch (e) {}
-            if (!text) {
-              errors.push(model + ": empty");
-              return tryModel(idx + 1);
-            }
-            geminiHistory.push({ role: "model", parts: [{ text: text }] });
-            return text;
-          });
-        })
-        .catch(function (err) {
-          if (err && err.message && /API key not valid|PERMISSION_DENIED|INVALID_ARGUMENT/i.test(err.message)) {
-            throw err;
-          }
-          errors.push(model + ": " + String(err && err.message || err).slice(0, 80));
-          if (idx + 1 < GEMINI_MODELS.length) return tryModel(idx + 1);
-          throw new Error("all-models-failed: " + errors.slice(0, 2).join(" | "));
-        });
-    }
-
-    return tryModel(0);
-  }
-
   function addMsg(text, who, meta) {
     var div = document.createElement("div");
     div.className = "ai-msg ai-" + who;
@@ -289,7 +100,7 @@
   function addTyping() {
     var tip = document.createElement("div");
     tip.className = "ai-msg ai-bot ai-typing";
-    tip.textContent = mode === "gemini" ? "Yanıt hazırlanıyor…" : "Düşünüyor…";
+    tip.textContent = "Düşünüyor…";
     chat.appendChild(tip);
     chat.scrollTop = chat.scrollHeight;
     return tip;
@@ -311,37 +122,12 @@
     if (sendBtn) sendBtn.disabled = true;
     var tip = addTyping();
 
-    function done(text, meta) {
+    setTimeout(function () {
       tip.remove();
-      typeOut(text, meta, function () {
+      typeOut(answerLocal(q), null, function () {
         if (sendBtn) sendBtn.disabled = false;
         input.focus();
       });
-    }
-
-    function fail(err) {
-      tip.remove();
-      var raw = (err && err.message) || "";
-      var msg;
-      if (/no-key/i.test(raw)) {
-        msg = "Bu mod şu an kapalı. Yerel asistanla devam edebilirsin.";
-        setMode("local");
-      } else if (/API key not valid|invalid.*key/i.test(raw)) {
-        msg = "Bağlantı kurulamadı. Yerel moda geçildi — sorunu yine sorabilirsin.";
-        setMode("local");
-      } else if (/429|quota|RESOURCE/i.test(raw)) {
-        msg = "Yoğunluk nedeniyle yanıt gecikti. Biraz sonra tekrar dene veya Yerel ile devam et.";
-      } else {
-        msg = "Şu an yanıt alınamadı. Yerel asistanla devam edebilirsin.";
-        setMode("local");
-      }
-      done(msg);
-    }
-
-    if (mode === "gemini") {
-      callGemini(q).then(function (t) { done(t); }).catch(fail);
-    } else {
-      setTimeout(function () { done(answerLocal(q)); }, 220);
-    }
+    }, 220);
   });
 })();

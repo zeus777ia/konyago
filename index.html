@@ -40,99 +40,6 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
     "https://raw.githack.com/zeus777ia/konyago/dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html"
   ];
 
-  function injectOneri(html) {
-    if (html.indexOf("oneriForm") !== -1 || html.indexOf('id="oneriOpen"') !== -1) return html;
-
-    var css = '<style id="oneri-css">'
-      + '.social-btn.oneri{border-color:rgba(13,122,79,.55)!important;color:#0a5c3a!important;background:linear-gradient(135deg,rgba(13,122,79,.14),var(--white,#fff))!important;position:relative;overflow:visible;animation:oneriPulse 2.4s ease-in-out infinite}'
-      + '.social-btn.oneri:hover{background:rgba(13,122,79,.18)!important;border-color:#0d7a4f!important;transform:translateY(-2px)}'
-      + '@keyframes oneriPulse{0%,100%{box-shadow:0 0 0 0 rgba(13,122,79,.4);transform:scale(1)}50%{box-shadow:0 0 0 9px rgba(13,122,79,0);transform:scale(1.035)}}'
-      + '.oneri-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(10,30,20,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}'
-      + '.oneri-modal.open{display:flex}'
-      + '.oneri-card{width:100%;max-width:420px;background:var(--white,#fff);border-radius:20px;border:1px solid var(--border,#dce8e1);box-shadow:0 20px 50px rgba(0,0,0,.18);padding:22px;position:relative;animation:oneriIn .25s ease}'
-      + '@keyframes oneriIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}'
-      + '.oneri-card h3{margin:0 0 6px;font-size:1.15rem;color:var(--green-deep,#0a5c3a)}'
-      + '.oneri-card p.lead{margin:0 0 14px;font-size:.88rem;color:var(--muted,#5a6b63);line-height:1.45}'
-      + '.oneri-card input,.oneri-card textarea{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border,#dce8e1);background:var(--bg,#f7faf8);color:var(--text,#1a2e24);font:inherit;box-sizing:border-box;margin-bottom:10px}'
-      + '.oneri-card textarea{resize:vertical;min-height:100px}'
-      + '.oneri-card button[type=submit]{width:100%;border:0;border-radius:999px;padding:13px 20px;background:var(--green,#0d7a4f);color:#fff;font:inherit;font-weight:700;cursor:pointer;margin-top:4px}'
-      + '.oneri-card button[type=submit]:disabled{opacity:.65;cursor:wait}'
-      + '.oneri-close{position:absolute;top:12px;right:14px;border:0;background:transparent;font-size:1.4rem;line-height:1;color:#7a8a82;cursor:pointer;padding:4px 8px}'
-      + '.oneri-ok{display:none;margin-top:12px;padding:12px;border-radius:12px;background:rgba(13,122,79,.12);border:1px solid rgba(13,122,79,.28);color:var(--green-deep,#0a5c3a);font-size:.9rem;text-align:center}'
-      + '</style>';
-    if (html.indexOf("</head>") !== -1) {
-      html = html.replace("</head>", css + "\n</head>");
-    }
-
-    var btn = '<a class="social-btn oneri" href="#" id="oneriOpen" title="Öneri gönder — fikir, hata veya istek">'
-      + '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7zm2 15h-4v-1h4v1zm-1.1-3.1-.9.1v1h2v-1l-.9-.1A5.01 5.01 0 0 1 12 4a5 5 0 0 1 4.9 9.9z"/></svg>'
-      + 'Öneri'
-      + '</a>';
-
-    var wacMarker = 'title="KonyaGo WhatsApp Kanalı — duyuru ve güncellemeler">';
-    var wacIdx = html.indexOf(wacMarker);
-    if (wacIdx !== -1) {
-      var afterClose = html.indexOf("</a>", wacIdx);
-      if (afterClose !== -1) {
-        html = html.slice(0, afterClose + 4) + "\n      " + btn + html.slice(afterClose + 4);
-      }
-    } else {
-      html = html.replace(/(<div class="social-row"[^>]*>)/, '$1\n      ' + btn);
-    }
-
-    var modal = ''
-      + '<div class="oneri-modal" id="oneriModal" role="dialog" aria-modal="true" aria-labelledby="oneriTitle">'
-      + '<div class="oneri-card">'
-      + '<button type="button" class="oneri-close" id="oneriClose" aria-label="Kapat">×</button>'
-      + '<h3 id="oneriTitle">Öneri gönder</h3>'
-      + '<p class="lead">Fikir, hata veya istek yaz — doğrudan bana ulaşır. Pazarlama yok.</p>'
-      + '<form id="oneriForm" action="https://formsubmit.co/ajax/cnrtech@outlook.com.tr" method="POST">'
-      + '<input type="hidden" name="_subject" value="KonyaGo — yeni öneri">'
-      + '<input type="hidden" name="_template" value="table">'
-      + '<input type="hidden" name="_captcha" value="false">'
-      + '<input type="text" name="_honey" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off" aria-hidden="true">'
-      + '<input type="text" name="name" placeholder="Adın (opsiyonel)" maxlength="60" autocomplete="name">'
-      + '<textarea name="message" placeholder="Önerin / hata / istek..." required maxlength="2000" rows="4"></textarea>'
-      + '<button type="submit" id="oneriBtn">Gönder</button>'
-      + '</form>'
-      + '<div class="oneri-ok" id="oneriOk">Teşekkürler, önerin ulaştı ✓</div>'
-      + '</div></div>';
-
-    if (html.indexOf("</body>") !== -1) {
-      html = html.replace("</body>", modal + "\n</body>");
-    }
-
-    var js = '<script>(function(){'
-      + 'var open=document.getElementById("oneriOpen"),'
-      + 'modal=document.getElementById("oneriModal"),'
-      + 'close=document.getElementById("oneriClose"),'
-      + 'f=document.getElementById("oneriForm"),'
-      + 'b=document.getElementById("oneriBtn"),'
-      + 'ok=document.getElementById("oneriOk");'
-      + 'if(!open||!modal)return;'
-      + 'function show(){modal.classList.add("open");document.body.style.overflow="hidden"}'
-      + 'function hide(){modal.classList.remove("open");document.body.style.overflow=""}'
-      + 'open.addEventListener("click",function(e){e.preventDefault();show()});'
-      + 'if(close)close.addEventListener("click",hide);'
-      + 'modal.addEventListener("click",function(e){if(e.target===modal)hide()});'
-      + 'document.addEventListener("keydown",function(e){if(e.key==="Escape")hide()});'
-      + 'if(f){f.addEventListener("submit",function(e){e.preventDefault();'
-      + 'if(b){b.disabled=true;b.textContent="Gönderiliyor…"}'
-      + 'var d=new FormData(f);'
-      + 'fetch(f.action,{method:"POST",body:d,headers:{Accept:"application/json"}})'
-      + '.then(function(r){if(!r.ok)throw new Error("http");return r.json().catch(function(){return{}})})'
-      + '.then(function(){f.reset();if(ok)ok.style.display="block";setTimeout(hide,1800)})'
-      + '.catch(function(){f.action="https://formsubmit.co/cnrtech@outlook.com.tr";f.submit()})'
-      + '.finally(function(){if(b){b.disabled=false;b.textContent="Gönder"}})'
-      + '})}'
-      + '})();<\/script>';
-
-    if (html.indexOf("</body>") !== -1) {
-      html = html.replace("</body>", js + "\n</body>");
-    }
-    return html;
-  }
-
   function patch(html) {
     html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=25");
     html = html.replace(/assets\/css\/app\.css\?v=\d+/g, "assets/css/app.css?v=23");
@@ -161,7 +68,6 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
     } else {
       html = html.replace(/kur\.js\?v=\d+/g, "kur.js?v=3");
     }
-    html = injectOneri(html);
     return html;
   }
 
