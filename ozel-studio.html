@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0d7a4f">
+<title>KonyaGo Özel Studio (gizli)</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<style>
+:root{
+  --bg:#0b1a14;--card:#12261c;--line:rgba(255,255,255,.08);
+  --green:#0d7a4f;--gold:#c9a227;--text:#e6f2eb;--muted:#8aa697;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:16px 14px 40px}
+.gate,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.gate h1,.panel h1{margin:0 0 8px;font-size:1.25rem}
+.muted{color:var(--muted);font-size:.88rem;line-height:1.45}
+label{display:block;font-size:.8rem;color:var(--muted);margin:12px 0 6px}
+input,textarea,select{width:100%;border-radius:10px;border:1px solid var(--line);background:#0d1c15;color:var(--text);padding:10px 12px;font:inherit}
+textarea{min-height:88px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;font:inherit}
+.btn{background:var(--green);color:#fff}
+.btn.gold{background:var(--gold);color:#1a2e24}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+#app{display:none}
+.chat{margin-top:14px;display:flex;flex-direction:column;gap:10px;max-height:48vh;overflow:auto;padding-right:4px}
+.bubble{padding:10px 12px;border-radius:12px;line-height:1.45;white-space:pre-wrap;font-size:.92rem}
+.bubble.user{background:rgba(13,122,79,.25);align-self:flex-end;max-width:90%}
+.bubble.bot{background:rgba(255,255,255,.05);border:1px solid var(--line);align-self:flex-start;max-width:95%}
+.bubble.err{background:rgba(180,40,40,.2);border:1px solid rgba(255,80,80,.35)}
+.warn{margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.35);font-size:.82rem;color:#f0e2b0}
+.preview{margin-top:18px}
+.preview-frame{margin-top:10px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#f7faf8;color:#1a2e24}
+.msg-ui{padding:14px}
+.msg-ui h3{margin:0 0 8px;color:#0a5c3a;font-size:1rem}
+.msg-ui .fields{display:grid;gap:8px}
+.msg-ui input,.msg-ui textarea{background:#fff;color:#1a2e24;border:1px solid #c5e6d4}
+.msg-ui .send{margin-top:8px;background:#0d7a4f;color:#fff;border:0;border-radius:999px;padding:10px 14px;font-weight:700}
+.badge{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.05em;padding:3px 8px;border-radius:999px;background:rgba(201,162,39,.2);color:#f5ecd0;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="gate" id="gate">
+    <span class="badge">GİZLİ · NOINDEX</span>
+    <h1>KonyaGo Özel Studio</h1>
+    <p class="muted">Bu sayfa menüde yok, arama motoruna kapalı. Sadece senin erişimin için.</p>
+    <label for="pw">Erişim şifresi</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Şifre">
+    <div class="row">
+      <button class="btn" type="button" id="unlockBtn">Giriş</button>
+      <a class="btn ghost" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center">Ana sayfa</a>
+    </div>
+    <p class="muted" style="margin-top:12px">Şifreyi bilmiyorsan bu sayfayı kullanma. İlk kurulumda sana özel şifre tanımlıdır.</p>
+  </div>
+
+  <div id="app">
+    <div class="panel">
+      <span class="badge">META MUSE · ÖNİZLEME</span>
+      <h1>Mesajlaşma bölümü tasarımcısı</h1>
+      <p class="muted">Meta Model API (<code>muse-spark-1.2</code>) ile site mesajlaşma / iletişim UI fikri üretir. Anahtar tarayıcıda tutulur, GitHub’a yazılmaz.</p>
+
+      <div class="warn">
+        <strong>Önemli:</strong> API anahtarı tarayıcıdan gönderilir. <code>api.meta.ai</code> CORS engeli koyarsa istek tarayıcıda çalışmaz — o zaman bilgisayarında
+        <code>scripts/meta_responses.py</code> kullan. Anahtarı asla public repoya koyma.
+      </div>
+
+      <label for="apiKey">MODEL_API_KEY</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="Meta Model API anahtarın">
+
+      <label for="prompt">İstek</label>
+      <textarea id="prompt">KonyaGo şehir rehberi için modern, mobil uyumlu bir mesajlaşma / iletişim bölümü tasarla. Alanlar, validasyon, spam koruması ve KVKK notu öner. HTML+CSS iskeleti ver.</textarea>
+
+      <div class="row">
+        <button class="btn" type="button" id="runBtn">Muse’a sor</button>
+        <button class="btn gold" type="button" id="fillPreview">Önizlemeyi doldur</button>
+        <button class="btn ghost" type="button" id="clearChat">Sohbeti temizle</button>
+        <button class="btn ghost" type="button" id="lockBtn">Kilitle</button>
+      </div>
+
+      <div class="chat" id="chat" aria-live="polite"></div>
+    </div>
+
+    <div class="panel preview">
+      <h1 style="font-size:1.05rem;margin:0 0 6px">Mesajlaşma önizlemesi (taslak)</h1>
+      <p class="muted">Herkese açık değil — sadece bu gizli sayfada. Beğenirsen sonra ana siteye taşırız.</p>
+      <div class="preview-frame">
+        <div class="msg-ui">
+          <h3>Bize yazın</h3>
+          <p style="margin:0 0 10px;font-size:.85rem;color:#5a7264">KonyaGo iletişim formu taslağı · en kısa sürede dönüş</p>
+          <div class="fields">
+            <input type="text" placeholder="Ad Soyad" disabled>
+            <input type="email" placeholder="E-posta" disabled>
+            <input type="tel" placeholder="Telefon (opsiyonel)" disabled>
+            <select disabled><option>Konu: Genel</option><option>Reklam / iş birliği</option><option>Teknik destek</option></select>
+            <textarea placeholder="Mesajınız" disabled></textarea>
+          </div>
+          <button class="send" type="button" disabled>Gönder (taslak)</button>
+          <p style="margin:10px 0 0;font-size:.75rem;color:#5a7264">KVKK: Mesajınız yalnızca talebinize dönüş için işlenir. Açık rıza olmadan pazarlama yapılmaz.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/js/ozel-studio.js?v=1"></script>
+</body>
+</html>
