@@ -4,89 +4,160 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
-<script>
-(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.querySelector('meta[name="theme-color"]').setAttribute("content","#0e1813")}catch(e){}})();
-</script>
 <title>KonyaGo | Konya Gezilecek Yerler, Mutfak, Rota ve Şehir Rehberi</title>
-<meta name="description" content="Konya’nın premium şehir rehberi: Mevlana, Sille, etli ekmek, rotalar, tarihçe, nöbetçi eczane, hava ve KonyaGo AI. Ücretsiz, güncel, mobil uyumlu.">
+<meta name="description" content="Konya’nın premium şehir rehberi: Mevlana, Sille, etli ekmek, rotalar, tarihçe, nöbetçi eczane, hava ve KonyaGo AI.">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="author" content="KonyaGo">
 <link rel="canonical" href="https://konyago.com.tr/">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="tr_TR">
-<meta property="og:site_name" content="KonyaGo">
-<meta property="og:title" content="KonyaGo | Konya’nın Premium Şehir Rehberi">
-<meta property="og:description" content="Selçuklu mirası, Mevlana, Sille, mutfak ve rotalar — Konya’yı keşfetmenin en zarif yolu.">
-<meta property="og:url" content="https://konyago.com.tr/">
-<meta property="og:image" content="https://konyago.com.tr/assets/img/eagle.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="KonyaGo | Konya Şehir Rehberi">
-<meta name="twitter:description" content="Mevlana’dan etli ekmeğe — gezi, mutfak, rota ve AI asistanı.">
-<link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/img/eagle.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://api.open-meteo.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="dns-prefetch" href="https://upload.wikimedia.org">
 <link rel="dns-prefetch" href="https://live.staticflickr.com">
-<link rel="stylesheet" href="assets/css/app.css?v=16">
-<link rel="stylesheet" href="assets/css/theme.css?v=2">
-<link rel="stylesheet" href="assets/css/elite.css?v=2">
-<link rel="stylesheet" href="assets/css/perf.css?v=2">
-<link rel="stylesheet" href="assets/css/visits.css?v=1">
-<link rel="stylesheet" href="assets/css/wx.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="assets/css/wx.css"></noscript>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "name": "KonyaGo",
-      "url": "https://konyago.com.tr/",
-      "description": "Konya gezilecek yerler, mutfak, rotalar ve şehir rehberi.",
-      "inLanguage": "tr-TR",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://konyago.com.tr/ara.html?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    },
-    {
-      "@type": "Organization",
-      "name": "KonyaGo",
-      "url": "https://konyago.com.tr/",
-      "logo": "https://konyago.com.tr/assets/img/eagle.svg",
-      "sameAs": ["https://instagram.com/mehmet_ali_caner_","https://whatsapp.com/channel/0029Vb8eooy2phHIrUGqgx2n"]
-    },
-    {
-      "@type": "TouristDestination",
-      "name": "Konya",
-      "description": "Anadolu Selçuklu başkenti, Mevlana şehri.",
-      "url": "https://konyago.com.tr/"
-    }
-  ]
-}
-</script>
 <style>
-.ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
-@media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
-.ilce-pill{display:block;text-align:center;padding:12px 8px;border-radius:14px;background:var(--green-soft);border:1px solid var(--border);color:var(--green-deep);font-weight:700;font-size:.85rem;text-decoration:none}
-.ilce-pill small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);margin-top:2px}
-.quick-search{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
-.quick-search input{flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);border-radius:999px;font:inherit;font-size:.92rem;background:var(--white);color:var(--text)}
-.hot-list{display:grid;gap:10px;margin-top:8px}
-@media(min-width:640px){.hot-list{grid-template-columns:1fr 1fr}}
-.hot-item{display:block;padding:12px 14px;border-radius:14px;background:var(--white);border:1px solid var(--border);text-decoration:none;color:inherit}
-.hot-item strong{color:var(--green-deep);display:block;margin-bottom:2px}
-.hot-item span{font-size:.8rem;color:var(--muted)}
-.social-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 6px}
-.social-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;font-weight:700;font-size:.88rem;text-decoration:none;border:1.5px solid var(--border);background:var(--white);color:var(--green-deep);transition:transform .15s,box-shadow .15s,border-color .15s}
-.social-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(13,122,79,.14)}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;color:#1a2e24;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.box{text-align:center;padding:28px;max-width:380px}
+.box strong{color:#0a5c3a}.box a{color:#0d7a4f;font-weight:700;text-decoration:none;margin:0 6px}
+.spin{width:28px;height:28px;border:3px solid #c5e6d4;border-top-color:#0d7a4f;border-radius:50%;margin:0 auto 14px;animation:s .7s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-<!-- PLACEHOLDER - full content will be truncated for this call; use file path approach instead -->
+<div class="box" id="boot">
+  <div class="spin" aria-hidden="true"></div>
+  <p><strong>KonyaGo</strong> açılıyor…</p>
+</div>
+<script>
+(function () {
+  try {
+    localStorage.removeItem("konyago_home_html_v21");
+    localStorage.removeItem("konyago_home_html_v20");
+  } catch (e) {}
+
+  var urls = [
+    "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html",
+    "https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0/index.html",
+    "https://raw.githack.com/zeus777ia/konyago/dbab5e0b005bc8995972caf5133b488f32b5ec38/index.html"
+  ];
+
+  function injectOneri(html) {
+    if (html.indexOf("oneriForm") !== -1) return html;
+    var box = ''
+      + '<section class="section" aria-label="Öneri gönder" id="oneri">'
+      + '<h2 class="section-title">Öneri <span>gönder</span></h2>'
+      + '<p style="margin:0 0 12px;font-size:.9rem;color:var(--muted)">KonyaGo hakkında fikir, hata veya istek yaz — doğrudan e-postama düşer.</p>'
+      + '<div style="margin:0;padding:16px;border-radius:16px;border:1px solid var(--border);background:var(--white);box-shadow:0 6px 20px rgba(13,122,79,.06)">'
+      + '<form id="oneriForm" action="https://formsubmit.co/ajax/cnrtech@outlook.com.tr" method="POST">'
+      + '<input type="hidden" name="_subject" value="KonyaGo — yeni öneri">'
+      + '<input type="hidden" name="_template" value="table">'
+      + '<input type="hidden" name="_captcha" value="false">'
+      + '<input type="text" name="_honey" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<div style="display:grid;gap:10px">'
+      + '<input type="text" name="name" placeholder="Adın (opsiyonel)" maxlength="60" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--bg,#f7faf8);color:var(--text);font:inherit;box-sizing:border-box">'
+      + '<textarea name="message" placeholder="Önerin / hata / istek..." required maxlength="2000" rows="4" style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--bg,#f7faf8);color:var(--text);font:inherit;box-sizing:border-box;resize:vertical;min-height:90px"></textarea>'
+      + '<button type="submit" id="oneriBtn" style="border:0;border-radius:999px;padding:12px 20px;background:var(--green,#0d7a4f);color:#fff;font:inherit;font-weight:700;cursor:pointer">Gönder</button>'
+      + '</div>'
+      + '<p style="margin:10px 0 0;font-size:.75rem;color:var(--muted);line-height:1.4">Mesajın sadece bana (cnrtech@outlook.com.tr) iletilir. Pazarlama yapılmaz.</p>'
+      + '</form>'
+      + '<div id="oneriOk" style="display:none;margin-top:12px;padding:12px;border-radius:12px;background:rgba(13,122,79,.12);border:1px solid rgba(13,122,79,.3);color:var(--green-deep);font-size:.9rem">Teşekkürler, önerin ulaştı.</div>'
+      + '</div></section>';
+    if (html.indexOf("</main>") !== -1) {
+      html = html.replace("</main>", box + "\n</main>");
+    }
+    var js = '<script>(function(){var f=document.getElementById("oneriForm"),b=document.getElementById("oneriBtn"),o=document.getElementById("oneriOk");if(!f)return;f.addEventListener("submit",function(e){e.preventDefault();if(b){b.disabled=true;b.textContent="Gönderiliyor…"}var d=new FormData(f);fetch(f.action,{method:"POST",body:d,headers:{Accept:"application/json"}}).then(function(r){if(!r.ok)throw new Error("http");return r.json().catch(function(){return{}})}).then(function(){f.reset();if(o)o.style.display="block";alert("Önerin gönderildi, teşekkürler!")}).catch(function(){f.action="https://formsubmit.co/cnrtech@outlook.com.tr";f.submit()}).finally(function(){if(b){b.disabled=false;b.textContent="Gönder"}})})})();<\/script>';
+    if (html.indexOf("</body>") !== -1) {
+      html = html.replace("</body>", js + "\n</body>");
+    }
+    return html;
+  }
+
+  function patch(html) {
+    html = html.replace(/assets\\/js\\/app\\.js\\?v=\\d+/g, "assets/js/app.js?v=24");
+    html = html.replace(/assets\\/css\\/app\\.css\\?v=\\d+/g, "assets/css/app.css?v=22");
+    html = html.replace(/perf\\.css\\?v=\\d+/g, "perf.css?v=2");
+    html = html.replace(/sponsor\\.css\\?v=\\d+/g, "sponsor.css?v=3");
+    html = html.replace(/visits\\.js\\?v=\\d+/g, "visits.js?v=2");
+    if (html.indexOf("sponsor.css") < 0) {
+      html = html.replace(
+        /(href="assets\\/css\\/app\\.css\\?v=22">)/,
+        '$1\\n<link rel="stylesheet" href="assets/css/sponsor.css?v=3">'
+      );
+    }
+    if (html.indexOf("yenilikler.css") < 0) {
+      html = html.replace(
+        "</head>",
+        '<link rel="stylesheet" href="assets/css/yenilikler.css?v=1"></head>'
+      );
+    }
+    if (html.indexOf("speak.js") < 0) {
+      html = html.replace(
+        "</body>",
+        '<script src="assets/js/speak.js?v=1"><' + '/script></body>'
+      );
+    }
+    if (html.indexOf("yenilikler.js") < 0) {
+      html = html.replace(
+        "</body>",
+        '<script src="assets/js/yenilikler.js?v=4" defer><' + '/script></body>'
+      );
+    } else {
+      html = html.replace(/yenilikler\\.js\\?v=\\d+/g, "yenilikler.js?v=4");
+    }
+    if (html.indexOf("barajlar.js") < 0) {
+      html = html.replace(
+        "</body>",
+        '<script src="assets/js/barajlar.js?v=1" defer><' + '/script></body>'
+      );
+    }
+    if (html.indexOf("kur.js") < 0) {
+      html = html.replace(
+        "</body>",
+        '<script src="assets/js/kur.js?v=3" defer><' + '/script></body>'
+      );
+    } else {
+      html = html.replace(/kur\\.js\\?v=\\d+/g, "kur.js?v=3");
+    }
+    html = injectOneri(html);
+    return html;
+  }
+
+  function fail() {
+    document.getElementById("boot").innerHTML =
+      "<p><strong>Yükleme gecikti</strong></p>" +
+      "<p><a href=\\"gezilecek.html\\">Gezi</a> · <a href=\\"kesfet.html\\">Keşfet</a> · <a href=\\"mutfak.html\\">Mutfak</a> · <a href=\\"quiz.html\\">Quiz</a> · <a href=\\"ai.html\\">AI</a></p>";
+  }
+
+  function go(i) {
+    if (i >= urls.length) {
+      fail();
+      return;
+    }
+    var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var timer = setTimeout(function () {
+      try { if (ctrl) ctrl.abort(); } catch (e) {}
+      go(i + 1);
+    }, 8000);
+    fetch(urls[i], {
+      cache: "default",
+      mode: "cors",
+      signal: ctrl ? ctrl.signal : undefined
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error("http");
+        return r.text();
+      })
+      .then(function (html) {
+        clearTimeout(timer);
+        if (!html || html.indexOf("feat-grid") < 0) throw new Error("incomplete");
+        document.open();
+        document.write(patch(html));
+        document.close();
+      })
+      .catch(function () {
+        clearTimeout(timer);
+        go(i + 1);
+      });
+  }
+  go(0);
+})();
+</script>
 </body>
 </html>
