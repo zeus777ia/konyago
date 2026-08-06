@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d7a4f">
 <script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
-<meta name="description" content="KonyaGo iletişim — e-posta, Instagram, WhatsApp ve resmî WhatsApp kanalı.">
+<meta name="description" content="KonyaGo iletişim — mesaj formu, e-posta, Instagram, WhatsApp.">
 <title>İletişim | KonyaGo</title>
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/app.css?v=15">
@@ -24,6 +24,34 @@
 .contact-card span{font-size:.88rem;color:var(--muted);word-break:break-all}
 .contact-card.wa{border-color:rgba(37,211,102,.35)}
 .contact-card.ig{border-color:rgba(225,48,108,.3)}
+.msg-box{
+  margin:16px 0 8px;padding:18px 16px;border-radius:18px;
+  border:1px solid var(--border);background:var(--white);
+  box-shadow:0 8px 24px rgba(13,122,79,.06)
+}
+.msg-box h2{margin:0 0 4px;font-size:1.15rem;color:var(--green-deep)}
+.msg-box .sub{margin:0 0 14px;font-size:.88rem;color:var(--muted)}
+.msg-fields{display:grid;gap:10px}
+.msg-fields input,.msg-fields select,.msg-fields textarea{
+  width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--bg,#f7faf8);color:var(--text,#1a2e24);font:inherit
+}
+.msg-fields input:focus,.msg-fields select:focus,.msg-fields textarea:focus{
+  outline:none;border-color:var(--green)
+}
+.msg-fields textarea{min-height:110px;resize:vertical}
+.msg-box .send{
+  margin-top:4px;border:0;border-radius:999px;padding:12px 20px;
+  background:var(--green);color:#fff;font:inherit;font-weight:700;cursor:pointer
+}
+.msg-box .send:disabled{opacity:.6;cursor:wait}
+.msg-note{margin:10px 0 0;font-size:.75rem;color:var(--muted);line-height:1.4}
+.msg-ok{
+  display:none;margin:12px 0;padding:12px 14px;border-radius:12px;
+  background:rgba(13,122,79,.12);border:1px solid rgba(13,122,79,.3);color:var(--green-deep);font-size:.9rem
+}
+.msg-ok.show{display:block}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
 </style>
 </head>
 <body>
@@ -45,6 +73,35 @@
   </div>
   <div class="prose">
     <p><strong>KonyaGo</strong>, Konya için bağımsız bir şehir rehberidir. Tarihçe, gezilecek yerler, mutfak, harita ve pratik bilgileri sade bir arayüzde sunar. Resmî belediye veya turizm müdürlüğü sitesi değildir.</p>
+  </div>
+
+  <div class="msg-ok" id="msgOk">Mesajın alındı. En kısa sürede dönüş yapacağız.</div>
+
+  <div class="msg-box" id="msgBox">
+    <h2>Bize yazın</h2>
+    <p class="sub">KonyaGo iletişim formu · en kısa sürede dönüş</p>
+    <form id="contactForm" action="https://formsubmit.co/ajax/cnrtech@outlook.com.tr" method="POST">
+      <input type="hidden" name="_subject" value="KonyaGo — yeni iletişim mesajı">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="msg-fields">
+        <input type="text" name="name" placeholder="Ad Soyad" required maxlength="80" autocomplete="name">
+        <input type="email" name="email" placeholder="E-posta" required maxlength="120" autocomplete="email">
+        <input type="tel" name="phone" placeholder="Telefon (opsiyonel)" maxlength="30" autocomplete="tel">
+        <select name="subject" required>
+          <option value="Genel">Konu: Genel</option>
+          <option value="Reklam / iş birliği">Reklam / iş birliği</option>
+          <option value="Hata bildirimi">Hata bildirimi</option>
+          <option value="Öneri">Öneri</option>
+          <option value="Teknik destek">Teknik destek</option>
+        </select>
+        <textarea name="message" placeholder="Mesajınız" required maxlength="4000"></textarea>
+      </div>
+      <div style="margin-top:12px">
+        <button class="send" type="submit" id="sendBtn">Gönder</button>
+      </div>
+      <p class="msg-note">KVKK: Mesajınız yalnızca talebinize dönüş için işlenir. Açık rıza olmadan pazarlama yapılmaz. Gönderim ücretsiz FormSubmit altyapısıyla e-postaya iletilir.</p>
+    </form>
   </div>
 
   <div class="info">
@@ -81,13 +138,13 @@
 
   <div class="info">
     <h2>WhatsApp Kanalı nedir?</h2>
-    <p><strong>KonyaGo WhatsApp Kanalı</strong> tek yönlü duyuru kanalıdır: gezi ipuçları, güncellemeler ve önemli duyurular paylaşılır. Sohbet değildir; yazmak için kişisel WhatsApp veya e-posta kullanın.</p>
+    <p><strong>KonyaGo WhatsApp Kanalı</strong> tek yönlü duyuru kanalıdır: gezi ipuçları, güncellemeler ve önemli duyurular paylaşılır. Sohbet değildir; yazmak için form, kişisel WhatsApp veya e-posta kullanın.</p>
     <p><a class="btn btn-primary btn-sm" href="https://whatsapp.com/channel/0029Vb8eooy2phHIrUGqgx2n" target="_blank" rel="noopener">Kanala katıl</a></p>
   </div>
 
   <div class="info">
     <h2>Reklam</h2>
-    <p>Site içi reklam ve iş birliği talepleriniz için e-posta veya WhatsApp ile ulaşabilirsiniz. Konu satırına “Reklam” yazmanız yeterli.</p>
+    <p>Site içi reklam ve iş birliği talepleriniz için formu veya e-posta / WhatsApp kullanın. Konu olarak “Reklam / iş birliği” seçmeniz yeterli.</p>
   </div>
   <div class="info">
     <h2>Kaynak notu</h2>
@@ -104,5 +161,54 @@
 </nav>
 <script src="assets/js/theme.js?v=2"></script>
 <script src="assets/js/app.js?v=15" defer></script>
+<script>
+(function () {
+  var form = document.getElementById("contactForm");
+  var btn = document.getElementById("sendBtn");
+  var ok = document.getElementById("msgOk");
+  if (!form) return;
+
+  if (/[?&]gonderildi=1\b/.test(location.search) && ok) {
+    ok.classList.add("show");
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Gönderiliyor…";
+    }
+    var data = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" }
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error("http");
+        return r.json().catch(function () { return {}; });
+      })
+      .then(function () {
+        form.reset();
+        if (ok) {
+          ok.classList.add("show");
+          ok.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        alert("Mesaj gönderildi. En kısa sürede dönüş yapacağız.");
+      })
+      .catch(function () {
+        // Ajax basarisizsa klasik formsubmit yonlendirmesi
+        form.action = "https://formsubmit.co/cnrtech@outlook.com.tr";
+        form.submit();
+      })
+      .finally(function () {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Gönder";
+        }
+      });
+  });
+})();
+</script>
 </body>
 </html>
