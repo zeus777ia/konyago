@@ -43,7 +43,6 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
   function injectOneri(html) {
     if (html.indexOf("oneriForm") !== -1 || html.indexOf('id="oneriOpen"') !== -1) return html;
 
-    // 1) CSS for pulse button + modal
     var css = '<style id="oneri-css">'
       + '.social-btn.oneri{border-color:rgba(13,122,79,.55)!important;color:#0a5c3a!important;background:linear-gradient(135deg,rgba(13,122,79,.14),var(--white,#fff))!important;position:relative;overflow:visible;animation:oneriPulse 2.4s ease-in-out infinite}'
       + '.social-btn.oneri:hover{background:rgba(13,122,79,.18)!important;border-color:#0d7a4f!important;transform:translateY(-2px)}'
@@ -65,13 +64,11 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
       html = html.replace("</head>", css + "\n</head>");
     }
 
-    // 2) Button next to WP Kanal
     var btn = '<a class="social-btn oneri" href="#" id="oneriOpen" title="Öneri gönder — fikir, hata veya istek">'
       + '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7zm2 15h-4v-1h4v1zm-1.1-3.1-.9.1v1h2v-1l-.9-.1A5.01 5.01 0 0 1 12 4a5 5 0 0 1 4.9 9.9z"/></svg>'
       + 'Öneri'
       + '</a>';
 
-    // Insert after the WP Kanal anchor
     var wacMarker = 'title="KonyaGo WhatsApp Kanalı — duyuru ve güncellemeler">';
     var wacIdx = html.indexOf(wacMarker);
     if (wacIdx !== -1) {
@@ -80,13 +77,9 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
         html = html.slice(0, afterClose + 4) + "\n      " + btn + html.slice(afterClose + 4);
       }
     } else {
-      html = html.replace(
-        /(<div class="social-row"[^>]*>)/,
-        '$1\n      ' + btn
-      );
+      html = html.replace(/(<div class="social-row"[^>]*>)/, '$1\n      ' + btn);
     }
 
-    // 3) Modal + form
     var modal = ''
       + '<div class="oneri-modal" id="oneriModal" role="dialog" aria-modal="true" aria-labelledby="oneriTitle">'
       + '<div class="oneri-card">'
@@ -109,7 +102,6 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
       html = html.replace("</body>", modal + "\n</body>");
     }
 
-    // 4) JS for modal + submit
     var js = '<script>(function(){'
       + 'var open=document.getElementById("oneriOpen"),'
       + 'modal=document.getElementById("oneriModal"),'
@@ -142,48 +134,30 @@ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f7faf8;
   }
 
   function patch(html) {
-    html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=24");
-    html = html.replace(/assets\/css\/app\.css\?v=\d+/g, "assets/css/app.css?v=22");
+    html = html.replace(/assets\/js\/app\.js\?v=\d+/g, "assets/js/app.js?v=25");
+    html = html.replace(/assets\/css\/app\.css\?v=\d+/g, "assets/css/app.css?v=23");
     html = html.replace(/perf\.css\?v=\d+/g, "perf.css?v=2");
     html = html.replace(/sponsor\.css\?v=\d+/g, "sponsor.css?v=3");
     html = html.replace(/visits\.js\?v=\d+/g, "visits.js?v=2");
     if (html.indexOf("sponsor.css") < 0) {
-      html = html.replace(
-        /(href="assets\/css\/app\.css\?v=22">)/,
-        '$1\n<link rel="stylesheet" href="assets/css/sponsor.css?v=3">'
-      );
+      html = html.replace(/(href="assets\/css\/app\.css\?v=23">)/, '$1\n<link rel="stylesheet" href="assets/css/sponsor.css?v=3">');
     }
     if (html.indexOf("yenilikler.css") < 0) {
-      html = html.replace(
-        "</head>",
-        '<link rel="stylesheet" href="assets/css/yenilikler.css?v=1"></head>'
-      );
+      html = html.replace("</head>", '<link rel="stylesheet" href="assets/css/yenilikler.css?v=1"></head>');
     }
     if (html.indexOf("speak.js") < 0) {
-      html = html.replace(
-        "</body>",
-        '<script src="assets/js/speak.js?v=1"><' + '/script></body>'
-      );
+      html = html.replace("</body>", '<script src="assets/js/speak.js?v=1"><' + '/script></body>');
     }
     if (html.indexOf("yenilikler.js") < 0) {
-      html = html.replace(
-        "</body>",
-        '<script src="assets/js/yenilikler.js?v=4" defer><' + '/script></body>'
-      );
+      html = html.replace("</body>", '<script src="assets/js/yenilikler.js?v=4" defer><' + '/script></body>');
     } else {
       html = html.replace(/yenilikler\.js\?v=\d+/g, "yenilikler.js?v=4");
     }
     if (html.indexOf("barajlar.js") < 0) {
-      html = html.replace(
-        "</body>",
-        '<script src="assets/js/barajlar.js?v=1" defer><' + '/script></body>'
-      );
+      html = html.replace("</body>", '<script src="assets/js/barajlar.js?v=1" defer><' + '/script></body>');
     }
     if (html.indexOf("kur.js") < 0) {
-      html = html.replace(
-        "</body>",
-        '<script src="assets/js/kur.js?v=3" defer><' + '/script></body>'
-      );
+      html = html.replace("</body>", '<script src="assets/js/kur.js?v=3" defer><' + '/script></body>');
     } else {
       html = html.replace(/kur\.js\?v=\d+/g, "kur.js?v=3");
     }
