@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0d7a4f">
+<title>KonyaGo Studio (gizli)</title>
+<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
+<style>
+:root{--bg:#0b1a14;--card:#12261c;--line:rgba(255,255,255,.08);--green:#0d7a4f;--gold:#c9a227;--text:#e6f2eb;--muted:#8aa697}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:16px 14px 40px}
+.gate,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.gate h1,.panel h1{margin:0 0 8px;font-size:1.25rem}
+.muted{color:var(--muted);font-size:.88rem;line-height:1.45}
+label{display:block;font-size:.8rem;color:var(--muted);margin:12px 0 6px}
+input,textarea,select{width:100%;border-radius:10px;border:1px solid var(--line);background:#0d1c15;color:var(--text);padding:10px 12px;font:inherit}
+textarea{min-height:88px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;font:inherit}
+.btn{background:var(--green);color:#fff}
+.btn.gold{background:var(--gold);color:#1a2e24}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+#app{display:none}
+.chat{margin-top:14px;display:flex;flex-direction:column;gap:10px;max-height:48vh;overflow:auto}
+.bubble{padding:10px 12px;border-radius:12px;line-height:1.45;white-space:pre-wrap;font-size:.92rem}
+.bubble.user{background:rgba(13,122,79,.25);align-self:flex-end;max-width:90%}
+.bubble.bot{background:rgba(255,255,255,.05);border:1px solid var(--line);align-self:flex-start;max-width:95%}
+.bubble.err{background:rgba(180,40,40,.2);border:1px solid rgba(255,80,80,.35)}
+.warn{margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.35);font-size:.82rem;color:#f0e2b0}
+.preview{margin-top:18px}
+.preview-frame{margin-top:10px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#f7faf8;color:#1a2e24}
+.msg-ui{padding:14px}
+.msg-ui h3{margin:0 0 8px;color:#0a5c3a}
+.msg-ui .fields{display:grid;gap:8px}
+.msg-ui input,.msg-ui textarea{background:#fff;color:#1a2e24;border:1px solid #c5e6d4}
+.msg-ui .send{margin-top:8px;background:#0d7a4f;color:#fff;border:0;border-radius:999px;padding:10px 14px;font-weight:700}
+.badge{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.05em;padding:3px 8px;border-radius:999px;background:rgba(201,162,39,.2);color:#f5ecd0;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="gate" id="gate">
+    <span class="badge">GIZLI · NOINDEX</span>
+    <h1>KonyaGo Studio</h1>
+    <p class="muted">Menude yok. Sadece senin erisimin icin.</p>
+    <label for="pw">Erisim sifresi</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Sifre">
+    <div class="row">
+      <button class="btn" type="button" id="unlockBtn">Giris</button>
+      <a class="btn ghost" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center">Ana sayfa</a>
+    </div>
+  </div>
+
+  <div id="app">
+    <div class="panel">
+      <span class="badge">META MUSE · ONIZLEME</span>
+      <h1>Mesajlasma bolumu tasarimcisi</h1>
+      <p class="muted">Meta Model API (muse-spark-1.2). Anahtar tarayicida tutulur, GitHub'a yazilmaz.</p>
+      <div class="warn"><strong>Not:</strong> CORS engeli olursa tarayicida calismaz; lokal <code>scripts/meta_responses.py</code> kullan.</div>
+      <label for="apiKey">MODEL_API_KEY</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="Meta Model API anahtarin">
+      <label for="prompt">Istek</label>
+      <textarea id="prompt">KonyaGo sehir rehberi icin modern, mobil uyumlu bir mesajlasma / iletisim bolumu tasarla. Alanlar, validasyon, spam korumasi ve KVKK notu oner. HTML+CSS iskeleti ver.</textarea>
+      <div class="row">
+        <button class="btn" type="button" id="runBtn">Muse'a sor</button>
+        <button class="btn ghost" type="button" id="clearChat">Sohbeti temizle</button>
+        <button class="btn ghost" type="button" id="lockBtn">Kilitle</button>
+      </div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+    </div>
+
+    <div class="panel preview">
+      <h1 style="font-size:1.05rem;margin:0 0 6px">Mesajlasma onizlemesi (taslak)</h1>
+      <p class="muted">Herkese acik degil. Begenirsen ana siteye tasiriz.</p>
+      <div class="preview-frame">
+        <div class="msg-ui">
+          <h3>Bize yazin</h3>
+          <p style="margin:0 0 10px;font-size:.85rem;color:#5a7264">KonyaGo iletisim formu taslagi</p>
+          <div class="fields">
+            <input type="text" placeholder="Ad Soyad" disabled>
+            <input type="email" placeholder="E-posta" disabled>
+            <input type="tel" placeholder="Telefon (opsiyonel)" disabled>
+            <select disabled><option>Konu: Genel</option><option>Reklam / is birligi</option></select>
+            <textarea placeholder="Mesajiniz" disabled></textarea>
+          </div>
+          <button class="send" type="button" disabled>Gonder (taslak)</button>
+          <p style="margin:10px 0 0;font-size:.75rem;color:#5a7264">KVKK: Mesajiniz yalnizca talebinize donus icin islenir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var ACCESS_PIN = "konyago-studio";
+  var GATE_KEY = "kg_studio_ok_v1";
+  var API_KEY_STORE = "kg_meta_api_key_sess";
+  var gate = document.getElementById("gate");
+  var app = document.getElementById("app");
+  var chat = document.getElementById("chat");
+  var runBtn = document.getElementById("runBtn");
+  var busy = false;
+
+  function unlocked() {
+    try { return sessionStorage.getItem(GATE_KEY) === "1"; } catch (e) { return false; }
+  }
+  function showApp(on) {
+    if (gate) gate.style.display = on ? "none" : "block";
+    if (app) app.style.display = on ? "block" : "none";
+  }
+  function bubble(role, text) {
+    if (!chat) return null;
+    var el = document.createElement("div");
+    el.className = "bubble " + role;
+    el.textContent = text;
+    chat.appendChild(el);
+    chat.scrollTop = chat.scrollHeight;
+    return el;
+  }
+  function getKey() {
+    var input = document.getElementById("apiKey");
+    var v = ((input && input.value) || "").trim();
+    if (!v) { try { v = sessionStorage.getItem(API_KEY_STORE) || ""; } catch (e) {} }
+    return v;
+  }
+  function extractDelta(event) {
+    if (!event || typeof event !== "object") return "";
+    if (event.type === "response.output_text.delta" && event.delta) return String(event.delta);
+    if (typeof event.delta === "string") return event.delta;
+    if (typeof event.output_text === "string") return event.output_text;
+    if (typeof event.text === "string") return event.text;
+    try {
+      var c = event.choices && event.choices[0];
+      if (c && c.delta && c.delta.content) return String(c.delta.content);
+    } catch (e) {}
+    return "";
+  }
+
+  async function runMuse() {
+    if (busy) return;
+    var key = getKey();
+    var prompt = ((document.getElementById("prompt") || {}).value || "").trim();
+    if (!key) { bubble("err", "API anahtari yok."); return; }
+    if (!prompt) { bubble("err", "Istek bos olamaz."); return; }
+    try { sessionStorage.setItem(API_KEY_STORE, key); } catch (e) {}
+    busy = true;
+    if (runBtn) runBtn.disabled = true;
+    bubble("user", prompt);
+    var bot = bubble("bot", "...");
+    var payload = {
+      model: "muse-spark-1.2",
+      input: prompt,
+      stream: true,
+      temperature: 0.6,
+      max_output_tokens: 2048,
+      top_p: 0.9,
+      reasoning: { effort: "medium" }
+    };
+    try {
+      var res = await fetch("https://api.meta.ai/v1/responses", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + key,
+          "Content-Type": "application/json",
+          Accept: "text/event-stream"
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        var errText = await res.text();
+        if (bot) { bot.className = "bubble err"; bot.textContent = "HTTP " + res.status + " — " + errText.slice(0, 500); }
+        return;
+      }
+      if (!res.body || !res.body.getReader) {
+        var json = await res.json();
+        if (bot) bot.textContent = json.output_text || JSON.stringify(json).slice(0, 4000);
+        return;
+      }
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buffer = "";
+      var out = "";
+      while (true) {
+        var chunk = await reader.read();
+        if (chunk.done) break;
+        buffer += decoder.decode(chunk.value, { stream: true });
+        var parts = buffer.split("\n");
+        buffer = parts.pop() || "";
+        for (var i = 0; i < parts.length; i++) {
+          var line = parts[i].trim();
+          if (line.indexOf("data:") !== 0) continue;
+          var data = line.slice(5).trim();
+          if (data === "[DONE]") continue;
+          try {
+            var event = JSON.parse(data);
+            var delta = extractDelta(event);
+            if (delta) {
+              out += delta;
+              if (bot) bot.textContent = out;
+              if (chat) chat.scrollTop = chat.scrollHeight;
+            }
+          } catch (e) {}
+        }
+      }
+      if (!out && bot) bot.textContent = "(Bos yanit veya stream parse edilemedi)";
+    } catch (err) {
+      if (bot) {
+        bot.className = "bubble err";
+        bot.textContent = "Istek basarisiz: " + (err && err.message ? err.message : String(err)) +
+          "\n\nMuhtemel sebep: tarayici CORS. Lokal: scripts/meta_responses.py";
+      }
+    } finally {
+      busy = false;
+      if (runBtn) runBtn.disabled = false;
+    }
+  }
+
+  function boot() {
+    showApp(unlocked());
+    try {
+      var saved = sessionStorage.getItem(API_KEY_STORE);
+      var keyInput = document.getElementById("apiKey");
+      if (saved && keyInput) keyInput.value = saved;
+    } catch (e) {}
+    document.getElementById("unlockBtn").onclick = function () {
+      var pw = (document.getElementById("pw") || {}).value || "";
+      if (pw === ACCESS_PIN) {
+        try { sessionStorage.setItem(GATE_KEY, "1"); } catch (e) {}
+        showApp(true);
+      } else alert("Sifre hatali");
+    };
+    document.getElementById("lockBtn").onclick = function () {
+      try { sessionStorage.removeItem(GATE_KEY); sessionStorage.removeItem(API_KEY_STORE); } catch (e) {}
+      showApp(false);
+    };
+    runBtn.onclick = runMuse;
+    document.getElementById("clearChat").onclick = function () { if (chat) chat.innerHTML = ""; };
+    document.getElementById("pw").onkeydown = function (e) {
+      if (e.key === "Enter") document.getElementById("unlockBtn").click();
+    };
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+</body>
+</html>
