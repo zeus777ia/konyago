@@ -1,0 +1,29 @@
+name: Generate favicons
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "assets/img/eagle.svg"
+      - ".github/workflows/favicons.yml"
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ImageMagick
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick
+      - name: Rasterize eagle.svg to PNG/ICO
+        run: |
+          set -e
+          convert -background none -density 300 assets/img/eagle.svg -resize 48x48 assets/img/favicon-48.png
+          convert -background none -density 300 assets/img/eagle.svg -resize 96x96 assets/img/favicon-96.png
+          convert -background none -density 300 assets/img/eagle.svg -resize 192x192 assets/img/favicon-192.png
+          convert assets/img/favicon-48.png assets/img/favicon-96.png favicon.ico
+          ls -la favicon.ico assets/img/favicon-*.png
+      - name: Commit favicons
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: add PNG/ICO favicons for Google Search"
+          file_pattern: "favicon.ico assets/img/favicon-48.png assets/img/favicon-96.png assets/img/favicon-192.png"
