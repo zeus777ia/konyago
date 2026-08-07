@@ -69,4 +69,4 @@ Site haritası: `https://konyago.com.tr/sitemap.xml`
 3. Sızan API key varsa provider’da revoke  
 4. Search Console’da güvenlik uyarısı var mı bak  
 
-İletişim: cnrtech@outlook.com.tr
+İletişim: info@konyago.com.tr

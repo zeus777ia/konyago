@@ -56,7 +56,7 @@
   } catch (e) {}
 
   try {
-    var mail = "mailto:cnrtech@outlook.com.tr?subject=KonyaGo%20Reklam";
+    var mail = "mailto:info@konyago.com.tr?subject=KonyaGo%20Reklam";
     var items = [
       { t: "✨ AysaTekin — En şık abiye modelleri · Kalite ve zarafet", href: "https://aysatekin.com", cta: "Keşfet" },
       { t: "👗 HOSGELDİN10 kodu ile yeni üyelere %10 indirim — AysaTekin", href: "https://aysatekin.com", cta: "Alışverişe başla" },

@@ -4,7 +4,7 @@
 
 Site: https://konyago.com.tr/
 Dil: tr-TR
-İletişim: cnrtech@outlook.com.tr
+İletişim: info@konyago.com.tr
 
 ## Ana sayfalar
 

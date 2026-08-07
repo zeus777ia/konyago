@@ -8,7 +8,7 @@
 | **Uygulama adı** | KonyaGo |
 | **İçerik kaynağı** | Canlı site: https://konyago.com.tr |
 | **Gizlilik** | https://konyago.com.tr/gizlilik.html |
-| **Destek** | cnrtech@outlook.com.tr |
+| **Destek** | info@konyago.com.tr |
 
 Site (GitHub Pages) güncellenince uygulama içeriği de güncellenir; her içerik değişiminde mağaza sürümü şart değildir.
 
@@ -139,7 +139,7 @@ Sadece web sitesi saran (thin WebView) uygulamalar reddedilebilir. Riski azaltma
 Seyahat / Travel  
 
 **İletişim**  
-- Destek: cnrtech@outlook.com.tr  
+- Destek: info@konyago.com.tr  
 - Site: https://konyago.com.tr  
 - Gizlilik: https://konyago.com.tr/gizlilik.html  
 

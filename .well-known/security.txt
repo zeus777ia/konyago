@@ -1,4 +1,4 @@
-Contact: mailto:cnrtech@outlook.com.tr
+Contact: mailto:info@konyago.com.tr
 Expires: 2027-08-01T00:00:00.000Z
 Preferred-Languages: tr, en
 Canonical: https://konyago.com.tr/.well-known/security.txt
