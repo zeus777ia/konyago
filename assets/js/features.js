@@ -1,4 +1,4 @@
-/* KonyaGo — hava, bugün planı, sesli anlatım yardımcıları */
+/* KonyaGo — hava, bugün planı, rastgele öneri, sesli anlatım */
 (function (w) {
   "use strict";
   var KONYA = { lat: 37.8746, lon: 32.4932, tz: "Europe/Istanbul" };
@@ -44,47 +44,98 @@
     });
   }
 
+  /* Sabit yedek listeler (kesfet-data yüklenmezse) */
+  var FALLBACK_GEZI = [
+    { name: "Mevlana Müzesi", tag: "Ücretsiz · simge", href: "gezilecek.html", desc: "Yeşil kubbe ve Mevlevî kültürünün merkezi." },
+    { name: "Alaaddin Tepesi", tag: "Selçuklu", href: "gezilecek.html", desc: "Tarihî çekirdek ve manzara." },
+    { name: "Sille", tag: "Yarım gün", href: "sille.html", desc: "Taş sokaklar, Aya Eleni, fotoğraf rotası." },
+    { name: "Japon Parkı", tag: "Aile", href: "gezilecek.html", desc: "Japon bahçesi temalı park; gölet ve yürüyüş." },
+    { name: "İnce Minareli Medrese", tag: "Taş işi", href: "gezilecek.html", desc: "Selçuklu taş işçiliğinin öne çıkan örneği." },
+    { name: "Karatay Medresesi", tag: "Çini", href: "gezilecek.html", desc: "Çini eserleri ve medrese mimarisi." },
+    { name: "Meram Bağları", tag: "Akşam", href: "gezilecek.html", desc: "Yeşil vadi, yürüyüş ve serin akşam." },
+    { name: "Sahip Ata Külliyesi", tag: "Selçuklu", href: "gezilecek.html", desc: "Külliye ve vakıf eserleri; Mevlana yakını." }
+  ];
+  var FALLBACK_YEMEK = [
+    { name: "Etli ekmek", tag: "İmza lezzet", href: "etli-ekmek.html", desc: "İnce hamur, kıyma, taş fırın — ayran ile klasik." },
+    { name: "Fırın kebabı", tag: "Et", href: "mutfak.html", desc: "Uzun pişen kuşbaşı; sosu ekmekle." },
+    { name: "Tirit", tag: "Geleneksel", href: "mutfak.html", desc: "Konya usulü tirit — doyurucu ve sade." },
+    { name: "Bamya çorbası", tag: "Çorba", href: "mutfak.html", desc: "Konya sofasının klasik başlangıcı." }
+  ];
+  var TIPS = [
+    "Sabah Mevlana’ya erken git, kalabalıktan kaç.",
+    "Sille’yi öğleden sonra + kahvaltı ile birleştir.",
+    "Yazın şapka ve su; öğlen dış mekânı kısalt.",
+    "Kışın katmanlı giyin; buzlu kaldırımlara dikkat.",
+    "Etli ekmek için yerel önerilen fırınlara bak.",
+    "Alaaddin + İnce Minare aynı yürüyüş rotasında.",
+    "Akşam için Meram veya Japon Parkı ideal.",
+    "ATUŞ / Konyakart ile toplu taşıma pratik."
+  ];
+
+  function pick(arr) {
+    if (!arr || !arr.length) return null;
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function getPools() {
+    var data = w.KONYAGO_KESFET || [];
+    var gezi = data.filter(function (x) {
+      return x.cat === "muze" || x.cat === "gezi" || x.cat === "ilce";
+    });
+    var yemek = data.filter(function (x) { return x.cat === "yemek"; });
+    if (gezi.length < 3) gezi = FALLBACK_GEZI;
+    if (yemek.length < 1) yemek = FALLBACK_YEMEK;
+    return { gezi: gezi, yemek: yemek };
+  }
+
+  function renderSuggestion(el) {
+    var pools = getPools();
+    var g = pick(pools.gezi);
+    var y = pick(pools.yemek);
+    var tip = pick(TIPS);
+    if (!g) g = FALLBACK_GEZI[0];
+    if (!y) y = FALLBACK_YEMEK[0];
+
+    var html =
+      '<div class="bugun-header">' +
+      "<h2>Bugün nereye gideyim?</h2>" +
+      '<button type="button" class="btn btn-primary btn-sm" id="bugunYenile" aria-label="Yeni öneri">🎲 Yeniden öner</button>' +
+      "</div>" +
+      '<div class="bugun-grid">' +
+      '<a class="bugun-card" href="' + (g.href || "gezilecek.html") + '">' +
+      '<span class="bugun-label">🕌 Gezi</span>' +
+      "<strong>" + g.name + "</strong>" +
+      "<span>" + (g.tag || g.ilce || "") + "</span>" +
+      (g.desc ? "<p>" + g.desc + "</p>" : "") +
+      "</a>" +
+      '<a class="bugun-card" href="' + (y.href || "mutfak.html") + '">' +
+      '<span class="bugun-label">🍽️ Yemek</span>' +
+      "<strong>" + y.name + "</strong>" +
+      "<span>" + (y.tag || y.ilce || "") + "</span>" +
+      (y.desc ? "<p>" + y.desc + "</p>" : "") +
+      "</a>" +
+      "</div>" +
+      '<p class="bugun-tip"><strong>İpucu:</strong> ' + tip + "</p>" +
+      '<div class="link-row">' +
+      '<a class="btn btn-ghost btn-sm" href="rotalar.html">Tüm rotalar</a>' +
+      '<a class="btn btn-ghost btn-sm" href="semtler.html">Semt rehberleri</a>' +
+      '<a class="btn btn-ghost btn-sm" href="ai.html">AI ile plan</a>' +
+      "</div>";
+
+    el.innerHTML = html;
+    var btn = document.getElementById("bugunYenile");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        renderSuggestion(el);
+      });
+    }
+  }
+
   function todayPlan(targetId) {
     var el = document.getElementById(targetId || "todayPlan");
     if (!el) return;
-    var h = new Date().getHours();
-    var m = new Date().getMonth(); // 0-11
-    var season = (m >= 5 && m <= 8) ? "yaz" : ((m >= 11 || m <= 1) ? "kis" : "gecis");
-    var title, steps, tip;
-    if (h < 11) {
-      title = "Sabah planı";
-      steps = [
-        "Mevlana Müzesi — açılışa yakın git, kalabalıktan kaç",
-        "Kısa yürüyüş: müzeden çarşıya doğru",
-        "Öğle için etli ekmek noktası seç (merkez)"
-      ];
-    } else if (h < 16) {
-      title = "Öğleden sonra planı";
-      steps = [
-        "Alaaddin Tepesi + çevre müzeler (İnce Minare / Karatay)",
-        "Gölge ve su molası",
-        "İstersen Sille’ye yarım gün kaydır"
-      ];
-    } else {
-      title = "Akşam planı";
-      steps = [
-        "Meram veya Japon Parkı yürüyüşü",
-        "Hafif akşam yemeği — fırın kebabı veya tirit",
-        "Yarın için Mevlana’yı sabaha bırak"
-      ];
-    }
-    if (season === "yaz") tip = "Sıcak: şapka, su, öğlen dış mekânı kısalt.";
-    else if (season === "kis") tip = "Soğuk: katmanlı giyin; buzlu kaldırımlara dikkat.";
-    else tip = "Mevsim geçişi: ince mont + yürüyüş ayakkabısı ideal.";
-
-    var html = "<h2>" + title + "</h2><ul>";
-    steps.forEach(function (s) { html += "<li>" + s + "</li>"; });
-    html += "</ul><p><strong>İpucu:</strong> " + tip + "</p>" +
-      '<div class="link-row">' +
-      '<a class="btn btn-primary btn-sm" href="rotalar.html">Tüm rotalar</a>' +
-      '<a class="btn btn-ghost btn-sm" href="rota-yazdir.html">Yazdır / PDF</a>' +
-      '<a class="btn btn-ghost btn-sm" href="ai.html">AI ile plan</a></div>';
-    el.innerHTML = html;
+    /* İlk yüklemede rastgele öneri göster */
+    renderSuggestion(el);
   }
 
   function speak(text, btn) {
@@ -104,7 +155,7 @@
     w.speechSynthesis.speak(u);
   }
 
-  w.KonyaGoFeatures = { loadWeather: loadWeather, todayPlan: todayPlan, speak: speak };
+  w.KonyaGoFeatures = { loadWeather: loadWeather, todayPlan: todayPlan, speak: speak, renderSuggestion: renderSuggestion };
   w.addEventListener("DOMContentLoaded", function () {
     loadWeather("weatherBox");
     todayPlan("todayPlan");
