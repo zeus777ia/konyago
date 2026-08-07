@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "scripts/write_brand_favicons.py"
+      - "scripts/brand-icon.b64"
       - ".github/workflows/favicons.yml"
 jobs:
   gen:
@@ -12,10 +13,12 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Install ImageMagick
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick
       - name: Write brand favicons
         run: python3 scripts/write_brand_favicons.py
       - name: Commit favicons
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update favicons to new KonyaGo brand icon"
-          file_pattern: "favicon.ico assets/img/favicon-*.png assets/img/apple-touch-icon.png"
+          commit_message: "chore: new KonyaGo brand app icon favicons"
+          file_pattern: "favicon.ico assets/img/favicon-*.png assets/img/apple-touch-icon.png assets/img/brand-icon-src.jpg"
