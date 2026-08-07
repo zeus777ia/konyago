@@ -46,6 +46,22 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
+  /* Basit footer'lara kurumsal e-posta ekle (tüm sayfalar) */
+  try {
+    document.querySelectorAll(".site-footer .container").forEach(function (el) {
+      var html = el.innerHTML || "";
+      if (html.indexOf("info@konyago.com.tr") !== -1) return;
+      if (/©\s*2026\s*KonyaGo/i.test(html)) {
+        el.innerHTML = html.replace(
+          /©\s*2026\s*KonyaGo/i,
+          '© 2026 KonyaGo · <a href="mailto:info@konyago.com.tr">info@konyago.com.tr</a>'
+        );
+      } else if (html.trim()) {
+        el.innerHTML = html + ' · <a href="mailto:info@konyago.com.tr">info@konyago.com.tr</a>';
+      }
+    });
+  } catch (e) {}
+
   try {
     document.addEventListener("visibilitychange", function () {
       var paused = document.hidden;
