@@ -30,7 +30,7 @@
 <link rel="dns-prefetch" href="https://api.open-meteo.com">
 <link rel="dns-prefetch" href="https://upload.wikimedia.org">
 <link rel="dns-prefetch" href="https://live.staticflickr.com">
-<link rel="stylesheet" href="assets/css/app.css?v=24">
+<link rel="stylesheet" href="assets/css/app.css?v=25">
 <link rel="stylesheet" href="assets/css/theme.css?v=2">
 <link rel="stylesheet" href="assets/css/elite.css?v=2">
 <link rel="stylesheet" href="assets/css/perf.css?v=2">
@@ -101,6 +101,21 @@
 .social-btn.mail:hover{border-color:var(--green);background:var(--green-soft)}
 .social-btn.wac{border-color:rgba(37,211,102,.5);color:#0b6b4a;background:linear-gradient(135deg,rgba(37,211,102,.12),var(--white))}
 .social-btn.wac:hover{background:rgba(37,211,102,.18);border-color:#25d366}
+/* Bugün Nereye Gideyim */
+#todayPlan{padding:16px;border-radius:16px}
+.bugun-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.bugun-header h2{margin:0;font-size:1.15rem;color:var(--green-deep)}
+.bugun-grid{display:grid;gap:10px;margin-bottom:10px}
+@media(min-width:560px){.bugun-grid{grid-template-columns:1fr 1fr}}
+.bugun-card{display:block;padding:14px 14px 12px;border-radius:14px;background:var(--white);border:1px solid var(--border);text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s}
+.bugun-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(13,122,79,.12);border-color:rgba(13,122,79,.35)}
+.bugun-label{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.bugun-card strong{display:block;color:var(--green-deep);font-size:1rem;margin-bottom:2px}
+.bugun-card > span{font-size:.78rem;color:var(--muted)}
+.bugun-card p{margin:6px 0 0;font-size:.82rem;color:var(--muted);line-height:1.4}
+.bugun-tip{margin:8px 0 0;font-size:.88rem;color:var(--muted)}
+html[data-theme="dark"] .bugun-card{background:var(--white)}
+html[data-theme="dark"] .bugun-card strong{color:var(--green)}
 </style>
 </head>
 <body>
@@ -130,7 +145,7 @@
       <a href="kesfet.html">Keşfet</a>
       <a href="ai.html">AI</a>
       <a href="gezilecek.html">Gezi</a>
-      <a href="album.html">Albüm</a>
+      <a href="semtler.html">Semtler</a>
       <a href="rotalar.html">Rotalar</a>
       <a href="mutfak.html">Mutfak</a>
       <a href="en.html">EN</a>
@@ -195,9 +210,9 @@
   <div class="wx-card" id="weatherBox" aria-live="polite"></div>
   <p class="note" style="margin-top:4px"><a href="hava.html">7 günlük hava detayı →</a></p>
 
-  <div class="info" id="todayPlan" style="margin-top:12px">
-    <h2>Bugün ne yapmalı?</h2>
-    <p>Plan hazırlanıyor…</p>
+  <div class="info" id="todayPlan" style="margin-top:12px" aria-live="polite">
+    <h2>Bugün nereye gideyim?</h2>
+    <p>Öneri hazırlanıyor…</p>
   </div>
 
   <section class="section" aria-label="Öne çıkan destinasyonlar">
@@ -231,6 +246,20 @@
     <div class="link-row" style="margin-top:12px">
       <a class="btn btn-ghost btn-sm" href="album.html">Tüm fotoğraf albümü →</a>
       <a class="btn btn-ghost btn-sm" href="gezilecek.html">Gezilecek yerler →</a>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Semt rehberi">
+    <h2 class="section-title">Semt <span>rehberi</span></h2>
+    <div class="ilce-strip">
+      <a class="ilce-pill" href="semtler.html#karatay">Karatay<small>Mevlana · medrese</small></a>
+      <a class="ilce-pill" href="semtler.html#selcuklu">Selçuklu<small>Alaaddin · park</small></a>
+      <a class="ilce-pill" href="semtler.html#meram">Meram<small>Bağlar · akşam</small></a>
+      <a class="ilce-pill" href="sille.html">Sille<small>Taş köy · kahvaltı</small></a>
+    </div>
+    <div class="link-row" style="margin-top:10px">
+      <a class="btn btn-ghost btn-sm" href="semtler.html">Tüm semt rehberi →</a>
+      <a class="btn btn-ghost btn-sm" href="ilceler.html">İlçeler (Beyşehir, Akşehir…)</a>
     </div>
   </section>
 
@@ -282,6 +311,7 @@
     <div class="grid grid-2 grid-4">
       <a class="card" href="kesfet.html"><div class="ico">🔍</div><h3>Keşfet</h3><p>Kategori + ilçe filtre</p></a>
       <a class="card" href="gezilecek.html"><div class="ico">🕌</div><h3>Gezilecek yerler</h3><p>Mevlana, Sille, merkez</p></a>
+      <a class="card" href="semtler.html"><div class="ico">🏘️</div><h3>Semt rehberi</h3><p>Meram · Selçuklu · Karatay</p></a>
       <a class="card" href="album.html"><div class="ico">📷</div><h3>Foto albüm</h3><p>Konya görselleri</p></a>
       <a class="card" href="rotalar.html"><div class="ico">🧭</div><h3>Rotalar</h3><p>1–2 gün planları</p></a>
       <a class="card" href="mutfak.html"><div class="ico">🍽️</div><h3>Konya mutfağı</h3><p>Etli ekmek & lezzet</p></a>
@@ -290,7 +320,6 @@
       <a class="card" href="konaklama.html"><div class="ico">🏨</div><h3>Konaklama</h3><p>Otel ipuçları</p></a>
       <a class="card" href="ulasim.html"><div class="ico">🚌</div><h3>Ulaşım</h3><p>Otobüs & pratik</p></a>
       <a class="card" href="etkinlikler.html"><div class="ico">🎭</div><h3>Etkinlikler</h3><p>Şehir takvimi</p></a>
-      <a class="card" href="hediyelik.html"><div class="ico">🎁</div><h3>Hediyelik</h3><p>Ne alınır?</p></a>
       <a class="card" href="katki.html"><div class="ico">✉️</div><h3>Başvuru</h3><p>İşletme / katkı</p></a>
     </div>
   </section>
@@ -313,10 +342,10 @@
         <h4>Keşfet</h4>
         <ul>
           <li><a href="gezilecek.html">Gezilecek yerler</a></li>
+          <li><a href="semtler.html">Semt rehberi</a></li>
           <li><a href="rotalar.html">Rotalar</a></li>
           <li><a href="mutfak.html">Mutfak</a></li>
           <li><a href="album.html">Albüm</a></li>
-          <li><a href="tarihce.html">Tarihçe</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -350,7 +379,7 @@
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html" aria-current="page"><span class="i">🏠</span>Ana</a>
   <a href="kesfet.html"><span class="i">🔍</span>Keşfet</a>
-  <a href="album.html"><span class="i">📷</span>Albüm</a>
+  <a href="semtler.html"><span class="i">🏘️</span>Semt</a>
   <a href="gezilecek.html"><span class="i">🕌</span>Gezi</a>
   <a href="ai.html"><span class="i">✨</span>AI</a>
 </nav>
@@ -359,8 +388,8 @@
 <script src="assets/js/visits.js?v=2"></script>
 <script src="assets/js/duyurular.js" defer></script>
 <script src="assets/js/kesfet-data.js" defer></script>
-<script src="assets/js/features.js" defer></script>
-<script src="assets/js/app.js?v=27" defer></script>
+<script src="assets/js/features.js?v=3" defer></script>
+<script src="assets/js/app.js?v=28" defer></script>
 <script src="assets/js/speak.js?v=1"></script>
 <script src="assets/js/yenilikler.js?v=4" defer></script>
 <script src="assets/js/barajlar.js?v=1" defer></script>
