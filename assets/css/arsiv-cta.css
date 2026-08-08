@@ -1,0 +1,211 @@
+/* KonyaGo Arşiv — ana sayfa sabit CTA */
+.arsiv-pin {
+  position: relative;
+  margin: 18px 0 8px;
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(15, 107, 82, 0.22);
+  background:
+    linear-gradient(135deg, rgba(15, 107, 82, 0.08) 0%, rgba(224, 195, 92, 0.08) 48%, rgba(255, 255, 255, 0.92) 100%);
+  box-shadow: 0 10px 28px rgba(16, 40, 28, 0.08);
+  overflow: hidden;
+}
+.arsiv-pin::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: linear-gradient(180deg, #0f6b52, #c9a227);
+  border-radius: 18px 0 0 18px;
+}
+.arsiv-pin-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 8px;
+}
+.arsiv-pin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0b3d32;
+  background: rgba(15, 107, 82, 0.12);
+  border: 1px solid rgba(15, 107, 82, 0.2);
+}
+.arsiv-pin-badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1f9d6b;
+  box-shadow: 0 0 0 0 rgba(31, 157, 107, 0.55);
+  animation: arsiv-pulse 1.8s ease-in-out infinite;
+}
+@keyframes arsiv-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(31, 157, 107, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(31, 157, 107, 0);
+  }
+}
+.arsiv-pin h2 {
+  margin: 0 0 6px;
+  font-size: 1.28rem;
+  line-height: 1.25;
+  color: var(--green-deep, #0b3d32);
+}
+.arsiv-pin h2 span {
+  color: var(--gold, #b8922a);
+}
+.arsiv-pin p {
+  margin: 0 0 14px;
+  color: var(--muted, #5c6b7a);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 52rem;
+}
+.arsiv-pin-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.arsiv-pin-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--green-deep, #0b3d32);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(15, 107, 82, 0.14);
+}
+.arsiv-pin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.btn-arsiv {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #f4faf7 !important;
+  background: linear-gradient(135deg, #0f6b52 0%, #0b3d32 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 18px rgba(11, 61, 50, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.btn-arsiv:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 24px rgba(11, 61, 50, 0.34);
+}
+.btn-arsiv:active {
+  transform: translateY(0);
+}
+.btn-arsiv-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  color: var(--green-deep, #0b3d32) !important;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(15, 107, 82, 0.2);
+}
+.btn-arsiv-ghost:hover {
+  background: #fff;
+  border-color: rgba(15, 107, 82, 0.35);
+}
+.arsiv-pin-note {
+  margin: 12px 0 0 !important;
+  font-size: 0.78rem !important;
+  color: var(--muted, #6b7280) !important;
+}
+.nav-desktop a.nav-arsiv {
+  color: #0b3d32;
+  font-weight: 700;
+  border: 1px solid rgba(15, 107, 82, 0.2);
+  background: rgba(15, 107, 82, 0.08);
+}
+.nav-desktop a.nav-arsiv:hover {
+  background: rgba(15, 107, 82, 0.14);
+}
+.mnav a.mnav-arsiv {
+  color: #0b3d32;
+  font-weight: 700;
+}
+
+html[data-theme="dark"] .arsiv-pin {
+  background:
+    linear-gradient(135deg, rgba(62, 207, 142, 0.1) 0%, rgba(224, 195, 92, 0.08) 45%, rgba(22, 36, 28, 0.95) 100%);
+  border-color: rgba(62, 207, 142, 0.25);
+}
+html[data-theme="dark"] .arsiv-pin h2 {
+  color: var(--green-deep);
+}
+html[data-theme="dark"] .arsiv-pin p,
+html[data-theme="dark"] .arsiv-pin-note {
+  color: var(--muted) !important;
+}
+html[data-theme="dark"] .arsiv-pin-meta li,
+html[data-theme="dark"] .btn-arsiv-ghost {
+  background: rgba(20, 40, 30, 0.75);
+  color: var(--text) !important;
+  border-color: rgba(62, 207, 142, 0.22);
+}
+html[data-theme="dark"] .arsiv-pin-badge {
+  color: var(--green);
+  background: rgba(62, 207, 142, 0.12);
+  border-color: rgba(62, 207, 142, 0.25);
+}
+html[data-theme="dark"] .nav-desktop a.nav-arsiv {
+  color: var(--green);
+  background: rgba(62, 207, 142, 0.1);
+  border-color: rgba(62, 207, 142, 0.25);
+}
+
+@media (max-width: 640px) {
+  .arsiv-pin {
+    padding: 16px 14px 14px;
+  }
+  .arsiv-pin h2 {
+    font-size: 1.12rem;
+  }
+  .btn-arsiv,
+  .btn-arsiv-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arsiv-pin-badge .dot {
+    animation: none;
+  }
+  .btn-arsiv {
+    transition: none;
+  }
+}
