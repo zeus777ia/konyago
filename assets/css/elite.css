@@ -1,4 +1,4 @@
-/* KonyaGo Elite — premium şehir rehberi katmanı v4 */
+/* KonyaGo Elite — premium şehir rehberi katmanı v4 — clean modern */
 /* Mat derin yeşil + daha sıcak antik altın · soft hover · güçlü hero derinliği */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap");
 
@@ -11,14 +11,14 @@
   --radius-sm:12px;
   --ease:cubic-bezier(.22,1,.36,1);
 
-  /* Mat, derin, biraz daha soluk yeşiller */
+  /* Mat, derin yeşiller */
   --green:#0b6541;
   --green-dark:#084c32;
   --green-deep:#032a1b;
   --green-soft:#e4f0e9;
   --green-mid:#bdd9cb;
 
-  /* Daha sıcak antik altın / pirinç (turuncu alt ton) */
+  /* Sıcak antik altın */
   --gold:#c49a2c;
   --gold-bright:#dbb04a;
   --gold-soft:#f5ecd6;
@@ -43,7 +43,6 @@ body{
   background:var(--cream);
 }
 
-/* Hafif ambient arka plan — daha yumuşak */
 body::before{
   background:
     radial-gradient(ellipse 78% 48% at 0% -8%,rgba(11,101,65,.065),transparent 55%),
@@ -107,7 +106,7 @@ body::before{
 }
 .nav-desktop a:hover{transform:translateY(-1px)}
 
-/* ========== HERO — görsel derinlik güçlendirildi ========== */
+/* ========== HERO ========== */
 .hero{
   position:relative;
   text-align:center;
@@ -189,7 +188,7 @@ body::before{
 }
 .hero .actions{
   position:relative;z-index:1;
-  justify-content:center;gap:10px;flex-wrap:wrap;
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
 }
 .hero .btn-primary{
   background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);
@@ -211,7 +210,7 @@ body::before{
   box-shadow:0 8px 22px rgba(11,101,65,.09);
 }
 
-/* ========== Trust strip ========== */
+/* Trust strip */
 .trust-strip{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -237,7 +236,7 @@ body::before{
 .trust-item strong{font-size:.82rem;color:var(--green-deep);font-weight:700}
 .trust-item span{font-size:.72rem;color:var(--muted);line-height:1.35}
 
-/* ========== Feature cards ========== */
+/* Feature cards */
 .feat-grid{
   display:grid;
   grid-template-columns:1fr;
@@ -289,7 +288,7 @@ body::before{
 }
 .feat-card p{font-size:.78rem;opacity:.9;margin:0;color:#e4f0e9}
 
-/* ========== Genel kartlar ========== */
+/* Cards */
 .card{
   border-radius:var(--radius);
   transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .22s;
@@ -309,17 +308,14 @@ body::before{
   color:var(--green-deep);
 }
 
-/* ========== Yer kartları (.place) — soft hover + premium gölge ========== */
+/* Place cards */
 .place{
   background:var(--white);
   border:1px solid var(--border);
   border-radius:var(--radius);
   overflow:hidden;
   box-shadow:0 6px 22px rgba(3,42,27,.045);
-  transition:
-    transform .34s var(--ease),
-    box-shadow .34s var(--ease),
-    border-color .28s ease;
+  transition:transform .34s var(--ease),box-shadow .34s var(--ease),border-color .28s ease;
 }
 .place:hover{
   transform:translateY(-6px);
@@ -330,13 +326,9 @@ body::before{
   border-color:rgba(11,101,65,.28);
 }
 .place .place-img,
-.place .place-img-sm{
-  transition:transform .6s var(--ease);
-}
+.place .place-img-sm{transition:transform .6s var(--ease)}
 .place:hover .place-img,
-.place:hover .place-img-sm{
-  transform:scale(1.035);
-}
+.place:hover .place-img-sm{transform:scale(1.035)}
 .place-body h2{
   font-family:var(--font-display);
   color:var(--green-deep);
@@ -353,7 +345,7 @@ body::before{
   border-color:rgba(196,154,44,.18);
 }
 
-/* ========== Butonlar ========== */
+/* Buttons */
 .btn{
   letter-spacing:.01em;
   transition:transform .2s var(--ease),box-shadow .2s,background .2s,border-color .2s;
@@ -364,9 +356,7 @@ body::before{
   color:#fff;
   box-shadow:0 6px 18px rgba(11,101,65,.2);
 }
-.btn-primary:hover{
-  box-shadow:0 10px 26px rgba(11,101,65,.28);
-}
+.btn-primary:hover{box-shadow:0 10px 26px rgba(11,101,65,.28)}
 .btn-ghost{
   background:var(--white);
   border:1.5px solid var(--border);
@@ -399,7 +389,7 @@ body::before{
   background:linear-gradient(135deg,var(--green-soft),#fff);
 }
 
-/* ========== Footer ========== */
+/* Footer */
 .footer-elite{
   background:linear-gradient(180deg,var(--green-deep) 0%,#02160f 100%);
   color:rgba(228,240,233,.9);
@@ -420,13 +410,6 @@ body::before{
   font-family:var(--font-display);
   font-size:1.5rem;color:#fff;display:block;margin-bottom:6px;
 }
-.footer-brand p{font-size:.85rem;line-height:1.5;opacity:.85;max-width:32ch}
-.footer-col h4{
-  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--gold-bright);margin:0 0 12px;
-}
-.footer-col ul{list-style:none;padding:0;margin:0}
-.footer-col li{margin:0 0 8px;font-size:.88rem}
 .footer-brand p{font-size:.85rem;line-height:1.5;opacity:.85;max-width:32ch}
 .footer-col h4{
   font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
@@ -491,7 +474,15 @@ body:has(.footer-elite) > .site-footer{display:none}
   box-shadow:0 4px 14px rgba(3,42,27,.038);
 }
 
-/* ========== Koyu tema uyumu ========== */
+/* Grid helpers for homepage */
+.grid{display:grid;gap:12px}
+.grid-2{grid-template-columns:1fr}
+@media(min-width:560px){.grid-2{grid-template-columns:1fr 1fr}}
+.grid-4{grid-template-columns:1fr}
+@media(min-width:640px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.grid-4{grid-template-columns:repeat(4,1fr)}}
+
+/* Dark theme */
 html[data-theme="dark"]{
   --green:#3dcf8e;
   --green-dark:#2aad72;
