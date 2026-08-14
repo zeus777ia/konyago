@@ -1,4 +1,4 @@
-/* Profesyonel ziyaretçi paneli */
+/* Ziyaretçi paneli — navy + gold (luxury uyumlu) */
 .visit-stats{
   display:flex;
   flex-wrap:wrap;
@@ -11,12 +11,12 @@
 .visit-stat{
   flex:1 1 140px;
   min-width:130px;
-  background:linear-gradient(160deg,#fff 0%,var(--green-soft,#e8f5ee) 100%);
-  border:1px solid var(--border,rgba(13,122,79,.18));
-  border-radius:14px;
+  background:#1A3050;
+  border:1px solid rgba(201,162,39,0.22);
+  border-radius:12px;
   padding:12px 14px;
   text-align:center;
-  box-shadow:0 4px 14px rgba(13,122,79,.07);
+  box-shadow:none;
 }
 .visit-stat .vs-label{
   display:block;
@@ -24,22 +24,24 @@
   font-weight:700;
   letter-spacing:.04em;
   text-transform:uppercase;
-  color:var(--muted,#5a7264);
+  color:#D4DBE6;
   margin-bottom:4px;
 }
 .visit-stat .vs-value{
   display:block;
   font-size:1.35rem;
-  font-weight:800;
-  color:var(--green-deep,#063d28);
+  font-weight:700;
+  color:#F5EED8;
   line-height:1.15;
   font-variant-numeric:tabular-nums;
 }
 .visit-stat.vs-total{
-  background:linear-gradient(160deg,#fff 0%,#f5ecd0 100%);
-  border-color:rgba(201,162,39,.35);
+  background:#1A3050;
+  border-color:rgba(201,162,39,0.4);
 }
-.visit-stat.vs-total .vs-value{color:#8a7010}
+.visit-stat.vs-total .vs-value{
+  color:#E8C84A;
+}
 .visit-stats[data-ready="1"] .vs-value{animation:vsPop .35s ease}
 @keyframes vsPop{from{opacity:.5;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.visit-stats[data-ready="1"] .vs-value{animation:none}}
