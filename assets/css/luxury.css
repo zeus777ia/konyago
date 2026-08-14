@@ -1,0 +1,407 @@
+/* KonyaGo Luxury Dark — Navy + Gold · Editorial */
+:root {
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --max: 1180px;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+
+  --navy: #0A1628;
+  --navy-mid: #0F1E32;
+  --navy-card: #12243A;
+  --gold: #C9A227;
+  --gold-bright: #E0BC55;
+  --gold-soft: rgba(201, 162, 39, 0.12);
+  --text: #F0EDE6;
+  --muted: #A8B0BC;
+  --border: rgba(201, 162, 39, 0.18);
+  --white: #FFFFFF;
+}
+
+html, body {
+  background: var(--navy) !important;
+  color: var(--text) !important;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: none !important;
+  background: none !important;
+}
+
+/* Header */
+.site-header {
+  background: rgba(10, 22, 40, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.12) !important;
+  box-shadow: none !important;
+}
+
+.logo-text strong {
+  font-family: var(--font-display) !important;
+  color: var(--gold-bright) !important;
+  font-size: 1.35rem !important;
+}
+
+.logo-text small {
+  color: var(--muted) !important;
+}
+
+.nav-desktop a {
+  color: var(--muted) !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  padding: 8px 12px !important;
+}
+
+.nav-desktop a:hover,
+.nav-desktop a[aria-current="page"] {
+  color: var(--gold-bright) !important;
+  background: transparent !important;
+}
+
+/* Hero — Luxury split style */
+.hero {
+  text-align: left !important;
+  padding: clamp(36px, 6vw, 64px) 28px !important;
+  margin: 16px 0 28px !important;
+  border-radius: 20px !important;
+  background: linear-gradient(135deg, #0F1E32 0%, #0A1628 60%, #0D1A2C 100%) !important;
+  border: 1px solid rgba(201, 162, 39, 0.15) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.hero::before,
+.hero::after {
+  display: none !important;
+}
+
+.hero-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--gold) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+  box-shadow: none !important;
+}
+
+.hero-badge::before {
+  content: "" !important;
+  width: 28px !important;
+  height: 1px !important;
+  background: var(--gold) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.hero-eagle {
+  display: none !important;
+}
+
+.hero h1 {
+  font-family: var(--font-display) !important;
+  font-size: clamp(2.1rem, 5.5vw, 3.4rem) !important;
+  font-weight: 600 !important;
+  color: #F5F1E8 !important;
+  line-height: 1.12 !important;
+  max-width: 14ch !important;
+  margin: 0 0 16px !important;
+  text-shadow: none !important;
+  letter-spacing: -0.02em !important;
+}
+
+.hero p {
+  font-size: clamp(0.95rem, 1.8vw, 1.08rem) !important;
+  color: var(--muted) !important;
+  max-width: 38ch !important;
+  margin: 0 0 28px !important;
+  line-height: 1.6 !important;
+}
+
+.hero .actions {
+  display: flex !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-start !important;
+}
+
+.hero .btn-primary {
+  background: transparent !important;
+  color: var(--gold-bright) !important;
+  border: 1.5px solid var(--gold) !important;
+  padding: 13px 26px !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  font-size: 0.82rem !important;
+  box-shadow: none !important;
+}
+
+.hero .btn-primary:hover {
+  background: var(--gold) !important;
+  color: #0A1628 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hero .btn-ghost {
+  background: transparent !important;
+  border: 1.5px solid rgba(168, 176, 188, 0.35) !important;
+  color: var(--muted) !important;
+  padding: 13px 22px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+}
+
+.hero .btn-ghost:hover {
+  border-color: var(--gold) !important;
+  color: var(--gold-bright) !important;
+  background: transparent !important;
+}
+
+/* Trust strip luxury */
+.trust-strip {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  margin: 0 0 28px !important;
+}
+
+@media (min-width: 720px) {
+  .trust-strip {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+.trust-item {
+  background: var(--navy-card) !important;
+  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+  border-radius: 12px !important;
+  padding: 16px 14px !important;
+  box-shadow: none !important;
+}
+
+.trust-item:hover {
+  border-color: rgba(201, 162, 39, 0.3) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.trust-item strong {
+  color: var(--gold-bright) !important;
+  font-size: 0.8rem !important;
+}
+
+.trust-item span {
+  color: var(--muted) !important;
+  font-size: 0.72rem !important;
+}
+
+/* Cards */
+.card {
+  background: var(--navy-card) !important;
+  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  padding: 20px 16px !important;
+}
+
+.card:hover {
+  border-color: rgba(201, 162, 39, 0.28) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.card h3 {
+  font-family: var(--font-display) !important;
+  color: var(--text) !important;
+  font-size: 1.15rem !important;
+}
+
+.card p {
+  color: var(--muted) !important;
+  font-size: 0.88rem !important;
+}
+
+/* Section titles */
+.section-title {
+  font-family: var(--font-display) !important;
+  color: var(--text) !important;
+  font-size: clamp(1.4rem, 2.5vw, 1.7rem) !important;
+}
+
+.section-title span {
+  color: var(--gold) !important;
+  font-style: italic !important;
+}
+
+/* Buttons general */
+.btn-primary {
+  background: transparent !important;
+  color: var(--gold-bright) !important;
+  border: 1.5px solid var(--gold) !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+
+.btn-primary:hover {
+  background: var(--gold) !important;
+  color: #0A1628 !important;
+}
+
+.btn-ghost {
+  background: transparent !important;
+  border: 1.5px solid rgba(168, 176, 188, 0.3) !important;
+  color: var(--muted) !important;
+  border-radius: 6px !important;
+}
+
+/* SMS */
+.sms-soft {
+  background: var(--navy-card) !important;
+  border: 1px solid rgba(201, 162, 39, 0.15) !important;
+  border-radius: 14px !important;
+}
+
+.sms-soft p {
+  color: var(--muted) !important;
+}
+
+.sms-soft a {
+  background: transparent !important;
+  border: 1.5px solid var(--gold) !important;
+  color: var(--gold-bright) !important;
+  border-radius: 6px !important;
+}
+
+.sms-soft a:hover {
+  background: var(--gold) !important;
+  color: #0A1628 !important;
+}
+
+/* Footer */
+.footer-elite {
+  background: #060E18 !important;
+  border-top: 1px solid rgba(201, 162, 39, 0.2) !important;
+  color: var(--muted) !important;
+}
+
+.footer-elite a {
+  color: var(--gold) !important;
+}
+
+.footer-elite a:hover {
+  color: var(--gold-bright) !important;
+}
+
+.footer-brand strong {
+  color: var(--gold-bright) !important;
+  font-family: var(--font-display) !important;
+}
+
+.footer-col h4 {
+  color: var(--gold) !important;
+}
+
+/* Visit stats */
+.visit-stat {
+  background: var(--navy-card) !important;
+  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+}
+
+/* Ilce pills */
+.ilce-pill {
+  background: var(--navy-card) !important;
+  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+  color: var(--text) !important;
+}
+
+.ilce-pill:hover {
+  border-color: var(--gold) !important;
+}
+
+.ilce-pill small {
+  color: var(--muted) !important;
+}
+
+/* Search */
+.quick-search input {
+  background: var(--navy-card) !important;
+  border: 1.5px solid rgba(201, 162, 39, 0.15) !important;
+  color: var(--text) !important;
+}
+
+.quick-search input:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12) !important;
+}
+
+/* Biz banner */
+.biz-banner {
+  background: var(--navy-card) !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+}
+
+.biz-banner h2 {
+  color: var(--gold-bright) !important;
+}
+
+.biz-badge {
+  background: var(--gold-soft) !important;
+  color: var(--gold) !important;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .hero {
+    padding: 28px 18px !important;
+    text-align: center !important;
+  }
+
+  .hero h1 {
+    max-width: 100% !important;
+    font-size: 1.85rem !important;
+  }
+
+  .hero p {
+    max-width: 100% !important;
+  }
+
+  .hero .actions {
+    justify-content: center !important;
+  }
+
+  .hero-badge {
+    justify-content: center !important;
+  }
+
+  .sms-soft {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+
+  .sms-soft a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* Force dark always for this theme */
+html[data-theme="light"] {
+  /* Luxury theme is dark-first; light mode also stays dark-ish for consistency */
+}
