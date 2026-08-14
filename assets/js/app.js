@@ -39,15 +39,67 @@
         "input,select,textarea{background:#152A42!important;color:#F5F2EB!important;border-color:rgba(201,162,39,.25)!important}",
         "p,li,label,small,.muted,.meta,.desc,.note{color:#D4DBE6!important}",
         "strong,b,h1,h2,h3,h4{color:#F5F2EB!important}",
-        /* Layout: clear ad-rails on desktop so titles are fully readable */
         "@media(min-width:1100px){main.container,.container:not(.header-inner){padding-left:170px!important;padding-right:170px!important;max-width:1180px!important;box-sizing:border-box!important}.ad-rail{width:150px!important;z-index:5!important}.page-head{margin-left:0!important;padding-left:0!important}}",
-        /* Force remaining green/elite leftovers to navy */
         ".ad-rail .ad-box:not(.ad-sponsor-aysa){background:#152A42!important;border-color:rgba(201,162,39,.25)!important;color:#D4DBE6!important}",
         ".ad-rail .ad-box:not(.ad-sponsor-aysa) strong{color:#F5F2EB!important}",
         ".ad-rail .ad-box:not(.ad-sponsor-aysa) a{color:#E8C84A!important}",
         ".place-visual .pv-label{color:#F5F2EB!important;opacity:0.95!important}"
       ].join("");
       document.head.appendChild(s);
+    }
+  } catch (e) {}
+
+  try {
+    if (!document.querySelector("link[data-app-css-v30]")) {
+      var ac = document.createElement("link");
+      ac.rel = "stylesheet";
+      ac.href = "assets/css/app.css?v=30";
+      ac.setAttribute("data-app-css-v30", "1");
+      document.head.appendChild(ac);
+    }
+  } catch (e) {}
+
+  /* Ticker layout restore — overflow + marquee (navy+gold) */
+  try {
+    if (!document.getElementById("konyago-ticker-css")) {
+      var tss = document.createElement("style");
+      tss.id = "konyago-ticker-css";
+      tss.textContent = [
+        ":root{--safe-t:env(safe-area-inset-top,0px);--ticker-h:36px;--eczane-h:32px;--borsa-h:32px}",
+        ".ad-ticker{position:sticky;top:0;z-index:110;height:var(--ticker-h);overflow:hidden;background:linear-gradient(90deg,#0A1628 0%,#12243A 40%,#0F1E32 70%,#0A1628 100%);color:#F5F2EB;border-bottom:1px solid rgba(201,162,39,.35);box-shadow:0 2px 10px rgba(0,0,0,.25);padding-top:var(--safe-t);min-height:calc(var(--ticker-h) + var(--safe-t))}",
+        ".ad-ticker-track{display:flex;width:max-content;align-items:center;height:var(--ticker-h);animation:tickerScroll 28s linear infinite;will-change:transform}",
+        ".ad-ticker:hover .ad-ticker-track{animation-play-state:paused}",
+        ".ad-ticker-item{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;padding:0 28px;font-size:.78rem;font-weight:600;color:#E8ECF0}",
+        ".ad-ticker-item a{color:#E8C84A;font-weight:800;text-decoration:underline;text-underline-offset:2px}",
+        ".ad-ticker-dot{width:5px;height:5px;border-radius:50%;background:#C9A227;flex-shrink:0}",
+        "@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}",
+        ".eczane-ticker{position:sticky;top:calc(var(--ticker-h) + var(--safe-t));z-index:109;display:flex;align-items:stretch;min-height:var(--eczane-h);height:var(--eczane-h);overflow:hidden;background:linear-gradient(90deg,#0D1A2C 0%,#152A42 45%,#12243A 100%);color:#F5F2EB;font-size:.76rem;font-weight:600;border-bottom:1px solid rgba(201,162,39,.28)}",
+        ".eczane-ticker-label{flex:0 0 auto;padding:0 12px;background:rgba(201,162,39,.18);color:#E8C84A;white-space:nowrap;display:flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700}",
+        ".eczane-ticker-label a{color:#E8C84A;text-decoration:underline;font-weight:800}",
+        ".eczane-ticker-viewport{flex:1;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}",
+        ".eczane-ticker-track{display:inline-flex;white-space:nowrap;align-items:center;animation:eczaneMarquee 70s linear infinite;height:100%;width:max-content}",
+        ".eczane-ticker:hover .eczane-ticker-track{animation-play-state:paused}",
+        ".eczane-ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 16px;white-space:nowrap;color:#E8ECF0}",
+        ".eczane-ticker-dot{width:5px;height:5px;border-radius:50%;background:#C9A227;flex-shrink:0}",
+        "@keyframes eczaneMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}",
+        ".borsa-ticker{position:sticky;top:calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t));z-index:108;display:flex;align-items:stretch;min-height:var(--borsa-h);height:var(--borsa-h);overflow:hidden;background:linear-gradient(90deg,#0A1628 0%,#1A3050 40%,#12243A 100%);color:#F5F2EB;font-size:.76rem;font-weight:600;border-bottom:1px solid rgba(201,162,39,.32);box-shadow:0 2px 8px rgba(0,0,0,.12)}",
+        ".borsa-ticker-label{flex:0 0 auto;padding:0 12px;background:rgba(201,162,39,.22);color:#E8C84A;white-space:nowrap;display:flex;align-items:center;font-size:.72rem;font-weight:800}",
+        ".borsa-ticker-viewport{flex:1;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}",
+        ".borsa-ticker-track{display:inline-flex;white-space:nowrap;align-items:center;animation:borsaMarquee 40s linear infinite;height:100%;width:max-content}",
+        ".borsa-ticker:hover .borsa-ticker-track{animation-play-state:paused}",
+        ".borsa-ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 18px;white-space:nowrap;color:#E8ECF0}",
+        ".borsa-ticker-item strong{color:#F5F2EB;font-weight:700}",
+        ".borsa-ticker-dot{width:5px;height:5px;border-radius:50%;background:#C9A227;flex-shrink:0}",
+        "@keyframes borsaMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}",
+        "@media (prefers-reduced-motion:reduce){.ad-ticker-track,.eczane-ticker-track,.borsa-ticker-track{animation:none!important}}",
+        "body:has(.ad-ticker) .site-header{top:calc(var(--ticker-h) + var(--safe-t))}",
+        "body:has(.eczane-ticker):not(:has(.borsa-ticker)) .site-header{top:calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t))}",
+        "body:has(.borsa-ticker) .site-header{top:calc(var(--ticker-h) + var(--eczane-h) + var(--borsa-h) + var(--safe-t))}",
+        "body:has(.borsa-ticker):not(:has(.eczane-ticker)) .site-header{top:calc(var(--ticker-h) + var(--borsa-h) + var(--safe-t))}",
+        "body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker{top:calc(var(--ticker-h) + var(--safe-t))}",
+        "@media(max-width:480px){.eczane-ticker,.borsa-ticker{font-size:.7rem}.eczane-ticker-label,.borsa-ticker-label{padding:0 8px;font-size:.65rem}.ad-ticker-item{font-size:.72rem;padding:0 18px}}"
+      ].join("");
+      document.head.appendChild(tss);
     }
   } catch (e) {}
 
@@ -102,7 +154,6 @@
     }
   } catch (e) {}
 
-  /* Re-apply readable after other CSS settles */
   setTimeout(function () {
     try {
       document.documentElement.setAttribute("data-theme", "dark");
