@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#5F7F66">
-<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.querySelector('meta[name="theme-color"]').setAttribute("content","#0E1411")}catch(e){}})();</script>
+<meta name="theme-color" content="#0A1628">
+<script>(function(){try{document.documentElement.setAttribute("data-theme","dark")}catch(e){}})();</script>
 <title>KonyaGo | Konya Gezilecek Yerler, Mutfak, Rota ve Şehir Rehberi</title>
 <meta name="description" content="Konya’nın premium şehir rehberi: Mevlana, Sille, etli ekmek, rotalar, tarihçe, nöbetçi eczane, hava ve KonyaGo AI. Ücretsiz, güncel, mobil uyumlu.">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="assets/css/app.css?v=28">
 <link rel="stylesheet" href="assets/css/theme.css?v=3">
 <link rel="stylesheet" href="assets/css/elite.css?v=7">
-<link rel="stylesheet" href="assets/css/calm.css?v=1">
+<link rel="stylesheet" href="assets/css/luxury.css?v=1">
 <link rel="stylesheet" href="assets/css/logo-anim.css?v=1">
 <link rel="stylesheet" href="assets/css/perf.css?v=2">
 <link rel="stylesheet" href="assets/css/visits.css?v=1">
@@ -33,23 +33,16 @@
 <style>
 .ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
 @media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
-.ilce-pill{display:block;text-align:center;padding:14px 10px;border-radius:14px;background:var(--white);border:1px solid var(--border);color:var(--green-deep);font-weight:700;font-size:.86rem;text-decoration:none;transition:border-color .2s,box-shadow .2s}
-.ilce-pill:hover{border-color:rgba(95,127,102,.3);box-shadow:var(--shadow)}
-.ilce-pill small{display:block;font-weight:500;font-size:.72rem;color:var(--muted);margin-top:3px}
+.ilce-pill{display:block;text-align:center;padding:14px 10px;border-radius:12px;font-weight:700;font-size:.86rem;text-decoration:none}
+.ilce-pill small{display:block;font-weight:500;font-size:.72rem;margin-top:3px}
 .quick-search{display:flex;gap:8px;margin:14px 0 8px;flex-wrap:wrap}
-.quick-search input{flex:1;min-width:160px;padding:13px 16px;border:1.5px solid var(--border);border-radius:999px;font:inherit;font-size:.94rem;background:var(--white);color:var(--text)}
-.quick-search input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(95,127,102,.12)}
-.biz-banner{text-align:center;padding:26px 18px;border-radius:18px;background:var(--white);border:1px solid var(--border)}
-.biz-badge{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);background:var(--green-soft);padding:4px 12px;border-radius:999px;margin-bottom:10px}
-.biz-banner h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.2rem,3vw,1.5rem);color:var(--green-deep);margin:0 0 8px}
-.biz-banner p{color:var(--muted);font-size:.92rem;max-width:38ch;margin:0 auto 16px;line-height:1.5}
+.quick-search input{flex:1;min-width:160px;padding:13px 16px;border-radius:999px;font:inherit;font-size:.94rem}
+.biz-banner{text-align:center;padding:26px 18px;border-radius:16px}
+.biz-badge{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.biz-banner h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.2rem,3vw,1.5rem);margin:0 0 8px}
+.biz-banner p{font-size:.92rem;max-width:38ch;margin:0 auto 16px;line-height:1.5}
 .biz-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.section{margin:22px 0}
-@media(max-width:640px){
-  .hero-eagle{width:64px!important;height:64px!important}
-  .feat-grid{gap:10px}
-  .grid-2{gap:10px}
-}
+.section{margin:24px 0}
 </style>
 </head>
 <body>
@@ -81,22 +74,21 @@
   </div>
 
   <section class="hero" aria-label="Karşılama">
-    <div class="hero-badge">Bağımsız · Ücretsiz · 2026</div>
-    <img class="hero-eagle" src="assets/img/eagle.svg" width="72" height="72" alt="KonyaGo" decoding="async">
-    <h1>Konya’yı keşfetmenin en zarif yolu</h1>
-    <p>Mevlana’dan Sille’ye, etli ekmekten rotalara — premium şehir rehberi. AI asistan, güncel bilgiler, tamamen ücretsiz.</p>
+    <div class="hero-badge">Welcome to Konya</div>
+    <h1>Where History Inspires Tomorrow</h1>
+    <p>Mevlana’nın şehri · Selçuklu mirası · Zamansız lezzetler. Konya’nın ruhunu keşfetmek için premium rehberin.</p>
     <div class="actions">
-      <a class="btn btn-primary" href="kesfet.html">Keşfetmeye başla</a>
-      <a class="btn btn-ghost" href="rotalar.html">Rotaları gör</a>
+      <a class="btn btn-primary" href="kesfet.html">Explore Konya →</a>
+      <a class="btn btn-ghost" href="rotalar.html">Rotaları Gör</a>
       <a class="btn btn-ghost" href="ai.html">AI Asistan</a>
     </div>
   </section>
 
   <div class="trust-strip" aria-label="Neden KonyaGo">
-    <div class="trust-item"><span class="ti">🏛️</span><strong>Selçuklu odaklı</strong><span>Tarih ve kültür derinliği</span></div>
-    <div class="trust-item"><span class="ti">✨</span><strong>KonyaGo AI</strong><span>Akıllı şehir asistanı</span></div>
-    <div class="trust-item"><span class="ti">📱</span><strong>Mobil uyumlu</strong><span>Her cihazda akıcı</span></div>
-    <div class="trust-item"><span class="ti">🆓</span><strong>Tamamen ücretsiz</strong><span>Premium gezi deneyimi</span></div>
+    <div class="trust-item"><span class="ti">🏛️</span><strong>Rich Heritage</strong><span>Centuries of culture</span></div>
+    <div class="trust-item"><span class="ti">✨</span><strong>Spiritual Heart</strong><span>Home of Mevlana</span></div>
+    <div class="trust-item"><span class="ti">🍽️</span><strong>Local Flavors</strong><span>Taste tradition</span></div>
+    <div class="trust-item"><span class="ti">🆓</span><strong>Tamamen Ücretsiz</strong><span>Premium gezi deneyimi</span></div>
   </div>
 
   <div class="sms-soft" aria-label="Kampanya SMS onayı">
