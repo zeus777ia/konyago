@@ -1,6 +1,4 @@
-/* KonyaGo app.css — ticker + header layout
-   Colors deferred to luxury.css; structure lives here.
-*/
+/* KonyaGo app.css — ticker + header + ad-rails layout */
 :root {
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
@@ -105,7 +103,6 @@
   white-space: nowrap;
   align-items: center;
   animation: eczaneMarquee 70s linear infinite;
-  padding: 0;
   height: 100%;
   width: max-content;
 }
@@ -115,7 +112,6 @@
   align-items: center;
   gap: 6px;
   padding: 0 16px;
-  opacity: 0.96;
   white-space: nowrap;
   color: #E8ECF0;
 }
@@ -146,7 +142,6 @@
   font-size: 0.76rem;
   font-weight: 600;
   border-bottom: 1px solid rgba(201, 162, 39, 0.32);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 .borsa-ticker-label {
   flex: 0 0 auto;
@@ -170,7 +165,6 @@
   white-space: nowrap;
   align-items: center;
   animation: borsaMarquee 40s linear infinite;
-  padding: 0;
   height: 100%;
   width: max-content;
 }
@@ -202,10 +196,11 @@
   .borsa-ticker-track { animation: none !important; }
 }
 
-/* Header sticky offset — ticker yüksekliğine göre */
+/* Header sticky */
 .site-header {
   position: sticky;
   z-index: 100;
+  background: rgba(10, 22, 40, 0.96);
 }
 body:has(.ad-ticker) .site-header {
   top: calc(var(--ticker-h) + var(--safe-t));
@@ -231,7 +226,7 @@ body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker {
   .ad-ticker-item { font-size: 0.72rem; padding: 0 18px; }
 }
 
-/* ===== Header / logo / nav layout ===== */
+/* ===== Header / logo / nav ===== */
 .header-inner {
   display: flex !important;
   align-items: center !important;
@@ -246,25 +241,17 @@ body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker {
   gap: 10px !important;
   text-decoration: none !important;
   color: inherit !important;
-  min-width: 0 !important;
   flex-shrink: 0 !important;
 }
 .logo-mark {
   width: 44px !important;
   height: 44px !important;
-  flex-shrink: 0 !important;
   border-radius: 10px !important;
   object-fit: cover !important;
+  flex-shrink: 0 !important;
 }
-.logo-text strong {
-  display: block !important;
-  line-height: 1.1 !important;
-}
-.logo-text small {
-  display: block !important;
-  font-size: 0.62rem !important;
-  font-weight: 600 !important;
-}
+.logo-text strong { display: block !important; line-height: 1.1 !important; }
+.logo-text small { display: block !important; font-size: 0.62rem !important; font-weight: 600 !important; }
 .nav-desktop {
   display: none;
   align-items: center !important;
@@ -272,14 +259,7 @@ body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker {
   gap: 2px !important;
   margin-left: auto !important;
 }
-.nav-desktop a {
-  text-decoration: none !important;
-  white-space: nowrap !important;
-}
-.theme-toggle {
-  flex-shrink: 0 !important;
-  margin-left: 8px !important;
-}
+.nav-desktop a { text-decoration: none !important; white-space: nowrap !important; }
 @media (min-width: 900px) {
   .header-inner { min-height: 64px !important; }
   .nav-desktop { display: flex !important; }
@@ -288,3 +268,125 @@ body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker {
 @media (max-width: 899px) {
   .nav-desktop { display: none !important; }
 }
+
+/* ===== Ad rails — fixed side columns ===== */
+.ad-rail { display: none; }
+.ad-box {
+  background: #152A42 !important;
+  border: 1px solid rgba(201, 162, 39, 0.25) !important;
+  border-radius: 12px !important;
+  padding: 14px 10px !important;
+  text-align: center !important;
+  font-size: 0.72rem !important;
+  color: #D4DBE6 !important;
+  margin-bottom: 12px !important;
+}
+.ad-box strong {
+  display: block !important;
+  color: #F5F2EB !important;
+  font-size: 0.78rem !important;
+  margin-bottom: 6px !important;
+}
+.ad-box a {
+  display: inline-block !important;
+  margin-top: 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.72rem !important;
+  text-decoration: none !important;
+  color: #0A1628 !important;
+  background: #C9A227 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 7px 14px !important;
+}
+.ad-box.ad-box-gold,
+.ad-box.ad-sponsor-aysa {
+  background: linear-gradient(160deg, rgba(201,162,39,0.2), #152A42) !important;
+  border-color: rgba(201,162,39,0.5) !important;
+}
+.ad-box .ad-label {
+  display: inline-block !important;
+  font-size: 0.58rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #E8C84A !important;
+  margin-bottom: 6px !important;
+}
+.ad-box .ad-sub {
+  display: block !important;
+  color: #B8C2CE !important;
+  font-size: 0.68rem !important;
+  margin-bottom: 4px !important;
+  line-height: 1.3 !important;
+}
+.ad-banner {
+  display: block;
+  background: #152A42 !important;
+  border: 1px solid rgba(201,162,39,0.25) !important;
+  border-radius: 14px !important;
+  padding: 16px 18px !important;
+  text-align: center !important;
+  margin: 16px 0 !important;
+  font-size: 0.9rem !important;
+  color: #D4DBE6 !important;
+}
+.ad-banner a { color: #E8C84A !important; font-weight: 700 !important; }
+
+@media (min-width: 1100px) {
+  .ad-rail {
+    display: block !important;
+    position: fixed !important;
+    top: calc(100px + var(--ticker-h, 36px) + var(--eczane-h, 32px) + var(--borsa-h, 32px)) !important;
+    width: 140px !important;
+    z-index: 40 !important;
+    max-height: calc(100vh - 180px) !important;
+    overflow-y: auto !important;
+  }
+  .ad-rail-left {
+    left: max(6px, calc(50% - 600px - 152px)) !important;
+  }
+  .ad-rail-right {
+    right: max(6px, calc(50% - 600px - 152px)) !important;
+  }
+  main.container,
+  .container:not(.header-inner) {
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+@media (max-width: 1099px) {
+  .ad-rail { display: none !important; }
+}
+
+/* Grid + place cards */
+.grid { display: grid !important; gap: 14px !important; }
+.grid-2 { grid-template-columns: 1fr !important; }
+@media (min-width: 720px) {
+  .grid-2 { grid-template-columns: 1fr 1fr !important; }
+}
+.place, .place-card { overflow: hidden !important; }
+.place-img, .place img {
+  width: 100% !important;
+  height: 160px !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+.place-body { padding: 14px !important; }
+.tags { display: flex !important; flex-wrap: wrap !important; gap: 6px !important; margin: 8px 0 !important; }
+.tag {
+  display: inline-block !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(201,162,39,0.12) !important;
+  border: 1px solid rgba(201,162,39,0.22) !important;
+  color: #B8C2CE !important;
+  font-size: 0.72rem !important;
+}
+.page-head { margin: 12px 0 20px !important; }
+.page-head h1 { margin: 8px 0 !important; }
