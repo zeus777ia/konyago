@@ -14,6 +14,25 @@
   } catch (e) {}
 
   try {
+    if (!document.querySelector("link[data-luxury-css]")) {
+      var lux = document.createElement("link");
+      lux.rel = "stylesheet";
+      lux.href = "assets/css/luxury.css?v=3";
+      lux.setAttribute("data-luxury-css", "1");
+      document.head.appendChild(lux);
+    }
+  } catch (e) {}
+
+  try {
+    document.querySelectorAll("img.logo-mark, img.hero-eagle").forEach(function(el){
+      el.src = "assets/img/IMG_0510.jpeg";
+      el.style.borderRadius = el.style.borderRadius || "10px";
+      el.style.objectFit = "cover";
+      el.alt = el.alt || "KonyaGo";
+    });
+  } catch (e) {}
+
+  try {
     if (!document.querySelector("link[data-sponsor-css]")) {
       var sp = document.createElement("link");
       sp.rel = "stylesheet";
@@ -26,7 +45,7 @@
   try {
     if (!document.querySelector("script[data-theme-js]")) {
       var ts = document.createElement("script");
-      ts.src = "assets/js/theme.js?v=2";
+      ts.src = "assets/js/theme.js?v=3";
       ts.defer = true;
       ts.setAttribute("data-theme-js", "1");
       document.head.appendChild(ts);
@@ -46,7 +65,6 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
-  /* Basit footer'lara kurumsal e-posta ekle (tüm sayfalar) */
   try {
     document.querySelectorAll(".site-footer .container").forEach(function (el) {
       var html = el.innerHTML || "";
@@ -108,7 +126,6 @@
     }
   } catch (e) {}
 
-  /* Yan reklam kutularını düzgün yapıya çevir (metin/link çakışmasın) */
   try {
     document.querySelectorAll(".ad-rail .ad-box").forEach(function (box) {
       if (box.getAttribute("data-fixed") === "1") return;
@@ -169,26 +186,6 @@
         rail.insertAdjacentHTML("afterbegin", aysaBox("HOSGELDİN10", "Yeni üyelere %10 indirim · Abiye & takım", "Alışverişe git"));
       }
     });
-    if (!document.querySelector(".ad-sponsor-card") && document.getElementById("main")) {
-      var banner =
-        '<div class="ad-mobile ad-sponsor-card" role="complementary" aria-label="Sponsor reklam">' +
-        '<span class="ad-label">Sponsor</span>' +
-        "<strong>AysaTekin — En şık abiye elbise modelleri</strong>" +
-        '<span class="ad-sub">Kaliteli kumaş · zarif kesim · özel günleriniz için</span>' +
-        '<span class="ad-offer">Yeni üyelere <b>HOSGELDİN10</b> ile %10 indirim</span>' +
-        '<a href="' +
-        aysaUrl +
-        '" target="_blank" rel="noopener sponsored">Koleksiyonu incele →</a></div>' +
-        '<div class="ad-banner-wide ad-sponsor-wide" role="complementary" aria-label="Sponsor reklam">' +
-        "<span>✨ <strong>AysaTekin</strong> — Zarafetin adresi · En şık abiye & takım · <em>HOSGELDİN10</em> ile %10 indirim</span>" +
-        '<a href="' +
-        aysaUrl +
-        '" target="_blank" rel="noopener sponsored">aysatekin.com</a></div>';
-      var main = document.getElementById("main");
-      var trust = main.querySelector(".trust-strip");
-      if (trust) trust.insertAdjacentHTML("afterend", banner);
-      else main.insertAdjacentHTML("afterbegin", banner);
-    }
   } catch (e) {}
 
   afterLoad(function () {
@@ -267,17 +264,14 @@
     var day = istanbulDay();
     var KEY = "konyago_visits_v3";
     var sess = "konyago_v3_" + day;
-    var dayN = 0,
-      totalN = 0;
+    var dayN = 0, totalN = 0;
     try {
       var o = JSON.parse(localStorage.getItem(KEY) || "{}");
       totalN = typeof o.total === "number" ? o.total : 0;
       if (o.day === day && typeof o.dayCount === "number") dayN = o.dayCount;
     } catch (e) {}
     var hit = false;
-    try {
-      hit = sessionStorage.getItem(sess) === "1";
-    } catch (e) {}
+    try { hit = sessionStorage.getItem(sess) === "1"; } catch (e) {}
     if (!hit) {
       dayN += 1;
       totalN += 1;
@@ -331,9 +325,7 @@
         .then(function (reg) {
           reg.update();
           if (reg.waiting) {
-            try {
-              reg.waiting.postMessage({ type: "SKIP_WAITING" });
-            } catch (e) {}
+            try { reg.waiting.postMessage({ type: "SKIP_WAITING" }); } catch (e) {}
           }
         })
         .catch(function () {});
