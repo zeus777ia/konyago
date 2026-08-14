@@ -1,3 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/zeus777ia/konyago@dbab5e0b005bc8995972caf5133b488f32b5ec38/assets/css/app.css");
-@import url("sponsor.css?v=3");
-@import url("luxury.css?v=7");
+/* KonyaGo app.css — local entry only (no remote imports)
+   Theme cascade is controlled by index link order:
+   theme.css → elite.css (layout) → luxury.css (final navy+gold)
+*/
