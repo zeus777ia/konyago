@@ -6,8 +6,8 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#f7faf8",
-  "theme_color": "#0d7a4f",
+  "background_color": "#0A1628",
+  "theme_color": "#0A1628",
   "lang": "tr",
   "dir": "ltr",
   "categories": ["travel", "navigation", "lifestyle"],
@@ -28,6 +28,12 @@
       "src": "/assets/img/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/IMG_0510.jpeg",
+      "sizes": "any",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
