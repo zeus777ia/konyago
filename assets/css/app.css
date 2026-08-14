@@ -1,4 +1,228 @@
-/* KonyaGo app.css — local entry only (no remote imports)
-   Theme cascade is controlled by index link order:
-   theme.css → elite.css (layout) → luxury.css (final navy+gold)
+/* KonyaGo app.css — ticker layout + shared heights
+   Colors deferred to luxury.css; structure lives here.
 */
+:root {
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --ticker-h: 36px;
+  --eczane-h: 32px;
+  --borsa-h: 32px;
+  --mnav-h: 64px;
+}
+
+/* ===== Reklam şeridi ===== */
+.ad-ticker {
+  position: sticky;
+  top: 0;
+  z-index: 110;
+  height: var(--ticker-h);
+  overflow: hidden;
+  background: linear-gradient(90deg, #0A1628 0%, #12243A 40%, #0F1E32 70%, #0A1628 100%);
+  color: #F5F2EB;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  padding-top: var(--safe-t);
+  min-height: calc(var(--ticker-h) + var(--safe-t));
+}
+.ad-ticker-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  height: var(--ticker-h);
+  animation: tickerScroll 28s linear infinite;
+  will-change: transform;
+}
+.ad-ticker:hover .ad-ticker-track { animation-play-state: paused; }
+.ad-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  padding: 0 28px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #E8ECF0;
+}
+.ad-ticker-item a {
+  color: #E8C84A;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ad-ticker-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C9A227;
+  flex-shrink: 0;
+}
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== Nöbetçi eczane şeridi ===== */
+.eczane-ticker {
+  position: sticky;
+  top: calc(var(--ticker-h) + var(--safe-t));
+  z-index: 109;
+  display: flex;
+  align-items: stretch;
+  min-height: var(--eczane-h);
+  height: var(--eczane-h);
+  overflow: hidden;
+  background: linear-gradient(90deg, #0D1A2C 0%, #152A42 45%, #12243A 100%);
+  color: #F5F2EB;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.28);
+}
+.eczane-ticker-label {
+  flex: 0 0 auto;
+  padding: 0 12px;
+  background: rgba(201, 162, 39, 0.18);
+  color: #E8C84A;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.eczane-ticker-label a {
+  color: #E8C84A;
+  text-decoration: underline;
+  font-weight: 800;
+}
+.eczane-ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.eczane-ticker-track {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  animation: eczaneMarquee 70s linear infinite;
+  padding: 0;
+  height: 100%;
+  width: max-content;
+}
+.eczane-ticker:hover .eczane-ticker-track { animation-play-state: paused; }
+.eczane-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  opacity: 0.96;
+  white-space: nowrap;
+  color: #E8ECF0;
+}
+.eczane-ticker-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C9A227;
+  flex-shrink: 0;
+}
+@keyframes eczaneMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== Kur / borsa şeridi ===== */
+.borsa-ticker {
+  position: sticky;
+  top: calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t));
+  z-index: 108;
+  display: flex;
+  align-items: stretch;
+  min-height: var(--borsa-h);
+  height: var(--borsa-h);
+  overflow: hidden;
+  background: linear-gradient(90deg, #0A1628 0%, #1A3050 40%, #12243A 100%);
+  color: #F5F2EB;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.32);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.borsa-ticker-label {
+  flex: 0 0 auto;
+  padding: 0 12px;
+  background: rgba(201, 162, 39, 0.22);
+  color: #E8C84A;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.borsa-ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.borsa-ticker-track {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  animation: borsaMarquee 40s linear infinite;
+  padding: 0;
+  height: 100%;
+  width: max-content;
+}
+.borsa-ticker:hover .borsa-ticker-track { animation-play-state: paused; }
+.borsa-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 18px;
+  white-space: nowrap;
+  color: #E8ECF0;
+}
+.borsa-ticker-item strong { color: #F5F2EB; font-weight: 700; }
+.borsa-ticker-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C9A227;
+  flex-shrink: 0;
+}
+@keyframes borsaMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-ticker-track,
+  .eczane-ticker-track,
+  .borsa-ticker-track { animation: none !important; }
+}
+
+/* Header sticky offset — ticker yüksekliğine göre */
+body:has(.ad-ticker) .site-header {
+  top: calc(var(--ticker-h) + var(--safe-t));
+}
+body:has(.eczane-ticker):not(:has(.borsa-ticker)) .site-header {
+  top: calc(var(--ticker-h) + var(--eczane-h) + var(--safe-t));
+}
+body:has(.borsa-ticker) .site-header {
+  top: calc(var(--ticker-h) + var(--eczane-h) + var(--borsa-h) + var(--safe-t));
+}
+body:has(.borsa-ticker):not(:has(.eczane-ticker)) .site-header {
+  top: calc(var(--ticker-h) + var(--borsa-h) + var(--safe-t));
+}
+body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker {
+  top: calc(var(--ticker-h) + var(--safe-t));
+}
+
+@media (max-width: 480px) {
+  .eczane-ticker,
+  .borsa-ticker { font-size: 0.7rem; }
+  .eczane-ticker-label,
+  .borsa-ticker-label { padding: 0 8px; font-size: 0.65rem; }
+  .ad-ticker-item { font-size: 0.72rem; padding: 0 18px; }
+}
