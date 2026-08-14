@@ -428,7 +428,7 @@ a {
   box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15) !important;
 }
 
-/* Biz banner — CRITICAL readability fix */
+/* Biz banner */
 .biz-banner {
   background: #152A42 !important;
   border: 1px solid rgba(201, 162, 39, 0.25) !important;
@@ -448,14 +448,13 @@ a {
   color: #E8C84A !important;
 }
 
-/* Arsiv / other sections */
+/* Arsiv */
 .arsiv-pin {
   background: #152A42 !important;
   border-color: rgba(201, 162, 39, 0.2) !important;
 }
 
-.arsiv-pin h2,
-.arsiv-pin p {
+.arsiv-pin h2 {
   color: #F2EFE8 !important;
 }
 
@@ -463,13 +462,106 @@ a {
   color: #C5CDD8 !important;
 }
 
-/* Override elite green leftovers */
-.green, .text-green, [class*="green"] {
-  color: inherit;
-}
-
 .info, .info p, .info a {
   color: #D0D8E2 !important;
+}
+
+/* ========== TICKERS — Navy + Gold, readable ========== */
+.ad-ticker {
+  background: linear-gradient(90deg, #0A1628 0%, #12243A 40%, #0F1E32 70%, #0A1628 100%) !important;
+  color: #F2EFE8 !important;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.35) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.ad-ticker-item {
+  color: #E8ECF0 !important;
+  font-weight: 600 !important;
+}
+
+.ad-ticker-item a {
+  color: #E8C84A !important;
+  font-weight: 800 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+.ad-ticker-dot {
+  background: #C9A227 !important;
+}
+
+/* Eczane ticker */
+.eczane-ticker {
+  background: linear-gradient(90deg, #0D1A2C 0%, #152A42 45%, #12243A 100%) !important;
+  color: #F2EFE8 !important;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.28) !important;
+}
+
+.eczane-ticker-label {
+  background: rgba(201, 162, 39, 0.18) !important;
+  color: #E8C84A !important;
+}
+
+.eczane-ticker-label a {
+  color: #E8C84A !important;
+  font-weight: 800 !important;
+}
+
+.eczane-ticker-item {
+  color: #E8ECF0 !important;
+  opacity: 1 !important;
+}
+
+.eczane-ticker-dot {
+  background: #C9A227 !important;
+}
+
+/* Borsa / döviz ticker */
+.borsa-ticker {
+  background: linear-gradient(90deg, #0A1628 0%, #1A3050 40%, #12243A 100%) !important;
+  color: #F2EFE8 !important;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.32) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25) !important;
+}
+
+.borsa-ticker-label {
+  background: rgba(201, 162, 39, 0.22) !important;
+  color: #E8C84A !important;
+  font-weight: 800 !important;
+}
+
+.borsa-ticker-item {
+  color: #E8ECF0 !important;
+}
+
+.borsa-ticker-item strong {
+  color: #F5F1E8 !important;
+}
+
+.borsa-ticker-dot {
+  background: #C9A227 !important;
+}
+
+.borsa-ch.up {
+  color: #7DFFB0 !important;
+}
+
+.borsa-ch.down {
+  color: #FF9A9A !important;
+}
+
+.borsa-ch.flat {
+  color: #A8B0BC !important;
+}
+
+.borsa-live {
+  background: #E8C84A !important;
+  box-shadow: 0 0 0 0 rgba(232, 200, 74, 0.6) !important;
+}
+
+.borsa-meta,
+.borsa-clock {
+  color: #C5CDD8 !important;
 }
 
 /* Mobile */
