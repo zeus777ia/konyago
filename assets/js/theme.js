@@ -1,4 +1,4 @@
-/* KonyaGo açık / koyu tema */
+/* KonyaGo açık / koyu tema — luxury dark default */
 (function () {
   "use strict";
   var KEY = "konyago_theme";
@@ -8,12 +8,8 @@
       var s = localStorage.getItem(KEY);
       if (s === "dark" || s === "light") return s;
     } catch (e) {}
-    try {
-      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-    } catch (e) {}
-    return "light";
+    // Default: dark (luxury theme)
+    return "dark";
   }
 
   function apply(theme) {
@@ -27,10 +23,9 @@
       btn.textContent = dark ? "☀️" : "🌙";
     }
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", theme === "dark" ? "#0e1813" : "#0d7a4f");
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#0A1628" : "#0d7a4f");
   }
 
-  // Anında uygula (FOUC azalt)
   apply(getPreferred());
 
   function ensureCss() {
