@@ -151,43 +151,43 @@
   font-weight:800;
 }
 
-/* Koyu tema — yan kutular */
+/* Koyu tema — yan kutular (navy + gold) */
 html[data-theme="dark"] .ad-box{
-  background:#16241c !important;
-  border-color:rgba(62,207,142,.28) !important;
-  color:#9bb5a8 !important;
+  background:#152A42 !important;
+  border-color:rgba(201,162,39,.28) !important;
+  color:#D4DBE6 !important;
 }
-html[data-theme="dark"] .ad-box strong{color:#e8f0eb !important}
+html[data-theme="dark"] .ad-box strong{color:#F5F2EB !important}
 html[data-theme="dark"] .ad-box .ad-sub,
-html[data-theme="dark"] .ad-box > span:not(.ad-label){color:#9bb5a8 !important}
-html[data-theme="dark"] .ad-box a{color:#3ecf8e !important}
+html[data-theme="dark"] .ad-box > span:not(.ad-label){color:#B8C2CE !important}
+html[data-theme="dark"] .ad-box a{color:#E8C84A !important}
 html[data-theme="dark"] .ad-sponsor-aysa{
-  background:linear-gradient(160deg,#2a2410,#1a2e24) !important;
-  border-color:rgba(224,195,92,.4) !important;
+  background:linear-gradient(160deg,#2a2410,#1A3050) !important;
+  border-color:rgba(201,162,39,.4) !important;
 }
-html[data-theme="dark"] .ad-sponsor-aysa strong{color:#e0c35c !important}
-html[data-theme="dark"] .ad-sponsor-aysa .ad-sub{color:#c5b87a !important}
+html[data-theme="dark"] .ad-sponsor-aysa strong{color:#E8C84A !important}
+html[data-theme="dark"] .ad-sponsor-aysa .ad-sub{color:#D4C89A !important}
 html[data-theme="dark"] .ad-sponsor-aysa a{
   background:linear-gradient(135deg,#8a7010,#c9a227) !important;
   color:#fff !important;
 }
 html[data-theme="dark"] .ad-label{
-  color:#e0c35c;
-  background:rgba(224,195,92,.15);
+  color:#E8C84A;
+  background:rgba(201,162,39,.18);
 }
 
 /* Koyu tema — mobil AysaTekin kartı */
 html[data-theme="dark"] .ad-sponsor-card{
-  background:linear-gradient(145deg,#2a2410,#1c2a20) !important;
-  border-color:rgba(224,195,92,.4) !important;
-  color:#f0e6c8 !important;
+  background:linear-gradient(145deg,#2a2410,#1A3050) !important;
+  border-color:rgba(201,162,39,.4) !important;
+  color:#F5F2EB !important;
 }
-html[data-theme="dark"] .ad-sponsor-card strong{color:#f5ecd0 !important}
+html[data-theme="dark"] .ad-sponsor-card strong{color:#F5F2EB !important}
 html[data-theme="dark"] .ad-sponsor-card .ad-sub,
 html[data-theme="dark"] .ad-sponsor-card > span:not(.ad-label):not(.ad-offer){
-  color:#d4c89a !important;
+  color:#D4DBE6 !important;
 }
-html[data-theme="dark"] .ad-sponsor-card .ad-offer{color:#e0c35c !important}
+html[data-theme="dark"] .ad-sponsor-card .ad-offer{color:#E8C84A !important}
 html[data-theme="dark"] .ad-sponsor-card a{
   background:linear-gradient(135deg,#8a7010,#c9a227) !important;
   color:#fff !important;
