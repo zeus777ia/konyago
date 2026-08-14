@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a5c3a">
-<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b1210")}catch(e){}})();</script>
+<meta name="theme-color" content="#5F7F66">
+<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.querySelector('meta[name="theme-color"]').setAttribute("content","#0E1411")}catch(e){}})();</script>
 <title>KonyaGo | Konya Gezilecek Yerler, Mutfak, Rota ve Şehir Rehberi</title>
 <meta name="description" content="Konya’nın premium şehir rehberi: Mevlana, Sille, etli ekmek, rotalar, tarihçe, nöbetçi eczane, hava ve KonyaGo AI. Ücretsiz, güncel, mobil uyumlu.">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="assets/css/app.css?v=28">
 <link rel="stylesheet" href="assets/css/theme.css?v=3">
 <link rel="stylesheet" href="assets/css/elite.css?v=7">
+<link rel="stylesheet" href="assets/css/calm.css?v=1">
 <link rel="stylesheet" href="assets/css/logo-anim.css?v=1">
 <link rel="stylesheet" href="assets/css/perf.css?v=2">
 <link rel="stylesheet" href="assets/css/visits.css?v=1">
@@ -30,57 +31,25 @@
 <link rel="stylesheet" href="assets/css/yenilikler.css?v=1">
 <link rel="stylesheet" href="assets/css/arsiv-cta.css?v=1">
 <style>
-.ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+.ilce-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
 @media(min-width:640px){.ilce-strip{grid-template-columns:repeat(4,1fr)}}
-.ilce-pill{display:block;text-align:center;padding:12px 8px;border-radius:14px;background:var(--green-soft);border:1px solid var(--border);color:var(--green-deep);font-weight:700;font-size:.85rem;text-decoration:none}
-.ilce-pill small{display:block;font-weight:600;font-size:.7rem;color:var(--muted);margin-top:2px}
-.quick-search{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
-.quick-search input{flex:1;min-width:180px;padding:12px 14px;border:1.5px solid var(--border);border-radius:999px;font:inherit;font-size:.92rem;background:var(--white);color:var(--text)}
-.social-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0 4px}
-.social-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;font-weight:700;font-size:.86rem;text-decoration:none;border:1.5px solid var(--border);background:var(--white);color:var(--green-deep);transition:transform .15s,box-shadow .15s}
-.social-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(10,92,58,.1)}
-.social-btn.ig{border-color:rgba(225,48,108,.35);color:#c13584}
-.social-btn.wa{border-color:rgba(37,211,102,.4);color:#128c7e}
-.social-btn.tg{border-color:rgba(0,136,204,.45);color:#0088cc}
-.social-btn.mail:hover{border-color:var(--green);background:var(--green-soft)}
-.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.biz-banner{
-  text-align:center;padding:24px 18px;border-radius:18px;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(192,138,40,.14),transparent 55%),
-    linear-gradient(165deg,#fff 0%,#f4ead4 45%,#e8f0ea 100%);
-  border:1px solid rgba(192,138,40,.28);
-  box-shadow:0 10px 32px rgba(138,112,16,.08);
-}
-.biz-badge{
-  display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:#8a7010;background:rgba(201,162,39,.18);padding:4px 12px;border-radius:999px;margin-bottom:10px;
-}
-.biz-banner h2{
-  font-family:var(--font-display);font-weight:600;
-  font-size:clamp(1.25rem,3vw,1.55rem);color:var(--green-deep);margin:0 0 8px;
-}
-.biz-banner p{color:var(--muted);font-size:.92rem;max-width:40ch;margin:0 auto 16px;line-height:1.45}
+.ilce-pill{display:block;text-align:center;padding:14px 10px;border-radius:14px;background:var(--white);border:1px solid var(--border);color:var(--green-deep);font-weight:700;font-size:.86rem;text-decoration:none;transition:border-color .2s,box-shadow .2s}
+.ilce-pill:hover{border-color:rgba(95,127,102,.3);box-shadow:var(--shadow)}
+.ilce-pill small{display:block;font-weight:500;font-size:.72rem;color:var(--muted);margin-top:3px}
+.quick-search{display:flex;gap:8px;margin:14px 0 8px;flex-wrap:wrap}
+.quick-search input{flex:1;min-width:160px;padding:13px 16px;border:1.5px solid var(--border);border-radius:999px;font:inherit;font-size:.94rem;background:var(--white);color:var(--text)}
+.quick-search input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(95,127,102,.12)}
+.biz-banner{text-align:center;padding:26px 18px;border-radius:18px;background:var(--white);border:1px solid var(--border)}
+.biz-badge{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green-dark);background:var(--green-soft);padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.biz-banner h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.2rem,3vw,1.5rem);color:var(--green-deep);margin:0 0 8px}
+.biz-banner p{color:var(--muted);font-size:.92rem;max-width:38ch;margin:0 auto 16px;line-height:1.5}
 .biz-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-html[data-theme="dark"] .biz-banner{
-  background:linear-gradient(165deg,#1a2a20 0%,#2a2410 50%,#15241c 100%);
-  border-color:rgba(224,188,85,.3);
+.section{margin:22px 0}
+@media(max-width:640px){
+  .hero-eagle{width:64px!important;height:64px!important}
+  .feat-grid{gap:10px}
+  .grid-2{gap:10px}
 }
-html[data-theme="dark"] .biz-banner h2{color:var(--gold)}
-.sms-soft{
-  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
-  padding:14px 18px;margin:16px 0 8px;border-radius:14px;
-  background:var(--white);border:1px solid var(--border);
-  box-shadow:0 3px 12px rgba(2,28,18,.03);
-}
-.sms-soft p{margin:0;font-size:.9rem;color:var(--muted);flex:1;min-width:200px}
-.sms-soft a{
-  display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;
-  background:var(--green);color:#fff;font-weight:700;font-size:.88rem;text-decoration:none;
-  white-space:nowrap;box-shadow:0 4px 12px rgba(10,92,58,.2);
-}
-.sms-soft a:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(10,92,58,.28)}
-html[data-theme="dark"] .sms-soft{background:var(--white)}
 </style>
 </head>
 <body>
@@ -89,7 +58,7 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
-      <img class="logo-mark" src="assets/img/eagle.svg" width="48" height="48" alt="KonyaGo" decoding="async">
+      <img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt="KonyaGo" decoding="async">
       <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
@@ -111,12 +80,11 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     <div class="visit-stat vs-total"><span class="vs-label">Toplam ziyaret</span><span class="vs-value" id="visitTotal">—</span></div>
   </div>
 
-  <!-- HERO — Landing odaklı -->
   <section class="hero" aria-label="Karşılama">
     <div class="hero-badge">Bağımsız · Ücretsiz · 2026</div>
-    <img class="hero-eagle" src="assets/img/eagle.svg" width="96" height="96" alt="KonyaGo" decoding="async">
+    <img class="hero-eagle" src="assets/img/eagle.svg" width="72" height="72" alt="KonyaGo" decoding="async">
     <h1>Konya’yı keşfetmenin en zarif yolu</h1>
-    <p>Mevlana’dan Sille’ye, etli ekmekten rotalara — Konya’nın premium şehir rehberi. AI asistan, güncel bilgiler ve tamamen ücretsiz deneyim.</p>
+    <p>Mevlana’dan Sille’ye, etli ekmekten rotalara — premium şehir rehberi. AI asistan, güncel bilgiler, tamamen ücretsiz.</p>
     <div class="actions">
       <a class="btn btn-primary" href="kesfet.html">Keşfetmeye başla</a>
       <a class="btn btn-ghost" href="rotalar.html">Rotaları gör</a>
@@ -124,7 +92,6 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     </div>
   </section>
 
-  <!-- Trust / Sosyal kanıt -->
   <div class="trust-strip" aria-label="Neden KonyaGo">
     <div class="trust-item"><span class="ti">🏛️</span><strong>Selçuklu odaklı</strong><span>Tarih ve kültür derinliği</span></div>
     <div class="trust-item"><span class="ti">✨</span><strong>KonyaGo AI</strong><span>Akıllı şehir asistanı</span></div>
@@ -132,19 +99,16 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     <div class="trust-item"><span class="ti">🆓</span><strong>Tamamen ücretsiz</strong><span>Premium gezi deneyimi</span></div>
   </div>
 
-  <!-- SMS CTA — doğal yerleşim -->
   <div class="sms-soft" aria-label="Kampanya SMS onayı">
-    <p>Kampanya, fırsat ve duyuru SMS’lerini almak ister misin? Onay ver, bilgilendirelim.</p>
+    <p>Kampanya, fırsat ve duyuru SMS’lerini almak ister misin?</p>
     <a href="https://forms.gle/ZcoUWqp7e3ww82vs9" target="_blank" rel="noopener">📱 SMS Onayı Ver</a>
   </div>
 
-  <!-- Arama -->
   <form class="quick-search" action="ara.html" method="get" role="search">
     <input type="search" name="q" id="homeQ" placeholder="Müze, yemek, eczane, rota ara…" aria-label="Konya’da ara" autocomplete="off">
     <button type="submit" class="btn btn-primary">Ara</button>
   </form>
 
-  <!-- İkonik yerler -->
   <section class="section" aria-label="Öne çıkan destinasyonlar">
     <h2 class="section-title">İkonik <span>yerler</span></h2>
     <div class="feat-grid">
@@ -163,7 +127,6 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     </div>
   </section>
 
-  <!-- Semt rehberi -->
   <section class="section" aria-label="Semt rehberi">
     <h2 class="section-title">Semt <span>rehberi</span></h2>
     <div class="ilce-strip">
@@ -174,7 +137,6 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     </div>
   </section>
 
-  <!-- Rehber bölümleri -->
   <section class="section" aria-label="Rehber bölümleri">
     <h2 class="section-title">Rehber <span>bölümleri</span></h2>
     <div class="grid grid-2">
@@ -189,8 +151,7 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     </div>
   </section>
 
-  <!-- Topluluk -->
-  <section class="arsiv-pin" id="konyago-arsiv" aria-label="KonyaGo Arşiv forum" style="margin-top:20px">
+  <section class="arsiv-pin" id="konyago-arsiv" aria-label="KonyaGo Arşiv forum" style="margin-top:24px">
     <div class="arsiv-pin-top">
       <span class="arsiv-pin-badge"><span class="dot"></span> Topluluk</span>
       <span class="arsiv-pin-badge">konyagoarsiv.org</span>
@@ -203,12 +164,11 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
     </div>
   </section>
 
-  <!-- İşletmeler -->
   <section class="section ad-biz" aria-label="İşletmeler için reklam" style="margin-top:28px">
     <div class="biz-banner">
       <div class="biz-badge">İşletmeler için</div>
       <h2>KonyaGo’da yeriniz olsun</h2>
-      <p>Restoran, otel, butik, tur ve yerel işletmeler — Konya’nın premium şehir rehberinde görünürlük kazanın.</p>
+      <p>Restoran, otel, butik, tur ve yerel işletmeler — premium şehir rehberinde görünürlük kazanın.</p>
       <div class="biz-actions">
         <a class="btn btn-primary" href="reklam.html">Reklam paketlerini gör</a>
         <a class="btn btn-ghost" href="https://wa.me/905332595042?text=Merhaba%2C%20KonyaGo%20reklam%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">WhatsApp yaz</a>
@@ -217,7 +177,6 @@ html[data-theme="dark"] .sms-soft{background:var(--white)}
   </section>
 </main>
 
-<!-- Profesyonel Footer -->
 <footer class="footer-elite" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
