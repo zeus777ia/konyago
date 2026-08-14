@@ -1,6 +1,6 @@
-/* KonyaGo SW v26 */
-var CACHE = "konyago-v26";
-var PRECACHE = ["./", "./index.html", "./assets/css/app.css", "./assets/js/app.js", "./assets/img/eagle.svg", "./manifest.json", "./semtler.html"];
+/* KonyaGo SW v27 */
+var CACHE = "konyago-v27";
+var PRECACHE = ["./", "./index.html", "./assets/css/app.css", "./assets/css/luxury.css", "./assets/css/theme.css", "./assets/js/app.js", "./assets/img/IMG_0510.jpeg", "./manifest.json"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(
