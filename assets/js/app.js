@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  /* Force dark + readable tokens immediately */
   try {
     document.documentElement.setAttribute("data-theme", "dark");
     document.documentElement.style.setProperty("--green-deep", "#F5F2EB", "important");
@@ -14,7 +13,6 @@
     document.documentElement.style.setProperty("--bg-card", "#152A42", "important");
   } catch (e) {}
 
-  /* Inline nuclear styles — always last, always wins. Covers every page text + layout */
   try {
     if (!document.getElementById("konyago-readable")) {
       var s = document.createElement("style");
@@ -43,7 +41,12 @@
         ".ad-rail .ad-box:not(.ad-sponsor-aysa){background:#152A42!important;border-color:rgba(201,162,39,.25)!important;color:#D4DBE6!important}",
         ".ad-rail .ad-box:not(.ad-sponsor-aysa) strong{color:#F5F2EB!important}",
         ".ad-rail .ad-box:not(.ad-sponsor-aysa) a{color:#E8C84A!important}",
-        ".place-visual .pv-label{color:#F5F2EB!important;opacity:0.95!important}"
+        ".place-visual .pv-label{color:#F5F2EB!important;opacity:0.95!important}",
+        ".hero{text-align:center!important;display:flex!important;flex-direction:column!important;align-items:center!important;width:100%!important;padding:clamp(40px,7vw,72px) clamp(24px,6vw,64px)!important}",
+        ".hero h1{text-align:center!important;margin-left:auto!important;margin-right:auto!important;max-width:min(22ch,100%)!important}",
+        ".hero p{text-align:center!important;margin-left:auto!important;margin-right:auto!important;max-width:min(52ch,100%)!important}",
+        ".hero .actions{justify-content:center!important}",
+        ".hero-badge{justify-content:center!important;margin-left:auto!important;margin-right:auto!important}"
       ].join("");
       document.head.appendChild(s);
     }
@@ -59,7 +62,6 @@
     }
   } catch (e) {}
 
-  /* Ticker layout restore — overflow + marquee (navy+gold) */
   try {
     if (!document.getElementById("konyago-ticker-css")) {
       var tss = document.createElement("style");
@@ -116,13 +118,14 @@
   } catch (e) {}
 
   try {
-    if (!document.querySelector("link[data-luxury-css]")) {
-      var lux = document.createElement("link");
+    var lux = document.querySelector("link[data-luxury-css]");
+    if (!lux) {
+      lux = document.createElement("link");
       lux.rel = "stylesheet";
-      lux.href = "assets/css/luxury.css?v=7";
       lux.setAttribute("data-luxury-css", "1");
       document.head.appendChild(lux);
     }
+    lux.href = "assets/css/luxury.css?v=8";
   } catch (e) {}
 
   try {
