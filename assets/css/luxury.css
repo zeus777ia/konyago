@@ -1,4 +1,4 @@
-/* KonyaGo Luxury Dark — Navy + Gold · Editorial */
+/* KonyaGo Luxury Dark — Navy + Gold · High Contrast */
 :root {
   --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -9,13 +9,13 @@
 
   --navy: #0A1628;
   --navy-mid: #0F1E32;
-  --navy-card: #12243A;
+  --navy-card: #152A42;
   --gold: #C9A227;
-  --gold-bright: #E0BC55;
-  --gold-soft: rgba(201, 162, 39, 0.12);
-  --text: #F0EDE6;
-  --muted: #A8B0BC;
-  --border: rgba(201, 162, 39, 0.18);
+  --gold-bright: #E8C84A;
+  --gold-soft: rgba(201, 162, 39, 0.15);
+  --text: #F2EFE8;
+  --muted: #C5CDD8;
+  --border: rgba(201, 162, 39, 0.2);
   --white: #FFFFFF;
 }
 
@@ -31,11 +31,24 @@ body::before {
   background: none !important;
 }
 
+/* Force readable text everywhere */
+p, span, li, label, small, .muted {
+  color: var(--muted) !important;
+}
+
+h1, h2, h3, h4, strong {
+  color: var(--text) !important;
+}
+
+a {
+  color: var(--gold-bright) !important;
+}
+
 /* Header */
 .site-header {
-  background: rgba(10, 22, 40, 0.92) !important;
+  background: rgba(10, 22, 40, 0.95) !important;
   backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(201, 162, 39, 0.12) !important;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.14) !important;
   box-shadow: none !important;
 }
 
@@ -46,11 +59,11 @@ body::before {
 }
 
 .logo-text small {
-  color: var(--muted) !important;
+  color: #B0B8C4 !important;
 }
 
 .nav-desktop a {
-  color: var(--muted) !important;
+  color: #C5CDD8 !important;
   font-weight: 600 !important;
   font-size: 0.82rem !important;
   letter-spacing: 0.04em !important;
@@ -64,14 +77,14 @@ body::before {
   background: transparent !important;
 }
 
-/* Hero — Luxury split style */
+/* Hero */
 .hero {
   text-align: left !important;
   padding: clamp(36px, 6vw, 64px) 28px !important;
   margin: 16px 0 28px !important;
   border-radius: 20px !important;
   background: linear-gradient(135deg, #0F1E32 0%, #0A1628 60%, #0D1A2C 100%) !important;
-  border: 1px solid rgba(201, 162, 39, 0.15) !important;
+  border: 1px solid rgba(201, 162, 39, 0.18) !important;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35) !important;
   position: relative !important;
   overflow: hidden !important;
@@ -125,7 +138,7 @@ body::before {
 
 .hero p {
   font-size: clamp(0.95rem, 1.8vw, 1.08rem) !important;
-  color: var(--muted) !important;
+  color: #C5CDD8 !important;
   max-width: 38ch !important;
   margin: 0 0 28px !important;
   line-height: 1.6 !important;
@@ -160,8 +173,8 @@ body::before {
 
 .hero .btn-ghost {
   background: transparent !important;
-  border: 1.5px solid rgba(168, 176, 188, 0.35) !important;
-  color: var(--muted) !important;
+  border: 1.5px solid rgba(197, 205, 216, 0.4) !important;
+  color: #C5CDD8 !important;
   padding: 13px 22px !important;
   border-radius: 6px !important;
   font-weight: 600 !important;
@@ -174,7 +187,7 @@ body::before {
   background: transparent !important;
 }
 
-/* Trust strip luxury */
+/* Trust strip */
 .trust-strip {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
@@ -190,14 +203,14 @@ body::before {
 
 .trust-item {
   background: var(--navy-card) !important;
-  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+  border: 1px solid rgba(201, 162, 39, 0.15) !important;
   border-radius: 12px !important;
   padding: 16px 14px !important;
   box-shadow: none !important;
 }
 
 .trust-item:hover {
-  border-color: rgba(201, 162, 39, 0.3) !important;
+  border-color: rgba(201, 162, 39, 0.35) !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -208,40 +221,44 @@ body::before {
 }
 
 .trust-item span {
-  color: var(--muted) !important;
+  color: #B8C2CE !important;
   font-size: 0.72rem !important;
 }
 
 /* Cards */
 .card {
   background: var(--navy-card) !important;
-  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+  border: 1px solid rgba(201, 162, 39, 0.15) !important;
   border-radius: 14px !important;
   box-shadow: none !important;
   padding: 20px 16px !important;
 }
 
 .card:hover {
-  border-color: rgba(201, 162, 39, 0.28) !important;
+  border-color: rgba(201, 162, 39, 0.35) !important;
   transform: none !important;
   box-shadow: none !important;
 }
 
 .card h3 {
   font-family: var(--font-display) !important;
-  color: var(--text) !important;
+  color: #F2EFE8 !important;
   font-size: 1.15rem !important;
 }
 
 .card p {
-  color: var(--muted) !important;
+  color: #C5CDD8 !important;
   font-size: 0.88rem !important;
+}
+
+.card .ico {
+  filter: none !important;
 }
 
 /* Section titles */
 .section-title {
   font-family: var(--font-display) !important;
-  color: var(--text) !important;
+  color: #F2EFE8 !important;
   font-size: clamp(1.4rem, 2.5vw, 1.7rem) !important;
 }
 
@@ -250,7 +267,7 @@ body::before {
   font-style: italic !important;
 }
 
-/* Buttons general */
+/* Buttons */
 .btn-primary {
   background: transparent !important;
   color: var(--gold-bright) !important;
@@ -266,12 +283,17 @@ body::before {
 
 .btn-ghost {
   background: transparent !important;
-  border: 1.5px solid rgba(168, 176, 188, 0.3) !important;
-  color: var(--muted) !important;
+  border: 1.5px solid rgba(197, 205, 216, 0.35) !important;
+  color: #C5CDD8 !important;
   border-radius: 6px !important;
 }
 
-/* SMS — fixed */
+.btn-ghost:hover {
+  border-color: var(--gold) !important;
+  color: var(--gold-bright) !important;
+}
+
+/* SMS */
 .sms-soft {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -281,7 +303,7 @@ body::before {
   padding: 16px 20px !important;
   margin: 18px 0 14px !important;
   background: #152A42 !important;
-  border: 1px solid rgba(201, 162, 39, 0.22) !important;
+  border: 1px solid rgba(201, 162, 39, 0.25) !important;
   border-radius: 14px !important;
   box-shadow: none !important;
 }
@@ -289,7 +311,7 @@ body::before {
 .sms-soft p {
   margin: 0 !important;
   font-size: 0.95rem !important;
-  color: #C8D0DA !important;
+  color: #D0D8E2 !important;
   flex: 1 !important;
   min-width: 200px !important;
   line-height: 1.4 !important;
@@ -314,15 +336,19 @@ body::before {
 }
 
 .sms-soft a:hover {
-  background: #E0BC55 !important;
+  background: #E8C84A !important;
   color: #0A1628 !important;
 }
 
 /* Footer */
 .footer-elite {
   background: #060E18 !important;
-  border-top: 1px solid rgba(201, 162, 39, 0.2) !important;
-  color: var(--muted) !important;
+  border-top: 1px solid rgba(201, 162, 39, 0.22) !important;
+  color: #C5CDD8 !important;
+}
+
+.footer-elite p {
+  color: #B0B8C4 !important;
 }
 
 .footer-elite a {
@@ -342,36 +368,40 @@ body::before {
   color: var(--gold) !important;
 }
 
-/* Visit stats — lighter */
+.footer-col li {
+  color: #C5CDD8 !important;
+}
+
+/* Visit stats */
 .visit-stats {
   gap: 10px !important;
 }
 
 .visit-stat {
   background: #1A3050 !important;
-  border: 1px solid rgba(201, 162, 39, 0.18) !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
   border-radius: 12px !important;
 }
 
 .visit-stat .vs-label {
-  color: #B8C2CE !important;
+  color: #C5CDD8 !important;
   font-size: 0.72rem !important;
 }
 
 .visit-stat .vs-value {
-  color: #F0E6C8 !important;
+  color: #F5EED8 !important;
   font-weight: 700 !important;
 }
 
 .visit-stat.vs-total .vs-value {
-  color: #E0BC55 !important;
+  color: #E8C84A !important;
 }
 
 /* Ilce pills */
 .ilce-pill {
   background: var(--navy-card) !important;
-  border: 1px solid rgba(201, 162, 39, 0.12) !important;
-  color: var(--text) !important;
+  border: 1px solid rgba(201, 162, 39, 0.15) !important;
+  color: #F2EFE8 !important;
 }
 
 .ilce-pill:hover {
@@ -379,34 +409,67 @@ body::before {
 }
 
 .ilce-pill small {
-  color: var(--muted) !important;
+  color: #B8C2CE !important;
 }
 
 /* Search */
 .quick-search input {
   background: var(--navy-card) !important;
-  border: 1.5px solid rgba(201, 162, 39, 0.15) !important;
-  color: var(--text) !important;
+  border: 1.5px solid rgba(201, 162, 39, 0.2) !important;
+  color: #F2EFE8 !important;
+}
+
+.quick-search input::placeholder {
+  color: #8A95A5 !important;
 }
 
 .quick-search input:focus {
   border-color: var(--gold) !important;
-  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12) !important;
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15) !important;
 }
 
-/* Biz banner */
+/* Biz banner — CRITICAL readability fix */
 .biz-banner {
-  background: var(--navy-card) !important;
-  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  background: #152A42 !important;
+  border: 1px solid rgba(201, 162, 39, 0.25) !important;
 }
 
 .biz-banner h2 {
-  color: var(--gold-bright) !important;
+  color: #E8C84A !important;
+}
+
+.biz-banner p {
+  color: #D0D8E2 !important;
+  opacity: 1 !important;
 }
 
 .biz-badge {
-  background: var(--gold-soft) !important;
-  color: var(--gold) !important;
+  background: rgba(201, 162, 39, 0.2) !important;
+  color: #E8C84A !important;
+}
+
+/* Arsiv / other sections */
+.arsiv-pin {
+  background: #152A42 !important;
+  border-color: rgba(201, 162, 39, 0.2) !important;
+}
+
+.arsiv-pin h2,
+.arsiv-pin p {
+  color: #F2EFE8 !important;
+}
+
+.arsiv-pin p {
+  color: #C5CDD8 !important;
+}
+
+/* Override elite green leftovers */
+.green, .text-green, [class*="green"] {
+  color: inherit;
+}
+
+.info, .info p, .info a {
+  color: #D0D8E2 !important;
 }
 
 /* Mobile */
