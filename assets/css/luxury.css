@@ -271,26 +271,50 @@ body::before {
   border-radius: 6px !important;
 }
 
-/* SMS */
+/* SMS — fixed */
 .sms-soft {
-  background: var(--navy-card) !important;
-  border: 1px solid rgba(201, 162, 39, 0.15) !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding: 16px 20px !important;
+  margin: 18px 0 14px !important;
+  background: #152A42 !important;
+  border: 1px solid rgba(201, 162, 39, 0.22) !important;
   border-radius: 14px !important;
+  box-shadow: none !important;
 }
 
 .sms-soft p {
-  color: var(--muted) !important;
+  margin: 0 !important;
+  font-size: 0.95rem !important;
+  color: #C8D0DA !important;
+  flex: 1 !important;
+  min-width: 200px !important;
+  line-height: 1.4 !important;
 }
 
 .sms-soft a {
-  background: transparent !important;
-  border: 1.5px solid var(--gold) !important;
-  color: var(--gold-bright) !important;
-  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 11px 20px !important;
+  background: #C9A227 !important;
+  border: none !important;
+  color: #0A1628 !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+  line-height: 1.2 !important;
 }
 
 .sms-soft a:hover {
-  background: var(--gold) !important;
+  background: #E0BC55 !important;
   color: #0A1628 !important;
 }
 
@@ -318,10 +342,29 @@ body::before {
   color: var(--gold) !important;
 }
 
-/* Visit stats */
+/* Visit stats — lighter */
+.visit-stats {
+  gap: 10px !important;
+}
+
 .visit-stat {
-  background: var(--navy-card) !important;
-  border: 1px solid rgba(201, 162, 39, 0.12) !important;
+  background: #1A3050 !important;
+  border: 1px solid rgba(201, 162, 39, 0.18) !important;
+  border-radius: 12px !important;
+}
+
+.visit-stat .vs-label {
+  color: #B8C2CE !important;
+  font-size: 0.72rem !important;
+}
+
+.visit-stat .vs-value {
+  color: #F0E6C8 !important;
+  font-weight: 700 !important;
+}
+
+.visit-stat.vs-total .vs-value {
+  color: #E0BC55 !important;
 }
 
 /* Ilce pills */
@@ -393,15 +436,11 @@ body::before {
   .sms-soft {
     flex-direction: column !important;
     text-align: center !important;
+    padding: 16px !important;
   }
 
   .sms-soft a {
     width: 100% !important;
     justify-content: center !important;
   }
-}
-
-/* Force dark always for this theme */
-html[data-theme="light"] {
-  /* Luxury theme is dark-first; light mode also stays dark-ish for consistency */
 }
