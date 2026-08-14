@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a9b6c"/>
+      <stop offset="100%" stop-color="#0d6b4a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8C84A"/>
+      <stop offset="50%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#A8861C"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="192" height="192" rx="42" ry="42" fill="url(#g)"/>
+  <g fill="url(#gold)" transform="translate(100,88)">
+    <ellipse cx="0" cy="8" rx="18" ry="22"/>
+    <path d="M-18,0 Q-55,-25 -70,5 Q-50,15 -30,12 Q-20,8 -18,0Z"/>
+    <path d="M18,0 Q55,-25 70,5 Q50,15 30,12 Q20,8 18,0Z"/>
+    <ellipse cx="-14" cy="-22" rx="11" ry="13"/>
+    <circle cx="-18" cy="-26" r="2.5" fill="#0d6b4a"/>
+    <ellipse cx="14" cy="-22" rx="11" ry="13"/>
+    <circle cx="18" cy="-26" r="2.5" fill="#0d6b4a"/>
+    <path d="M-8,-32 L0,-42 L8,-32 Z"/>
+    <path d="M-10,28 Q0,42 10,28 Q0,34 -10,28Z"/>
+  </g>
+  <text x="100" y="168" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF" letter-spacing="2">KONYAGO</text>
+</svg>
