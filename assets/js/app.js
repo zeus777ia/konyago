@@ -65,18 +65,27 @@
         "a.card h3{color:#F5F2EB!important;font-size:1.15rem!important;font-weight:600!important;margin:8px 0 6px!important}",
         "a.card p{color:#C5D0DE!important;font-size:.9rem!important;opacity:1!important;margin:0!important}",
         "a.card:hover{border-color:rgba(201,162,39,.55)!important;background:#1A3050!important}",
-        "a.card:hover h3{color:#E8C84A!important}"
+        "a.card:hover h3{color:#E8C84A!important}",
+        /* Kayan şerit (ad-ticker) garantisi */
+        ".ad-ticker{position:sticky!important;top:0!important;z-index:110!important;height:36px!important;overflow:hidden!important;background:linear-gradient(90deg,#0A1628 0%,#12243A 40%,#0F1E32 70%,#0A1628 100%)!important;color:#F5F2EB!important;border-bottom:1px solid rgba(201,162,39,.35)!important;box-shadow:0 2px 10px rgba(0,0,0,.25)!important;display:block!important;visibility:visible!important;opacity:1!important}",
+        ".ad-ticker-track{display:flex!important;width:max-content!important;align-items:center!important;height:36px!important;animation:tickerScroll 28s linear infinite!important;will-change:transform}",
+        ".ad-ticker:hover .ad-ticker-track{animation-play-state:paused!important}",
+        ".ad-ticker-item{display:inline-flex!important;align-items:center!important;gap:10px!important;white-space:nowrap!important;padding:0 28px!important;font-size:.78rem!important;font-weight:600!important;color:#E8ECF0!important}",
+        ".ad-ticker-item a{color:#E8C84A!important;font-weight:800!important;text-decoration:underline!important}",
+        ".ad-ticker-dot{width:5px!important;height:5px!important;border-radius:50%!important;background:#C9A227!important;flex-shrink:0!important}",
+        "@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}",
+        "body:has(.ad-ticker) .site-header{top:36px!important}"
       ].join("");
       document.head.appendChild(s);
     }
   } catch (e) {}
 
   try {
-    if (!document.querySelector("link[data-app-css-v32]")) {
+    if (!document.querySelector("link[data-app-css-v35]")) {
       var ac = document.createElement("link");
       ac.rel = "stylesheet";
-      ac.href = "assets/css/app.css?v=32";
-      ac.setAttribute("data-app-css-v32", "1");
+      ac.href = "assets/css/app.css?v=35";
+      ac.setAttribute("data-app-css-v35", "1");
       document.head.appendChild(ac);
     }
   } catch (e) {}
@@ -146,6 +155,7 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
+  /* ===== Kayan reklam şeridi (ad-ticker) — her zaman oluştur ===== */
   try {
     var mail = "mailto:info@konyago.com.tr?subject=KonyaGo%20Reklam";
     var items = [
@@ -163,14 +173,22 @@
     var existing = document.querySelector(".ad-ticker");
     if (existing) {
       var track = existing.querySelector(".ad-ticker-track");
-      if (track && !track.children.length) track.innerHTML = html + html;
+      if (track) {
+        if (!track.children.length) track.innerHTML = html + html;
+      } else {
+        existing.innerHTML = '<div class="ad-ticker-track">' + html + html + "</div>";
+      }
     } else {
       var ticker = document.createElement("div");
       ticker.className = "ad-ticker";
       ticker.setAttribute("role", "complementary");
       ticker.setAttribute("aria-label", "Reklam şeridi");
       ticker.innerHTML = '<div class="ad-ticker-track">' + html + html + "</div>";
-      document.body.insertBefore(ticker, document.body.firstChild);
+      if (document.body.firstChild) {
+        document.body.insertBefore(ticker, document.body.firstChild);
+      } else {
+        document.body.appendChild(ticker);
+      }
     }
   } catch (e) {}
 
@@ -189,7 +207,7 @@
       var sub = (clone.textContent || "").replace(/\s+/g, " ").trim();
       var isSponsor = box.classList.contains("ad-sponsor-aysa") || /aysatekin|hosgeldin/i.test(title + href);
       var label = isSponsor ? '<span class="ad-label">Sponsor</span>' : "";
-      box.innerHTML = label + "<strong>" + title + "</strong>" + (sub ? '<span class="ad-sub">' + sub + "</span>' : "") + '<a href="' + href + '"' + (href.indexOf("http") === 0 ? ' target="_blank" rel="noopener sponsored"' : "") + ">" + cta + "</a>";
+      box.innerHTML = label + "<strong>" + title + "</strong>" + (sub ? '<span class="ad-sub">' + sub + "</span>" : "") + '<a href="' + href + '"' + (href.indexOf("http") === 0 ? ' target="_blank" rel="noopener sponsored"' : "") + ">" + cta + "</a>";
       box.setAttribute("data-fixed", "1");
       if (isSponsor) box.classList.add("ad-box-gold", "ad-sponsor-aysa");
     });
