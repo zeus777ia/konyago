@@ -1,24 +1,49 @@
+# KonyaGo — https://konyago.com.tr
+# Apex canonical host (www → apex 308)
+
 User-agent: *
 Allow: /
 
-# Yönetim ve hata sayfaları dizine girmez
+# Dizinlenmemesi gereken / düşük değerli sayfalar
 Disallow: /admin.html
 Disallow: /404.html
 Disallow: /rota-yazdir.html
+Disallow: /ara.html
+Disallow: /ara?
+
+# Parametreli arama / gereksiz crawl bütçesi
+Disallow: /*?*q=
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
 
 # Google
 User-agent: Googlebot
 Allow: /
 Disallow: /admin.html
 Disallow: /404.html
+Disallow: /rota-yazdir.html
+Disallow: /ara.html
 
 # Bing
 User-agent: Bingbot
 Allow: /
 Disallow: /admin.html
 Disallow: /404.html
+Disallow: /rota-yazdir.html
+Disallow: /ara.html
 
+# Yandex (Host = tercih edilen domain)
+User-agent: Yandex
+Allow: /
+Disallow: /admin.html
+Disallow: /404.html
+Disallow: /rota-yazdir.html
+Disallow: /ara.html
+Host: https://konyago.com.tr
+
+# Sitemap (apex)
 Sitemap: https://konyago.com.tr/sitemap.xml
 
-# LLM / AI crawlers bilgilendirme
+# AI / LLM bilgilendirme (engelleme yok — içerik keşfi serbest)
 # https://konyago.com.tr/llms.txt
