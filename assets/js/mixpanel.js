@@ -11,6 +11,54 @@
   var TOKEN = "579a0a89b147340515db46c34844a82f";
   var tracked = false;
 
+  function getQueryParam(name) {
+    try {
+      var params = new URLSearchParams(window.location.search || "");
+      return params.get(name) || "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function detectAcquisition() {
+    var utmSource = (getQueryParam("utm_source") || "").toLowerCase();
+    var utmMedium = (getQueryParam("utm_medium") || "").toLowerCase();
+    var utmCampaign = getQueryParam("utm_campaign") || "";
+    var ref = "";
+    try {
+      ref = (document.referrer || "").toLowerCase();
+    } catch (e) {}
+
+    var source = "direct";
+    if (utmSource) {
+      source = utmSource;
+    } else if (ref.indexOf("instagram.com") !== -1 || ref.indexOf("l.instagram.com") !== -1) {
+      source = "instagram";
+    } else if (ref.indexOf("t.co") !== -1 || ref.indexOf("twitter.com") !== -1 || ref.indexOf("x.com") !== -1) {
+      source = "twitter";
+    } else if (ref.indexOf("facebook.com") !== -1 || ref.indexOf("fb.com") !== -1 || ref.indexOf("l.facebook.com") !== -1) {
+      source = "facebook";
+    } else if (ref.indexOf("google.") !== -1 || ref.indexOf("bing.com") !== -1 || ref.indexOf("yandex.") !== -1) {
+      source = "organic_search";
+    } else if (ref) {
+      source = "referral";
+    }
+
+    // Instagram-specific mediums from ads/reels links
+    if (!utmSource && (utmMedium === "social" || utmMedium === "story" || utmMedium === "reel")) {
+      if (utmMedium) source = utmMedium === "reel" ? "instagram" : source;
+    }
+
+    return {
+      acquisition_source: source,
+      utm_source: utmSource || undefined,
+      utm_medium: utmMedium || undefined,
+      utm_campaign: utmCampaign || undefined,
+      referrer: ref ? ref.slice(0, 300) : undefined,
+      is_instagram: source === "instagram" || utmSource === "instagram" || utmSource === "ig"
+    };
+  }
+
   function getPageType() {
     var path = (window.location.pathname || "/").toLowerCase();
     if (path === "/" || path === "" || /index\.html$/.test(path)) return "home";
@@ -39,20 +87,40 @@
       var pageType = getPageType();
       var path = window.location.pathname || "/";
       var title = document.title || "";
+      var acq = detectAcquisition();
 
-      mixpanel.track("page_view", {
+      // Super properties for all future events in this session
+      var superProps = {
+        acquisition_source: acq.acquisition_source,
+        platform: "web"
+      };
+      if (acq.utm_source) superProps.utm_source = acq.utm_source;
+      if (acq.utm_medium) superProps.utm_medium = acq.utm_medium;
+      if (acq.utm_campaign) superProps.utm_campaign = acq.utm_campaign;
+      if (acq.is_instagram) superProps.is_instagram = true;
+      mixpanel.register(superProps);
+
+      var pageProps = {
         page_path: path,
         page_title: title,
         page_type: pageType,
-        platform: "web"
-      });
+        platform: "web",
+        acquisition_source: acq.acquisition_source
+      };
+      if (acq.utm_source) pageProps.utm_source = acq.utm_source;
+      if (acq.utm_medium) pageProps.utm_medium = acq.utm_medium;
+      if (acq.utm_campaign) pageProps.utm_campaign = acq.utm_campaign;
+      if (acq.referrer) pageProps.referrer = acq.referrer;
+
+      mixpanel.track("page_view", pageProps);
 
       if (pageType === "content" || pageType === "ai") {
         mixpanel.track("content_view", {
           content_title: title,
           content_type: getContentType(),
           page_path: path,
-          platform: "web"
+          platform: "web",
+          acquisition_source: acq.acquisition_source
         });
       }
 
@@ -85,7 +153,12 @@
             return;
           }
           if (href.indexOf("instagram.com") !== -1) {
-            mixpanel.track("cta_click", { cta_type: "instagram", content_title: title, page_path: path });
+            mixpanel.track("cta_click", {
+              cta_type: "instagram",
+              content_title: title,
+              page_path: path,
+              destination_url: href.slice(0, 200)
+            });
             return;
           }
           if (href.indexOf("wa.me") !== -1 || href.indexOf("whatsapp") !== -1) {
@@ -115,7 +188,7 @@
       }
 
       if (typeof console !== "undefined" && console.log) {
-        console.log("[KonyaGo Mixpanel] tracking active");
+        console.log("[KonyaGo Mixpanel] tracking active", acq.acquisition_source);
       }
     } catch (err) {
       if (typeof console !== "undefined" && console.warn) console.warn("[KonyaGo Mixpanel]", err);
@@ -134,7 +207,6 @@
           trackAll();
         }
       });
-      // Fallback if loaded never fires
       setTimeout(trackAll, 1200);
       setTimeout(trackAll, 3000);
     } catch (err) {
@@ -142,7 +214,6 @@
     }
   }
 
-  // Load full library, then init
   if (window.mixpanel && typeof window.mixpanel.init === "function" && !window.mixpanel.__SV) {
     boot();
     return;
