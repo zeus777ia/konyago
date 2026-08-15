@@ -8,7 +8,6 @@
   --mnav-h: 64px;
 }
 
-/* ===== Reklam seridi ===== */
 .ad-ticker {
   position: sticky;
   top: 0;
@@ -352,13 +351,21 @@ body:has(.borsa-ticker):not(:has(.eczane-ticker)) .borsa-ticker {
     right: 10px !important;
     left: auto !important;
   }
+  /* Icerik panolarin arasina yayilir — buyuk bosluk kalmaz */
   main.container {
-    max-width: 980px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    max-width: none !important;
+    width: auto !important;
+    margin-left: 178px !important;
+    margin-right: 178px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     box-sizing: border-box !important;
+  }
+  .hero {
+    max-width: 100% !important;
+  }
+  .visit-stats {
+    justify-content: center !important;
   }
   .ad-rail .ad-box,
   .ad-rail .ad-sky {
