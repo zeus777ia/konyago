@@ -1,0 +1,191 @@
+/* KonyaGo footer.css — premium ozel stil */
+
+.footer-elite {
+  position: relative;
+  margin-top: 36px !important;
+  padding: 0 !important;
+  background:
+    linear-gradient(180deg, #0C1A2E 0%, #0A1628 40%, #081220 100%) !important;
+  border-top: none !important;
+  color: #D4DBE6 !important;
+  overflow: hidden;
+}
+
+/* Ust altin cizi + soft glow */
+.footer-elite::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 162, 39, 0.15) 15%,
+    #C9A227 50%,
+    rgba(201, 162, 39, 0.15) 85%,
+    transparent 100%
+  );
+}
+
+.footer-elite::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(420px, 70%);
+  height: 80px;
+  background: radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.12), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer-elite > .container {
+  position: relative;
+  z-index: 1;
+  padding-top: 32px !important;
+  padding-bottom: 20px !important;
+}
+
+/* Grid */
+.footer-grid {
+  display: grid !important;
+  gap: 22px 28px !important;
+  grid-template-columns: 1fr !important;
+  align-items: start !important;
+}
+
+@media (min-width: 640px) {
+  .footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr !important;
+  }
+}
+
+/* Brand */
+.footer-brand strong {
+  display: block !important;
+  font-family: var(--font-display, "Cormorant Garamond", Georgia, serif) !important;
+  font-size: 1.45rem !important;
+  font-weight: 600 !important;
+  color: #F5F2EB !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 2px !important;
+}
+
+.footer-brand p {
+  color: #9AA8B8 !important;
+  font-size: 0.86rem !important;
+  line-height: 1.5 !important;
+  max-width: 30ch !important;
+  margin: 8px 0 14px !important;
+}
+
+/* Sosyal pill butonlar */
+.footer-social {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 4px !important;
+}
+
+.footer-social a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  color: #E8C84A !important;
+  background: rgba(201, 162, 39, 0.1) !important;
+  border: 1px solid rgba(201, 162, 39, 0.32) !important;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease !important;
+}
+
+.footer-social a:hover {
+  background: rgba(201, 162, 39, 0.2) !important;
+  border-color: rgba(201, 162, 39, 0.55) !important;
+  color: #F5E6A3 !important;
+  transform: translateY(-1px);
+}
+
+/* Kolon basliklari */
+.footer-col h4 {
+  margin: 0 0 12px !important;
+  font-size: 0.7rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #C9A227 !important;
+}
+
+.footer-col ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  gap: 7px !important;
+}
+
+.footer-col li {
+  margin: 0 !important;
+}
+
+.footer-col a {
+  display: inline-block !important;
+  color: #C5CED8 !important;
+  text-decoration: none !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  transition: color 0.15s ease, transform 0.15s ease !important;
+}
+
+.footer-col a:hover {
+  color: #E8C84A !important;
+  transform: translateX(2px);
+}
+
+/* Alt bar */
+.footer-bottom {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px 16px !important;
+  margin-top: 24px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(201, 162, 39, 0.14) !important;
+  font-size: 0.76rem !important;
+  color: #7A8796 !important;
+}
+
+.footer-bottom span:last-child {
+  color: #6A7788 !important;
+}
+
+/* Mobil */
+@media (max-width: 639px) {
+  .footer-elite > .container {
+    padding-top: 24px !important;
+    padding-bottom: 16px !important;
+  }
+
+  .footer-grid {
+    gap: 20px !important;
+  }
+
+  .footer-brand strong {
+    font-size: 1.3rem !important;
+  }
+
+  .footer-col h4 {
+    margin-bottom: 8px !important;
+  }
+
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-top: 18px !important;
+    gap: 6px !important;
+  }
+}
