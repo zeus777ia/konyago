@@ -5,6 +5,7 @@
 Site: https://konyago.com.tr/
 Dil: tr-TR
 İletişim: info@konyago.com.tr
+WhatsApp: +90 533 259 50 42
 
 ## Ana sayfalar
 
@@ -15,16 +16,26 @@ Dil: tr-TR
 - [Tarihçe](https://konyago.com.tr/tarihce.html): Selçuklu ve Konya tarihi
 - [Keşfet](https://konyago.com.tr/kesfet.html): Kategori ve ilçe filtreli keşif
 - [Harita](https://konyago.com.tr/harita.html): Harita ve yol tarifi
-- [İlçeler](https://konyago.com.tr/ilceler.html): Beyşehir, Seydişehir, Akşehir
+- [İlçeler](https://konyago.com.tr/ilceler.html): Beyşehir, Seydişehir, Akşehir, Taşkent
 - [KonyaGo AI](https://konyago.com.tr/ai.html): Konya odaklı soru-cevap asistanı
 - [Nöbetçi eczane](https://konyago.com.tr/nobetci-eczane.html): Eczane bilgileri
 - [Hava](https://konyago.com.tr/hava.html): 7 günlük hava
 - [Ulaşım](https://konyago.com.tr/ulasim.html): ATUS ve pratik ulaşım
+- [Reklam / Sponsor](https://konyago.com.tr/reklam.html): İşletme görünürlük paketleri
 - [Gizlilik](https://konyago.com.tr/gizlilik.html): KVKK ve gizlilik metni
-- [İletişim / katkı](https://konyago.com.tr/katki.html): İşletme ve katkı formu
+- [İletişim](https://konyago.com.tr/iletisim.html): Form, e-posta, WhatsApp
+
+## Popüler rehber yazıları
+
+- [Konya’da 1 günde ne yapılır?](https://konyago.com.tr/konya-1-gun.html)
+- [Sille kahvaltı rehberi](https://konyago.com.tr/sille-kahvalti.html)
+- [Mevlana Müzesi giriş ücretsiz mi?](https://konyago.com.tr/mevlana-giris.html)
+- [Sille rehberi](https://konyago.com.tr/sille.html)
+- [Etli ekmek](https://konyago.com.tr/etli-ekmek.html)
 
 ## Notlar
 
 - Site statik bir rehberdir; resmi kurum sitesi değildir.
 - Saat, ücret ve nöbetçi bilgileri değişebilir; resmi kaynaklar doğrulanmalıdır.
 - Sitemap: https://konyago.com.tr/sitemap.xml
+- Sponsor / reklam: info@konyago.com.tr · WhatsApp +90 533 259 50 42
