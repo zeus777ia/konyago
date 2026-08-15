@@ -1,6 +1,16 @@
 (function () {
   "use strict";
 
+  // Load SEO helpers early (OG + Organization JSON-LD, no Twitter/X)
+  try {
+    if (!document.querySelector('script[data-konyago-seo]')) {
+      var seo = document.createElement("script");
+      seo.src = "assets/js/seo.js?v=2";
+      seo.setAttribute("data-konyago-seo", "1");
+      document.head.appendChild(seo);
+    }
+  } catch (e) {}
+
   try {
     document.documentElement.setAttribute("data-theme", "dark");
     document.documentElement.style.setProperty("--green-deep", "#F5F2EB", "important");
@@ -179,7 +189,7 @@
       var sub = (clone.textContent || "").replace(/\s+/g, " ").trim();
       var isSponsor = box.classList.contains("ad-sponsor-aysa") || /aysatekin|hosgeldin/i.test(title + href);
       var label = isSponsor ? '<span class="ad-label">Sponsor</span>' : "";
-      box.innerHTML = label + "<strong>" + title + "</strong>" + (sub ? '<span class="ad-sub">' + sub + "</span>" : "") + '<a href="' + href + '"' + (href.indexOf("http") === 0 ? ' target="_blank" rel="noopener sponsored"' : "") + ">" + cta + "</a>";
+      box.innerHTML = label + "<strong>" + title + "</strong>" + (sub ? '<span class="ad-sub">' + sub + "</span>' : "") + '<a href="' + href + '"' + (href.indexOf("http") === 0 ? ' target="_blank" rel="noopener sponsored"' : "") + ">" + cta + "</a>";
       box.setAttribute("data-fixed", "1");
       if (isSponsor) box.classList.add("ad-box-gold", "ad-sponsor-aysa");
     });

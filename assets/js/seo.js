@@ -1,5 +1,6 @@
 /**
- * KonyaGo SEO helpers — JSON-LD Organization + OG defaults (no Twitter)
+ * KonyaGo SEO helpers — JSON-LD Organization + OG defaults
+ * No Twitter/X cards (user request: x hesabı hariç)
  */
 (function () {
   "use strict";
@@ -8,7 +9,7 @@
 
   var ORIGIN = "https://konyago.com.tr";
   var LOGO = ORIGIN + "/assets/img/IMG_0510.jpeg";
-  var OG = ORIGIN + "/assets/img/og-cover.jpg";
+  var OG_IMG = ORIGIN + "/assets/img/IMG_0510.jpeg";
 
   function ensureMeta(attr, key, value) {
     if (!value) return;
@@ -26,20 +27,30 @@
     document.head.appendChild(el);
   }
 
-  // OG defaults if missing
   var path = location.pathname || "/";
-  var pageUrl = ORIGIN + (path === "/" ? "/" : path);
+  var pageUrl = ORIGIN + (path === "/" || path === "/index.html" ? "/" : path);
+
+  // Core OG (no twitter:*)
   ensureMeta("property", "og:type", "website");
   ensureMeta("property", "og:locale", "tr_TR");
   ensureMeta("property", "og:site_name", "KonyaGo");
   ensureMeta("property", "og:url", pageUrl);
-  ensureMeta("property", "og:image", OG);
+  ensureMeta("property", "og:image", OG_IMG);
+  ensureMeta("property", "og:image:secure_url", OG_IMG);
+  ensureMeta("property", "og:image:type", "image/jpeg");
   ensureMeta("property", "og:image:width", "1200");
   ensureMeta("property", "og:image:height", "630");
   ensureMeta("property", "og:image:alt", "KonyaGo — Konya şehir rehberi");
 
-  // Fallback image if og-cover 404 — browsers still list primary; secondary already on index
+  // Title / description fallback from document if missing og:
+  var t = document.title || "KonyaGo | Konya Şehir Rehberi";
+  ensureMeta("property", "og:title", t);
+  var descEl = document.querySelector('meta[name="description"]');
+  if (descEl && descEl.content) {
+    ensureMeta("property", "og:description", descEl.content);
+  }
 
+  // Organization JSON-LD (once)
   if (!document.querySelector('script[type="application/ld+json"][data-konyago-org]')) {
     var data = {
       "@context": "https://schema.org",
@@ -47,7 +58,10 @@
       "@id": ORIGIN + "/#organization",
       "name": "KonyaGo",
       "url": ORIGIN + "/",
-      "logo": LOGO,
+      "logo": {
+        "@type": "ImageObject",
+        "url": LOGO
+      },
       "email": "info@konyago.com.tr",
       "telephone": "+90-533-259-50-42",
       "sameAs": [
