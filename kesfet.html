@@ -3,44 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d7a4f">
-<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
-<meta name="description" content="Konya keşfet — kategori ve ilçe ile yer, lezzet, müze filtrele.">
-<title>Keşfet | KonyaGo</title>
+<meta name="theme-color" content="#0A1628">
+<script>(function(){try{document.documentElement.setAttribute("data-theme","dark")}catch(e){}})();</script>
+<title>Konya Keşfet | Kategori ve İlçe Filtreli Rehber — KonyaGo</title>
+<meta name="description" content="Konya keşfet: müze, gezi, yemek, otel ve ilçe filtreleriyle yerleri daralt. Bilgilendirme amaçlı premium şehir rehberi.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="keywords" content="Konya keşfet, Konya filtre, Konya müze, Konya yemek, Konya otel">
 <link rel="canonical" href="https://konyago.com.tr/kesfet.html">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
-<link rel="icon" href="/assets/img/eagle.svg" type="image/svg+xml" sizes="any">
-<link rel="apple-touch-icon" href="/assets/img/favicon-192.png">
-<link rel="stylesheet" href="assets/css/app.css?v=15">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="KonyaGo">
+<meta property="og:title" content="Konya Keşfet | KonyaGo">
+<meta property="og:description" content="Kategori ve ilçe ile Konya noktalarını daralt.">
+<meta property="og:url" content="https://konyago.com.tr/kesfet.html">
+<meta property="og:image" content="https://konyago.com.tr/assets/img/IMG_0510.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="KonyaGo Keşfet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Konya Keşfet","url":"https://konyago.com.tr/kesfet.html","description":"Kategori ve ilçe filtreli Konya rehberi.","isPartOf":{"@type":"WebSite","name":"KonyaGo","url":"https://konyago.com.tr/"}}
+</script>
+<link rel="icon" href="/assets/img/IMG_0510.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="assets/css/app.css?v=35">
 <link rel="stylesheet" href="assets/css/theme.css?v=2">
 <style>
 .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
-.filter-bar select,.filter-bar input{
-  border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;font:inherit;font-size:.9rem;
-  background:var(--white);color:var(--text);min-height:44px
-}
+.filter-bar select,.filter-bar input{border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;font:inherit;font-size:.9rem;background:var(--white);color:var(--text);min-height:44px}
 .filter-bar input{flex:1;min-width:160px}
 .kesfet-grid{display:grid;gap:12px}
 @media(min-width:640px){.kesfet-grid{grid-template-columns:1fr 1fr}}
-.kesfet-card{
-  background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;
-  box-shadow:0 4px 14px rgba(13,122,79,.05);display:flex;flex-direction:column;gap:6px;
-  text-decoration:none;color:inherit
-}
+.kesfet-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:0 4px 14px rgba(13,122,79,.05);display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit}
 .kesfet-card h3{margin:0;font-size:1.05rem;color:var(--green-deep)}
 .kesfet-card .meta{font-size:.75rem;color:var(--muted);font-weight:600}
 .kesfet-card p{margin:0;font-size:.88rem;color:var(--text);line-height:1.45;flex:1}
-.kesfet-card.hot{border-color:rgba(201,162,39,.5);background:linear-gradient(180deg,#fffef8,#fff)}
+.kesfet-card.hot{border-color:rgba(201,162,39,.5)}
 #kesfetEmpty{display:none;text-align:center;padding:24px;color:var(--muted)}
 </style>
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt=""><span class="logo-text"><strong>KonyaGo</strong><small>Keşfet</small></span></a>
+    <a class="logo" href="index.html"><img class="logo-mark" src="assets/img/IMG_0510.jpeg" width="44" height="44" alt="KonyaGo"><span class="logo-text"><strong>KonyaGo</strong><small>Keşfet</small></span></a>
     <nav class="nav-desktop">
       <a href="index.html">Ana</a>
       <a href="kesfet.html" aria-current="page">Keşfet</a>
@@ -55,7 +58,6 @@
     <h1>Keşfet</h1>
     <p>Kategori ve ilçe ile Konya noktalarını daralt. Bilgilendirme amaçlıdır; işletme reklamı ayrı başvuruya tabidir.</p>
   </div>
-
   <div class="filter-bar">
     <input type="search" id="q" placeholder="İsim veya kelime…" autocomplete="off">
     <select id="cat" aria-label="Kategori">
@@ -71,20 +73,13 @@
     </select>
     <select id="ilce" aria-label="İlçe">
       <option value="">Tüm ilçeler</option>
-      <option>Karatay</option>
-      <option>Selçuklu</option>
-      <option>Meram</option>
-      <option>Beyşehir</option>
-      <option>Seydişehir</option>
-      <option>Akşehir</option>
-      <option>Çumra</option>
-      <option>Merkez</option>
+      <option>Karatay</option><option>Selçuklu</option><option>Meram</option>
+      <option>Beyşehir</option><option>Seydişehir</option><option>Akşehir</option>
+      <option>Çumra</option><option>Merkez</option>
     </select>
   </div>
-
   <div class="kesfet-grid" id="kesfetList"></div>
   <p id="kesfetEmpty">Sonuç yok — filtreyi genişlet veya <a href="ara.html">site aramasını</a> dene.</p>
-
   <div class="info" style="margin-top:16px">
     <h2>İşletmeni ekle</h2>
     <p>Restoran, otel veya marka kartı için başvuru formu.</p>
@@ -101,7 +96,7 @@
 </nav>
 <script src="assets/js/theme.js?v=2"></script>
 <script src="assets/js/kesfet-data.js"></script>
-<script src="assets/js/app.js?v=15" defer></script>
+<script src="assets/js/app.js?v=35" defer></script>
 <script>
 (function(){
   var data = window.KONYAGO_KESFET || [];
@@ -110,7 +105,6 @@
   var q = document.getElementById('q');
   var cat = document.getElementById('cat');
   var ilce = document.getElementById('ilce');
-
   function render(){
     var qq = (q.value || '').toLowerCase().trim();
     var c = cat.value;

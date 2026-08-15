@@ -3,54 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d7a4f">
-<meta name="description" content="KonyaGo AI — Yerel Konya asistanı.">
-<title>KonyaGo AI | Yerel Asistan</title>
+<meta name="theme-color" content="#0A1628">
+<script>(function(){try{document.documentElement.setAttribute("data-theme","dark")}catch(e){}})();</script>
+<title>KonyaGo AI | Yerel Konya Asistanı — Anında Yanıt</title>
+<meta name="description" content="KonyaGo AI: Mevlana, Sille, etli ekmek, rota ve ulaşım sorularına anında yanıt veren yerel Konya asistanı.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="keywords" content="Konya AI, Konya asistan, Konya rota planı, Mevlana soru, etli ekmek nerede">
+<link rel="canonical" href="https://konyago.com.tr/ai.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="KonyaGo">
+<meta property="og:title" content="KonyaGo AI | Yerel Konya Asistanı">
+<meta property="og:description" content="Konya hakkında sor — anında yerel yanıt.">
+<meta property="og:url" content="https://konyago.com.tr/ai.html">
+<meta property="og:image" content="https://konyago.com.tr/assets/img/IMG_0510.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="KonyaGo AI">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"KonyaGo AI","url":"https://konyago.com.tr/ai.html","description":"Yerel Konya asistanı","applicationCategory":"TravelApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"isPartOf":{"@type":"WebSite","name":"KonyaGo","url":"https://konyago.com.tr/"}}
+</script>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/app.css?v=23">
+<link rel="icon" href="assets/img/IMG_0510.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="assets/css/app.css?v=35">
 <link rel="stylesheet" href="assets/css/theme.css?v=3">
 <style>
 .ai-wrap{max-width:720px;margin:0 auto}
 .ai-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;height:min(72vh,600px);color:var(--text)}
-.ai-head{background:linear-gradient(135deg,var(--green-dark),var(--green));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.ai-head img{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12)}
-.ai-head strong{display:block;font-size:1rem;color:#fff}
-.ai-head span{font-size:.75rem;opacity:.95;color:#fff}
-#aiChat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--cream);color:var(--text)}
+.ai-head{background:linear-gradient(135deg,#0A1628,#152A42);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid rgba(201,162,39,.3)}
+.ai-head img{width:40px;height:40px;border-radius:10px;object-fit:cover}
+.ai-head strong{display:block;font-size:1rem;color:#E8C84A}
+.ai-head span{font-size:.75rem;opacity:.95;color:#D4DBE6}
+#aiChat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#0A1628;color:var(--text)}
 .ai-msg{max-width:90%;padding:10px 14px;border-radius:14px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;word-break:break-word}
-.ai-bot{align-self:flex-start;background:#fff;border:1px solid rgba(13,122,79,.22);color:#1a2e24!important;border-bottom-left-radius:4px}
-.ai-bot *{color:#1a2e24!important}
-.ai-user{align-self:flex-end;background:#0d7a4f;color:#fff!important;border-bottom-right-radius:4px}
-.ai-user *{color:#fff!important}
+.ai-bot{align-self:flex-start;background:#152A42;border:1px solid rgba(201,162,39,.25);color:#F5F2EB!important;border-bottom-left-radius:4px}
+.ai-bot *{color:#F5F2EB!important}
+.ai-user{align-self:flex-end;background:#C9A227;color:#0A1628!important;border-bottom-right-radius:4px}
+.ai-user *{color:#0A1628!important}
 .ai-meta{font-size:.68rem;opacity:.75;margin-top:4px}
 .ai-typing{opacity:.85;font-style:italic}
-#aiForm{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border);background:var(--white)}
-#aiInput{flex:1;border:1.5px solid var(--border);border-radius:999px;padding:12px 16px;font:inherit;font-size:.92rem;outline:none;min-height:44px;background:var(--white);color:var(--text)}
-#aiInput::placeholder{color:var(--muted);opacity:1}
-#aiInput:focus{border-color:var(--green)}
-#aiSend{border:none;border-radius:999px;padding:0 18px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;min-height:44px;font-family:inherit}
+#aiForm{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(201,162,39,.25);background:#152A42}
+#aiInput{flex:1;border:1.5px solid rgba(201,162,39,.25);border-radius:999px;padding:12px 16px;font:inherit;font-size:.92rem;outline:none;min-height:44px;background:#0A1628;color:#F5F2EB}
+#aiInput::placeholder{color:#B8C2CE;opacity:1}
+#aiInput:focus{border-color:#C9A227}
+#aiSend{border:none;border-radius:999px;padding:0 18px;background:#C9A227;color:#0A1628;font-weight:700;cursor:pointer;min-height:44px;font-family:inherit}
 #aiSend:disabled{opacity:.5}
 .ai-hints{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
-.ai-hints button{border:1px solid var(--border);background:var(--white);border-radius:999px;padding:8px 12px;font-size:.78rem;font-weight:600;color:#063d28;cursor:pointer;font-family:inherit}
-.ai-hints button:hover{background:var(--green-soft)}
-.ai-hints button.hint-hot{background:linear-gradient(135deg,var(--green-soft),var(--gold-soft));border-color:rgba(13,122,79,.35);color:#063d28}
-html[data-theme="dark"] #aiChat{background:linear-gradient(180deg,#0e1813,#12201a)}
-html[data-theme="dark"] .ai-bot{background:#1a2e24!important;border-color:rgba(62,207,142,.3)!important;color:#e8f0eb!important}
-html[data-theme="dark"] .ai-bot *{color:#e8f0eb!important}
-html[data-theme="dark"] .ai-user{background:#2aad72!important;color:#fff!important}
-html[data-theme="dark"] #aiForm{background:#16241c;border-top-color:rgba(62,207,142,.22)}
-html[data-theme="dark"] #aiInput{background:#12201a;color:#e8f0eb;border-color:rgba(62,207,142,.28)}
-html[data-theme="dark"] #aiInput::placeholder{color:#9bb5a8}
-html[data-theme="dark"] .ai-hints button{background:#16241c;color:#3ecf8e;border-color:rgba(62,207,142,.28)}
-html[data-theme="dark"] .ai-hints button.hint-hot{background:linear-gradient(135deg,#143d2c,#3d3420);color:#e8f0eb;border-color:rgba(224,195,92,.35)}
+.ai-hints button{border:1px solid rgba(201,162,39,.3);background:#152A42;border-radius:999px;padding:8px 12px;font-size:.78rem;font-weight:600;color:#E8C84A;cursor:pointer;font-family:inherit}
+.ai-hints button:hover{background:#1A3050}
+.ai-hints button.hint-hot{background:linear-gradient(135deg,rgba(201,162,39,.2),#152A42);border-color:rgba(201,162,39,.5)}
 </style>
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
-      <img class="logo-mark" src="assets/img/eagle.svg" width="44" height="44" alt="">
+      <img class="logo-mark" src="assets/img/IMG_0510.jpeg" width="44" height="44" alt="KonyaGo">
       <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
@@ -62,18 +70,16 @@ html[data-theme="dark"] .ai-hints button.hint-hot{background:linear-gradient(135
     </nav>
   </div>
 </header>
-
 <main class="container">
   <div class="page-head">
     <a href="index.html">← Ana sayfa</a>
     <h1>KonyaGo AI</h1>
     <p>Yerel Konya asistanı — anında yanıt</p>
   </div>
-
   <div class="ai-wrap">
     <div class="ai-panel">
       <div class="ai-head">
-        <img src="assets/img/eagle.svg" alt="">
+        <img src="assets/img/IMG_0510.jpeg" alt="">
         <div>
           <strong>KonyaGo AI</strong>
           <span>Yerel motor · Konya-only</span>
@@ -96,7 +102,6 @@ html[data-theme="dark"] .ai-hints button.hint-hot{background:linear-gradient(135
     </div>
   </div>
 </main>
-
 <footer class="site-footer"><div class="container">© 2026 KonyaGo AI</div></footer>
 <nav class="mnav" aria-label="Mobil menü">
   <a href="index.html"><span class="i">🏠</span>Ana</a>
@@ -106,7 +111,7 @@ html[data-theme="dark"] .ai-hints button.hint-hot{background:linear-gradient(135
   <a href="harita.html"><span class="i">🗺️</span>Harita</a>
 </nav>
 <script src="assets/js/theme.js?v=2"></script>
-<script src="assets/js/app.js?v=23" defer></script>
+<script src="assets/js/app.js?v=35" defer></script>
 <script src="assets/js/ai.js?v=11" defer></script>
 <script>
 document.querySelectorAll(".ai-hints button").forEach(function(b){
