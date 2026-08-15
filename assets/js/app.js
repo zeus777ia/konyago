@@ -1,9 +1,7 @@
 (function () {
   "use strict";
-  // Restored - skyscraper rails: skip inject when .ad-sky / data-fixed present
-  try {
-    document.documentElement.setAttribute("data-theme", "dark");
-  } catch (e) {}
+
+  try { document.documentElement.setAttribute("data-theme", "dark"); } catch (e) {}
 
   function onIdle(fn) {
     if (typeof requestIdleCallback === "function") requestIdleCallback(fn, { timeout: 2800 });
@@ -14,14 +12,15 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
+  /* Kayan reklam seridi */
   try {
     var mail = "mailto:info@konyago.com.tr?subject=KonyaGo%20Reklam";
     var items = [
-      { t: "AysaTekin — En şık abiye modelleri · Kalite ve zarafet", href: "https://aysatekin.com", cta: "Keşfet" },
-      { t: "HOSGELDİN10 kodu ile yeni üyelere %10 indirim — AysaTekin", href: "https://aysatekin.com", cta: "Alışverişe başla" },
-      { t: "Özel günlerinize yakışan abiye ve takımlar — aysatekin.com", href: "https://aysatekin.com", cta: "Koleksiyon" },
-      { t: "Reklam & iş birliği — KonyaGo’da yerinizi alın", href: mail, cta: "Teklif al" },
-      { t: "Otel · restoran · tur — görünürlük için yazın", href: mail, cta: "İletişim" }
+      { t: "AysaTekin — En sik abiye modelleri · Kalite ve zarafet", href: "https://aysatekin.com", cta: "Kesfet" },
+      { t: "HOSGELDIN10 kodu ile yeni uyelere %10 indirim — AysaTekin", href: "https://aysatekin.com", cta: "Alisverise basla" },
+      { t: "Ozel gunlerinize yakisan abiye ve takimlar — aysatekin.com", href: "https://aysatekin.com", cta: "Koleksiyon" },
+      { t: "Reklam & is birligi — KonyaGo'da yerinizi alin", href: mail, cta: "Teklif al" },
+      { t: "Otel · restoran · tur — gorunurluk icin yazin", href: mail, cta: "Iletisim" }
     ];
     var html = "";
     for (var i = 0; i < items.length; i++) {
@@ -40,13 +39,14 @@
       var ticker = document.createElement("div");
       ticker.className = "ad-ticker";
       ticker.setAttribute("role", "complementary");
-      ticker.setAttribute("aria-label", "Reklam şeridi");
+      ticker.setAttribute("aria-label", "Reklam seridi");
       ticker.innerHTML = '<div class="ad-ticker-track">' + html + html + "</div>";
       if (document.body.firstChild) document.body.insertBefore(ticker, document.body.firstChild);
       else document.body.appendChild(ticker);
     }
   } catch (e) {}
 
+  /* Skyscraper: ekstra kutu ekleme */
   try {
     var aysaUrl = "https://aysatekin.com";
     function aysaBox(title, sub, cta) {
@@ -54,7 +54,7 @@
     }
     document.querySelectorAll(".ad-rail-left, .ad-rail-right").forEach(function (rail) {
       if (rail.querySelector(".ad-sky") || rail.querySelector(".ad-sponsor-aysa") || rail.querySelector('[data-fixed="1"]')) return;
-      rail.insertAdjacentHTML("afterbegin", aysaBox("AysaTekin", "En şık abiye · Kalite · %10 indirim", "aysatekin.com"));
+      rail.insertAdjacentHTML("afterbegin", aysaBox("AysaTekin", "En sik abiye · Kalite · %10 indirim", "aysatekin.com"));
     });
   } catch (e) {}
 
@@ -81,7 +81,7 @@
     });
   });
 
-  // Vercel analytics
+  /* Vercel analytics */
   try {
     if (!document.querySelector('script[src*="/_vercel/insights"]')) {
       var s1 = document.createElement("script");
