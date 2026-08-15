@@ -9,7 +9,7 @@
 
   var ORIGIN = "https://konyago.com.tr";
   var LOGO = ORIGIN + "/assets/img/IMG_0510.jpeg";
-  var OG_IMG = ORIGIN + "/assets/img/Sophisticated%20KonyaGo%20Editorial%20Image.jpg";
+  var OG_IMG = ORIGIN + "/assets/img/og-cover.jpg";
 
   function ensureMeta(attr, key, value, force) {
     if (!value) return;
@@ -18,8 +18,9 @@
       : 'meta[name="' + key + '"]';
     var el = document.querySelector(sel);
     if (el) {
-      if (force || !el.getAttribute("content") ||
-          (key.indexOf("og:image") === 0 && el.getAttribute("content").indexOf("IMG_0510") !== -1)) {
+      var cur = el.getAttribute("content") || "";
+      var broken = /IMG_0510|Sophisticated/i.test(cur);
+      if (force || !cur || (key.indexOf("og:image") === 0 && broken)) {
         el.setAttribute("content", value);
       }
       return;
@@ -49,7 +50,6 @@
   var descEl = document.querySelector('meta[name="description"]');
   if (descEl && descEl.content) ensureMeta("property", "og:description", descEl.content, false);
 
-  // Page-specific JSON-LD for reklam / iletisim if missing
   if (path.indexOf("reklam") !== -1 && !document.querySelector('script[data-konyago-page]')) {
     var r = document.createElement("script");
     r.type = "application/ld+json";

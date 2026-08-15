@@ -1,11 +1,28 @@
 (function () {
   "use strict";
 
+  // Vercel Web Analytics + Speed Insights (all pages, production)
+  try {
+    if (!window.__konyagoVa) {
+      window.__konyagoVa = true;
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+      var va = document.createElement("script");
+      va.defer = true;
+      va.src = "/_vercel/insights/script.js";
+      document.head.appendChild(va);
+      var si = document.createElement("script");
+      si.defer = true;
+      si.src = "/_vercel/speed-insights/script.js";
+      document.head.appendChild(si);
+    }
+  } catch (e) {}
+
   // Load SEO helpers early (OG + Organization JSON-LD, no Twitter/X)
   try {
     if (!document.querySelector('script[data-konyago-seo]')) {
       var seo = document.createElement("script");
-      seo.src = "assets/js/seo.js?v=2";
+      seo.src = "assets/js/seo.js?v=3";
       seo.setAttribute("data-konyago-seo", "1");
       document.head.appendChild(seo);
     }
@@ -66,7 +83,6 @@
         "a.card p{color:#C5D0DE!important;font-size:.9rem!important;opacity:1!important;margin:0!important}",
         "a.card:hover{border-color:rgba(201,162,39,.55)!important;background:#1A3050!important}",
         "a.card:hover h3{color:#E8C84A!important}",
-        /* Kayan şerit (ad-ticker) garantisi */
         ".ad-ticker{position:sticky!important;top:0!important;z-index:110!important;height:36px!important;overflow:hidden!important;background:linear-gradient(90deg,#0A1628 0%,#12243A 40%,#0F1E32 70%,#0A1628 100%)!important;color:#F5F2EB!important;border-bottom:1px solid rgba(201,162,39,.35)!important;box-shadow:0 2px 10px rgba(0,0,0,.25)!important;display:block!important;visibility:visible!important;opacity:1!important}",
         ".ad-ticker-track{display:flex!important;width:max-content!important;align-items:center!important;height:36px!important;animation:tickerScroll 28s linear infinite!important;will-change:transform}",
         ".ad-ticker:hover .ad-ticker-track{animation-play-state:paused!important}",
@@ -155,7 +171,7 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
-  /* ===== Kayan reklam şeridi (ad-ticker) — her zaman oluştur ===== */
+  /* ===== Kayan reklam şeridi (ad-ticker) ===== */
   try {
     var mail = "mailto:info@konyago.com.tr?subject=KonyaGo%20Reklam";
     var items = [
