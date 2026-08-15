@@ -12,6 +12,17 @@
     else window.addEventListener("load", fn, { once: true });
   }
 
+  /* Mixpanel tracking */
+  try {
+    if (!document.querySelector('script[data-mixpanel]')) {
+      var mp = document.createElement("script");
+      mp.src = "assets/js/mixpanel.js?v=1";
+      mp.defer = true;
+      mp.setAttribute("data-mixpanel", "1");
+      document.body.appendChild(mp);
+    }
+  } catch (e) {}
+
   /* Kayan reklam seridi */
   try {
     var mail = "mailto:info@konyago.com.tr?subject=KonyaGo%20Reklam";
