@@ -1,0 +1,194 @@
+/* KonyaGo readability.css — dark theme kontrast / okunabilirlik */
+
+/* Ana metin hiyerarsisi */
+html[data-theme="dark"] body,
+html[data-theme="dark"] main {
+  color: #E8ECF2 !important;
+}
+
+/* Hero */
+html[data-theme="dark"] .hero p,
+.hero p {
+  color: #D8DEE8 !important;
+}
+html[data-theme="dark"] .seo-lead,
+.seo-lead {
+  color: #C5CDD8 !important;
+  opacity: 1 !important;
+}
+
+/* Kart alt metinleri */
+html[data-theme="dark"] .card p,
+html[data-theme="dark"] .place-body p,
+html[data-theme="dark"] .prose p,
+html[data-theme="dark"] .prose,
+html[data-theme="dark"] .info p,
+html[data-theme="dark"] .list-card p,
+.card p,
+.place-body p {
+  color: #C8D0DA !important;
+}
+
+/* Trust / semt alt yazilar */
+.trust-item span:not(.ti),
+html[data-theme="dark"] .trust-item span:not(.ti) {
+  color: #B0BAC8 !important;
+}
+.ilce-pill small,
+html[data-theme="dark"] .ilce-pill small {
+  color: #B0BAC8 !important;
+}
+
+/* Feat overlay alt yazi */
+.feat-overlay p {
+  color: #D0D6E0 !important;
+}
+.feat-overlay h3 {
+  color: #F5F2EB !important;
+}
+
+/* Logo alt yazi */
+html[data-theme="dark"] .logo-text small {
+  color: #A8B4C2 !important;
+}
+
+/* Nav */
+html[data-theme="dark"] .nav-desktop a {
+  color: #D0D8E2 !important;
+}
+html[data-theme="dark"] .nav-desktop a:hover,
+html[data-theme="dark"] .nav-desktop a[aria-current="page"] {
+  color: #E8C84A !important;
+}
+
+/* SMS / form */
+.sms-soft p {
+  color: #D0D8E2 !important;
+}
+.quick-search input::placeholder,
+html[data-theme="dark"] .quick-search input::placeholder {
+  color: #9AA8B8 !important;
+  opacity: 1 !important;
+}
+
+/* Sponsor kart — dark uyumlu okunabilir renkler */
+html[data-theme="dark"] .ad-sponsor-card,
+.ad-sponsor-card {
+  background: linear-gradient(160deg, #1e2a18 0%, #152A42 55%, #12243A 100%) !important;
+  border: 1px solid rgba(201, 162, 39, 0.35) !important;
+  color: #E8ECF2 !important;
+}
+html[data-theme="dark"] .ad-sponsor-card .ad-label,
+.ad-sponsor-card .ad-label {
+  color: #E8C84A !important;
+}
+html[data-theme="dark"] .ad-sponsor-card strong,
+.ad-sponsor-card strong {
+  color: #F5F2EB !important;
+}
+html[data-theme="dark"] .ad-sponsor-card .ad-sub,
+html[data-theme="dark"] .ad-sponsor-card > span:not(.ad-label):not(.ad-offer),
+.ad-sponsor-card .ad-sub {
+  color: #C5D0A8 !important;
+}
+html[data-theme="dark"] .ad-sponsor-card .ad-offer,
+.ad-sponsor-card .ad-offer {
+  color: #E8D48A !important;
+}
+html[data-theme="dark"] .ad-sponsor-card .ad-offer b,
+.ad-sponsor-card .ad-offer b {
+  color: #F5E6A3 !important;
+}
+
+/* Yan panolar alt yazi */
+.ad-rail .ad-sub,
+.ad-sky .ad-sub {
+  color: #C0C8D4 !important;
+}
+.ad-rail .ad-sky-placeholder,
+.ad-sky-placeholder {
+  color: #9AA8B8 !important;
+}
+
+/* Biz banner */
+.biz-banner p {
+  color: #C8D0DA !important;
+}
+.biz-banner h2 {
+  color: #F5F2EB !important;
+}
+
+/* Page head */
+html[data-theme="dark"] .page-head p,
+.page-head p {
+  color: #C8D0DA !important;
+}
+
+/* Footer — daha okunur */
+.footer-brand p {
+  color: #B8C4D0 !important;
+}
+.footer-col a {
+  color: #D0D8E2 !important;
+}
+.footer-col a:hover {
+  color: #E8C84A !important;
+}
+.footer-bottom,
+.footer-bottom span {
+  color: #9AA8B8 !important;
+}
+
+/* Mnav */
+html[data-theme="dark"] .mnav a {
+  color: #C5CDD8 !important;
+}
+html[data-theme="dark"] .mnav a[aria-current="page"],
+html[data-theme="dark"] .mnav a:hover {
+  color: #E8C84A !important;
+}
+
+/* Visit stats labels */
+.visit-stat .vs-label,
+.vs-label {
+  color: #A8B4C2 !important;
+}
+
+/* Tag / muted chips */
+.tag {
+  color: #C5CDD8 !important;
+}
+
+/* Arsiv pin dark okunabilirlik */
+html[data-theme="dark"] .arsiv-pin {
+  background: linear-gradient(135deg, rgba(15, 40, 32, 0.95) 0%, #152A42 100%) !important;
+  border-color: rgba(62, 207, 142, 0.28) !important;
+  color: #E8ECF2 !important;
+}
+html[data-theme="dark"] .arsiv-pin h2 {
+  color: #F5F2EB !important;
+}
+html[data-theme="dark"] .arsiv-pin p {
+  color: #C0CBD6 !important;
+}
+html[data-theme="dark"] .arsiv-pin-badge {
+  color: #7DDEA8 !important;
+  background: rgba(62, 207, 142, 0.12) !important;
+  border-color: rgba(62, 207, 142, 0.3) !important;
+}
+
+/* Genel link */
+html[data-theme="dark"] a {
+  text-underline-offset: 2px;
+}
+
+/* Section title span (gold) zaten okunur; ana baslik */
+.section-title {
+  color: #F5F2EB !important;
+}
+
+/* Reklam sayfasi / price vs muted metinler */
+html[data-theme="dark"] .muted,
+.muted {
+  color: #B0BAC8 !important;
+}
