@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0a5c3a">
 <script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b1210")}catch(e){}})();</script>
 <title>Reklam & Sponsorluk | KonyaGo — Konya İşletmeleri İçin</title>
-<meta name="description" content="KonyaGo’da reklam verin. Konya’nın premium şehir rehberinde yer alın. Restoran, otel, butik, tur ve yerel işletmeler için görünürlük paketleri.">
+<meta name="description" content="KonyaGo’da reklam verin. Vitrin, Cadde, Meydan, Selçuklu paketleri — restoran, otel, butik ve yerel işletmeler için premium görünürlük.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://konyago.com.tr/reklam.html">
 <link rel="icon" href="assets/img/eagle.svg" type="image/svg+xml">
@@ -15,93 +15,40 @@
 <link rel="stylesheet" href="assets/css/elite.css?v=7">
 <link rel="stylesheet" href="assets/css/sponsor.css?v=4">
 <style>
-.reklam-hero{
-  text-align:center;padding:clamp(28px,5vw,48px) 16px 28px;margin:8px 0 20px;
-  border-radius:20px;
-  background:
-    radial-gradient(ellipse 90% 70% at 50% -20%,rgba(192,138,40,.18),transparent 55%),
-    linear-gradient(168deg,rgba(255,255,255,.98) 0%,rgba(230,240,234,.92) 50%,rgba(244,234,212,.55) 100%);
-  border:1px solid rgba(10,92,58,.12);
-  box-shadow:0 12px 36px rgba(2,28,18,.08);
-}
-.reklam-hero h1{
-  font-family:var(--font-display);font-weight:600;
-  font-size:clamp(1.7rem,4.2vw,2.4rem);color:var(--green-deep);
-  margin:0 auto 10px;max-width:20ch;line-height:1.15;
-}
+.reklam-hero{text-align:center;padding:clamp(28px,5vw,48px) 16px 28px;margin:8px 0 20px;border-radius:20px;background:radial-gradient(ellipse 90% 70% at 50% -20%,rgba(192,138,40,.18),transparent 55%),linear-gradient(168deg,rgba(255,255,255,.98) 0%,rgba(230,240,234,.92) 50%,rgba(244,234,212,.55) 100%);border:1px solid rgba(10,92,58,.12);box-shadow:0 12px 36px rgba(2,28,18,.08)}
+.reklam-hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,4.2vw,2.4rem);color:var(--green-deep);margin:0 auto 10px;max-width:20ch;line-height:1.15}
 .reklam-hero p{color:var(--muted);font-size:1.02rem;max-width:42ch;margin:0 auto 18px;line-height:1.5}
-.reklam-hero .badge{
-  display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;
-  background:linear-gradient(135deg,var(--gold-soft),#fff);border:1px solid rgba(192,138,40,.4);
-  font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-deep);
-  margin-bottom:12px;
-}
+.reklam-hero .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:linear-gradient(135deg,var(--gold-soft),#fff);border:1px solid rgba(192,138,40,.4);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-deep);margin-bottom:12px}
 .why-grid{display:grid;gap:10px;margin:16px 0 22px}
 @media(min-width:640px){.why-grid{grid-template-columns:1fr 1fr}}
-.why-card{
-  padding:16px 18px;border-radius:14px;background:var(--white);
-  border:1px solid var(--border);box-shadow:0 4px 16px rgba(2,28,18,.04);
-}
+.why-card{padding:16px 18px;border-radius:14px;background:var(--white);border:1px solid var(--border);box-shadow:0 4px 16px rgba(2,28,18,.04)}
 .why-card strong{display:block;color:var(--green-deep);font-size:.95rem;margin-bottom:4px}
 .why-card span{font-size:.82rem;color:var(--muted);line-height:1.4}
 .price-grid{display:grid;gap:12px;margin:14px 0 20px}
 @media(min-width:640px){.price-grid{grid-template-columns:1fr 1fr}}
-.price-card{
-  background:var(--white);border:1px solid var(--border);border-radius:16px;
-  padding:18px 16px;box-shadow:0 4px 18px rgba(2,28,18,.04);
-  transition:transform .25s,box-shadow .25s,border-color .2s;
-}
+.price-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:18px 16px;box-shadow:0 4px 18px rgba(2,28,18,.04);transition:transform .25s,box-shadow .25s,border-color .2s}
 .price-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(2,28,18,.1)}
-.price-card.featured{
-  border-color:rgba(192,138,40,.55);
-  background:linear-gradient(160deg,#fffef9,#f8f0d8 40%,#fff);
-  box-shadow:0 8px 28px rgba(192,138,40,.12);
-}
+.price-card.featured{border-color:rgba(192,138,40,.55);background:linear-gradient(160deg,#fffef9,#f8f0d8 40%,#fff);box-shadow:0 8px 28px rgba(192,138,40,.12)}
 .price-card .pkg{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px}
-.price-card h2{font-family:var(--font-display);font-size:1.25rem;color:var(--green-deep);margin:0 0 8px}
+.price-card h2{font-family:var(--font-display);font-size:1.25rem;color:var(--green-deep);margin:0 0 4px}
+.price-card .price{font-size:1.05rem;font-weight:800;color:var(--green-deep);margin:0 0 10px}
 .price-card ul{margin:0 0 12px 1.1em;font-size:.86rem;color:var(--muted);line-height:1.55}
 .price-card li{margin-bottom:3px}
-.price-card .cta-sm{
-  display:inline-flex;padding:9px 14px;border-radius:999px;font-weight:700;font-size:.82rem;
-  background:var(--green);color:#fff;text-decoration:none;
-}
+.price-card .cta-sm{display:inline-flex;padding:9px 14px;border-radius:999px;font-weight:700;font-size:.82rem;background:var(--green);color:#fff;text-decoration:none}
 .price-card.featured .cta-sm{background:linear-gradient(135deg,#8a7010,#c9a227)}
-.sponsor-now{
-  background:linear-gradient(145deg,#fff9e8,#fff,#f3e7c7);
-  border:1px solid rgba(201,162,39,.5);border-radius:16px;padding:18px 16px;margin:14px 0 20px;
-  box-shadow:0 8px 24px rgba(138,112,16,.08);
-}
-.sponsor-now .ad-label{
-  display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:#8a7010;background:rgba(201,162,39,.18);
-  padding:2px 8px;border-radius:999px;margin-bottom:8px;
-}
+.sponsor-now{background:linear-gradient(145deg,#fff9e8,#fff,#f3e7c7);border:1px solid rgba(201,162,39,.5);border-radius:16px;padding:18px 16px;margin:14px 0 20px;box-shadow:0 8px 24px rgba(138,112,16,.08)}
+.sponsor-now .ad-label{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#8a7010;background:rgba(201,162,39,.18);padding:2px 8px;border-radius:999px;margin-bottom:8px}
 .sponsor-now h2{color:#5c4a0e;font-size:1.1rem;margin:0 0 6px}
 .sponsor-now p{font-size:.9rem;color:#5a4a2a;margin:0 0 12px;line-height:1.5}
-.sponsor-now a.cta{
-  display:inline-flex;padding:10px 16px;border-radius:999px;
-  background:linear-gradient(135deg,#8a7010,#c9a227);color:#fff!important;
-  font-weight:800;font-size:.88rem;text-decoration:none;
-}
-.cta-bar{
-  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 8px;
-}
+.sponsor-now a.cta{display:inline-flex;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,#8a7010,#c9a227);color:#fff!important;font-weight:800;font-size:.88rem;text-decoration:none}
+.cta-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 8px}
 .cta-bar .btn{padding:12px 20px;font-weight:700}
 .note{text-align:center;font-size:.82rem;color:var(--muted);margin:8px 0 20px}
-html[data-theme="dark"] .reklam-hero{
-  background:linear-gradient(168deg,#15241c 0%,#0f1a15 55%,#0c1612 100%);
-  border-color:rgba(61,207,142,.16);
-}
+html[data-theme="dark"] .reklam-hero{background:linear-gradient(168deg,#15241c 0%,#0f1a15 55%,#0c1612 100%);border-color:rgba(61,207,142,.16)}
 html[data-theme="dark"] .reklam-hero h1{color:var(--green)}
 html[data-theme="dark"] .why-card,.price-card{background:var(--white);border-color:var(--border)}
-html[data-theme="dark"] .price-card.featured{
-  background:linear-gradient(160deg,#2a2410,#1a2e24);
-  border-color:rgba(224,188,85,.35);
-}
-html[data-theme="dark"] .sponsor-now{
-  background:linear-gradient(145deg,#2a2410,#1c2a20);
-  border-color:rgba(224,195,92,.4);
-}
+html[data-theme="dark"] .price-card.featured{background:linear-gradient(160deg,#2a2410,#1a2e24);border-color:rgba(224,188,85,.35)}
+html[data-theme="dark"] .sponsor-now{background:linear-gradient(145deg,#2a2410,#1c2a20);border-color:rgba(224,195,92,.4)}
 html[data-theme="dark"] .sponsor-now h2{color:#f0e6c8}
 html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
 </style>
@@ -137,32 +84,21 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
   <section class="section" aria-label="Neden KonyaGo">
     <h2 class="section-title">Neden <span>KonyaGo</span>?</h2>
     <div class="why-grid">
-      <div class="why-card">
-        <strong>🎯 Hedef kitle net</strong>
-        <span>Gezi, mutfak, konaklama ve rota arayan insanlar. Rastgele trafik değil, niyetli ziyaretçi.</span>
-      </div>
-      <div class="why-card">
-        <strong>✨ Premium konumlandırma</strong>
-        <span>Ucuz ilan panosu değil. Kaliteli, modern ve güven veren bir şehir rehberi içinde yer alırsınız.</span>
-      </div>
-      <div class="why-card">
-        <strong>📍 Yerel + turist erişimi</strong>
-        <span>Hem Konyalılar hem şehir dışından gelenler siteyi kullanıyor. İki kitleye birden ulaşım.</span>
-      </div>
-      <div class="why-card">
-        <strong>🤝 Esnek paketler</strong>
-        <span>Küçük esnaftan otele kadar farklı bütçelere uygun görünürlük seçenekleri.</span>
-      </div>
+      <div class="why-card"><strong>🎯 Hedef kitle net</strong><span>Gezi, mutfak, konaklama ve rota arayan insanlar. Rastgele trafik değil, niyetli ziyaretçi.</span></div>
+      <div class="why-card"><strong>✨ Premium konumlandırma</strong><span>Ucuz ilan panosu değil. Kaliteli, modern ve güven veren bir şehir rehberi içinde yer alırsınız.</span></div>
+      <div class="why-card"><strong>📍 Yerel + turist erişimi</strong><span>Hem Konyalılar hem şehir dışından gelenler siteyi kullanıyor. İki kitleye birden ulaşım.</span></div>
+      <div class="why-card"><strong>🤝 Esnek paketler</strong><span>Küçük esnaftan otele kadar farklı bütçelere uygun görünürlük seçenekleri.</span></div>
     </div>
   </section>
 
   <section class="section" aria-label="Paketler">
     <h2 class="section-title">Görünürlük <span>paketleri</span></h2>
-    <p style="color:var(--muted);font-size:.92rem;margin:0 0 8px">Fiyatlar işletme türüne ve süreye göre değişir. Net teklif için WhatsApp veya e-posta yeterli.</p>
+    <p style="color:var(--muted);font-size:.92rem;margin:0 0 8px">Aylık yaklaşık band (KDV hariç). Net teklif işletme ve süreye göre WhatsApp / e-posta ile verilir.</p>
     <div class="price-grid">
       <div class="price-card">
         <div class="pkg">Başlangıç</div>
         <h2>Vitrin</h2>
+        <p class="price">1.500 – 2.500 TL / ay</p>
         <ul>
           <li>Mobil şerit veya kayan bant</li>
           <li>Metin + link</li>
@@ -173,6 +109,7 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
       <div class="price-card">
         <div class="pkg">Orta</div>
         <h2>Cadde</h2>
+        <p class="price">3.500 – 5.000 TL / ay</p>
         <ul>
           <li>Üst bant + mobil şerit</li>
           <li>1 yan kutu / sponsor kartı</li>
@@ -183,6 +120,7 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
       <div class="price-card featured">
         <div class="pkg">Öne çıkan</div>
         <h2>Meydan</h2>
+        <p class="price">7.500 – 12.000 TL / ay</p>
         <ul>
           <li>Cadde hakları + daha fazla alan</li>
           <li>Ana sayfa kartı / duyuru</li>
@@ -193,6 +131,7 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
       <div class="price-card">
         <div class="pkg">Tam kapsama</div>
         <h2>Selçuklu</h2>
+        <p class="price">15.000 TL+ / ay</p>
         <ul>
           <li>Tüm reklam alanları</li>
           <li>Keşfet’te sabit yer</li>
@@ -213,22 +152,10 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
   <section class="section" aria-label="Nasıl çalışır">
     <h2 class="section-title">Nasıl <span>çalışır</span>?</h2>
     <div class="why-grid">
-      <div class="why-card">
-        <strong>1. Yazın</strong>
-        <span>WhatsApp veya e-posta ile işletmenizi ve istediğiniz paketi söyleyin.</span>
-      </div>
-      <div class="why-card">
-        <strong>2. Teklif alın</strong>
-        <span>Size özel net fiyat ve yerleşim önerisi gönderilir.</span>
-      </div>
-      <div class="why-card">
-        <strong>3. Onay + yayın</strong>
-        <span>İçerik onaylandıktan sonra kısa sürede yayınlanır.</span>
-      </div>
-      <div class="why-card">
-        <strong>4. Takip</strong>
-        <span>İsterseniz süre boyunca güncelleme ve konum değişikliği yapılabilir.</span>
-      </div>
+      <div class="why-card"><strong>1. Yazın</strong><span>WhatsApp veya e-posta ile işletmenizi ve istediğiniz paketi söyleyin.</span></div>
+      <div class="why-card"><strong>2. Teklif alın</strong><span>Size özel net fiyat ve yerleşim önerisi gönderilir.</span></div>
+      <div class="why-card"><strong>3. Onay + yayın</strong><span>İçerik onaylandıktan sonra kısa sürede yayınlanır.</span></div>
+      <div class="why-card"><strong>4. Takip</strong><span>İsterseniz süre boyunca güncelleme ve konum değişikliği yapılabilir.</span></div>
     </div>
   </section>
 
@@ -239,6 +166,7 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
       <li>Yanıltıcı, yasadışı veya rahatsız edici içerik kabul edilmez</li>
       <li>Aynı sektörde aşırı yığılma sınırlandırılabilir</li>
       <li>Tıklama / satış garantisi verilmez — görünürlük satılır</li>
+      <li>Listelenen fiyatlar örnek banddır; net teklif ayrıca verilir</li>
     </ul>
   </div>
 
@@ -290,6 +218,6 @@ html[data-theme="dark"] .sponsor-now p{color:#d4c89a}
 </nav>
 
 <script src="assets/js/theme.js?v=2"></script>
-<script src="assets/js/app.js?v=29" defer></script>
+<script src="assets/js/app.js?v=37" defer></script>
 </body>
 </html>
