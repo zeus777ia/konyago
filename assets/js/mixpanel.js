@@ -11,63 +11,66 @@
 
   var TOKEN = "579a0a89b147340515db46c34844a82f";
 
-  // Official Mixpanel snippet (stub + async lib load)
-  (function (e, a) {
-    if (!a.__SV) {
-      var b, c, f, d;
-      window.mixpanel = a;
-      a._i = [];
-      a.init = function (b, c, g) {
-        function h(a, d) {
-          var b = d.split(".");
-          2 == b.length && ((a = a[b[0]]), (d = b[1]));
-          a[d] = function () {
-            a.push([d].concat(Array.prototype.slice.call(arguments, 0)));
-          };
-        }
-        var e = a;
-        "undefined" !== typeof g ? (e = a[g] = []) : (g = "mixpanel");
-        e.people = e.people || [];
-        e.toString = function (a) {
-          var b = "mixpanel";
-          "mixpanel" !== g && (b += "." + g);
-          a || (b += " (stub)");
-          return b;
-        };
-        e.people.toString = function () {
-          return e.toString(1) + ".people (stub)";
-        };
-        b =
-          "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(
-            " "
-          );
-        for (c = 0; c < b.length; c++) h(e, b[c]);
-        a._i.push([b, c, g]);
+  // Official Mixpanel async snippet (correct variable scoping)
+  (function (document, mixpanel) {
+    if (mixpanel.__SV) return;
+    var script, firstScript, methods, i;
+    window.mixpanel = mixpanel;
+    mixpanel._i = [];
+    mixpanel.init = function (token, config, name) {
+      var target = mixpanel;
+      if (typeof name !== "undefined") {
+        target = mixpanel[name] = [];
+      } else {
+        name = "mixpanel";
+      }
+      target.people = target.people || [];
+      target.toString = function (notStub) {
+        var str = "mixpanel";
+        if (name !== "mixpanel") str += "." + name;
+        if (!notStub) str += " (stub)";
+        return str;
       };
-      a.__SV = 1.2;
-      b = e.createElement("script");
-      b.type = "text/javascript";
-      b.async = true;
-      b.src = "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";
-      c = e.getElementsByTagName("script")[0];
-      c.parentNode.insertBefore(b, c);
+      target.people.toString = function () {
+        return target.toString(1) + ".people (stub)";
+      };
+      methods =
+        "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(
+          " "
+        );
+      function stub(obj, method) {
+        var parts = method.split(".");
+        if (parts.length === 2) {
+          obj = obj[parts[0]];
+          method = parts[1];
+        }
+        obj[method] = function () {
+          obj.push([method].concat(Array.prototype.slice.call(arguments, 0)));
+        };
+      }
+      for (i = 0; i < methods.length; i++) {
+        stub(target, methods[i]);
+      }
+      mixpanel._i.push([token, config, name]);
+    };
+    mixpanel.__SV = 1.2;
+    script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";
+    firstScript = document.getElementsByTagName("script")[0];
+    if (firstScript && firstScript.parentNode) {
+      firstScript.parentNode.insertBefore(script, firstScript);
+    } else {
+      (document.head || document.documentElement).appendChild(script);
     }
   })(document, window.mixpanel || []);
 
   function getPageType() {
     var path = (window.location.pathname || "/").toLowerCase();
-    if (path === "/" || path === "" || path.endsWith("/index.html") || path === "/index.html") return "home";
+    if (path === "/" || path === "" || /\/index\.html$/.test(path)) return "home";
     if (
-      path.indexOf("gezilecek") !== -1 ||
-      path.indexOf("sille") !== -1 ||
-      path.indexOf("mutfak") !== -1 ||
-      path.indexOf("rotalar") !== -1 ||
-      path.indexOf("semtler") !== -1 ||
-      path.indexOf("tarihce") !== -1 ||
-      path.indexOf("ilceler") !== -1 ||
-      path.indexOf("etli-ekmek") !== -1 ||
-      path.indexOf("mevlana") !== -1 ||
-      path.indexOf("kesfet") !== -1
+      /gezilecek|sille|mutfak|rotalar|semtler|tarihce|ilceler|etli-ekmek|mevlana|kesfet/.test(path)
     )
       return "content";
     if (path.indexOf("ara") !== -1) return "search";
@@ -78,15 +81,18 @@
 
   function getContentType() {
     var path = (window.location.pathname || "").toLowerCase();
-    if (path.indexOf("gezilecek") !== -1 || path.indexOf("sille") !== -1 || path.indexOf("mevlana") !== -1) return "mekan";
-    if (path.indexOf("mutfak") !== -1 || path.indexOf("etli-ekmek") !== -1) return "yemek";
-    if (path.indexOf("rotalar") !== -1 || path.indexOf("konya-1-gun") !== -1) return "rota";
+    if (/gezilecek|sille|mevlana/.test(path)) return "mekan";
+    if (/mutfak|etli-ekmek/.test(path)) return "yemek";
+    if (/rotalar|konya-1-gun/.test(path)) return "rota";
     if (path.indexOf("etkinlik") !== -1) return "etkinlik";
     if (path.indexOf("ai") !== -1) return "ai";
     return "yazi";
   }
 
+  var tracked = false;
   function trackAll() {
+    if (tracked) return;
+    tracked = true;
     try {
       var pageType = getPageType();
       var path = window.location.pathname || "/";
@@ -172,8 +178,8 @@
       );
 
       var searchForms = document.querySelectorAll('form[action*="ara"], form[role="search"]');
-      for (var i = 0; i < searchForms.length; i++) {
-        searchForms[i].addEventListener("submit", function (ev) {
+      for (var si = 0; si < searchForms.length; si++) {
+        searchForms[si].addEventListener("submit", function (ev) {
           try {
             var form = ev.target;
             var input = form.querySelector('input[type="search"], input[name="q"]');
@@ -190,7 +196,6 @@
     } catch (err) {}
   }
 
-  // Init with EU host, then track
   try {
     mixpanel.init(TOKEN, {
       api_host: "https://api-eu.mixpanel.com",
@@ -202,13 +207,14 @@
         trackAll();
       }
     });
-    // Fallback if loaded callback is slow / already ready
-    setTimeout(function () {
-      try {
-        if (window.mixpanel && typeof window.mixpanel.track === "function") {
-          trackAll();
-        }
-      } catch (e) {}
-    }, 1500);
   } catch (err) {}
+
+  // Safety fallback
+  setTimeout(function () {
+    try {
+      if (!tracked && window.mixpanel && typeof window.mixpanel.track === "function") {
+        trackAll();
+      }
+    } catch (e) {}
+  }, 2000);
 })();
