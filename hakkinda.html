@@ -1,32 +1,66 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a5c3a">
-<script>(function(){try{var t=localStorage.getItem("konyago_theme");if(t!=="dark"&&t!=="light"){t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b1210")}catch(e){}})();</script>
-<title>Hakkımızda | KonyaGo</title>
+<meta name="theme-color" content="#0A1628">
+<script>(function(){try{document.documentElement.setAttribute("data-theme","dark")}catch(e){}})();</script>
+<title>Hakkımızda | KonyaGo — Bağımsız Konya Şehir Rehberi</title>
 <meta name="description" content="KonyaGo nedir? Konya’nın bağımsız, ücretsiz ve premium şehir rehberi. Proje hakkında, vizyon ve iletişim.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://konyago.com.tr/hakkinda.html">
-<link rel="icon" href="/assets/img/eagle.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/app.css?v=28">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="KonyaGo">
+<meta property="og:title" content="Hakkımızda | KonyaGo">
+<meta property="og:description" content="Konya’nın bağımsız, ücretsiz premium şehir rehberi. Vizyon, ne sunuyoruz ve iletişim.">
+<meta property="og:url" content="https://konyago.com.tr/hakkinda.html">
+<meta property="og:image" content="https://konyago.com.tr/assets/img/IMG_0510.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="KonyaGo hakkımızda">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Hakkımızda — KonyaGo",
+  "url": "https://konyago.com.tr/hakkinda.html",
+  "description": "KonyaGo: Konya için bağımsız, ücretsiz premium şehir rehberi.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "KonyaGo",
+    "url": "https://konyago.com.tr/",
+    "email": "info@konyago.com.tr",
+    "telephone": "+90-533-259-50-42",
+    "sameAs": [
+      "https://instagram.com/mehmet_ali_caner_",
+      "https://t.me/+mgwLM224L7A0Mzdk"
+    ]
+  }
+}
+</script>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/img/IMG_0510.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="assets/css/app.css?v=32">
 <link rel="stylesheet" href="assets/css/theme.css?v=3">
 <link rel="stylesheet" href="assets/css/elite.css?v=7">
+<link rel="stylesheet" href="assets/css/luxury.css?v=12">
 <style>
 .about-hero{text-align:center;padding:40px 16px 28px;margin-bottom:8px}
-.about-hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.4rem);color:var(--green-deep);margin:0 0 12px}
-.about-hero p{color:var(--muted);max-width:48ch;margin:0 auto;line-height:1.55;font-size:1.02rem}
+.about-hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.4rem);margin:0 0 12px}
+.about-hero p{max-width:48ch;margin:0 auto;line-height:1.55;font-size:1.02rem}
 .about-grid{display:grid;gap:16px;margin:24px 0}
 @media(min-width:700px){.about-grid{grid-template-columns:1fr 1fr}}
-.about-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;box-shadow:0 3px 14px rgba(2,28,18,.03)}
-.about-card h2{font-family:var(--font-display);font-size:1.25rem;color:var(--green-deep);margin:0 0 10px}
-.about-card p,.about-card li{color:var(--muted);font-size:.92rem;line-height:1.55;margin:0 0 8px}
+.about-card{background:#152A42;border:1px solid rgba(201,162,39,.28);border-radius:14px;padding:22px 20px}
+.about-card h2{font-family:var(--font-display);font-size:1.25rem;margin:0 0 10px}
+.about-card p,.about-card li{font-size:.92rem;line-height:1.55;margin:0 0 8px}
 .about-card ul{padding-left:18px;margin:8px 0 0}
-.about-cta{text-align:center;padding:28px 16px;margin:28px 0;border-radius:var(--radius);background:linear-gradient(165deg,rgba(10,92,58,.06),rgba(192,138,40,.05));border:1px solid var(--border)}
-.about-cta h2{font-family:var(--font-display);font-size:1.35rem;color:var(--green-deep);margin:0 0 8px}
-.about-cta p{color:var(--muted);margin:0 0 16px}
-html[data-theme="dark"] .about-card{background:var(--white)}
-html[data-theme="dark"] .about-hero h1,html[data-theme="dark"] .about-card h2,html[data-theme="dark"] .about-cta h2{color:var(--green)}
+.about-cta{text-align:center;padding:28px 16px;margin:28px 0;border-radius:14px;background:linear-gradient(165deg,rgba(201,162,39,.08),rgba(21,42,66,.6));border:1px solid rgba(201,162,39,.25)}
+.about-cta h2{font-family:var(--font-display);font-size:1.35rem;margin:0 0 8px}
+.about-cta p{margin:0 0 16px}
 </style>
 </head>
 <body>
@@ -35,7 +69,7 @@ html[data-theme="dark"] .about-hero h1,html[data-theme="dark"] .about-card h2,ht
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
-      <img class="logo-mark" src="assets/img/eagle.svg" width="48" height="48" alt="KonyaGo" decoding="async">
+      <img class="logo-mark" src="assets/img/IMG_0510.jpeg" width="48" height="48" alt="KonyaGo" decoding="async">
       <span class="logo-text"><strong>KonyaGo</strong><small>Şehir rehberi</small></span>
     </a>
     <nav class="nav-desktop" aria-label="Ana menü">
@@ -155,6 +189,6 @@ html[data-theme="dark"] .about-hero h1,html[data-theme="dark"] .about-card h2,ht
 
 <script src="assets/js/brand-logo.js?v=1"></script>
 <script src="assets/js/theme.js?v=2"></script>
-<script src="assets/js/app.js?v=29" defer></script>
+<script src="assets/js/app.js?v=32" defer></script>
 </body>
 </html>
