@@ -16,7 +16,7 @@
   try {
     if (!document.querySelector('script[data-mixpanel]')) {
       var mp = document.createElement("script");
-      mp.src = "assets/js/mixpanel.js?v=1";
+      mp.src = "assets/js/mixpanel.js?v=2";
       mp.defer = true;
       mp.setAttribute("data-mixpanel", "1");
       document.body.appendChild(mp);
