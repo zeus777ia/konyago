@@ -50,6 +50,18 @@
     return isFinite(n) ? n : null;
   }
 
+  function escapeHtml(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (char) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char];
+    });
+  }
+
   function selling(obj) {
     if (!obj || typeof obj !== "object") return null;
     return num(obj.Selling != null ? obj.Selling : obj.satis != null ? obj.satis : obj.Satış);
@@ -194,7 +206,7 @@
       '<span class="borsa-ticker-item borsa-meta">↻ ' +
       (data.fetchedAt || istanbulNow()) +
       (data.src ? " · " + data.src : "") +
-      (data.apiTime ? " · API " + data.apiTime : "") +
+      (data.apiTime ? " · API " + escapeHtml(data.apiTime) : "") +
       "</span>"
     );
     if (weekendNote) parts.push(weekendNote);

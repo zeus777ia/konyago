@@ -221,7 +221,10 @@
 
   var s = document.createElement("script");
   s.async = true;
-  s.src = "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";
+  s.src = "https://cdn.jsdelivr.net/npm/mixpanel-browser@2.81.0/dist/mixpanel.umd.js";
+  s.integrity = "sha256-O2YR/e8vqmoywXq5INwZ1aBrJZcsoH4yUcQ7CQ6HCms=";
+  s.crossOrigin = "anonymous";
+  s.referrerPolicy = "no-referrer";
   s.onload = function () {
     boot();
   };

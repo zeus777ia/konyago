@@ -72,6 +72,18 @@
     return String(s || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   }
 
+  function escapeHtml(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (char) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char];
+    });
+  }
+
   function parseList(html) {
     var cells = [];
     var re = /<td[^>]*>([\s\S]*?)<\/td>/gi;
@@ -145,7 +157,7 @@
 
     var parts = D.items.map(function (it) {
       return '<span class="eczane-ticker-item"><span class="eczane-ticker-dot" aria-hidden="true"></span>💊 ' +
-        it.name + " · " + it.ilce + "</span>";
+        escapeHtml(it.name) + " · " + escapeHtml(it.ilce) + "</span>";
     });
     var trackHtml = parts.join("") + parts.join("");
     var bar = document.createElement("div");
@@ -153,7 +165,7 @@
     bar.setAttribute("role", "complementary");
     bar.setAttribute("aria-label", "Nöbetçi eczaneler");
     bar.innerHTML =
-      '<div class="eczane-ticker-label"><a href="nobetci-eczane.html">Nöbetçi</a> · ' + (D.label || "") +
+      '<div class="eczane-ticker-label"><a href="nobetci-eczane.html">Nöbetçi</a> · ' + escapeHtml(D.label || "") +
       (D.live ? " · canlı" : "") + "</div>" +
       '<div class="eczane-ticker-viewport"><div class="eczane-ticker-track">' + trackHtml + "</div></div>";
     var ad = document.querySelector(".ad-ticker");
@@ -175,16 +187,16 @@
       by[k].push(it.name);
     });
     var keys = Object.keys(by).sort(function (a, b) { return a.localeCompare(b, "tr"); });
-    var html = "<h2>Bugünkü liste (" + (D.label || "") + ")</h2>";
+    var html = "<h2>Bugünkü liste (" + escapeHtml(D.label || "") + ")</h2>";
     if (!D.live) {
       html += '<p style="font-size:.85rem;color:var(--muted)">Canlı kaynak şu an yanıt vermedi; yedek liste. Mutlaka resmî kaynaktan teyit edin.</p>';
     }
     keys.forEach(function (k) {
-      html += '<p style="margin-top:10px"><strong style="color:var(--green-deep)">' + k + "</strong><br>";
-      html += by[k].map(function (n) { return "💊 " + n; }).join("<br>");
+      html += '<p style="margin-top:10px"><strong style="color:var(--green-deep)">' + escapeHtml(k) + "</strong><br>";
+      html += by[k].map(function (n) { return "💊 " + escapeHtml(n); }).join("<br>");
       html += "</p>";
     });
-    html += '<p style="margin-top:12px;font-size:.8rem">' + (D.sourceNote || "") + "</p>";
+    html += '<p style="margin-top:12px;font-size:.8rem">' + escapeHtml(D.sourceNote || "") + "</p>";
     box.innerHTML = html;
   }
 
