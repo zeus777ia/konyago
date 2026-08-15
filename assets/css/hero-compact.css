@@ -1,0 +1,31 @@
+/* Homepage hero — diğer kart/bölümlerle aynı kompakt boyut */
+.hero {
+  padding: clamp(22px, 3.5vw, 36px) clamp(16px, 3vw, 28px) !important;
+  margin: 10px 0 16px !important;
+  border-radius: 16px !important;
+  box-sizing: border-box !important;
+}
+.hero-badge {
+  font-size: 0.66rem !important;
+  margin: 0 auto 10px !important;
+  gap: 8px !important;
+}
+.hero-badge::before,
+.hero-badge::after {
+  width: 20px !important;
+}
+.hero h1 {
+  font-size: clamp(1.55rem, 3.6vw, 2.2rem) !important;
+  max-width: min(28ch, 100%) !important;
+  margin: 0 auto 10px !important;
+  line-height: 1.2 !important;
+}
+.hero p {
+  font-size: 0.92rem !important;
+  margin: 0 auto 16px !important;
+  max-width: min(48ch, 100%) !important;
+  line-height: 1.5 !important;
+}
+.hero .actions {
+  gap: 10px !important;
+}
