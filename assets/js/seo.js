@@ -9,7 +9,8 @@
 
   var ORIGIN = "https://konyago.com.tr";
   var LOGO = ORIGIN + "/assets/img/IMG_0510.jpeg";
-  var OG_IMG = ORIGIN + "/assets/img/IMG_0510.jpeg";
+  // Canva OG cover (uploaded as Sophisticated KonyaGo Editorial Image.jpg)
+  var OG_IMG = ORIGIN + "/assets/img/Sophisticated%20KonyaGo%20Editorial%20Image.jpg";
 
   function ensureMeta(attr, key, value) {
     if (!value) return;
@@ -18,6 +19,11 @@
       : 'meta[name="' + key + '"]';
     var el = document.querySelector(sel);
     if (el) {
+      // Force update og:image to cover if it still points to logo
+      if (key === "og:image" || key === "og:image:secure_url") {
+        el.setAttribute("content", value);
+        return;
+      }
       if (!el.getAttribute("content")) el.setAttribute("content", value);
       return;
     }
@@ -42,7 +48,6 @@
   ensureMeta("property", "og:image:height", "630");
   ensureMeta("property", "og:image:alt", "KonyaGo — Konya şehir rehberi");
 
-  // Title / description fallback from document if missing og:
   var t = document.title || "KonyaGo | Konya Şehir Rehberi";
   ensureMeta("property", "og:title", t);
   var descEl = document.querySelector('meta[name="description"]');
@@ -50,7 +55,6 @@
     ensureMeta("property", "og:description", descEl.content);
   }
 
-  // Organization JSON-LD (once)
   if (!document.querySelector('script[type="application/ld+json"][data-konyago-org]')) {
     var data = {
       "@context": "https://schema.org",
