@@ -16,10 +16,10 @@
   try {
     if (!document.querySelector('script[data-mixpanel]')) {
       var mp = document.createElement("script");
-      mp.src = "assets/js/mixpanel.js?v=3";
+      mp.src = "/assets/js/mixpanel.js?v=4";
       mp.defer = true;
       mp.setAttribute("data-mixpanel", "1");
-      document.body.appendChild(mp);
+      (document.body || document.documentElement).appendChild(mp);
     }
   } catch (e) {}
 
