@@ -1,0 +1,272 @@
+/* KonyaGo mobile-opt.css — mobil + grid duzeni */
+
+/* ===== Mobil alt navigasyon ===== */
+.mnav {
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding: 0 4px env(safe-area-inset-bottom, 0px);
+  align-items: stretch;
+  justify-content: space-around;
+  background: rgba(10, 22, 40, 0.97) !important;
+  border-top: 1px solid rgba(201, 162, 39, 0.28) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.35);
+}
+.mnav a {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 6px 2px;
+  text-decoration: none !important;
+  color: #B8C2CE !important;
+  font-size: 0.62rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  border-radius: 10px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mnav a .i {
+  font-size: 1.15rem;
+  line-height: 1;
+  display: block;
+}
+.mnav a[aria-current="page"],
+.mnav a:hover {
+  color: #E8C84A !important;
+  background: rgba(201, 162, 39, 0.1);
+}
+
+/* Desktop: mnav gizle */
+@media (min-width: 900px) {
+  .mnav { display: none !important; }
+}
+
+/* Icerik altinda mnav boslugu */
+body {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+}
+@media (min-width: 900px) {
+  body { padding-bottom: 0 !important; }
+}
+.footer-elite {
+  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important;
+}
+@media (min-width: 900px) {
+  .footer-elite { padding-bottom: 24px !important; }
+}
+
+/* ===== Grid duzeni — tutarli breakpoint ===== */
+.grid {
+  display: grid !important;
+  gap: 12px !important;
+}
+.grid-2 {
+  grid-template-columns: 1fr !important;
+}
+@media (min-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr 1fr !important; }
+}
+
+.feat-grid {
+  display: grid !important;
+  gap: 12px !important;
+  grid-template-columns: 1fr !important;
+}
+@media (min-width: 600px) {
+  .feat-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .feat-grid .feat-card.large {
+    grid-column: 1 / -1 !important;
+  }
+}
+@media (min-width: 900px) {
+  .feat-grid {
+    grid-template-columns: 1.4fr 1fr 1fr !important;
+  }
+  .feat-grid .feat-card.large {
+    grid-column: auto !important;
+  }
+}
+
+.trust-strip {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+}
+@media (min-width: 720px) {
+  .trust-strip { grid-template-columns: repeat(4, 1fr) !important; }
+}
+
+.ilce-strip {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+}
+@media (min-width: 640px) {
+  .ilce-strip { grid-template-columns: repeat(4, 1fr) !important; }
+}
+
+.footer-grid {
+  display: grid !important;
+  gap: 20px !important;
+  grid-template-columns: 1fr !important;
+}
+@media (min-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (min-width: 900px) {
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr !important; }
+}
+
+/* ===== Mobil (<= 599px) optimizasyon ===== */
+@media (max-width: 599px) {
+  /* Yatay tasma engelle */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  main.container,
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: max(14px, env(safe-area-inset-left)) !important;
+    padding-right: max(14px, env(safe-area-inset-right)) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Yan panolar kapali (zaten 1400 altinda gizli) */
+  .ad-rail { display: none !important; }
+
+  /* Header sade */
+  .header-inner {
+    min-height: 52px !important;
+    gap: 8px !important;
+  }
+  .logo-mark {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .logo-text strong { font-size: 0.95rem !important; }
+  .logo-text small { font-size: 0.58rem !important; }
+
+  /* Hero kompakt + butonlar alt alta */
+  .hero {
+    padding: 18px 14px !important;
+    margin: 8px 0 12px !important;
+    border-radius: 14px !important;
+  }
+  .hero h1 {
+    font-size: clamp(1.35rem, 7vw, 1.7rem) !important;
+    max-width: 100% !important;
+  }
+  .hero p {
+    font-size: 0.88rem !important;
+    margin-bottom: 14px !important;
+  }
+  .hero .actions {
+    width: 100% !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .hero .actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Ziyaretci paneli */
+  .visit-stats {
+    max-width: 100% !important;
+    gap: 8px !important;
+  }
+  .visit-stat {
+    min-width: 0 !important;
+    flex: 1 1 40% !important;
+    padding: 10px 8px !important;
+  }
+  .visit-stat .vs-value { font-size: 1.15rem !important; }
+
+  /* Kartlar */
+  .feat-card,
+  .feat-card.large {
+    min-height: 160px !important;
+  }
+  .card {
+    padding: 14px !important;
+  }
+  .card h3 { font-size: 0.95rem !important; }
+
+  /* Sponsor kart */
+  .ad-sponsor-card {
+    padding: 14px !important;
+    margin: 12px 0 !important;
+  }
+
+  /* SMS + arama */
+  .sms-soft {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .quick-search {
+    flex-direction: column !important;
+  }
+  .quick-search input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .quick-search .btn {
+    width: 100% !important;
+  }
+
+  /* Biz banner */
+  .biz-actions {
+    flex-direction: column !important;
+  }
+  .biz-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Section basliklari */
+  .section { margin: 18px 0 !important; }
+  .section-title { font-size: 1.25rem !important; }
+
+  /* Ticker daha kisa */
+  .ad-ticker-item { font-size: 0.7rem !important; padding: 0 16px !important; }
+}
+
+/* ===== Tablet (600–899) ===== */
+@media (min-width: 600px) and (max-width: 899px) {
+  main.container,
+  .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .hero .actions {
+    justify-content: center !important;
+  }
+  .ad-rail { display: none !important; }
+}
+
+/* Touch hedefleri */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .mnav a,
+  .ilce-pill,
+  .card {
+    min-height: 44px;
+  }
+}
