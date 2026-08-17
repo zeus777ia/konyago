@@ -1,0 +1,4 @@
+KonyaGo Premium Reels
+Visuals: original procedural graphics.
+Audio: original mathematical synthesis; no third-party songs, samples or loops.
+Format: 1080x1920, 30 fps, H.264/AAC, 10 seconds.
