@@ -21,7 +21,8 @@
     ];
     var ROUTES = {klasik:["mevlana","inceminare","alaeddin","meram"],tarih:["karatay","sahipata","carsi"],sille:["sille","sille-ayaelenia"],doga:["beysehir","esrefoglu"],aile:["kelebek","japonparki","alaeddin"]};
     var markers={}, routeLine=null, myRoute=[], pharmLayer=null, map, mekanCluster, ilceCluster, mahalleCluster;
-    var layersOn={mekan:true,ilce:true,mahalle:true};
+    var isNarrow=window.matchMedia&&window.matchMedia("(max-width:900px)").matches;
+    var layersOn={mekan:true,ilce:true,mahalle:!isNarrow};
     var favs=new Set(JSON.parse(localStorage.getItem("kg_favs")||"[]"));
     function $(id){return document.getElementById(id);}
     function expandMahalle(arr){
@@ -196,11 +197,17 @@
     mekanCluster=clusterGroup("mekan"); ilceCluster=clusterGroup("ilce"); mahalleCluster=clusterGroup("mh");
     VENUES.forEach(addVenueMarker); ILCE.forEach(addIlceMarker);
     mekanCluster.addTo(map); ilceCluster.addTo(map);
+    if(!layersOn.mahalle){var lb=$("layerMahalle"); if(lb) lb.classList.remove("on");}
     attachMahalle();
     try{map.fitBounds(L.latLngBounds(VENUES.concat(ILCE).filter(function(x){return x.lat!=null;}).map(function(x){return [x.lat,x.lng];})).pad(0.08),{animate:false});}catch(e){}
     updateCounts(); renderList("all","");
     applyDeepLink();
-    setTimeout(function(){try{map.invalidateSize();}catch(e){}},350);
+    function sizeMap(){try{map.invalidateSize();}catch(e){}}
+    setTimeout(sizeMap,200);
+    setTimeout(sizeMap,700);
+    setTimeout(sizeMap,1400);
+    window.addEventListener("resize",sizeMap);
+    window.addEventListener("orientationchange",function(){setTimeout(sizeMap,250);});
     if(!window.__KG_MH_DONE){
       var n=0,t=setInterval(function(){ n++; if(attachMahalle()||n>50) clearInterval(t); },200);
     }
