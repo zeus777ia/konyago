@@ -56,10 +56,16 @@
       var img=v.img?'<img src="'+v.img+'" alt="">':(v.icon||"📍");
       var tags=(v.tags||[]).map(function(t){return "<span>"+t+"</span>";}).join("");
       if(!tags && v.cat) tags="<span>"+(CATNAMES[v.cat]||v.cat)+"</span>";
-      var about=(v.desc||v.d||"").trim();
-      if(about.length>140) about=about.slice(0,137)+"...";
+      // Prefer longer informative d over short poetic desc so "ne olduğu" is clear
+      var about=(v.d||v.long||v.desc||"").trim();
+      if(about.length>190) about=about.slice(0,187)+"...";
       if(!about) about=(CATNAMES[v.cat]||"Mekan")+" · "+(v.dist||"Konya");
-      return '<div class="pop-img">'+img+'</div><div class="pop-body"><h4>'+v.name+'</h4><div class="pop-tags">'+tags+'</div><div class="pop-meta">'+(v.rating?'<span>★ '+v.rating+'</span>':'')+'<span>📍 '+(v.dist||"Konya")+'</span>'+(v.hours?'<span>🕐 '+v.hours+'</span>':'')+'</div><p>'+about+'</p><div class="pop-actions"><button class="pop-btn" id="add-'+v.id+'" onclick="window.kgAdd(\''+v.id+'\')">+ Rotaya Ekle</button><button class="pop-btn ghost" onclick="window.kgModal(\''+v.id+'\')">Detay</button></div></div>';
+      var metaParts=[];
+      if(v.rating) metaParts.push("<span>★ "+v.rating+"</span>");
+      metaParts.push("<span>📍 "+(v.dist||"Konya")+"</span>");
+      if(v.hours) metaParts.push("<span>🕐 "+v.hours+"</span>");
+      if(v.fee) metaParts.push("<span>🎫 "+v.fee+"</span>");
+      return '<div class="pop-img">'+img+'</div><div class="pop-body"><h4>'+v.name+'</h4><div class="pop-tags">'+tags+'</div><div class="pop-meta">'+metaParts.join("")+'</div><p>'+about+'</p><div class="pop-actions"><button class="pop-btn" id="add-'+v.id+'" onclick="window.kgAdd(\''+v.id+'\')">+ Rotaya Ekle</button><button class="pop-btn ghost" onclick="window.kgModal(\''+v.id+'\')">Detay</button></div></div>';
     }
     function addVenueMarker(v){if(v.lat==null||markers[v.id])return;var m=L.marker([v.lat,v.lng],{icon:pinIcon()}).bindPopup(popupHTML(v),{className:"map-card",closeButton:true});markers[v.id]=m;mekanCluster.addLayer(m);}
     function addIlceMarker(v){if(v.lat==null||markers[v.id])return;var m=L.marker([v.lat,v.lng],{icon:ilceIcon(),zIndexOffset:400}).bindPopup(popupHTML(v),{className:"map-card",closeButton:true});markers[v.id]=m;ilceCluster.addLayer(m);}
@@ -120,7 +126,14 @@
         var thumb=v.img?'<img src="'+v.img+'" alt="">':(v.icon||"📍");
         var catLabel=CATNAMES[v.cat]||v.kind||"";
         var meta=v.kind==="ilce"?((v.kids||0)+" mahalle"):v.kind==="mahalle"?v.dist:(catLabel+(v.rating?" · ★ "+v.rating:""));
-        el.innerHTML='<div class="venue-thumb">'+thumb+'</div><div><h4>'+v.name+'</h4><div class="meta">'+meta+'</div></div><span class="dist">'+(v.dist||"")+'</span>'+(v.kind==="ilce"||v.kind==="mahalle"?"":'<button class="fav-heart '+(favs.has(v.id)?"on":"")+'" data-id="'+v.id+'">♥</button>');
+        // short teaser so list also makes clear what the place is
+        var teaser="";
+        if(v.kind!=="ilce"&&v.kind!=="mahalle"){
+          var t=(v.desc||v.d||"").trim();
+          if(t.length>72) t=t.slice(0,69)+"...";
+          if(t) teaser='<div class="teaser" style="font-size:.68rem;color:#9db3c0;margin-top:3px;line-height:1.35">'+t+'</div>';
+        }
+        el.innerHTML='<div class="venue-thumb">'+thumb+'</div><div style="flex:1;min-width:0"><h4>'+v.name+'</h4><div class="meta">'+meta+'</div>'+teaser+'</div><span class="dist">'+(v.dist||"")+'</span>'+(v.kind==="ilce"||v.kind==="mahalle"?"":'<button class="fav-heart '+(favs.has(v.id)?"on":"")+'" data-id="'+v.id+'">♥</button>');
         el.onclick=function(e){if(e.target.classList.contains("fav-heart")){window.kgFav(v.id,e);return;}window.kgFocus(v.id);};
         list.appendChild(el);
       });
