@@ -68,10 +68,34 @@
       if(sp)sp.textContent=(VENUES.length+ILCE.length+mhOk).toLocaleString("tr-TR");
       if(st)st.textContent=VENUES.length+" mekân · "+ILCE.length+"/31 ilçe · "+mhOk+"/1143 mahalle";
     }
+    function norm(s){
+      return String(s||"").toLowerCase()
+        .replace(/[âàáä]/g,"a").replace(/[êèéë]/g,"e").replace(/[îìíï]/g,"i")
+        .replace(/[ôòóö]/g,"o").replace(/[ûùúü]/g,"u").replace(/ç/g,"c").replace(/ğ/g,"g")
+        .replace(/ı/g,"i").replace(/ş/g,"s").replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
+    }
+    function scoreItem(v, qq){
+      if(!qq) return 0;
+      var n=norm(v.name), d=norm(v.dist), tags=norm((v.tags||[]).join(" "));
+      var sc=0;
+      if(n===qq) sc=1000;
+      else if(n.indexOf(qq)===0) sc=800;
+      else if(n.indexOf(" "+qq)>-1) sc=650;
+      else if(n.indexOf(qq)>-1) sc=500;
+      else if(tags.indexOf(qq)>-1) sc=320;
+      else if(d.indexOf(qq)>-1) sc=200;
+      else return -1;
+      if(v.kind==="mahalle") sc-=120;
+      else if(v.kind==="ilce") sc-=40;
+      else sc+=40;
+      var r=parseFloat(v.rating); if(!isNaN(r)) sc+=Math.round(r*8);
+      sc-=Math.min(30, (v.name||"").length/4);
+      return sc;
+    }
     function renderList(filter,q){
       var list=$("venueList"); if(!list)return; list.innerHTML="";
-      var qq=(q||"").toLowerCase();
-      var match=function(v){return !qq||(v.name||"").toLowerCase().indexOf(qq)>-1||(v.dist||"").toLowerCase().indexOf(qq)>-1;};
+      var qq=norm(q);
+      var match=function(v){return scoreItem(v,qq)>=0;};
       var items;
       if(filter==="fav") items=VENUES.filter(function(v){return favs.has(v.id)&&match(v);});
       else if(filter==="ilce") items=ILCE.filter(match);
@@ -79,6 +103,13 @@
       else if(filter&&filter!=="all") items=VENUES.filter(function(v){return v.cat===filter&&match(v);});
       else if(qq) items=VENUES.concat(ILCE,MAHALLE).filter(match);
       else items=VENUES.filter(match);
+      if(qq){
+        items.sort(function(a,b){
+          var sa=scoreItem(a,qq), sb=scoreItem(b,qq);
+          if(sb!==sa) return sb-sa;
+          return String(a.name||"").localeCompare(String(b.name||""),"tr");
+        });
+      }
       if(!items.length){list.innerHTML='<p style="color:var(--muted);font-size:.8rem;padding:12px">Sonuç bulunamadı.</p>';return;}
       items.slice(0,180).forEach(function(v){
         var el=document.createElement("div"); el.className="venue-card"; el.id="vc-"+v.id;
