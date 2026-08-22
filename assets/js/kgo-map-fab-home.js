@@ -23,7 +23,7 @@
   var root = document.createElement("div");
   root.id = "kgoHomeMapFab";
   root.innerHTML =
-    '<div class="row"><span class="lbl">Rastgele mekân</span><button type="button" class="btn" data-go="/harita/?random=1" aria-label="Rastgele mekân">🎲</button></div>'+
+    '<div class="row"><span class="lbl">Rastgele tarih</span><button type="button" class="btn" data-go="/harita/?random=1&cat=tarih" aria-label="Rastgele tarihî mekân">🎲</button></div>'+
     '<div class="row"><span class="lbl">İlçeler</span><button type="button" class="btn" data-go="/harita/?cat=ilce" aria-label="İlçeler">🗺️</button></div>'+
     '<div class="row"><span class="lbl">Haritayı aç</span><button type="button" class="btn" data-go="/harita/" aria-label="Harita">✦</button></div>'+
     '<button type="button" class="main" aria-label="Harita menüsü" aria-expanded="false">MAP</button>';
@@ -36,7 +36,8 @@
     main.textContent = open ? "+" : "MAP";
   });
   root.querySelectorAll("[data-go]").forEach(function(btn){
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
       location.href = btn.getAttribute("data-go");
     });
   });
