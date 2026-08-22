@@ -1,0 +1,29 @@
+{
+  "date": "2026-08-22",
+  "source": "eczaneadresi.com",
+  "count": 28,
+  "districts": 21,
+  "pharmacies": [
+    {"district": "Selçuklu", "name": "Bosna Hersek Eczanesi", "count": 6},
+    {"district": "Cihanbeyli", "name": "Deniz Eczanesi", "count": 2},
+    {"district": "Ereğli", "name": "Ayrancı Eczanesi", "count": 2},
+    {"district": "Akşehir", "name": "Tepeoğlu Eczanesi", "count": 1},
+    {"district": "Altınekin", "name": "Dilek Eczanesi", "count": 1},
+    {"district": "Beyşehir", "name": "Şenol Eczanesi", "count": 1},
+    {"district": "Bozkır", "name": "Yeni Sağlam Eczanesi", "count": 1},
+    {"district": "Çeltik", "name": "Fidan Eczanesi", "count": 1},
+    {"district": "Çumra", "name": "Merkez Eczanesi", "count": 1},
+    {"district": "Doğanhisar", "name": "Hisar Eczanesi", "count": 1},
+    {"district": "Hüyük", "name": "Bilir Eczanesi", "count": 1},
+    {"district": "Ilgın", "name": "Can Eczanesi", "count": 1},
+    {"district": "Kadınhanı", "name": "Ganioğlu Eczanesi", "count": 1},
+    {"district": "Karapınar", "name": "Serap Eczanesi", "count": 1},
+    {"district": "Karatay", "name": "Nenehatun Eczanesi", "count": 1},
+    {"district": "Kulu", "name": "Erdoğan Eczanesi", "count": 1},
+    {"district": "Meram", "name": "Can Eczanesi", "count": 1},
+    {"district": "Sarayönü", "name": "Özşahin Eczanesi", "count": 1},
+    {"district": "Seydişehir", "name": "Elif Eczanesi", "count": 1},
+    {"district": "Tuzlukçu", "name": "Elçin Eczanesi", "count": 1},
+    {"district": "Yunak", "name": "Bizim Eczanesi", "count": 1}
+  ]
+}
