@@ -1,4 +1,4 @@
-/* kgo-map-fab.js — Map FAB for /harita/ (KonyaGo venues + ilce + mahalle only) */
+/* kgo-map-fab.js — Map FAB for /harita/ (KonyaGo pins only; random = tarih) */
 (function(){
   if (window.__KGO_MAP_FAB_BOOTED) return;
   if (!document.getElementById("map") && !document.getElementById("kg-harita")) return;
@@ -20,16 +20,36 @@
     if (st) st.textContent = msg;
   }
 
-  window.kgRandom = function(){
-    var list = data().venues.filter(function(v){ return v && v.lat != null && v.lng != null; });
-    if (!list.length) { status("Pin bulunamadı"); return; }
-    var v = list[Math.floor(Math.random() * list.length)];
-    if (window.kgFocus) {
-      try { window.kgFocus(v.id || v.name); } catch(e) {}
-    } else if (window.__KG_MAP) {
-      window.__KG_MAP.flyTo([v.lat, v.lng], 15, { duration: 0.8 });
+  /** Sadece harita pini: sayfa yönlendirmesi yok */
+  function focusPin(v){
+    if (!v || v.lat == null || v.lng == null) return;
+    var map = window.__KG_MAP;
+    var id = v.id || "";
+    if (map) {
+      try { map.flyTo([v.lat, v.lng], 15, { duration: 1.0 }); } catch (e) {}
+      setTimeout(function(){
+        try {
+          if (window.kgFocus && id) window.kgFocus(id);
+        } catch (e) {}
+      }, 200);
+    } else if (window.kgFocus && id) {
+      try { window.kgFocus(id); } catch (e) {}
     }
-    status("Rastgele: " + (v.name || ""));
+    status("Tarih · " + (v.name || ""));
+  }
+
+  window.kgRandom = function(){
+    var list = data().venues.filter(function(v){
+      return v && v.lat != null && v.lng != null && String(v.cat || "") === "tarih";
+    });
+    if (!list.length) {
+      list = data().venues.filter(function(v){
+        return v && v.lat != null && v.lng != null && v.kind !== "ilce" && v.kind !== "mahalle";
+      });
+    }
+    if (!list.length) { status("Tarihî pin bulunamadı"); return; }
+    var v = list[Math.floor(Math.random() * list.length)];
+    focusPin(v);
   };
 
   window.kgShowIlce = function(){
@@ -41,7 +61,7 @@
       try {
         var pts = ILCE.filter(function(x){ return x.lat != null; }).map(function(x){ return [x.lat, x.lng]; });
         if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.08));
-      } catch(e) {}
+      } catch (e) {}
     }
     status("İlçeler · " + ILCE.length);
   };
@@ -58,7 +78,7 @@
       var lat = pos.coords.latitude, lng = pos.coords.longitude;
       if (map && window.L) {
         map.flyTo([lat, lng], 15, { duration: 0.8 });
-        if (window.__KG_ME_MARKER) try { map.removeLayer(window.__KG_ME_MARKER); } catch(e) {}
+        if (window.__KG_ME_MARKER) try { map.removeLayer(window.__KG_ME_MARKER); } catch (e) {}
         window.__KG_ME_MARKER = L.circleMarker([lat, lng], {
           radius: 9, color: "#d4a24e", weight: 2, fillColor: "#2dd4bf", fillOpacity: 0.85
         }).addTo(map).bindPopup("Konumun");
@@ -73,16 +93,22 @@
   function applyDeepLink(){
     try {
       var p = new URLSearchParams(location.search);
-      if (p.get("random") || p.get("v") === "random") setTimeout(function(){ window.kgRandom(); }, 900);
-      if (p.get("locate")) setTimeout(function(){ window.kgLocate(); }, 900);
-      if (p.get("cat") === "ilce" || p.get("layer") === "ilce") setTimeout(function(){ window.kgShowIlce(); }, 700);
+      if (p.get("random") || p.get("v") === "random") setTimeout(function(){ window.kgRandom(); }, 1000);
+      if (p.get("locate")) setTimeout(function(){ window.kgLocate(); }, 1000);
+      if (p.get("cat") === "ilce" || p.get("layer") === "ilce") setTimeout(function(){ window.kgShowIlce(); }, 800);
+      if (p.get("cat") === "tarih") {
+        setTimeout(function(){
+          var chip = document.querySelector('#kg-harita .chip[data-cat="tarih"]');
+          if (chip) chip.click();
+        }, 700);
+      }
       if (p.get("cat") === "mahalle") {
         setTimeout(function(){
           var chip = document.querySelector('#kg-harita .chip[data-cat="mahalle"]');
           if (chip) chip.click();
         }, 700);
       }
-    } catch(e) {}
+    } catch (e) {}
   }
 
   function injectFab(){
@@ -108,7 +134,7 @@
     root.id = "kgoMapFab";
     root.innerHTML =
       '<div class="kgo-mf-actions">'+
-        '<div class="kgo-mf-row"><span class="kgo-mf-label">Rastgele mekân</span><button type="button" class="kgo-mf-btn" data-act="random" aria-label="Rastgele">🎲</button></div>'+
+        '<div class="kgo-mf-row"><span class="kgo-mf-label">Rastgele tarih</span><button type="button" class="kgo-mf-btn" data-act="random" aria-label="Rastgele tarihî mekân">🎲</button></div>'+
         '<div class="kgo-mf-row"><span class="kgo-mf-label">İlçeler</span><button type="button" class="kgo-mf-btn" data-act="ilce" aria-label="İlçeler">🗺️</button></div>'+
         '<div class="kgo-mf-row"><span class="kgo-mf-label">Konumum</span><button type="button" class="kgo-mf-btn" data-act="locate" aria-label="Konum">📍</button></div>'+
       '</div>'+
@@ -121,7 +147,9 @@
       main.setAttribute("aria-expanded", open ? "true" : "false");
     });
     root.querySelectorAll("[data-act]").forEach(function(btn){
-      btn.addEventListener("click", function(){
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
         var act = btn.getAttribute("data-act");
         root.classList.remove("open");
         main.setAttribute("aria-expanded", "false");
@@ -139,7 +167,7 @@
 
   var n = 0, t = setInterval(function(){
     n++;
-    if (window.__KG_LIVE_BOOTED || window.__KG_MAP || n > 60) {
+    if (window.__KG_LIVE_BOOTED || window.__KG_MAP || n > 80) {
       clearInterval(t);
       boot();
     }
