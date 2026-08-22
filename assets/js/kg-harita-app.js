@@ -11,7 +11,7 @@
     });
   }
   var GOOD="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@00746944d5e82213c073caea6551951ad3dcf000/assets/js/kg-harita-app.js";
-  var FAB="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/js/kgo-map-fab.js?v=20260823a";
+  var FAB="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/js/kgo-map-fab.js?v=20260823b";
   load(GOOD).then(function(){ return load(FAB); }).catch(function(){
     load("https://raw.githubusercontent.com/zeus777ia/konyago/00746944d5e82213c073caea6551951ad3dcf000/assets/js/kg-harita-app.js")
       .then(function(){ return load(FAB); });
