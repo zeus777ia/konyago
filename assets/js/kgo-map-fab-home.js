@@ -7,7 +7,8 @@
   var css = document.createElement("style");
   css.id = "kgo-home-map-fab-css";
   css.textContent =
-    "#kgoHomeMapFab{position:fixed;right:22px;bottom:92px;z-index:10055;display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-family:Inter,system-ui,sans-serif}"+ 
+    "#kgoHomeMapFab{position:fixed;right:22px;bottom:92px;z-index:10055;display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-family:Inter,system-ui,sans-serif;transition:opacity .2s ease,transform .2s ease}"+ 
+    "#kgoHomeMapFab.is-hidden{opacity:0;pointer-events:none;transform:scale(.9);visibility:hidden}"+ 
     "#kgoHomeMapFab .row{display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s ease,transform .2s ease;pointer-events:none}"+ 
     "#kgoHomeMapFab.open .row{opacity:1;transform:none;pointer-events:auto}"+ 
     "#kgoHomeMapFab .row:nth-child(1){transition-delay:0ms}"+ 
@@ -30,7 +31,23 @@
   document.body.appendChild(root);
 
   var main = root.querySelector(".main");
+
+  function closeMenu(){
+    root.classList.remove("open");
+    main.setAttribute("aria-expanded", "false");
+    main.textContent = "MAP";
+  }
+
+  function syncWithAiPanel(){
+    var panel = document.getElementById("kgoLiveAiPanel");
+    var aiOpen = !!(panel && panel.classList.contains("open"));
+    root.classList.toggle("is-hidden", aiOpen);
+    root.setAttribute("aria-hidden", aiOpen ? "true" : "false");
+    if (aiOpen) closeMenu();
+  }
+
   main.addEventListener("click", function(){
+    if (root.classList.contains("is-hidden")) return;
     var open = root.classList.toggle("open");
     main.setAttribute("aria-expanded", open ? "true" : "false");
     main.textContent = open ? "+" : "MAP";
@@ -42,10 +59,19 @@
     });
   });
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape") {
-      root.classList.remove("open");
-      main.setAttribute("aria-expanded", "false");
-      main.textContent = "MAP";
-    }
+    if (e.key === "Escape") closeMenu();
   });
+
+  // AI paneli açılınca MAP gizle (gönder butonu üstüne binmesin)
+  var panel = document.getElementById("kgoLiveAiPanel");
+  if (panel) {
+    syncWithAiPanel();
+    try {
+      var obs = new MutationObserver(syncWithAiPanel);
+      obs.observe(panel, { attributes: true, attributeFilter: ["class"] });
+    } catch (e) {}
+  }
+  document.addEventListener("click", function(){
+    setTimeout(syncWithAiPanel, 0);
+  }, true);
 })();
