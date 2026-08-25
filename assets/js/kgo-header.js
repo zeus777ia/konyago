@@ -134,5 +134,5 @@
   });
   loadPharmacies();loadRates();
   setInterval(loadPharmacies,15*60*1000);
-  setInterval(loadRates,30*60*1000);
+  setInterval(loadRates,5*60*1000);
 })();
