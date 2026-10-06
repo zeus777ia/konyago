@@ -1,0 +1,65 @@
+{
+  "week": "2026-10-07",
+  "created": "2026-10-06T09:06:00+03:00",
+  "note": "refill, eskiler silinmedi",
+  "slots": {
+    "IG": "11:30+03",
+    "FB": "13:15+03",
+    "TT": "19:45+03"
+  },
+  "rules": {
+    "sunday_no_facebook": true,
+    "wednesday_no_tiktok": true
+  },
+  "days": [
+    {
+      "date": "2026-10-07",
+      "theme": "Mevlana sabah",
+      "ig": "6ac48fffabce266e5a0c0487",
+      "fb": "6ac49002990828795e02fc15",
+      "tt": null
+    },
+    {
+      "date": "2026-10-08",
+      "theme": "Sille kopru",
+      "ig": "6ac49006246a2e868a04ad3e",
+      "fb": "6ac490068de4592cea08f531",
+      "tt": "6ac49008492d9bf1790b31b4"
+    },
+    {
+      "date": "2026-10-09",
+      "theme": "Ince Minare",
+      "ig": "6ac49021eddfbea4110a0632",
+      "fb": "6ac490238de4592cea08f532",
+      "tt": "6ac490291ca9308aac0759ac"
+    },
+    {
+      "date": "2026-10-10",
+      "theme": "Alaaddin",
+      "ig": "6ac49028114ba7826500e359",
+      "fb": "6ac4902a8c21b35eb707b523",
+      "tt": "6ac4902ca54177421a0b8309"
+    },
+    {
+      "date": "2026-10-11",
+      "theme": "Karatay",
+      "ig": "6ac4903b0f89f89119093d59",
+      "fb": null,
+      "tt": "6ac4903ca91ac5bb140b1362"
+    },
+    {
+      "date": "2026-10-12",
+      "theme": "Akyokus",
+      "ig": "6ac4903fec77c767150bf3f5",
+      "fb": "6ac49042a14188089e0e8e29",
+      "tt": "6ac49044a54177421a0b830a"
+    },
+    {
+      "date": "2026-10-13",
+      "theme": "Mevlana aksam",
+      "ig": "6ac490451ca9308aac0759ad",
+      "fb": "6ac490490445c221e208a49d",
+      "tt": "6ac4904a421a8664780a0d29"
+    }
+  ]
+}
