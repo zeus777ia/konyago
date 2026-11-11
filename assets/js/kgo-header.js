@@ -1,4 +1,4 @@
-/* kgo-header.js — deepened pharmacy + rates 2026-11-12 */
+/* kgo-header.js — force pharmacy list 2026-11-12 */
 (function(){
   "use strict";
   var root=document.querySelector(".kgo-ticker-stack");
@@ -50,44 +50,16 @@
 
   function loadPharmacies(){
     var own="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/data/konya-nobetci.json?v="+Date.now();
-
-    function fromOwn(data){
-      if(!data||!Array.isArray(data.pharmacies)||data.pharmacies.length<8)throw new Error("own-bad");
-      var rows=data.pharmacies.map(function(p){
-        return [String(p.district||"KONYA"), String(p.name||"")];
-      }).filter(function(r){return r[1].length>1;});
-      showPharmacyRows(rows,"Güncel liste");
-    }
-
-    function tryHtml(url,label){
-      return withTimeout(url,10000,{"Accept":"text/html"}).then(function(r){
-        if(!r.ok)throw new Error("html");
-        return r.text();
-      }).then(function(html){
-        var rows=[];
-        var re=/([A-ZÇĞİÖŞÜ][A-Za-zÇĞİÖŞÜçğıöşü\s\-]+)\s*(?:Eczanesi|ECZANESİ|ECZANESI)/gi;
-        var m, seen={};
-        while((m=re.exec(html))&&rows.length<60){
-          var name=m[1].replace(/\s+/g," ").trim();
-          if(name.length<3||seen[name])continue;
-          seen[name]=1;
-          rows.push(["KONYA", name]);
-        }
-        if(rows.length<5)throw new Error("html-empty");
-        showPharmacyRows(rows,label);
-      });
-    }
-
     return withTimeout(own,8000,{"Accept":"application/json"}).then(function(r){
-      if(!r.ok)throw new Error("own-http");
+      if(!r.ok)throw new Error("own");
       return r.json();
-    }).then(fromOwn).catch(function(){
-      return tryHtml("https://www.happ.health/nobetci-eczane/konya","Happ Health").catch(function(){
-        return tryHtml("https://www.posta.com.tr/nobetci-eczaneler/konya/","Posta").catch(function(){
-          setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi için resmî kaynakları kontrol edin","KEO ve e-Devlet bağlantılarını kullanın"],2);
-          if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste alınamadı";
-        });
-      });
+    }).then(function(data){
+      if(!data||!Array.isArray(data.pharmacies)||data.pharmacies.length<8)throw new Error("bad");
+      var rows=data.pharmacies.map(function(p){return [String(p.district||"KONYA"), String(p.name||"")];}).filter(function(r){return r[1].length>1;});
+      showPharmacyRows(rows,"Güncel liste");
+    }).catch(function(){
+      setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi için resmî kaynakları kontrol edin","KEO ve e-Devlet bağlantılarını kullanın"],2);
+      if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste alınamadı";
     });
   }
 
@@ -140,8 +112,13 @@
     });
   });
 
-  loadPharmacies();
-  loadRates();
-  setInterval(loadPharmacies,20*60*1000);
+  // Run after other scripts have had their chance
+  setTimeout(function(){loadPharmacies();loadRates();},1200);
+  setTimeout(loadPharmacies,4000);
+  setTimeout(loadPharmacies,9000);
+  setInterval(function(){
+    var t=document.querySelector("[data-kgo-pharmacy]");
+    if(t&&/güvenle doğrulanamadı|yükleniyor|doğrulanmamış/i.test(t.textContent||""))loadPharmacies();
+  },15000);
   setInterval(loadRates,10*60*1000);
 })();
