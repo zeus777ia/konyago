@@ -1,12 +1,14 @@
-/* kgo-header.js — live bars: pharmacy + FX + gold */
+/* kgo-header.js — fixed live bars 2026-11-12 */
 (function(){
   "use strict";
   var root=document.querySelector(".kgo-ticker-stack");
   if(!root)return;
+
   var pharmacyTrack=root.querySelector("[data-kgo-pharmacy]");
   var marketTrack=root.querySelector("[data-kgo-market]");
   var pharmacyMeta=root.querySelector("[data-kgo-pharmacy-meta]");
   var marketMeta=root.querySelector("[data-kgo-market-meta]");
+
   function todayLabel(){
     try{return new Intl.DateTimeFormat("tr-TR",{timeZone:"Europe/Istanbul",day:"numeric",month:"long",weekday:"long"}).format(new Date());}
     catch(e){return new Date().toLocaleDateString("tr-TR");}
@@ -23,7 +25,7 @@
   function setItems(track,items,maxItems){
     if(!track)return;
     track.replaceChildren();
-    var safe=Array.from(new Set(items)).slice(0,maxItems||80);
+    var safe=Array.from(new Set(items.filter(Boolean))).slice(0,maxItems||80);
     track.style.setProperty("--kgo-duration",Math.max(32,Math.round(safe.length*3.2))+"s");
     safe.concat(safe).forEach(function(item){
       var span=document.createElement("span");
@@ -32,13 +34,7 @@
       track.appendChild(span);
     });
   }
-  function istanbulDateKey(){
-    try{
-      var parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
-      var map={};parts.forEach(function(part){map[part.type]=part.value;});
-      return map.year+"-"+map.month+"-"+map.day;
-    }catch(e){return "";}
-  }
+
   function showPharmacyRows(rows,sourceLabel){
     var items=rows.map(function(row){
       var dist=String(row[0]||"KONYA").trim();
@@ -47,81 +43,94 @@
       var label=name+(/ECZANES[İI]$/i.test(name)?"":" ECZANESİ");
       return dist+" · "+label+extra;
     });
-    items.push("Kaynak: Eczane Adresi · tüm ilçeler");
+    items.push("Kaynak: "+sourceLabel+" · yola çıkmadan önce teyit edin");
     setItems(pharmacyTrack,items,100);
     var districtSet=new Set();
-    rows.forEach(function(row){districtSet.add(String(row[0]||"").toLocaleUpperCase("tr-TR"));});
+    rows.forEach(function(row){
+      var label=String(row[0]||"").toLocaleUpperCase("tr-TR");
+      districtSet.add(label.replace(/\s*·.*$/,"").trim());
+    });
     var total=rows.reduce(function(sum,row){return sum+(Number(row[2])||1);},0);
     if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · "+total+" eczane · "+districtSet.size+" ilçe · "+sourceLabel;
   }
+
   function loadPharmacies(){
-    var today=istanbulDateKey();
-    var own="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/data/konya-nobetci.json?v="+today;
-    var ownFb="https://raw.githubusercontent.com/zeus777ia/konyago/main/assets/data/konya-nobetci.json?v="+today;
+    var own="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/data/konya-nobetci.json";
     function fromOwn(data){
-      if(!data||data.date!==today)throw new Error("own-stale");
-      var list=data.pharmacies||[];
-      if(!list.length)throw new Error("own-empty");
-      var rows=list.map(function(p){
-        return [String(p.district||"KONYA").toLocaleUpperCase("tr-TR"),String(p.name||"").toLocaleUpperCase("tr-TR"),Number(p.count)||1];
+      if(!data||!Array.isArray(data.pharmacies)||!data.pharmacies.length)throw new Error("own-empty");
+      var rows=data.pharmacies.map(function(p){
+        return [
+          String(p.district||"KONYA").toLocaleUpperCase("tr-TR"),
+          String(p.name||"").toLocaleUpperCase("tr-TR"),
+          Number(p.count)||1
+        ];
       }).filter(function(r){return r[1].length>1;});
       if(rows.length<5)throw new Error("own-incomplete");
       rows.sort(function(a,b){return a[0].localeCompare(b[0],"tr");});
-      showPharmacyRows(rows,"Canlı · tüm ilçeler");
+      showPharmacyRows(rows,"Yedek liste (teyit edin)");
     }
-    return withTimeout(own,10000,{"Accept":"application/json"}).then(function(r){
-      if(!r.ok)throw new Error("own-http");
-      return r.json();
-    }).then(fromOwn).catch(function(){
-      return withTimeout(ownFb,10000,{"Accept":"application/json"}).then(function(r){
-        if(!r.ok)throw new Error("own-fb-http");
+    function fromApi(){
+      return withTimeout("https://eczaneadresi.com/api/public/v1/duty-pharmacies?city=konya&limit=300",8000,{"Accept":"application/json"}).then(function(r){
+        if(!r.ok)throw new Error("http");
+        return r.json();
+      }).then(function(data){
+        if(!Array.isArray(data.pharmacies)||!data.pharmacies.length)throw new Error("empty");
+        var rows=data.pharmacies.map(function(p){
+          return [String(p.district||"KONYA").toLocaleUpperCase("tr-TR"),String(p.name||"").toLocaleUpperCase("tr-TR"),1];
+        }).filter(function(r){return r[1].length>1;});
+        if(rows.length<5)throw new Error("incomplete");
+        showPharmacyRows(rows,"Canlı API");
+      });
+    }
+    return fromApi().catch(function(){
+      return withTimeout(own,8000,{"Accept":"application/json"}).then(function(r){
+        if(!r.ok)throw new Error("own");
         return r.json();
       }).then(fromOwn);
     }).catch(function(){
-      setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi yükleniyor…"],1);
-      if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste bekleniyor";
+      setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi için resmî kaynakları kontrol edin","KEO ve e-Devlet bağlantılarını kullanın"],2);
+      if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste yüklenemedi";
     });
   }
+
   function loadRates(){
-    var amp=String.fromCharCode(38);
-    var fxUrl="https://api.frankfurter.dev/v2/rates?base=TRY"+amp+"quotes=USD,EUR,GBP,CHF,CAD,AUD,JPY"+amp+"providers=TCMB";
-    var goldUrl="https://api.frankfurter.dev/v2/rates?base=XAU"+amp+"quotes=TRY";
     var OZ_GRAM=31.1034768;
     return Promise.all([
-      withTimeout(fxUrl,12000).then(function(r){if(!r.ok)throw new Error("tcmb-http");return r.json();}),
-      withTimeout(goldUrl,10000).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
-    ]).then(function(pair){
-      var rows=pair[0], goldRows=pair[1];
-      if(!Array.isArray(rows)||rows.length<7)throw new Error("rate-parse");
-      var items=[],byCode={},date="";
-      rows.forEach(function(row){
-        var rate=Number(row.rate);if(!rate)return;
-        byCode[row.quote]=rate;date=row.date||date;
-        if(row.quote==="JPY")items.push("100 JPY/TRY · "+fmt(100/rate,4)+" ₺");
-        else items.push(row.quote+"/TRY · "+fmt(1/rate,4)+" ₺");
-      });
-      if(byCode.USD){if(byCode.EUR)items.push("EUR/USD · "+fmt(byCode.USD/byCode.EUR,4));if(byCode.GBP)items.push("GBP/USD · "+fmt(byCode.USD/byCode.GBP,4));}
-      if(byCode.EUR){if(byCode.GBP)items.push("EUR/GBP · "+fmt(byCode.GBP/byCode.EUR,4));if(byCode.CHF)items.push("EUR/CHF · "+fmt(byCode.CHF/byCode.EUR,4));}
-      var goldDate="";
-      if(Array.isArray(goldRows)&&goldRows.length){
-        var oz=Number(goldRows[0].rate);
-        goldDate=goldRows[0].date||"";
-        if(oz>0){
-          var gram=oz/OZ_GRAM;
-          items.unshift("Çeyrek (yaklaşık) · "+fmt(gram*1.754,0)+" ₺");
-          items.unshift("Gram Altın · "+fmt(gram,2)+" ₺");
-          items.unshift("Ons Altın · "+fmt(oz,0)+" ₺");
-        }
+      withTimeout("https://api.frankfurter.app/latest?from=USD&to=TRY,EUR",10000).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}),
+      withTimeout("https://open.er-api.com/v6/latest/USD",10000).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}),
+      withTimeout("https://api.gold-api.com/price/XAU",8000).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
+    ]).then(function(res){
+      var frank=res[0], open=res[1], gold=res[2];
+      var usdtry=null, eurtry=null, date="";
+      if(frank&&frank.rates&&frank.rates.TRY){
+        usdtry=frank.rates.TRY;
+        if(frank.rates.EUR)eurtry=usdtry/frank.rates.EUR;
+        date=frank.date||"";
+      }else if(open&&open.rates&&open.rates.TRY){
+        usdtry=open.rates.TRY;
+        if(open.rates.EUR)eurtry=usdtry/open.rates.EUR;
+        date=open.time_last_update_utc||"";
       }
-      items.push("TCMB + altın gösterge · "+(date||goldDate||"son resmî iş günü"));
-      if(items.length<10)throw new Error("rate-parse");
-      setItems(marketTrack,items,32);
-      if(marketMeta) marketMeta.textContent="TCMB + altın "+(date||goldDate||"güncel")+" · gösterge (alış/satış değil)";
+      if(!usdtry)throw new Error("no-fx");
+      var items=["USD/TRY · "+fmt(usdtry,2)+" ₺"];
+      if(eurtry)items.push("EUR/TRY · "+fmt(eurtry,2)+" ₺");
+      var xauUsd=gold&&(gold.price||gold.price_usd)?Number(gold.price||gold.price_usd):null;
+      if(xauUsd&&usdtry){
+        var ons=xauUsd*usdtry;
+        var gram=ons/OZ_GRAM;
+        items.unshift("Gram Altın · "+fmt(gram,0)+" ₺");
+        items.unshift("Ons Altın · "+fmt(ons,0)+" ₺");
+        items.unshift("Çeyrek (yaklaşık) · "+fmt(gram*1.754,0)+" ₺");
+      }
+      items.push("Kaynak: piyasa · "+(date||"güncel")+" · bilgilendirme");
+      setItems(marketTrack,items,20);
+      if(marketMeta)marketMeta.textContent="Kur + altın · "+(date||"güncel")+" · gösterge";
     }).catch(function(){
-      setItems(marketTrack,["Güncel kur verisi kısa süre içinde yenilenecek","Kaynak: TCMB gösterge kurları"]);
-      if(marketMeta)marketMeta.textContent="TCMB / altın verisi bekleniyor";
+      setItems(marketTrack,["Kur ve altın verisi şu an alınamadı","Biraz sonra yenilenecek"],2);
+      if(marketMeta)marketMeta.textContent="Veri bekleniyor";
     });
   }
+
   root.querySelectorAll(".kgo-ticker-pause").forEach(function(button){
     var labelBase=(button.getAttribute("aria-label")||"Şerit").replace(/ duraklat$/i,"");
     button.addEventListener("click",function(){
@@ -132,7 +141,9 @@
       button.textContent=paused?"Oynat":"Duraklat";
     });
   });
-  loadPharmacies();loadRates();
+
+  loadPharmacies();
+  loadRates();
   setInterval(loadPharmacies,15*60*1000);
-  setInterval(loadRates,5*60*1000);
+  setInterval(loadRates,10*60*1000);
 })();
