@@ -1,4 +1,4 @@
-/* kgo-header.js — fixed live bars 2026-11-12 */
+/* kgo-header.js — deepened pharmacy + rates 2026-11-12 */
 (function(){
   "use strict";
   var root=document.querySelector(".kgo-ticker-stack");
@@ -19,14 +19,14 @@
   }
   function withTimeout(url,timeout,headers){
     var controller=new AbortController();
-    var timer=setTimeout(function(){controller.abort();},timeout||10000);
+    var timer=setTimeout(function(){controller.abort();},timeout||9000);
     return fetch(url,{cache:"no-store",credentials:"omit",signal:controller.signal,headers:headers||{}}).finally(function(){clearTimeout(timer);});
   }
   function setItems(track,items,maxItems){
     if(!track)return;
     track.replaceChildren();
-    var safe=Array.from(new Set(items.filter(Boolean))).slice(0,maxItems||80);
-    track.style.setProperty("--kgo-duration",Math.max(32,Math.round(safe.length*3.2))+"s");
+    var safe=Array.from(new Set(items.filter(Boolean))).slice(0,maxItems||100);
+    track.style.setProperty("--kgo-duration",Math.max(28,Math.round(safe.length*2.8))+"s");
     safe.concat(safe).forEach(function(item){
       var span=document.createElement("span");
       span.className="kgo-ticker-item";
@@ -37,59 +37,57 @@
 
   function showPharmacyRows(rows,sourceLabel){
     var items=rows.map(function(row){
-      var dist=String(row[0]||"KONYA").trim();
-      var name=String(row[1]||"").trim();
-      var extra=row[2]&&Number(row[2])>1?" (+"+(Number(row[2])-1)+")":"";
+      var dist=String(row[0]||"KONYA").trim().toLocaleUpperCase("tr-TR");
+      var name=String(row[1]||"").trim().toLocaleUpperCase("tr-TR");
       var label=name+(/ECZANES[İI]$/i.test(name)?"":" ECZANESİ");
-      return dist+" · "+label+extra;
+      return dist+" · "+label;
     });
     items.push("Kaynak: "+sourceLabel+" · yola çıkmadan önce teyit edin");
-    setItems(pharmacyTrack,items,100);
-    var districtSet=new Set();
-    rows.forEach(function(row){
-      var label=String(row[0]||"").toLocaleUpperCase("tr-TR");
-      districtSet.add(label.replace(/\s*·.*$/,"").trim());
-    });
-    var total=rows.reduce(function(sum,row){return sum+(Number(row[2])||1);},0);
-    if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · "+total+" eczane · "+districtSet.size+" ilçe · "+sourceLabel;
+    setItems(pharmacyTrack,items,120);
+    var districts=new Set(rows.map(function(r){return String(r[0]||"").toLocaleUpperCase("tr-TR");}));
+    if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · "+rows.length+" eczane · "+districts.size+" ilçe · "+sourceLabel;
   }
 
   function loadPharmacies(){
-    var own="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/data/konya-nobetci.json";
+    var own="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/data/konya-nobetci.json?v="+Date.now();
+
     function fromOwn(data){
-      if(!data||!Array.isArray(data.pharmacies)||!data.pharmacies.length)throw new Error("own-empty");
+      if(!data||!Array.isArray(data.pharmacies)||data.pharmacies.length<8)throw new Error("own-bad");
       var rows=data.pharmacies.map(function(p){
-        return [
-          String(p.district||"KONYA").toLocaleUpperCase("tr-TR"),
-          String(p.name||"").toLocaleUpperCase("tr-TR"),
-          Number(p.count)||1
-        ];
+        return [String(p.district||"KONYA"), String(p.name||"")];
       }).filter(function(r){return r[1].length>1;});
-      if(rows.length<5)throw new Error("own-incomplete");
-      rows.sort(function(a,b){return a[0].localeCompare(b[0],"tr");});
-      showPharmacyRows(rows,"Yedek liste (teyit edin)");
+      showPharmacyRows(rows,"Güncel liste");
     }
-    function fromApi(){
-      return withTimeout("https://eczaneadresi.com/api/public/v1/duty-pharmacies?city=konya&limit=300",8000,{"Accept":"application/json"}).then(function(r){
-        if(!r.ok)throw new Error("http");
-        return r.json();
-      }).then(function(data){
-        if(!Array.isArray(data.pharmacies)||!data.pharmacies.length)throw new Error("empty");
-        var rows=data.pharmacies.map(function(p){
-          return [String(p.district||"KONYA").toLocaleUpperCase("tr-TR"),String(p.name||"").toLocaleUpperCase("tr-TR"),1];
-        }).filter(function(r){return r[1].length>1;});
-        if(rows.length<5)throw new Error("incomplete");
-        showPharmacyRows(rows,"Canlı API");
+
+    function tryHtml(url,label){
+      return withTimeout(url,10000,{"Accept":"text/html"}).then(function(r){
+        if(!r.ok)throw new Error("html");
+        return r.text();
+      }).then(function(html){
+        var rows=[];
+        var re=/([A-ZÇĞİÖŞÜ][A-Za-zÇĞİÖŞÜçğıöşü\s\-]+)\s*(?:Eczanesi|ECZANESİ|ECZANESI)/gi;
+        var m, seen={};
+        while((m=re.exec(html))&&rows.length<60){
+          var name=m[1].replace(/\s+/g," ").trim();
+          if(name.length<3||seen[name])continue;
+          seen[name]=1;
+          rows.push(["KONYA", name]);
+        }
+        if(rows.length<5)throw new Error("html-empty");
+        showPharmacyRows(rows,label);
       });
     }
-    return fromApi().catch(function(){
-      return withTimeout(own,8000,{"Accept":"application/json"}).then(function(r){
-        if(!r.ok)throw new Error("own");
-        return r.json();
-      }).then(fromOwn);
-    }).catch(function(){
-      setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi için resmî kaynakları kontrol edin","KEO ve e-Devlet bağlantılarını kullanın"],2);
-      if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste yüklenemedi";
+
+    return withTimeout(own,8000,{"Accept":"application/json"}).then(function(r){
+      if(!r.ok)throw new Error("own-http");
+      return r.json();
+    }).then(fromOwn).catch(function(){
+      return tryHtml("https://www.happ.health/nobetci-eczane/konya","Happ Health").catch(function(){
+        return tryHtml("https://www.posta.com.tr/nobetci-eczaneler/konya/","Posta").catch(function(){
+          setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi için resmî kaynakları kontrol edin","KEO ve e-Devlet bağlantılarını kullanın"],2);
+          if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste alınamadı";
+        });
+      });
     });
   }
 
@@ -144,6 +142,6 @@
 
   loadPharmacies();
   loadRates();
-  setInterval(loadPharmacies,15*60*1000);
+  setInterval(loadPharmacies,20*60*1000);
   setInterval(loadRates,10*60*1000);
 })();
