@@ -1,18 +1,12 @@
-/* kgo-header.js — aggressive pharmacy override 2026-11-12 */
+/* kgo-header.js — market ticker only; pharmacy uses the site's verified-source module. */
 (function(){
   "use strict";
   var root=document.querySelector(".kgo-ticker-stack");
   if(!root)return;
 
-  var pharmacyTrack=root.querySelector("[data-kgo-pharmacy]");
   var marketTrack=root.querySelector("[data-kgo-market]");
-  var pharmacyMeta=root.querySelector("[data-kgo-pharmacy-meta]");
   var marketMeta=root.querySelector("[data-kgo-market-meta]");
 
-  function todayLabel(){
-    try{return new Intl.DateTimeFormat("tr-TR",{timeZone:"Europe/Istanbul",day:"numeric",month:"long",weekday:"long"}).format(new Date());}
-    catch(e){return new Date().toLocaleDateString("tr-TR");}
-  }
   function fmt(value,digits){
     var n=Number(value);if(!isFinite(n))return "—";
     return n.toLocaleString("tr-TR",{minimumFractionDigits:digits,maximumFractionDigits:digits});
@@ -32,54 +26,6 @@
       span.className="kgo-ticker-item";
       span.textContent=item;
       track.appendChild(span);
-    });
-  }
-
-  function showPharmacyRows(rows,sourceLabel){
-    var items=rows.map(function(row){
-      var dist=String(row[0]||"KONYA").trim().toLocaleUpperCase("tr-TR");
-      var name=String(row[1]||"").trim().toLocaleUpperCase("tr-TR");
-      if(!name)return null;
-      var label=name+(/ECZANES[İI]$/i.test(name)?"":" ECZANESİ");
-      return dist+" · "+label;
-    }).filter(Boolean);
-    if(items.length<5)return false;
-    items.push("Kaynak: "+sourceLabel+" · yola çıkmadan önce teyit edin");
-    setItems(pharmacyTrack,items,120);
-    var districts=new Set(rows.map(function(r){return String(r[0]||"").toLocaleUpperCase("tr-TR");}));
-    if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · "+rows.length+" eczane · "+districts.size+" ilçe · "+sourceLabel;
-    return true;
-  }
-
-  function loadPharmacies(){
-    var own="https://cdn.jsdelivr.net/gh/zeus777ia/konyago@main/assets/data/konya-nobetci.json?v="+Date.now();
-    return withTimeout(own,7000,{"Accept":"application/json"}).then(function(r){
-      if(!r.ok)throw new Error("own");
-      return r.json();
-    }).then(function(data){
-      if(!data||!Array.isArray(data.pharmacies)||data.pharmacies.length<8)throw new Error("bad");
-      var rows=data.pharmacies.map(function(p){return [String(p.district||"KONYA"), String(p.name||"")];}).filter(function(r){return r[1].length>1;});
-      if(!showPharmacyRows(rows,"Happ / güncel"))throw new Error("show");
-    }).catch(function(){
-      // HTML fallbacks
-      return withTimeout("https://www.happ.health/nobetci-eczane/konya",12000,{"Accept":"text/html"}).then(function(r){
-        if(!r.ok)throw new Error("html");
-        return r.text();
-      }).then(function(html){
-        var rows=[];
-        var re=/([A-ZÇĞİÖŞÜ][A-Za-zÇĞİÖŞÜçğıöşü\s\-]+)\s*(?:Eczanesi|ECZANESİ|ECZANESI)/gi;
-        var m, seen={};
-        while((m=re.exec(html))&&rows.length<50){
-          var name=m[1].replace(/\s+/g," ").trim();
-          if(name.length<3||seen[name])continue;
-          seen[name]=1;
-          rows.push(["KONYA", name]);
-        }
-        if(!showPharmacyRows(rows,"Happ Health"))throw new Error("empty");
-      }).catch(function(){
-        setItems(pharmacyTrack,["Güncel nöbetçi eczane listesi için resmî kaynakları kontrol edin","KEO ve e-Devlet bağlantılarını kullanın"],2);
-        if(pharmacyMeta)pharmacyMeta.textContent=todayLabel()+" · liste alınamadı";
-      });
     });
   }
 
@@ -132,19 +78,6 @@
     });
   });
 
-  function forcePharmacy(){
-    var t=document.querySelector("[data-kgo-pharmacy]");
-    if(!t)return;
-    var txt=(t.textContent||"").toLowerCase();
-    if(/güvenle doğrulanamadı|yükleniyor|doğrulanmamış|liste alınamadı/.test(txt)){
-      loadPharmacies();
-    }
-  }
-
-  setTimeout(function(){loadPharmacies();loadRates();},800);
-  setTimeout(forcePharmacy,3000);
-  setTimeout(forcePharmacy,7000);
-  setTimeout(forcePharmacy,15000);
-  setInterval(forcePharmacy,20000);
+  setTimeout(loadRates,800);
   setInterval(loadRates,10*60*1000);
 })();
