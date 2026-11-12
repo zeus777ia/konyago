@@ -1,0 +1,65 @@
+{
+  "week": "2026-11-13",
+  "created": "2026-11-12T09:00:00+03:00",
+  "note": "refill, eskiler silinmedi, kalan_gun=0",
+  "slots": {
+    "IG": "11:30+03",
+    "FB": "13:15+03",
+    "TT": "19:45+03"
+  },
+  "rules": {
+    "sunday_no_facebook": true,
+    "wednesday_no_tiktok": true
+  },
+  "days": [
+    {
+      "date": "2026-11-13",
+      "theme": "Catalhoyuk",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-14",
+      "theme": "Meram Baglari",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-15",
+      "theme": "Eflatunpinar",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-16",
+      "theme": "Aziziye Camii",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-17",
+      "theme": "Haciveyiszade",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-18",
+      "theme": "Selimiye",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-19",
+      "theme": "Kelebek Bahcesi",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    }
+  ]
+}
