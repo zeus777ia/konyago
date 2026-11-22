@@ -74,7 +74,7 @@
       try {
         if (!document.querySelector("script[data-nobetci]")) {
           var ns = document.createElement("script");
-          ns.src = "assets/js/nobetci.js?v=2";
+          ns.src = "assets/js/nobetci.js?v=3";
           ns.defer = true;
           ns.setAttribute("data-nobetci", "1");
           document.body.appendChild(ns);
