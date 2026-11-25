@@ -1,0 +1,65 @@
+{
+  "week": "2026-11-29",
+  "created": "2026-11-25T09:04:00+03:00",
+  "note": "refill, eskiler silinmedi, kalan_gun=4, son planli 2026-11-28 ertesi",
+  "slots": {
+    "IG": "11:30+03",
+    "FB": "13:15+03",
+    "TT": "19:45+03"
+  },
+  "rules": {
+    "sunday_no_facebook": true,
+    "wednesday_no_tiktok": true
+  },
+  "days": [
+    {
+      "date": "2026-11-29",
+      "theme": "Mevlana Muzesi",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-11-30",
+      "theme": "Alaaddin Tepesi",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-12-01",
+      "theme": "Sille",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-12-02",
+      "theme": "Karatay Medresesi",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-12-03",
+      "theme": "Ince Minareli Medrese",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-12-04",
+      "theme": "Sems-i Tebrizi Turbesi",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    },
+    {
+      "date": "2026-12-05",
+      "theme": "Sahip Ata Kulliyesi",
+      "ig": null,
+      "fb": null,
+      "tt": null
+    }
+  ]
+}
